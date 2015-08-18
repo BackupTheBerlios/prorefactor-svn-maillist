@@ -1,0 +1,206 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Prorefactor-svn] r12 - trunk/org.prorefactor.doc
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/prorefactor-svn/2005-January/index.html" >
+   <LINK REL="made" HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r12%20-%20trunk/org.prorefactor.doc&In-Reply-To=%3C200501200033.j0K0X1cO009036%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000008.html">
+   <LINK REL="Next"  HREF="000010.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Prorefactor-svn] r12 - trunk/org.prorefactor.doc</H1>
+    <B>John Green at BerliOS</B> 
+    <A HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r12%20-%20trunk/org.prorefactor.doc&In-Reply-To=%3C200501200033.j0K0X1cO009036%40sheep.berlios.de%3E"
+       TITLE="[Prorefactor-svn] r12 - trunk/org.prorefactor.doc">johnallengreen at sheep.berlios.de
+       </A><BR>
+    <I>Thu Jan 20 01:33:01 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000008.html">[Prorefactor-svn] r11 - trunk/org.prorefactor.core
+</A></li>
+        <LI>Next message: <A HREF="000010.html">[Prorefactor-svn] r13 - trunk/org.prorefactor.eclipse
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9">[ date ]</a>
+              <a href="thread.html#9">[ thread ]</a>
+              <a href="subject.html#9">[ subject ]</a>
+              <a href="author.html#9">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: johnallengreen
+Date: 2005-01-20 01:32:31 +0100 (Thu, 20 Jan 2005)
+New Revision: 12
+
+Modified:
+   trunk/org.prorefactor.doc/
+   trunk/org.prorefactor.doc/Makefile
+   trunk/org.prorefactor.doc/build.properties
+   trunk/org.prorefactor.doc/manual.xml
+Log:
+Updated various ignore lists.
+Changed the doc Makefile, so that the top directory doesn't get cluttered.
+Updated the manual with release notes, added a version number to the header.
+
+
+
+Property changes on: trunk/org.prorefactor.doc
+___________________________________________________________________
+Name: svn:ignore
+   - *.html
+manual.pdf
+toc.xml
+
+   + manual.pdf
+toc.xml
+html
+doc.zip
+
+
+Modified: trunk/org.prorefactor.doc/Makefile
+===================================================================
+--- trunk/org.prorefactor.doc/Makefile	2005-01-20 00:31:01 UTC (rev 11)
++++ trunk/org.prorefactor.doc/Makefile	2005-01-20 00:32:31 UTC (rev 12)
+@@ -1,6 +1,15 @@
+ 
+ # /c/progfile/fop-0.20.5/fop.bat -xml manual.xml -xsl c:/usr/share/xsl/docbook/fo/docbook.xsl -pdf manual.pdf
+ 
+-index.html: manual.xml joanju.xsl
+-	xmlto -x joanju.xsl html manual.xml
++html/index.html: manual.xml joanju.xsl Makefile
++	rm -rf html
++	xmlto -o html -x joanju.xsl html manual.xml
++	cp -r images html
++	cp -r screenshots html
++	cp *.css html
++	rm -rf html/images/.svn
++	rm -rf html/images/callouts/.svn
++	rm -rf html/screenshots/.svn
++	cp html/toc.xml .
++	cd html ; zip -r ../doc.zip *
+ 
+
+Modified: trunk/org.prorefactor.doc/build.properties
+===================================================================
+--- trunk/org.prorefactor.doc/build.properties	2005-01-20 00:31:01 UTC (rev 11)
++++ trunk/org.prorefactor.doc/build.properties	2005-01-20 00:32:31 UTC (rev 12)
+@@ -1,7 +1,5 @@
+ bin.includes = plugin.xml,\
+                about.html,\
+-               html/,\
+-               images/,\
+                build.properties,\
+                build.xml,\
+                helpcontexts.xml,\
+@@ -12,5 +10,6 @@
+                joanjupdf.xsl,\
+                manual.xml,\
+                pdf.bat,\
+-               screenshots/,\
+-               toc.xml
++               toc.xml,\
++               doc.zip,\
++               .project
+
+Modified: trunk/org.prorefactor.doc/manual.xml
+===================================================================
+--- trunk/org.prorefactor.doc/manual.xml	2005-01-20 00:31:01 UTC (rev 11)
++++ trunk/org.prorefactor.doc/manual.xml	2005-01-20 00:32:31 UTC (rev 12)
+@@ -7,6 +7,8 @@
+ 
+     &lt;date&gt;2005&lt;/date&gt;
+ 
++    &lt;releaseinfo&gt;ProRefactor version 1.2.3&lt;/releaseinfo&gt;
++
+     &lt;author&gt;
+       &lt;firstname&gt;John&lt;/firstname&gt;
+ 
+@@ -18,6 +20,13 @@
+ 
+       &lt;holder&gt;Joanju and other ProRefactor.org Contributors&lt;/holder&gt;
+     &lt;/copyright&gt;
++
++    &lt;legalnotice&gt;
++      &lt;para&gt;All rights reserved. This user manual and the accompanying
++      materials are made available under the terms of the Eclipse Public
++      License v1.0 which accompanies the software distribution, and is
++      available at <A HREF="http://www.eclipse.org/legal/epl-v10.html.&lt;/para">http://www.eclipse.org/legal/epl-v10.html.&lt;/para</A>&gt;
++    &lt;/legalnotice&gt;
+   &lt;/bookinfo&gt;
+ 
+   &lt;chapter&gt;
+@@ -1557,6 +1566,42 @@
+ 
+     &lt;variablelist&gt;
+       &lt;varlistentry&gt;
++        &lt;term&gt;Version 1.2.3&lt;/term&gt;
++
++        &lt;listitem&gt;
++          &lt;itemizedlist&gt;
++            &lt;listitem&gt;
++              &lt;para&gt;Migration from Joanju.com to ProRefactor.org.&lt;/para&gt;
++            &lt;/listitem&gt;
++
++            &lt;listitem&gt;
++              &lt;para&gt;If you are updating your environment from the old
++              Joanju.com plugins, then:&lt;/para&gt;
++
++              &lt;itemizedlist&gt;
++                &lt;listitem&gt;
++                  &lt;para&gt;Remove the old &lt;literal&gt;com.joanju.*&lt;/literal&gt;
++                  features/plugins.&lt;/para&gt;
++                &lt;/listitem&gt;
++
++                &lt;listitem&gt;
++                  &lt;para&gt;Change your .project file to replace
++                  &lt;literal&gt;com.joanju.prorefactor.ProRefactorNature&lt;/literal&gt;
++                  with
++                  &lt;literal&gt;org.prorefactor.eclipse.ProRefactorNature&lt;/literal&gt;.&lt;/para&gt;
++                &lt;/listitem&gt;
++
++                &lt;listitem&gt;
++                  &lt;para&gt;Install ProRefactor from ProRefactor.org, and restart
++                  Eclipse. &lt;/para&gt;
++                &lt;/listitem&gt;
++              &lt;/itemizedlist&gt;
++            &lt;/listitem&gt;
++          &lt;/itemizedlist&gt;
++        &lt;/listitem&gt;
++      &lt;/varlistentry&gt;
++
++      &lt;varlistentry&gt;
+         &lt;term&gt;Version 1.2.2&lt;/term&gt;
+ 
+         &lt;listitem&gt;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000008.html">[Prorefactor-svn] r11 - trunk/org.prorefactor.core
+</A></li>
+	<LI>Next message: <A HREF="000010.html">[Prorefactor-svn] r13 - trunk/org.prorefactor.eclipse
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9">[ date ]</a>
+              <a href="thread.html#9">[ thread ]</a>
+              <a href="subject.html#9">[ subject ]</a>
+              <a href="author.html#9">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">More information about the Prorefactor-svn
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,333 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Prorefactor-svn] r77 - in trunk: org.prolint.core/src/org/prolint/core org.prolint.core/src/org/prolint/eclipse org.prorefactor.core org.prorefactor.core/src/com/joanju org.prorefactor.core/src/org/prorefactor/treeparser org.prorefactor.doc org.prorefactor.eclipse/src/org/prorefactor/eclipse
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/prorefactor-svn/2006-July/index.html" >
+   <LINK REL="made" HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r77%20-%20in%20trunk%3A%20org.prolint.core/src/org/prolint/core%20org.prolint.core/src/org/prolint/eclipse%20org.prorefactor.core%20org.prorefactor.core/src/com/joanju%20org.prorefactor.core/src/org/prorefactor/treeparser%20org.prorefactor.doc%20org.prorefactor.eclipse/src/org/prorefactor/eclipse&In-Reply-To=%3C200607072022.k67KMp4r016500%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000063.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Prorefactor-svn] r77 - in trunk: org.prolint.core/src/org/prolint/core org.prolint.core/src/org/prolint/eclipse org.prorefactor.core org.prorefactor.core/src/com/joanju org.prorefactor.core/src/org/prorefactor/treeparser org.prorefactor.doc org.prorefactor.eclipse/src/org/prorefactor/eclipse</H1>
+    <B>johnallengreen at BerliOS</B> 
+    <A HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r77%20-%20in%20trunk%3A%20org.prolint.core/src/org/prolint/core%20org.prolint.core/src/org/prolint/eclipse%20org.prorefactor.core%20org.prorefactor.core/src/com/joanju%20org.prorefactor.core/src/org/prorefactor/treeparser%20org.prorefactor.doc%20org.prorefactor.eclipse/src/org/prorefactor/eclipse&In-Reply-To=%3C200607072022.k67KMp4r016500%40sheep.berlios.de%3E"
+       TITLE="[Prorefactor-svn] r77 - in trunk: org.prolint.core/src/org/prolint/core org.prolint.core/src/org/prolint/eclipse org.prorefactor.core org.prorefactor.core/src/com/joanju org.prorefactor.core/src/org/prorefactor/treeparser org.prorefactor.doc org.prorefactor.eclipse/src/org/prorefactor/eclipse">johnallengreen at berlios.de
+       </A><BR>
+    <I>Fri Jul  7 22:22:51 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000063.html">[Prorefactor-svn] r76 - in trunk: org.prorefactor.core/META-INF org.prorefactor.doc org.prorefactor.doc/META-INF org.prorefactor.eclipse/META-INF org.prorefactor.feature org.prorefactor.javadoc org.prorefactor.javadoc/META-INF org.prorefactor.lib/META-INF org.prorefactor.update
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#64">[ date ]</a>
+              <a href="thread.html#64">[ thread ]</a>
+              <a href="subject.html#64">[ subject ]</a>
+              <a href="author.html#64">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: johnallengreen
+Date: 2006-07-07 22:22:50 +0200 (Fri, 07 Jul 2006)
+New Revision: 77
+
+Modified:
+   trunk/org.prolint.core/src/org/prolint/core/FileStuff.java
+   trunk/org.prolint.core/src/org/prolint/core/LintRun.java
+   trunk/org.prolint.core/src/org/prolint/eclipse/ClearMarkersAction.java
+   trunk/org.prorefactor.core/build.properties
+   trunk/org.prorefactor.core/src/com/joanju/ProparseLdr.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/ParseUnit.java
+   trunk/org.prorefactor.doc/Makefile
+   trunk/org.prorefactor.eclipse/src/org/prorefactor/eclipse/ResourceUtil.java
+Log:
+Cleaned up some of the &quot;find IFile&quot; type code, especially with regard to linked resources.
+
+Modified: trunk/org.prolint.core/src/org/prolint/core/FileStuff.java
+===================================================================
+--- trunk/org.prolint.core/src/org/prolint/core/FileStuff.java	2006-07-04 22:20:34 UTC (rev 76)
++++ trunk/org.prolint.core/src/org/prolint/core/FileStuff.java	2006-07-07 20:22:50 UTC (rev 77)
+@@ -26,9 +26,6 @@
+ import java.io.FileReader;
+ import java.io.IOException;
+ 
+-import org.eclipse.core.resources.IFile;
+-import org.prorefactor.eclipse.ResourceUtil;
+-
+ /** Long and short term extensions to org.prorefactor.refactor.FileStuff.
+  * Some of the methods added here may be migrated to ProRefactor. 
+  */
+@@ -62,13 +59,4 @@
+ 		throw new IOException(&quot;No such line: &quot; + line + &quot; in file: &quot; + file.getPath());
+ 	}
+ 
+-	/** Find an IFile for a string filename, or null if not found.
+-	 * Maybe later: Remove once it's been added to org.prorefactor.eclipse.ResourceUtil.
+-	 */
+-	public static IFile getIFileRelaxed(String filename) {
+-		File file = FileStuff.findFile(filename);
+-		if (file==null) return null;
+-		return ResourceUtil.getIFile((FileStuff.fullpath(file)));
+-	}
+-
+ }
+
+Modified: trunk/org.prolint.core/src/org/prolint/core/LintRun.java
+===================================================================
+--- trunk/org.prolint.core/src/org/prolint/core/LintRun.java	2006-07-04 22:20:34 UTC (rev 76)
++++ trunk/org.prolint.core/src/org/prolint/core/LintRun.java	2006-07-07 20:22:50 UTC (rev 77)
+@@ -37,12 +37,11 @@
+ import org.prolint.rules.NodeRule;
+ import org.prolint.rules.Rule;
+ import org.prorefactor.core.JPNode;
++import org.prorefactor.eclipse.ResourceUtil;
+ import org.prorefactor.refactor.RefactorException;
+ import org.prorefactor.refactor.source.CompileUnit;
+ 
+-import com.joanju.ProparseLdr;
+ 
+-
+ /** This class stores the configuration for a lint run, and it contains
+  * the methods for launching lint against a given compile unit.
+  * The lint run keeps track of all files visited for all compile units.
+@@ -59,10 +58,10 @@
+ 	private int fileIndexSequence = 1;
+ 	private int ruleIndexSequence = 1;
+ 	private ArrayList cuRulesList = new ArrayList();
+-	private HashMap indexToResourceMap = new HashMap();
++	private HashMap&lt;Integer, IFile&gt; indexToResourceMap = new HashMap&lt;Integer, IFile&gt;();
+ 	private HashMap nodeRulesMap = new HashMap();
+ 	private HashMap ruleIndexMap = new HashMap();
+-	private HashMap resourceToIndexMap = new HashMap();
++	private HashMap&lt;IFile, Integer&gt; resourceToIndexMap = new HashMap&lt;IFile, Integer&gt;();
+ 	private IFile [] currentUnitIFiles = null;
+ 	private TempMarkerTable tempMarkerTable = new TempMarkerTable();
+ 
+@@ -134,14 +133,14 @@
+ 	 * file index can be retrieved quickly.
+ 	 */
+ 	private void clearAndIndexFiles(CompileUnit cu) {
+-		ArrayList resourceList = new ArrayList();
+-		String [] filenameArray = ProparseLdr.getInstance().getFilenameArray();
++		ArrayList&lt;IFile&gt; resourceList = new ArrayList&lt;IFile&gt;();
++		String [] filenameArray = cu.getFileIndex();
+ 		for (int i = 0; i &lt; filenameArray.length; i++) {
+ 			String name = filenameArray[i];
+ 			IFile ifile = null;
+-			if (name.length() &gt; 0) ifile = FileStuff.getIFileRelaxed(name);
+-			resourceList.add(ifile);
++			if (name.length() &gt; 0) ifile = ResourceUtil.getIFileRelaxed(name);
+ 			if (ifile==null) continue;
++			resourceList.add(ifile);
+ 			if (resourceToIndexMap.containsKey(ifile)) continue;
+ 			ClearMarkersAction.clear(ifile);
+ 			Integer index = new Integer(fileIndexSequence++);
+
+Modified: trunk/org.prolint.core/src/org/prolint/eclipse/ClearMarkersAction.java
+===================================================================
+--- trunk/org.prolint.core/src/org/prolint/eclipse/ClearMarkersAction.java	2006-07-04 22:20:34 UTC (rev 76)
++++ trunk/org.prolint.core/src/org/prolint/eclipse/ClearMarkersAction.java	2006-07-07 20:22:50 UTC (rev 77)
+@@ -33,7 +33,7 @@
+ import org.eclipse.jface.viewers.IStructuredSelection;
+ import org.eclipse.ui.IViewActionDelegate;
+ import org.eclipse.ui.IViewPart;
+-import org.prolint.core.FileStuff;
++import org.prorefactor.eclipse.ResourceUtil;
+ 
+ 
+ /** This class is responsible for clearing Prolint problem markers
+@@ -48,7 +48,7 @@
+ 	 * Is recursive for directory names.
+ 	 */
+ 	public static void clear(String filename) {
+-		IFile ifile = FileStuff.getIFileRelaxed(filename);
++		IFile ifile = ResourceUtil.getIFileRelaxed(filename);
+ 		if (ifile==null) return;
+ 		clear(ifile);
+ 	}
+
+Modified: trunk/org.prorefactor.core/build.properties
+===================================================================
+--- trunk/org.prorefactor.core/build.properties	2006-07-04 22:20:34 UTC (rev 76)
++++ trunk/org.prorefactor.core/build.properties	2006-07-07 20:22:50 UTC (rev 77)
+@@ -19,7 +19,6 @@
+                about.html,\
+                META-INF/,\
+                build.properties,\
+-               src/,\
+                prorefactor/,\
+                tmp/
+ jars.compile.order = 
+
+Modified: trunk/org.prorefactor.core/src/com/joanju/ProparseLdr.java
+===================================================================
+--- trunk/org.prorefactor.core/src/com/joanju/ProparseLdr.java	2006-07-04 22:20:34 UTC (rev 76)
++++ trunk/org.prorefactor.core/src/com/joanju/ProparseLdr.java	2006-07-07 20:22:50 UTC (rev 77)
+@@ -79,6 +79,7 @@
+ 	 * Important note: Sometimes Proparse will stick a blank &quot;&quot; entry into this list.
+ 	 * @deprecated May,2006. The new &quot;filename-list&quot; node attribute is used when the tree is loaded
+ 	 * into JPNode, and the filename array is stored in the ProgramRootNode object.
++	 * @see org.prorefactor.treeparser.ParseUnit#getFileIndex()
+ 	 */
+ 	public String [] getFilenameArray() {
+ 		ArrayList names = new ArrayList();
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/ParseUnit.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/ParseUnit.java	2006-07-04 22:20:34 UTC (rev 76)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/ParseUnit.java	2006-07-07 20:22:50 UTC (rev 77)
+@@ -72,7 +72,11 @@
+ 	}
+ 	
+ 	
+-	/** Get the file index, either from the PUB file or from the parser, whichever was used to get the tree. */
++	/** Get the file index, either from the PUB file or from the parser, whichever was used to get the tree.
++	 * The return is the array of file names. The file at index zero is always the compile unit.
++	 * The others are include files. The array index position corresponds to JPNode.getFileIndex().
++	 * @see org.prorefactor.nodetypes.ProgramRootNode#getFilenames()
++	 */
+ 	public String [] getFileIndex() {
+ 		if (topNode==null) return null;
+ 		return topNode.getFilenames();
+
+Modified: trunk/org.prorefactor.doc/Makefile
+===================================================================
+--- trunk/org.prorefactor.doc/Makefile	2006-07-04 22:20:34 UTC (rev 76)
++++ trunk/org.prorefactor.doc/Makefile	2006-07-07 20:22:50 UTC (rev 77)
+@@ -13,3 +13,18 @@
+ 	cp html/toc.xml .
+ 	cd html ; zip -r ../doc.zip *
+ 
++
++# This wrote into the top directory. How did I work around that in Callgraph?
++#
++# html/index.html: manual.xml joanju.xsl Makefile
++#	rm -rf html
++#	mkdir html
++#	cp -r images html
++#	cp -r screenshots html
++#	cp *.css html
++#	rm -rfd html/images/.svn
++#	rm -rfd html/images/callouts/.svn
++#	rm -rfd html/screenshots/.svn
++#	java -cp /progfile/xalan-j_2_7_0/xalan.jar org.apache.xalan.xslt.Process -IN manual.xml -XSL joanju.xsl
++#	cd html ; zip -r ../doc.zip *
++
+
+Modified: trunk/org.prorefactor.eclipse/src/org/prorefactor/eclipse/ResourceUtil.java
+===================================================================
+--- trunk/org.prorefactor.eclipse/src/org/prorefactor/eclipse/ResourceUtil.java	2006-07-04 22:20:34 UTC (rev 76)
++++ trunk/org.prorefactor.eclipse/src/org/prorefactor/eclipse/ResourceUtil.java	2006-07-07 20:22:50 UTC (rev 77)
+@@ -19,11 +19,14 @@
+ import org.eclipse.core.resources.IFile;
+ import org.eclipse.core.resources.IMarker;
+ import org.eclipse.core.resources.IResource;
++import org.eclipse.core.resources.IWorkspaceRoot;
++import org.eclipse.core.resources.ResourcesPlugin;
+ import org.eclipse.core.runtime.CoreException;
+ import org.eclipse.core.runtime.IProgressMonitor;
+ import org.eclipse.core.runtime.Path;
+ import org.eclipse.ui.actions.WorkspaceModifyOperation;
+ import org.prorefactor.refactor.FileStuff;
++import org.prorefactor.refactor.RefactorSession;
+ import org.prorefactor.refactor.messages.Message;
+ 
+ 
+@@ -55,21 +58,44 @@
+ 	} // clearRefactorMarkers
+ 
+ 
+-
+-	/** Find an IFile in the workspace that matches a full String pathname. */
++	/** Attempt to find an appropriate IFile for a file fullpath.
++	 * Since more than one linked resource can point at any one file
++	 * on the OS filesystem, any number of IFile matches are possible.
++	 * This attempts to find an IFile, in the following order:
++	 * 1. Unique &quot;simple&quot; (not linked) IFile in the workspace.
++	 * 2. First in current ProRefactor project.
++	 * 3. First in workspace.
++	 * @return null if there is no IFile representation.
++	 */
+ 	public static IFile getIFile(String fullPath) {
+-		Path temp = new Path(fullPath);
+-		if (! temp.toFile().exists() ) return null;
+-		IFile tempIFile = Plugin.getWorkspace().getRoot().getFileForLocation(temp);
+-		return tempIFile;
++		Path path = new Path(fullPath);
++		IFile ifile = ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(path);
++		/* If we found a &quot;simple&quot; IFile, we're done and we don't need to
++		 * widen the search to include linked resources.
++		 */ 
++		if (ifile!=null) return ifile;
++		
++		try {
++			IWorkspaceRoot workspaceRoot = null;
++			workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
++			String projectName = RefactorSession.getInstance().getProjectName();
++			for (IFile i : workspaceRoot.findFilesForLocation(path)) {
++				if (i.getProject().getName().equalsIgnoreCase(projectName)) {
++					return i;
++				}
++				if (ifile==null) ifile = i;
++			}
++		} catch (IllegalStateException e) {
++			// The workspace is closed, and can't be searched.
++		}
++		return ifile;
+ 	}
+-
+ 	
+ 	
+ 	/** Find an IFile in the workspace for any relative or qualified file path.
+ 	 * Returns null if the file or resource is not found.
+ 	 */
+-	private static IFile getIFileRelaxed(String filename) {
++	public static IFile getIFileRelaxed(String filename) {
+ 		File file = FileStuff.findFile(filename);
+ 		if (file==null) return null;
+ 		return getIFile((FileStuff.fullpath(file)));
+@@ -82,11 +108,13 @@
+ 	 */
+ 	public static void messagesToMarkers(final ArrayList messages) {
+ 		WorkspaceModifyOperation op = new WorkspaceModifyOperation() {
++			@Override
+ 			protected void execute(IProgressMonitor monitor) {
+ 				for (Iterator it = messages.iterator(); it.hasNext();) {
+ 					try {
+ 						Message message = (Message) it.next();
+ 						IFile file = getIFile(message.file.getCanonicalPath());
++						if (file==null) continue;
+ 						IMarker marker = file.createMarker(&quot;org.prorefactor.markers.refactor&quot;);
+ 						marker.setAttribute(IMarker.LINE_NUMBER, message.line);
+ 						marker.setAttribute(IMarker.MESSAGE, message.message);
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000063.html">[Prorefactor-svn] r76 - in trunk: org.prorefactor.core/META-INF org.prorefactor.doc org.prorefactor.doc/META-INF org.prorefactor.eclipse/META-INF org.prorefactor.feature org.prorefactor.javadoc org.prorefactor.javadoc/META-INF org.prorefactor.lib/META-INF org.prorefactor.update
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#64">[ date ]</a>
+              <a href="thread.html#64">[ thread ]</a>
+              <a href="subject.html#64">[ subject ]</a>
+              <a href="author.html#64">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">More information about the Prorefactor-svn
+mailing list</a><br>
+</body></html>

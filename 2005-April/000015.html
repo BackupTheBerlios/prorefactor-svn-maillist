@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Prorefactor-svn] r19 - trunk/org.prorefactor.core/data/tp01tests
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/prorefactor-svn/2005-April/index.html" >
+   <LINK REL="made" HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r19%20-%20trunk/org.prorefactor.core/data/tp01tests&In-Reply-To=%3C200504290003.j3T030LZ014236%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000013.html">
+   <LINK REL="Next"  HREF="000016.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Prorefactor-svn] r19 - trunk/org.prorefactor.core/data/tp01tests</H1>
+    <B>John Green at BerliOS</B> 
+    <A HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r19%20-%20trunk/org.prorefactor.core/data/tp01tests&In-Reply-To=%3C200504290003.j3T030LZ014236%40sheep.berlios.de%3E"
+       TITLE="[Prorefactor-svn] r19 - trunk/org.prorefactor.core/data/tp01tests">johnallengreen at sheep.berlios.de
+       </A><BR>
+    <I>Fri Apr 29 02:03:00 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000013.html">[Prorefactor-svn] r18 - in trunk: org.prorefactor.core org.prorefactor.doc org.prorefactor.eclipse/META-INF org.prorefactor.eclipse/src/org/prorefactor/eclipse org.prorefactor.feature org.prorefactor.javadoc org.prorefactor.refactor org.prorefactor.refactor/src/org/prorefactor/refactor/source org.prorefactor.update
+</A></li>
+        <LI>Next message: <A HREF="000016.html">[Prorefactor-svn] r20 - trunk/org.prorefactor.core/data/tp01tests
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15">[ date ]</a>
+              <a href="thread.html#15">[ thread ]</a>
+              <a href="subject.html#15">[ subject ]</a>
+              <a href="author.html#15">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: johnallengreen
+Date: 2005-04-29 02:01:04 +0200 (Fri, 29 Apr 2005)
+New Revision: 19
+
+Removed:
+   trunk/org.prorefactor.core/data/tp01tests/test01.out.p
+Log:
+Removed temp output file from repository.
+
+Deleted: trunk/org.prorefactor.core/data/tp01tests/test01.out.p
+===================================================================
+--- trunk/org.prorefactor.core/data/tp01tests/test01.out.p	2005-04-19 21:54:45 UTC (rev 18)
++++ trunk/org.prorefactor.core/data/tp01tests/test01.out.p	2005-04-29 00:01:04 UTC (rev 19)
+@@ -1,101 +0,0 @@
+- /* buffers=sports.bs,sports.customer,sports.state,tt1,tt12,wt1 */ 
+-/* Data file for testing treeparser01.
+- */
+-
+-
+-DEF TEMP-TABLE  /* 0:tt1 */ tt1 FIELD  /* 0:tt1.f1 */ f1 AS INT.
+-DEF WORK-TABLE  /* 0:wt1 */ wt1 FIELD  /* 0:wt1.f1 */ f1 AS INT.
+-
+-FIND FIRST  /* 0:sports.customer */ customer NO-ERROR.
+-FIND FIRST  /* 0:sports.customer abbrev */ cust NO-ERROR.
+-DISPLAY /* 0:sports.customer.address unqualfield */  address /* 0:sports.customer.balance abbrev unqualfield */  bal.
+-DISPLAY /* 0:sports.customer.discount */  customer.discount.
+-DISPLAY /* 0:sports.customer.discount abbrev */  customer.disc.
+-DISPLAY /* 0:sports.customer.discount abbrev */  cust.discount.
+-DISPLAY /* 0:sports.customer.comments abbrev */  sports.cust.comm.
+-
+-DEF VAR  /* 0:outer1 */ outer1 AS INT.
+-
+- /* buffers=b_tt1,sports.b_cust */ PROCEDURE myproc1:
+-  DEF INPUT PARAMETER  /* 1:inner1c */ inner1c AS INT.
+-  DEF BUFFER  /* 1:b_tt1 */ b_tt1 FOR  /* 0:tt1 */ tt1.
+-  DEF BUFFER  /* 1:sports.b_cust */ b_cust FOR  /* 0:sports.customer abbrev */ cust.
+-  DEF VAR  /* 1:inner1a */ inner1a AS INT.
+-  DEF VAR  /* 1:inner1b */ inner1b AS INT.
+-  DISPLAY /* 1:inner1c */  inner1c.
+-  FIND FIRST  /* 0:tt1 */ tt1 NO-ERROR.
+-  FIND FIRST  /* 0:wt1 */ wt1 NO-ERROR.
+-  FIND FIRST  /* 1:b_tt1 */ b_tt1 NO-ERROR.
+-  FIND FIRST  /* 1:sports.b_cust */ b_cust NO-ERROR.
+-  DISPLAY /* 1:sports.b_cust.comments abbrev */  b_cust.comm.
+-END.
+-
+-DEF VAR  /* 0:outer2 */ outer2 AS INT.
+-
+-FUNCTION myFunc1 RETURNS LOGICAL ( /* 1:inner2c */ inner2c AS INT):
+-  DEF VAR  /* 1:inner2a */ inner2a AS INT.
+-  ON ENDKEY ANYWHERE DO:
+-    DEF VAR  /* 2:inner2aa */ inner2aa AS INT.
+-    DISPLAY /* 2:inner2aa */  inner2aa.
+-    DISPLAY /* 1:inner2a */  inner2a.
+-    DISPLAY /* 1:inner2c */  inner2c.
+-    DISPLAY /* 0:outer1 */  outer1.
+-  END.
+-  DEF VAR  /* 1:inner2b */ inner2b AS INT.
+-  RETURN TRUE.
+-END.
+-
+-DEF VAR  /* 0:outer3 */ outer3 AS INT.
+-
+-
+-/* Bug in the tree parser used to prevent parameter buffers from working */
+-DEFINE TEMP-TABLE  /* 0:tt11 */ tt11
+-  FIELD  /* 0:tt11.f1 */ f1 AS CHARACTER.
+- /* buffers=sports.bf11 */ function fn11 returns logical
+-    (   buffer  /* 1:sports.bf11 */ bf11 for  /* 0:sports.customer */ customer,
+-        table for  /* 0:tt11 */ tt11 append,
+-        table  /* 0:tt11 */ tt11,
+-        table-handle  /* 1:thandle11 */ thandle11 append
+-    ):
+-  message /* 1:thandle11 */  thandle11.
+-  find first  /* 1:sports.bf11 */ bf11.
+-  return false.
+-end.
+-
+-
+-/* Test that define table LIKE works
+- * i.e. Ensure that the field names get copied into the
+- * new table def.
+- */
+-def temp-table  /* 0:tt12a */ tt12a
+-  rcode-information
+-  field  /* 0:tt12a.f1 */ f1 as char.
+-def temp-table  /* 0:tt12 */ tt12 no-undo like  /* 0:tt12a */ tt12a.
+-find first  /* 0:tt12 */ tt12.
+-display /* 0:tt12.f1 */  tt12.f1.
+-
+-
+-/* Make sure MESSAGE..UPDATE..AS works.
+- * Note that defining the variable state changes the &quot;display state&quot;
+- * statement. Normally it would display the record (not state.state)
+- * but in this case, the variable is displayed.
+- */
+-find first  /* 0:sports.state */ state.
+-MESSAGE &quot;hello&quot; 
+-  VIEW-AS ALERT-BOX QUESTION BUTTONS YES-NO UPDATE /* 0:state */   /* 0:state */ state AS LOGICAL.
+-display /* 0:state */  state.
+-
+-
+-/* Make sure that we aren't comparing a buffer name to the
+- * table name.
+- */
+-define buffer  /* 0:sports.bs */ bs for  /* 0:sports.state */ state.
+-find first  /* 0:sports.bs */ bs.
+-display /* 0:sports.bs.state */  bs.state.
+-
+-
+-/* There used to be a problem with references like this... */
+-DEFINE TEMP-TABLE  /* 0:state */ state NO-UNDO LIKE  /* 0:sports.state */ state
+-       Field  /* 0:state.oldstate */ oldstate like /* 0:state.state */  state.state.
+-
+-
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000013.html">[Prorefactor-svn] r18 - in trunk: org.prorefactor.core org.prorefactor.doc org.prorefactor.eclipse/META-INF org.prorefactor.eclipse/src/org/prorefactor/eclipse org.prorefactor.feature org.prorefactor.javadoc org.prorefactor.refactor org.prorefactor.refactor/src/org/prorefactor/refactor/source org.prorefactor.update
+</A></li>
+	<LI>Next message: <A HREF="000016.html">[Prorefactor-svn] r20 - trunk/org.prorefactor.core/data/tp01tests
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#15">[ date ]</a>
+              <a href="thread.html#15">[ thread ]</a>
+              <a href="subject.html#15">[ subject ]</a>
+              <a href="author.html#15">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">More information about the Prorefactor-svn
+mailing list</a><br>
+</body></html>

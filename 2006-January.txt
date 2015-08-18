@@ -1,0 +1,57 @@
+From johnallengreen at berlios.de  Tue Jan 17 02:23:22 2006
+From: johnallengreen at berlios.de (johnallengreen at BerliOS)
+Date: Tue, 17 Jan 2006 02:23:22 +0100
+Subject: [Prorefactor-svn] r41 - trunk/org.prorefactor.core/src/org/prorefactor/treeparser
+Message-ID: <200601170123.k0H1NMl6022881@sheep.berlios.de>
+
+Author: johnallengreen
+Date: 2006-01-17 02:23:15 +0100 (Tue, 17 Jan 2006)
+New Revision: 41
+
+Modified:
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/SymbolScope.java
+Log:
+lookupWidget() should have been recursive, looking to parent scope.
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/SymbolScope.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/SymbolScope.java	2005-12-19 20:26:48 UTC (rev 40)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/SymbolScope.java	2006-01-17 01:23:15 UTC (rev 41)
+@@ -301,15 +301,15 @@
+ 	
+ 	
+ 	
+-	public Dataset lookupDataset(String name) { return (Dataset) lookupSymbol(DATASET, name); }
++	public Dataset lookupDataset(String name) { return (Dataset) lookupSymbolLocally(DATASET, name); }
+ 	
+-	public Datasource lookupDatasource(String name) { return (Datasource) lookupSymbol(DATASOURCE, name); }
++	public Datasource lookupDatasource(String name) { return (Datasource) lookupSymbolLocally(DATASOURCE, name); }
+ 	
+-	public Query lookupQuery(String name) { return (Query) lookupSymbol(QUERY, name); }
++	public Query lookupQuery(String name) { return (Query) lookupSymbolLocally(QUERY, name); }
+ 	
+-	public Stream lookupStream(String name) { return (Stream) lookupSymbol(STREAM, name); }
++	public Stream lookupStream(String name) { return (Stream) lookupSymbolLocally(STREAM, name); }
+ 	
+-	private Object lookupSymbol(Integer symbolType, String name) {
++	private Object lookupSymbolLocally(Integer symbolType, String name) {
+ 		Map map = (Map) typeMap.get(symbolType);
+ 		if (map==null) return null;
+ 		return map.get(name.toLowerCase());
+@@ -364,9 +364,11 @@
+ 
+ 
+ 
+-	/** Lookup a Widget based on TokenType (FRAME, BUTTON, etc) and the name. */
++	/** Lookup a Widget based on TokenType (FRAME, BUTTON, etc) and the name in this scope or enclosing scope. */
+ 	public Widget lookupWidget(int widgetType, String name) {
+-		return (Widget) lookupSymbol(new Integer(widgetType), name);
++		Widget ret = (Widget) lookupSymbolLocally(new Integer(widgetType), name);
++		if (ret==null && parentScope!=null) return parentScope.lookupWidget(widgetType, name);
++		return ret;
+ 	}
+ 
+ 
+
+
+

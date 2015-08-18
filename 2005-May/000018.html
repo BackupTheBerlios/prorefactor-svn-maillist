@@ -1,0 +1,1124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Prorefactor-svn] r23 - in trunk/org.prorefactor.core/src/org/prorefactor: . nodetypes treeparser treeparser01 widgettypes
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/prorefactor-svn/2005-May/index.html" >
+   <LINK REL="made" HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r23%20-%20in%20trunk/org.prorefactor.core/src/org/prorefactor%3A%20.%20nodetypes%20treeparser%20treeparser01%20widgettypes&In-Reply-To=%3C200505042117.j44LHrW7019169%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000017.html">
+   <LINK REL="Next"  HREF="000019.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Prorefactor-svn] r23 - in trunk/org.prorefactor.core/src/org/prorefactor: . nodetypes treeparser treeparser01 widgettypes</H1>
+    <B>John Green at BerliOS</B> 
+    <A HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r23%20-%20in%20trunk/org.prorefactor.core/src/org/prorefactor%3A%20.%20nodetypes%20treeparser%20treeparser01%20widgettypes&In-Reply-To=%3C200505042117.j44LHrW7019169%40sheep.berlios.de%3E"
+       TITLE="[Prorefactor-svn] r23 - in trunk/org.prorefactor.core/src/org/prorefactor: . nodetypes treeparser treeparser01 widgettypes">johnallengreen at sheep.berlios.de
+       </A><BR>
+    <I>Wed May  4 23:17:53 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000017.html">[Prorefactor-svn] r22 - in trunk: org.prorefactor.core/src/org/prorefactor org.prorefactor.core/src/org/prorefactor/core org.prorefactor.core/src/org/prorefactor/nodetypes org.prorefactor.core/src/org/prorefactor/treeparser org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.doc org.prorefactor.refactor/src/org/prorefactor/refactor/action org.prorefactor.refactor/src/org/prorefactor/refactor/tfnames org.prorefactor.refactor/src/org/prorefactor/treeparser03
+</A></li>
+        <LI>Next message: <A HREF="000019.html">[Prorefactor-svn] r24 - in trunk: org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.refactor/data/pub org.prorefactor.refactor/prorefactor/projects/sports2000/pubs/data/pub org.prorefactor.refactor/prorefactor/projects/sports2000/pubs/data/rename/t01/orig org.prorefactor.refactor/src/org/prorefactor/refactor org.prorefactor.refactor/src/org/prorefactor/refactor/unittest
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18">[ date ]</a>
+              <a href="thread.html#18">[ thread ]</a>
+              <a href="subject.html#18">[ subject ]</a>
+              <a href="author.html#18">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: johnallengreen
+Date: 2005-05-04 23:17:51 +0200 (Wed, 04 May 2005)
+New Revision: 23
+
+Added:
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Dataset.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Datasource.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Query.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Stream.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/SymbolFactory.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Widget.java
+   trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/
+   trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Browse.java
+   trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Button.java
+   trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Frame.java
+   trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Image.java
+   trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Menu.java
+   trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/MenuItem.java
+   trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Rectangle.java
+   trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Submenu.java
+Modified:
+   trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/FieldRefNode.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Routine.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Symbol.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/SymbolScope.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Variable.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Action.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Support.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/treeparser01.g
+Log:
+Added separate symbol name spaces for each Progress type (FRAME, QUERY, STREAM, etc), as well as separate lookups for those.
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/FieldRefNode.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/FieldRefNode.java	2005-05-02 18:58:48 UTC (rev 22)
++++ trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/FieldRefNode.java	2005-05-04 21:17:51 UTC (rev 23)
+@@ -13,7 +13,9 @@
+ import org.prorefactor.core.JPNode;
+ import org.prorefactor.core.TokenTypes;
+ import org.prorefactor.treeparser.BufferScope;
++import org.prorefactor.treeparser.DataType;
+ import org.prorefactor.treeparser.FieldBuffer;
++import org.prorefactor.treeparser.Primative;
+ import org.prorefactor.treeparser.Symbol;
+ import org.prorefactor.treeparser.Variable;
+ 
+@@ -30,6 +32,8 @@
+ 		return bufferScope;
+ 	}
+ 	
++	public DataType getDataType() { return ((Primative)getSymbol()).getDataType(); }
++
+ 	/** We very often need to reference the ID node for a Field_ref node.
+ 	 * The Field_ref node is a synthetic node - it doesn't have any text.
+ 	 * If we want the field/variable name, or the file/line/column, then
+
+Added: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Dataset.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Dataset.java	2005-05-02 18:58:48 UTC (rev 22)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Dataset.java	2005-05-04 21:17:51 UTC (rev 23)
+@@ -0,0 +1,34 @@
++/** 3 May 2005
++ * Authors: John Green
++ * 
++ * Copyright (c) 2005 Joanju (www.joanju.com)
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
++ */
++
++package org.prorefactor.treeparser;
++
++import org.prorefactor.core.TokenTypes;
++
++
++/** A Symbol defined with DEFINE DATASET. */
++public class Dataset extends Symbol {
++
++	public Dataset(String name, SymbolScope scope) {
++		super(scope);
++		setName(name);
++	}
++
++	/** For this subclass of Symbol, fullName() returns the same value as getName(). */
++	public String fullName() { return getName(); }
++
++	/** Returns TokenTypes.DATASET.
++	 * @see org.prorefactor.treeparser.Symbol#getProgressType()
++	 */
++	public int getProgressType() {
++		return TokenTypes.DATASET;
++	}
++
++}
+
+Added: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Datasource.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Datasource.java	2005-05-02 18:58:48 UTC (rev 22)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Datasource.java	2005-05-04 21:17:51 UTC (rev 23)
+@@ -0,0 +1,34 @@
++/** 3 May 2005
++ * Authors: John Green
++ * 
++ * Copyright (c) 2005 Joanju (www.joanju.com)
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
++ */
++
++package org.prorefactor.treeparser;
++
++import org.prorefactor.core.TokenTypes;
++
++
++/** A Symbol defined with DEFINE DATA-SOURCE. */
++public class Datasource extends Symbol {
++
++	public Datasource(String name, SymbolScope scope) {
++		super(scope);
++		setName(name);
++	}
++
++	/** For this subclass of Symbol, fullName() returns the same value as getName(). */
++	public String fullName() { return getName(); }
++
++	/** Returns TokenTypes.DATASOURCE.
++	 * @see org.prorefactor.treeparser.Symbol#getProgressType()
++	 */
++	public int getProgressType() {
++		return TokenTypes.DATASOURCE;
++	}
++
++}
+
+Added: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Query.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Query.java	2005-05-02 18:58:48 UTC (rev 22)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Query.java	2005-05-04 21:17:51 UTC (rev 23)
+@@ -0,0 +1,34 @@
++/** 3 May 2005
++ * Authors: John Green
++ * 
++ * Copyright (c) 2005 Joanju (www.joanju.com)
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
++ */
++
++package org.prorefactor.treeparser;
++
++import org.prorefactor.core.TokenTypes;
++
++
++/** A Symbol defined with DEFINE QUERY. */
++public class Query extends Symbol {
++
++	public Query(String name, SymbolScope scope) {
++		super(scope);
++		setName(name);
++	}
++
++	/** For this subclass of Symbol, fullName() returns the same value as getName(). */
++	public String fullName() { return getName(); }
++
++	/** Returns TokenTypes.QUERY.
++	 * @see org.prorefactor.treeparser.Symbol#getProgressType()
++	 */
++	public int getProgressType() {
++		return TokenTypes.QUERY;
++	}
++
++}
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Routine.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Routine.java	2005-05-02 18:58:48 UTC (rev 22)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Routine.java	2005-05-04 21:17:51 UTC (rev 23)
+@@ -15,6 +15,7 @@
+ public class Routine extends Symbol {
+ 		
+ 	private SymbolScope routineScope;
++	private int progressType;
+ 	
+ 	public Routine (String name, SymbolScope definingScope, SymbolScope routineScope){
+ 		super(definingScope);
+@@ -30,7 +31,13 @@
+ 		return getName();
+ 	}
+ 
++	/** Return TokenTypes: PROCEDURE or FUNCTION. */
++	public int getProgressType() { return progressType; }
++	
+ 	public SymbolScope getRoutineScope(){
+ 		return routineScope;
+ 	}
++	
++	public Routine setProgressType(int t) { progressType=t; return this; }
++
+ }
+
+Added: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Stream.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Stream.java	2005-05-02 18:58:48 UTC (rev 22)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Stream.java	2005-05-04 21:17:51 UTC (rev 23)
+@@ -0,0 +1,36 @@
++/** 3 May 2005
++ * Authors: John Green
++ * 
++ * Copyright (c) 2005 Joanju (www.joanju.com)
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
++ */
++
++package org.prorefactor.treeparser;
++
++import org.prorefactor.core.TokenTypes;
++
++
++/** A Symbol defined with DEFINE STREAM or any other
++ * syntax which implicitly define a stream.
++ */
++public class Stream extends Symbol {
++
++	public Stream(String name, SymbolScope scope) {
++		super(scope);
++		setName(name);
++	}
++
++	/** For this subclass of Symbol, fullName() returns the same value as getName(). */
++	public String fullName() { return getName(); }
++
++	/** Returns TokenTypes.STREAM.
++	 * @see org.prorefactor.treeparser.Symbol#getProgressType()
++	 */
++	public int getProgressType() {
++		return TokenTypes.STREAM;
++	}
++
++}
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Symbol.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Symbol.java	2005-05-02 18:58:48 UTC (rev 22)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Symbol.java	2005-05-04 21:17:51 UTC (rev 23)
+@@ -114,27 +114,12 @@
+ 	 * A TableBuffer object always returns BUFFER, regardless of whether
+ 	 * the object is a named buffer or a default buffer.
+ 	 * A FieldBuffer object always returns FIELD.
+-	 * @see org.prorefactor.treeparser.TableBuffer#getProgressType().
+ 	 */
+-	public int getProgressType() {
+-		// If there is no DEFINE node, then we assume inline VARIABLE def,
+-		// as in &quot;message..update x as char&quot;
+-		if (	defNode == null
+-			||	defNode.getType() != TokenTypes.DEFINE
+-			) return TokenTypes.VARIABLE;
+-		JPNode n = defNode.firstChild();
+-		int type = n.getType();
+-		if (type==TokenTypes.NEW || type==TokenTypes.SHARED) {
+-			type = n.nextSibling().getType();
+-		}
+-		return type;
+-	}
++	public abstract int getProgressType();
+ 	
+ 	
+-	
+ 	public SymbolScope getScope() { return scope; }
+ 
+-
+ 	
+ 	/** Defined as NEW [GLOBAL] SHARED? */
+ 	public boolean isExported() {
+
+Added: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/SymbolFactory.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/SymbolFactory.java	2005-05-02 18:58:48 UTC (rev 22)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/SymbolFactory.java	2005-05-04 21:17:51 UTC (rev 23)
+@@ -0,0 +1,53 @@
++/* Created on May 3, 2005
++ * Authors: John Green
++ * 
++ * Copyright (c) 2005 Joanju (www.joanju.com)
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
++ */
++
++package org.prorefactor.treeparser;
++
++import org.prorefactor.core.TokenTypes;
++import org.prorefactor.widgettypes.*;
++
++
++/** Create a Symbol of the appropriate subclass. */
++public final class SymbolFactory {
++
++	public static Symbol create(int symbolType, String name, SymbolScope scope) {
++		switch (symbolType) {
++		case TokenTypes.DATASET:
++			return new Dataset(name, scope);
++		case TokenTypes.DATASOURCE:
++			return new Datasource(name, scope);
++		case TokenTypes.QUERY:
++			return new Query(name, scope);
++		case TokenTypes.STREAM:
++			return new Stream(name, scope);
++		// Widgets
++		case TokenTypes.BROWSE:
++			return new Browse(name, scope);
++		case TokenTypes.BUTTON:
++			return new Button(name, scope);
++		case TokenTypes.FRAME:
++			return new Frame(name, scope);
++		case TokenTypes.IMAGE:
++			return new Image(name, scope);
++		case TokenTypes.MENU:
++			return new Menu(name, scope);
++		case TokenTypes.MENUITEM:
++			return new MenuItem(name, scope);
++		case TokenTypes.RECTANGLE:
++			return new Rectangle(name, scope);
++		case TokenTypes.SUBMENU:
++			return new Submenu(name, scope);
++		default:
++			assert false : &quot;Unexpected values for SymbolFactory&quot; + &quot; &quot; + symbolType + &quot; &quot; + name;
++			return null;
++		}
++	}
++
++}
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/SymbolScope.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/SymbolScope.java	2005-05-02 18:58:48 UTC (rev 22)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/SymbolScope.java	2005-05-04 21:17:51 UTC (rev 23)
+@@ -1,15 +1,12 @@
+ /**
+- * SymbolScope.java
+  * @author John Green
+  * 6-Nov-2002
+- * www.joanju.com
+  * 
+- * Copyright (c) 2002-2004 Joanju Limited.
++ * Copyright (c) 2002-2005 Joanju (www.joanju.com)
+  * All rights reserved. This program and the accompanying materials 
+  * are made available under the terms of the Eclipse Public License v1.0
+  * which accompanies this distribution, and is available at
+  * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
+- * 
+  */
+ 
+ package org.prorefactor.treeparser;
+@@ -23,6 +20,7 @@
+ import java.util.Set;
+ 
+ import org.prorefactor.core.IConstants;
++import org.prorefactor.core.TokenTypes;
+ import org.prorefactor.core.schema.Schema;
+ import org.prorefactor.core.schema.Table;
+ 
+@@ -39,14 +37,6 @@
+  */
+ public class SymbolScope {
+ 
+-	/** Only Scope and derivatives may create a Scope object.
+-	 * @param parentScope null if called by the SymbolScopeRoot constructor.
+-	 */
+-	protected SymbolScope(SymbolScope parentScope) {
+-		this.parentScope = parentScope;
+-		if (parentScope!=null) this.rootScope = parentScope.rootScope;
+-	}
+-
+ 	private static Schema schema = Schema.getInstance();
+ 
+ 	private ArrayList allSymbols = new ArrayList();
+@@ -55,12 +45,32 @@
+ 	protected Map bufferMap = new HashMap();
+ 	protected Map callMap = new HashMap();
+ 	protected Map routineMap = new HashMap();
++	protected Map unnamedBuffers = new HashMap();
++	protected Map typeMap = new HashMap();
+ 	protected Map variableMap = new HashMap();
+-	protected Map unnamedBuffers = new HashMap();
+ 	private SymbolScope parentScope;
+ 	protected SymbolScopeRoot rootScope;
++	
++	private static final Integer DATASET = new Integer(TokenTypes.DATASET);
++	private static final Integer DATASOURCE = new Integer(TokenTypes.DATASOURCE);
++	private static final Integer QUERY = new Integer(TokenTypes.QUERY);
++	private static final Integer STREAM = new Integer(TokenTypes.STREAM);
+ 
++	/** Only Scope and derivatives may create a Scope object.
++	 * @param parentScope null if called by the SymbolScopeRoot constructor.
++	 */
++	protected SymbolScope(SymbolScope parentScope) {
++		this.parentScope = parentScope;
++		if (parentScope!=null) this.rootScope = parentScope.rootScope;
++	}
++	
++	// Initialization block
++	{
++		typeMap.put(new Integer(TokenTypes.VARIABLE), variableMap);
++	}
+ 
++
++	
+ 	/** Add a Routine for call handling. */
+ 	public void add(Routine routine){
+ 		routineMap.put(routine.getName().toLowerCase(), routine);
+@@ -68,12 +78,23 @@
+ 
+ 	
+ 	/** Add a Variable for names lookup. */
+-	public void add(Variable fieldSymbol) {
+-		variableMap.put(fieldSymbol.getName().toLowerCase(), fieldSymbol);
++	public void add(Variable var) {
++		variableMap.put(var.getName().toLowerCase(), var);
+ 	}
+ 
++	/** Add a Symbol for names lookup. */
++	public void add(Symbol symbol) {
++		Integer type = new Integer(symbol.getProgressType());
++		Map map = (Map) typeMap.get(type);
++		if (map==null) {
++			map = new HashMap();
++			typeMap.put(type, map);
++		}
++		map.put(symbol.getName().toLowerCase(), symbol);
++	}
+ 
+ 
++
+ 	/** Add a new scope to this scope. */
+ 	public SymbolScope addScope() {
+ 		SymbolScope newScope = new SymbolScope(this);
+@@ -251,9 +272,26 @@
+ 		}
+ 		return symbol;
+ 	} // lookupBuffer()
++	
++	
++	
++	public Dataset lookupDataset(String name) { return (Dataset) lookupSymbol(DATASET, name); }
++	
++	public Datasource lookupDatasource(String name) { return (Datasource) lookupSymbol(DATASOURCE, name); }
++	
++	public Query lookupQuery(String name) { return (Query) lookupSymbol(QUERY, name); }
++	
++	public Stream lookupStream(String name) { return (Stream) lookupSymbol(STREAM, name); }
+ 
++	
++	private Object lookupSymbol(Integer symbolType, String name) {
++		Map map = (Map) typeMap.get(symbolType);
++		if (map==null) return null;
++		return map.get(name.toLowerCase());
++	}
+ 
+ 
++
+ 	/** Lookup a Table or a BufferSymbol, schema table first.
+ 	 * It seems to work like this: unabbreviated schema name, then
+ 	 * buffer/temp/work name, then abbreviated schema names. Sheesh.
+@@ -292,6 +330,13 @@
+ 
+ 
+ 
++	/** Lookup a Widget based on TokenType (FRAME, BUTTON, etc) and the name. */
++	public Widget lookupWidget(int widgetType, String name) {
++		return (Widget) lookupSymbol(new Integer(widgetType), name);
++	}
++
++
++
+ 	public void setRootBlock(Block block) { rootBlock = block; }
+ 
+ 
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Variable.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Variable.java	2005-05-02 18:58:48 UTC (rev 22)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Variable.java	2005-05-04 21:17:51 UTC (rev 23)
+@@ -1,26 +1,22 @@
+-/**
+- * Variable.java
+- * @author John Green
+- * 6-Nov-2002
+- * www.joanju.com
++/** 6-Nov-2002
++ * Authors: John Green
+  * 
+- * Copyright (c) 2002, 2004 Joanju Limited.
++ * Copyright (c) 2002, 2004, 2005 Joanju (www.joanju.com)
+  * All rights reserved. This program and the accompanying materials 
+  * are made available under the terms of the Eclipse Public License v1.0
+  * which accompanies this distribution, and is available at
+  * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
+- * 
+  */
+ 
+ package org.prorefactor.treeparser;
+ 
++import org.prorefactor.core.TokenTypes;
+ 
+ 
++
+ /**
+- * Represents a defined symbol in a 4gl compile unit, such as a
+- * variable, frame, menu, menu-item, etc.
+- * @see org.prorefactor.treeparser.TableBuffer
+- * @see org.prorefactor.treeparser.FieldBuffer
++ * A Symbol defined with DEFINE VARIABLE or any of the other various
++ * syntaxes which implicitly define a variable.
+  */
+ public class Variable extends Symbol implements Primative, Value {
+ 
+@@ -45,6 +41,13 @@
+ 	
+ 	public void setDataType(DataType dataType) { this.dataType = dataType; }
+ 
++	/** Returns TokenTypes.VARIABLE.
++	 * @see org.prorefactor.treeparser.Symbol#getProgressType()
++	 */
++	public int getProgressType() {
++		return TokenTypes.VARIABLE;
++	}
++
+ 	/** @see org.prorefactor.treeparser.Value#setValue(java.lang.Object) */
+ 	public void setValue(Object value) { this.value = value; }
+ 
+
+Added: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Widget.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Widget.java	2005-05-02 18:58:48 UTC (rev 22)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Widget.java	2005-05-04 21:17:51 UTC (rev 23)
+@@ -0,0 +1,29 @@
++/** 3 May 2005
++ * Authors: John Green
++ * 
++ * Copyright (c) 2005 Joanju (www.joanju.com)
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
++ */
++
++package org.prorefactor.treeparser;
++
++
++/**
++ * A Symbol defined with DEFINE &lt;widget-type&gt; or any of the other various
++ * syntaxes which implicitly define a widget.
++ * This includes FRAMEs, WINDOWs, MENUs, etc.
++ */
++public abstract class Widget extends Symbol {
++
++	public Widget(String name, SymbolScope scope) {
++		super(scope);
++		setName(name);
++	}
++
++	/** For this subclass of Symbol, fullName() returns the same value as getName(). */
++	public String fullName() { return getName(); }
++
++}
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Action.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Action.java	2005-05-02 18:58:48 UTC (rev 22)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Action.java	2005-05-04 21:17:51 UTC (rev 23)
+@@ -13,6 +13,7 @@
+ package org.prorefactor.treeparser01;
+ 
+ 
++import org.prorefactor.treeparser.Symbol;
+ import org.prorefactor.treeparser.Variable;
+ 
+ import antlr.collections.AST;
+@@ -70,7 +71,13 @@
+ 	 */
+ 	public void defineBufferForTrigger(AST recAST) {}
+ 
++	
++	/** Called by the tree parser to define anything other than
++	 * buffers, temp/work tables, and variables/parameters.
++	 */
++	public Symbol defineSymbol(AST defAST, AST idAST, int symbolType) { return null; }
+ 
++	
+ 	/** Called by the tree parser at a temp or work table field definition. */
+ 	public void defineTableField(AST idNode) {}
+ 
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Support.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Support.java	2005-05-02 18:58:48 UTC (rev 22)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Support.java	2005-05-04 21:17:51 UTC (rev 23)
+@@ -20,6 +20,7 @@
+ 
+ import org.prorefactor.core.IConstants;
+ import org.prorefactor.core.JPNode;
++import org.prorefactor.core.TokenTypes;
+ import org.prorefactor.core.schema.Field;
+ import org.prorefactor.core.schema.Schema;
+ import org.prorefactor.core.schema.Table;
+@@ -36,6 +37,7 @@
+ import org.prorefactor.treeparser.Primative;
+ import org.prorefactor.treeparser.Routine;
+ import org.prorefactor.treeparser.Symbol;
++import org.prorefactor.treeparser.SymbolFactory;
+ import org.prorefactor.treeparser.SymbolScope;
+ import org.prorefactor.treeparser.SymbolScopeRoot;
+ import org.prorefactor.treeparser.TableBuffer;
+@@ -225,6 +227,26 @@
+ 
+ 
+ 
++	public Symbol defineSymbol(AST defAST, AST idAST, int symbolType) {
++		/* Some notes:
++		 * We need to create the Symbol right away, because further
++		 * actions in the grammar might need to set attributes on it.
++		 * We can't add it to the scope yet, because of statements like this:
++		 *   def var xyz like xyz.
++		 * The tree parser is responsible for calling addToScope at the end of
++		 * the statement or when it is otherwise safe to do so.
++		 */
++		JPNode defNode = (JPNode) defAST;
++		JPNode idNode = (JPNode) idAST;
++		Symbol symbol = SymbolFactory.create(symbolType, idNode.getText(), currentScope);
++		symbol.setDefOrIdNode(defNode);
++		currSymbol = symbol;
++		idNode.setLink(JPNode.SYMBOL, symbol);
++		return symbol;
++	}
++
++	
++	
+ 	public void defineTableField(AST idAST) {
+ 		JPNode idNode = (JPNode)idAST;
+ 		FieldBuffer fieldBuff = rootScope.defineTableField(idNode.getText(), currDefTable);
+@@ -375,33 +397,40 @@
+ 	} // field()
+ 
+ 
++	private static DataType fieldRefDataType(AST refAST) {
++		return ((FieldRefNode)refAST).getDataType();
++	}
+ 
++
+ 	/** If this function definition did not list any parameters, but it had a
+ 	 * function forward declaration, then we use the block and scope from that
+ 	 * declaration, in case it is where the parameters were listed.
+ 	 */
+ 	protected void funcDef(AST funcAST, AST idAST) {
++		SymbolScope forwardScope = (SymbolScope) funcForwards.get(idAST.getText());
++		if (forwardScope==null) funcSymbolCreate(idAST);
+ 		// If there are symbols (i.e. parameters, buffer params) already defined in
+ 		// this function scope, then we don't do anything.
+ 		if (	currentScope.getVariableSet().size() &gt; 0
+ 			||	currentScope.getBufferSet().size() &gt; 0
+ 			) return;
+-		SymbolScope forwardScope = (SymbolScope) funcForwards.get(idAST.getText());
+ 		if (forwardScope==null) return;
+ 		scopeSwap(forwardScope);
+ 		((BlockNode)funcAST).setBlock(currentBlock);
+ 	}
+ 
+-
+-	/** This is a really good example of why we need to subclass JPNode! */
+-	private static DataType fieldRefDataType(AST refAST) {
+-		return ((Primative)((JPNode)refAST).getLink(JPNode.SYMBOL)).getDataType();
+-	}
+-
+-
+ 	protected void funcForward(AST idAST) {
+ 		funcForwards.put(idAST.getText(), currentScope);
++		funcSymbolCreate(idAST);
+ 	}
++	
++	private Routine funcSymbolCreate(AST idAST) {
++		SymbolScope definingScope = currentScope.getParentScope();
++		Routine r = new Routine(idAST.getText(), definingScope, currentScope);
++		r.setProgressType(TokenTypes.FUNCTION);
++		definingScope.add(r);
++		return r;
++	}
+ 
+ 
+ 
+@@ -426,6 +455,7 @@
+ 		SymbolScope definingScope = currentScope;
+ 		scopeAdd(procNode);
+ 		Routine r = new Routine(idNode.getText(), definingScope, currentScope);
++		r.setProgressType(TokenTypes.PROCEDURE);
+ 		definingScope.add(r);
+ 	}
+ 	
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/treeparser01.g
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/treeparser01.g	2005-05-02 18:58:48 UTC (rev 22)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/treeparser01.g	2005-05-04 21:17:51 UTC (rev 23)
+@@ -1350,7 +1350,7 @@
+ 
+ definebrowsestate
+ 	:	#(	def:DEFINE (#(NEW (GLOBAL)? SHARED ) | SHARED)? BROWSE
+-			id:ID { push(action.defineVariable(#def, #id)); }
++			id:ID { push(action.defineSymbol(BROWSE, #def, #id)); }
+ 			(#(QUERY ID))? (lockhow|NOWAIT)*
+ 			(	#(	DISPLAY
+ 					(	#(	Form_item
+@@ -1394,7 +1394,7 @@
+ 
+ definebuttonstate
+ 	:	#(	def:DEFINE (#(NEW (GLOBAL)? SHARED ) | SHARED)? BUTTON 
+-			id:ID { push(action.defineVariable(#def, #id)); }
++			id:ID { push(action.defineSymbol(BUTTON, #def, #id)); }
+ 			(	AUTOGO
+ 			|	AUTOENDKEY
+ 			|	DEFAULT
+@@ -1423,7 +1423,7 @@
+ 
+ definedatasetstate
+ 	:	#(	def:DEFINE (#(NEW (GLOBAL)? SHARED ) | SHARED)? DATASET
+-			id:ID { push(action.defineVariable(#def, #id)); }
++			id:ID { push(action.defineSymbol(DATASET, #def, #id)); }
+ 			FOR tbl[CQ.INIT] (COMMA tbl[CQ.INIT])*
+ 			( data_relation ( (COMMA)? data_relation)* )?
+ 			state_end
+@@ -1442,7 +1442,7 @@
+ 
+ definedatasourcestate
+ 	:	#(	def:DEFINE (#(NEW (GLOBAL)? SHARED ) | SHARED)? DATASOURCE
+-			id:ID { push(action.defineVariable(#def, #id)); }
++			id:ID { push(action.defineSymbol(DATASOURCE, #def, #id)); }
+ 			FOR (#(QUERY ID))?
+ 			(source_buffer_phrase)? (COMMA source_buffer_phrase)*
+ 			{ action.addToScope(pop()); }
+@@ -1456,7 +1456,7 @@
+ 
+ defineframestate
+ 	:	#(	def:DEFINE (#(NEW (GLOBAL)? SHARED ) | SHARED)? FRAME
+-			id:ID { push(action.defineVariable(#def, #id)); }
++			id:ID { push(action.defineSymbol(FRAME, #def, #id)); }
+ 			(form_item[CQ.SYMBOL])*
+ 			(	#(HEADER (display_item)+ )
+ 			|	#(BACKGROUND (display_item)+ )
+@@ -1468,7 +1468,7 @@
+ 
+ defineimagestate
+ 	:	#(	def:DEFINE (#(NEW (GLOBAL)? SHARED ) | SHARED)? IMAGE
+-			id:ID { push(action.defineVariable(#def, #id)); }
++			id:ID { push(action.defineSymbol(IMAGE, #def, #id)); }
+ 			(	#(LIKE fld[CQ.SYMBOL] (VALIDATE)?)
+ 			|	imagephrase_opt 
+ 			|	sizephrase
+@@ -1486,7 +1486,7 @@
+ 
+ definemenustate
+ 	:	#(	def:DEFINE (#(NEW (GLOBAL)? SHARED ) | SHARED)? MENU
+-			id:ID { push(action.defineVariable(#def, #id)); }
++			id:ID { push(action.defineSymbol(MENU, #def, #id)); }
+ 			(menu_opt)* (menu_list_item)* state_end
+ 			{ action.addToScope(pop()); }
+ 		)
+@@ -1502,7 +1502,7 @@
+ 	;
+ menu_list_item
+ 	:	(	#(	MENUITEM
+-				id:ID { push(action.defineVariable(#id, #id)); }
++				id:ID { push(action.defineSymbol(MENUITEM, #id, #id)); }
+ 				(	#(ACCELERATOR expression )
+ 				|	color_expr
+ 				|	DISABLED
+@@ -1515,7 +1515,7 @@
+ 				{ action.addToScope(pop()); }
+ 			)
+ 		|	#(	SUBMENU
+-				id2:ID { push(action.defineVariable(#id2, #id2)); }
++				id2:ID { push(action.defineSymbol(SUBMENU, #id2, #id2)); }
+ 				(DISABLED | label_constant | #(FONT expression) | color_expr)*
+ 				{ action.addToScope(pop()); }
+ 			)
+@@ -1563,7 +1563,7 @@
+ 
+ definequerystate
+ 	:	#(	def:DEFINE (#(NEW (GLOBAL)? SHARED ) | SHARED)? QUERY
+-			id:ID { push(action.defineVariable(#def, #id)); }
++			id:ID { push(action.defineSymbol(QUERY, #def, #id)); }
+ 			FOR tbl[CQ.INIT] (record_fields)?
+ 			(COMMA tbl[CQ.INIT] (record_fields)?)*
+ 			( #(CACHE expression) | SCROLLING | RCODEINFORMATION)*
+@@ -1574,7 +1574,7 @@
+ 
+ definerectanglestate
+ 	:	#(	def:DEFINE (#(NEW (GLOBAL)? SHARED ) | SHARED)? RECTANGLE
+-			id:ID { push(action.defineVariable(#def, #id)); }
++			id:ID { push(action.defineSymbol(RECTANGLE, #def, #id)); }
+ 			(	NOFILL
+ 			|	#(EDGECHARS expression )
+ 			|	#(EDGEPIXELS expression )
+@@ -1592,12 +1592,12 @@
+ 
+ definestreamstate
+ 	:	#(	def:DEFINE (#(NEW (GLOBAL)? SHARED ) | SHARED)? STREAM id:ID state_end )
+-		{ action.addToScope(action.defineVariable(#def, #id)); }
++		{ action.addToScope(action.defineSymbol(STREAM, #def, #id)); }
+ 	;
+ 
+ definesubmenustate
+ 	:	#(	def:DEFINE (#(NEW (GLOBAL)? SHARED ) | SHARED)? SUBMENU
+-			id:ID { push(action.defineVariable(#def, #id)); }
++			id:ID { push(action.defineSymbol(SUBMENU, #def, #id)); }
+ 			(menu_opt)* (menu_list_item)* state_end
+ 		)
+ 		{ action.addToScope(pop()); }
+
+Added: trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Browse.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Browse.java	2005-05-02 18:58:48 UTC (rev 22)
++++ trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Browse.java	2005-05-04 21:17:51 UTC (rev 23)
+@@ -0,0 +1,24 @@
++/* Created on May 3, 2005
++ * Authors: John Green
++ * 
++ * Copyright (c) 2005 Joanju (www.joanju.com)
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
++ */
++package org.prorefactor.widgettypes;
++
++import org.prorefactor.core.TokenTypes;
++import org.prorefactor.treeparser.SymbolScope;
++import org.prorefactor.treeparser.Widget;
++
++
++public class Browse extends Widget {
++
++	public Browse(String name, SymbolScope scope) { super(name, scope); }
++
++	/** Returns TokenTypes.BROWSE. */
++	public int getProgressType() { return TokenTypes.BROWSE; }
++
++}
+
+Added: trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Button.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Button.java	2005-05-02 18:58:48 UTC (rev 22)
++++ trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Button.java	2005-05-04 21:17:51 UTC (rev 23)
+@@ -0,0 +1,24 @@
++/* Created on May 3, 2005
++ * Authors: John Green
++ * 
++ * Copyright (c) 2005 Joanju (www.joanju.com)
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
++ */
++package org.prorefactor.widgettypes;
++
++import org.prorefactor.core.TokenTypes;
++import org.prorefactor.treeparser.SymbolScope;
++import org.prorefactor.treeparser.Widget;
++
++
++public class Button extends Widget {
++
++	public Button(String name, SymbolScope scope) { super(name, scope); }
++
++	/** Returns TokenTypes.BUTTON. */
++	public int getProgressType() { return TokenTypes.BUTTON; }
++
++}
+
+Added: trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Frame.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Frame.java	2005-05-02 18:58:48 UTC (rev 22)
++++ trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Frame.java	2005-05-04 21:17:51 UTC (rev 23)
+@@ -0,0 +1,24 @@
++/* Created on May 3, 2005
++ * Authors: John Green
++ * 
++ * Copyright (c) 2005 Joanju (www.joanju.com)
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
++ */
++package org.prorefactor.widgettypes;
++
++import org.prorefactor.core.TokenTypes;
++import org.prorefactor.treeparser.SymbolScope;
++import org.prorefactor.treeparser.Widget;
++
++
++public class Frame extends Widget {
++
++	public Frame(String name, SymbolScope scope) { super(name, scope); }
++
++	/** Returns TokenTypes.FRAME. */
++	public int getProgressType() { return TokenTypes.FRAME; }
++
++}
+
+Added: trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Image.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Image.java	2005-05-02 18:58:48 UTC (rev 22)
++++ trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Image.java	2005-05-04 21:17:51 UTC (rev 23)
+@@ -0,0 +1,24 @@
++/* Created on May 3, 2005
++ * Authors: John Green
++ * 
++ * Copyright (c) 2005 Joanju (www.joanju.com)
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
++ */
++package org.prorefactor.widgettypes;
++
++import org.prorefactor.core.TokenTypes;
++import org.prorefactor.treeparser.SymbolScope;
++import org.prorefactor.treeparser.Widget;
++
++
++public class Image extends Widget {
++
++	public Image(String name, SymbolScope scope) { super(name, scope); }
++
++	/** Returns TokenTypes.IMAGE. */
++	public int getProgressType() { return TokenTypes.IMAGE; }
++
++}
+
+Added: trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Menu.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Menu.java	2005-05-02 18:58:48 UTC (rev 22)
++++ trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Menu.java	2005-05-04 21:17:51 UTC (rev 23)
+@@ -0,0 +1,24 @@
++/* Created on May 3, 2005
++ * Authors: John Green
++ * 
++ * Copyright (c) 2005 Joanju (www.joanju.com)
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
++ */
++package org.prorefactor.widgettypes;
++
++import org.prorefactor.core.TokenTypes;
++import org.prorefactor.treeparser.SymbolScope;
++import org.prorefactor.treeparser.Widget;
++
++
++public class Menu extends Widget {
++
++	public Menu(String name, SymbolScope scope) { super(name, scope); }
++
++	/** Returns TokenTypes.MENU. */
++	public int getProgressType() { return TokenTypes.MENU; }
++
++}
+
+Added: trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/MenuItem.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/MenuItem.java	2005-05-02 18:58:48 UTC (rev 22)
++++ trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/MenuItem.java	2005-05-04 21:17:51 UTC (rev 23)
+@@ -0,0 +1,24 @@
++/* Created on May 3, 2005
++ * Authors: John Green
++ * 
++ * Copyright (c) 2005 Joanju (www.joanju.com)
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
++ */
++package org.prorefactor.widgettypes;
++
++import org.prorefactor.core.TokenTypes;
++import org.prorefactor.treeparser.SymbolScope;
++import org.prorefactor.treeparser.Widget;
++
++
++public class MenuItem extends Widget {
++
++	public MenuItem(String name, SymbolScope scope) { super(name, scope); }
++
++	/** Returns TokenTypes.MENUITEM. */
++	public int getProgressType() { return TokenTypes.MENUITEM; }
++
++}
+
+Added: trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Rectangle.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Rectangle.java	2005-05-02 18:58:48 UTC (rev 22)
++++ trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Rectangle.java	2005-05-04 21:17:51 UTC (rev 23)
+@@ -0,0 +1,24 @@
++/* Created on May 3, 2005
++ * Authors: John Green
++ * 
++ * Copyright (c) 2005 Joanju (www.joanju.com)
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
++ */
++package org.prorefactor.widgettypes;
++
++import org.prorefactor.core.TokenTypes;
++import org.prorefactor.treeparser.SymbolScope;
++import org.prorefactor.treeparser.Widget;
++
++
++public class Rectangle extends Widget {
++
++	public Rectangle(String name, SymbolScope scope) { super(name, scope); }
++
++	/** Returns TokenTypes.RECTANGLE. */
++	public int getProgressType() { return TokenTypes.RECTANGLE; }
++
++}
+
+Added: trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Submenu.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Submenu.java	2005-05-02 18:58:48 UTC (rev 22)
++++ trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Submenu.java	2005-05-04 21:17:51 UTC (rev 23)
+@@ -0,0 +1,24 @@
++/* Created on May 3, 2005
++ * Authors: John Green
++ * 
++ * Copyright (c) 2005 Joanju (www.joanju.com)
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
++ */
++package org.prorefactor.widgettypes;
++
++import org.prorefactor.core.TokenTypes;
++import org.prorefactor.treeparser.SymbolScope;
++import org.prorefactor.treeparser.Widget;
++
++
++public class Submenu extends Widget {
++
++	public Submenu(String name, SymbolScope scope) { super(name, scope); }
++
++	/** Returns TokenTypes.SUBMENU. */
++	public int getProgressType() { return TokenTypes.SUBMENU; }
++
++}
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000017.html">[Prorefactor-svn] r22 - in trunk: org.prorefactor.core/src/org/prorefactor org.prorefactor.core/src/org/prorefactor/core org.prorefactor.core/src/org/prorefactor/nodetypes org.prorefactor.core/src/org/prorefactor/treeparser org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.doc org.prorefactor.refactor/src/org/prorefactor/refactor/action org.prorefactor.refactor/src/org/prorefactor/refactor/tfnames org.prorefactor.refactor/src/org/prorefactor/treeparser03
+</A></li>
+	<LI>Next message: <A HREF="000019.html">[Prorefactor-svn] r24 - in trunk: org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.refactor/data/pub org.prorefactor.refactor/prorefactor/projects/sports2000/pubs/data/pub org.prorefactor.refactor/prorefactor/projects/sports2000/pubs/data/rename/t01/orig org.prorefactor.refactor/src/org/prorefactor/refactor org.prorefactor.refactor/src/org/prorefactor/refactor/unittest
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#18">[ date ]</a>
+              <a href="thread.html#18">[ thread ]</a>
+              <a href="subject.html#18">[ subject ]</a>
+              <a href="author.html#18">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">More information about the Prorefactor-svn
+mailing list</a><br>
+</body></html>

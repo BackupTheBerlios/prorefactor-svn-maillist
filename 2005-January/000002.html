@@ -1,0 +1,460 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Prorefactor-svn] r5 - trunk/org.prorefactor.doc
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/prorefactor-svn/2005-January/index.html" >
+   <LINK REL="made" HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r5%20-%20trunk/org.prorefactor.doc&In-Reply-To=%3C200501190156.j0J1usxb029071%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000001.html">
+   <LINK REL="Next"  HREF="000003.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Prorefactor-svn] r5 - trunk/org.prorefactor.doc</H1>
+    <B>John Green at BerliOS</B> 
+    <A HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r5%20-%20trunk/org.prorefactor.doc&In-Reply-To=%3C200501190156.j0J1usxb029071%40sheep.berlios.de%3E"
+       TITLE="[Prorefactor-svn] r5 - trunk/org.prorefactor.doc">johnallengreen at sheep.berlios.de
+       </A><BR>
+    <I>Wed Jan 19 02:56:54 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000001.html">[Prorefactor-svn] r4 - in trunk: org.prorefactor.core org.prorefactor.eclipse org.prorefactor.feature org.prorefactor.refactor
+</A></li>
+        <LI>Next message: <A HREF="000003.html">[Prorefactor-svn] r6 - trunk/org.prorefactor.doc
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2">[ date ]</a>
+              <a href="thread.html#2">[ thread ]</a>
+              <a href="subject.html#2">[ subject ]</a>
+              <a href="author.html#2">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: johnallengreen
+Date: 2005-01-19 02:56:41 +0100 (Wed, 19 Jan 2005)
+New Revision: 5
+
+Removed:
+   trunk/org.prorefactor.doc/toc.xml
+Modified:
+   trunk/org.prorefactor.doc/
+   trunk/org.prorefactor.doc/manual.xml
+Log:
+Updated the user manual with ProRefactor.org instead of Joanju.com.
+Updated the user manual with new repository check out instructions,
+and new instructions for working with that checked-out source.
+Added top level directory *.html to the ignore list.
+Removed toc.xml (will be added to ignore list next), since it is a
+generated file.
+
+
+Property changes on: trunk/org.prorefactor.doc
+___________________________________________________________________
+Name: svn:ignore
+   + *.html
+manual.pdf
+
+
+Modified: trunk/org.prorefactor.doc/manual.xml
+===================================================================
+--- trunk/org.prorefactor.doc/manual.xml	2005-01-18 19:32:38 UTC (rev 4)
++++ trunk/org.prorefactor.doc/manual.xml	2005-01-19 01:56:41 UTC (rev 5)
+@@ -973,9 +973,9 @@
+     projects.&lt;/para&gt;
+ 
+     &lt;para&gt;Experience programming in Java with Eclipse's IDE is not necessary,
+-    but since this document glosses over a few details, it would be helpful if
+-    you were at familiar with the workbench menu items and basics of the IDE
+-    such as creating a Java project.&lt;/para&gt;
++    but since these instructions gloss over a few details, it would be helpful
++    if you were familiar with Eclipse basics such as creating a Java
++    project.&lt;/para&gt;
+ 
+     &lt;section&gt;
+       &lt;title&gt;Prepare Your Eclipse Workspace&lt;/title&gt;
+@@ -1093,8 +1093,8 @@
+           &lt;option&gt;-Djava.library.path=&lt;replaceable&gt;/your/path&lt;/replaceable&gt;&lt;/option&gt;
+           to the default VM args, where
+           &lt;filename&gt;&lt;replaceable&gt;/your/path&lt;/replaceable&gt;&lt;/filename&gt; is the
+-          jpplus plug-in directory (which is where
+-          &lt;filename&gt;proparse.dll&lt;/filename&gt; and
++          &lt;filename&gt;org.prorefactor.core&lt;/filename&gt; plug-in directory (which
++          is where &lt;filename&gt;proparse.dll&lt;/filename&gt; and
+           &lt;filename&gt;proparse_jni.dll&lt;/filename&gt; can be found).&lt;/para&gt;
+         &lt;/listitem&gt;
+       &lt;/orderedlist&gt;
+@@ -1105,197 +1105,65 @@
+ 
+       &lt;para&gt;For this option, it is not necessary to have installed ProRefactor
+       into Eclipse. You will need to follow the links from the ProRefactor.org
+-      web site to gain access to the development project and
+-      repository.&lt;/para&gt;
++      web site to gain access to the development project and repository. The
++      project web page has instructions for both anonymous and developer
++      access to the repository.&lt;/para&gt;
+ 
+-      &lt;para&gt;ProRefactor's source is stored in a &lt;ulink
+-      url=&quot;<A HREF="http://subversion.tigris.org/">http://subversion.tigris.org/</A>&quot;&gt;Subversion&lt;/ulink&gt; repository. Here,
+-      we will assume that you will use the &lt;ulink
+-      url=&quot;<A HREF="http://subclipse.tigris.org/">http://subclipse.tigris.org/</A>&quot;&gt;Subclipse&lt;/ulink&gt; plug-in to Eclipse
+-      for Subversion repository access, but other options are available from
+-      the Subversion web site.&lt;/para&gt;
++      &lt;note&gt;
++        &lt;para&gt;There are three top level directories in the ProRefactor
++        repository: &lt;filename&gt;branches&lt;/filename&gt;, &lt;filename&gt;tags&lt;/filename&gt;,
++        and &lt;filename&gt;trunk&lt;/filename&gt;. You only want the
++        &lt;filename&gt;trunk&lt;/filename&gt; directory, not the entire project
++        repository.&lt;/para&gt;
++      &lt;/note&gt;
+ 
+-      &lt;para&gt;XXXXX This all needs to change.&lt;/para&gt;
++      &lt;para&gt;For example, you might use the following Subversion command for
++      checking out the source code anonymously.&lt;/para&gt;
+ 
+-      &lt;variablelist&gt;
+-        &lt;varlistentry&gt;
+-          &lt;term&gt;Step 1. Use Subclipse to Access the Repository&lt;/term&gt;
++      &lt;programlisting&gt;svn checkout <A HREF="svn://svn.berlios.de/prorefactor/trunk&lt;/programlisting">svn://svn.berlios.de/prorefactor/trunk&lt;/programlisting</A>&gt;
+ 
+-          &lt;listitem&gt;
+-            &lt;orderedlist&gt;
+-              &lt;listitem&gt;
+-                &lt;para&gt;First install the Subclipse Eclipse plug-in. The
+-                installation directions are on their web site of course, but
+-                as of this writing, the directions are simply: &lt;quote&gt;Add
+-                <A HREF="http://subclipse.tigris.org/update">http://subclipse.tigris.org/update</A> as an update site in
+-                Eclipse's update manager (which you can find in the Help
+-                menu).&lt;/quote&gt;&lt;/para&gt;
+-              &lt;/listitem&gt;
++      &lt;para&gt;This will create several directories named
++      &lt;filename&gt;org.prorefactor.*&lt;/filename&gt;.&lt;/para&gt;
+ 
+-              &lt;listitem&gt;
+-                &lt;para&gt;Switch to the SVN Repository Exploring
+-                perspective.&lt;/para&gt;
+-              &lt;/listitem&gt;
++      &lt;para&gt;Once you have checked the source out from the repository, you are
++      ready to load that source into Eclipse projects.&lt;/para&gt;
+ 
+-              &lt;listitem&gt;
+-                &lt;para&gt;Right click on the SVN Repository view to get the pop-up
+-                menu, and choose &lt;guimenuitem&gt;New &gt; Repository
+-                Location&lt;/guimenuitem&gt;. Enter the details for your access to
+-                the project repository.&lt;/para&gt;
+-              &lt;/listitem&gt;
+-            &lt;/orderedlist&gt;
+-          &lt;/listitem&gt;
+-        &lt;/varlistentry&gt;
++      &lt;para&gt;From the Eclipse menu, choose &lt;guimenuitem&gt;File &gt; Import...
++      &gt; Existing Project into Workspace&lt;/guimenuitem&gt; for each of the
++      &lt;literal&gt;org.prorefactor&lt;/literal&gt; project directories in the following
++      order: &lt;literal&gt;antlr&lt;/literal&gt;, &lt;literal&gt;core&lt;/literal&gt;,
++      &lt;literal&gt;refactor&lt;/literal&gt;, &lt;literal&gt;eclipse&lt;/literal&gt;,
++      &lt;literal&gt;javadoc&lt;/literal&gt;, &lt;literal&gt;doc&lt;/literal&gt;,
++      &lt;literal&gt;feature&lt;/literal&gt;, &lt;literal&gt;update&lt;/literal&gt;. Eclipse will
++      automatically build (compile) each project as you import it.&lt;/para&gt;
+ 
+-        &lt;varlistentry&gt;
+-          &lt;term&gt;Step 2. Check Out Antlr&lt;/term&gt;
++      &lt;para&gt;In &lt;guilabel&gt;Window &gt; Preferences &gt; Java &gt; Installed
++      JREs&lt;/guilabel&gt;, edit your default JRE. Add:
++      &lt;option&gt;-Djava.library.path=&lt;replaceable&gt;/your/path&lt;/replaceable&gt;&lt;/option&gt;
++      to the default VM args, where &lt;replaceable&gt;/your/path&lt;/replaceable&gt; is
++      your &lt;filename&gt;org.prorefactor.core&lt;/filename&gt; project directory, where
++      &lt;filename&gt;proparse.dll&lt;/filename&gt; and
++      &lt;filename&gt;proparse_jni.dll&lt;/filename&gt; can be found.&lt;/para&gt;
+ 
+-          &lt;listitem&gt;
+-            &lt;orderedlist&gt;
+-              &lt;listitem&gt;
+-                &lt;para&gt;Select &lt;literal&gt;antlr&lt;/literal&gt; in the Subclipse
+-                repository browser. From the pop-up menu, choose
+-                &lt;guimenuitem&gt;Check Out As... &gt; Java Project&lt;/guimenuitem&gt;.
+-                Use separate source and output folders. Click
+-                &lt;guibutton&gt;Finish&lt;/guibutton&gt;. Once you click Finish, there
+-                appears to be a bug in Subversion's project creation; a dialog
+-                appears warning that the resource already exists, delete it?
+-                Just click &lt;guibutton&gt;OK&lt;/guibutton&gt;, and the project will be
+-                created by Subversion. Be patient, as the initial check out
+-                can take a while.&lt;/para&gt;
+-              &lt;/listitem&gt;
++      &lt;para&gt;Now you can run the regression tests. You can navigate to the
++      following two source files, and run them as JUnit tests:&lt;/para&gt;
+ 
+-              &lt;listitem&gt;
+-                &lt;para&gt;Switch to the Java perspective. Open the
+-                &lt;literal&gt;antlr&lt;/literal&gt; project properties dialog. Select
+-                &lt;guilabel&gt;Java Build Path&lt;/guilabel&gt;, and the
+-                &lt;guilabel&gt;Libraries&lt;/guilabel&gt; tab. Click the &lt;guibutton&gt;Add
+-                Library&lt;/guibutton&gt; button, and select &lt;guilabel&gt;Required
+-                Plug-ins&lt;/guilabel&gt;. Click &lt;guibutton&gt;Next&lt;/guibutton&gt; and
+-                then click &lt;guibutton&gt;Finish&lt;/guibutton&gt;. Click
+-                &lt;guibutton&gt;OK&lt;/guibutton&gt; to close the Preferences dialog.
+-                (This is necessary for the rest of the projects, but for the
+-                Antlr project, we only do this to force a change and force the
+-                &lt;filename&gt;.classpath&lt;/filename&gt; file to be written out, so
+-                that the project will compile. There appears to be a bug in
+-                Subclipse in this regard.)&lt;/para&gt;
+-              &lt;/listitem&gt;
++      &lt;itemizedlist&gt;
++        &lt;listitem&gt;
++          &lt;para&gt;&lt;filename&gt;org.prorefactor.core.unittest.AllPRCoreTests.java&lt;/filename&gt;&lt;/para&gt;
++        &lt;/listitem&gt;
+ 
+-              &lt;listitem&gt;
+-                &lt;para&gt;Once you have finished configuring the project, Eclipse
+-                will build the project (Eclipse default behavior is to build
+-                automatically). There will be some warnings, but there should
+-                be no errors.&lt;/para&gt;
+-              &lt;/listitem&gt;
+-            &lt;/orderedlist&gt;
+-          &lt;/listitem&gt;
+-        &lt;/varlistentry&gt;
++        &lt;listitem&gt;
++          &lt;para&gt;&lt;filename&gt;org.prorefactor.refactor.unittest.AllRefactorTests.java&lt;/filename&gt;&lt;/para&gt;
++        &lt;/listitem&gt;
++      &lt;/itemizedlist&gt;
+ 
+-        &lt;varlistentry&gt;
+-          &lt;term&gt;Step 3. Check Out JPPlus&lt;/term&gt;
+-
+-          &lt;listitem&gt;
+-            &lt;orderedlist&gt;
+-              &lt;listitem&gt;
+-                &lt;para&gt;Check out &lt;literal&gt;jpplus&lt;/literal&gt; from the Subversion
+-                repository, again as a Java project.&lt;/para&gt;
+-              &lt;/listitem&gt;
+-
+-              &lt;listitem&gt;
+-                &lt;para&gt;Switch to the Java perspective. Open the
+-                &lt;literal&gt;jpplus&lt;/literal&gt; project properties dialog. Select
+-                &lt;guilabel&gt;Java Build Path&lt;/guilabel&gt;, and the
+-                &lt;guilabel&gt;Libraries&lt;/guilabel&gt; tab. Click the &lt;guibutton&gt;Add
+-                Library&lt;/guibutton&gt; button, and add &lt;guilabel&gt;Required
+-                Plug-ins&lt;/guilabel&gt;.&lt;/para&gt;
+-              &lt;/listitem&gt;
+-
+-              &lt;listitem&gt;
+-                &lt;para&gt;Once you have finished configuring the jpplus project,
+-                Eclipse will build the project (Eclipse default behavior is to
+-                build automatically). There will be some warnings, but there
+-                should be no errors.&lt;/para&gt;
+-              &lt;/listitem&gt;
+-
+-              &lt;listitem&gt;
+-                &lt;para&gt;In &lt;guilabel&gt;Window &gt; Preferences &gt; Java &gt;
+-                Installed JREs&lt;/guilabel&gt;, edit your default JRE. Add:
+-                &lt;option&gt;-Djava.library.path=&lt;replaceable&gt;/your/path&lt;/replaceable&gt;&lt;/option&gt;
+-                to the default VM args, where
+-                &lt;replaceable&gt;/your/path&lt;/replaceable&gt; is your jpplus project
+-                directory, where &lt;filename&gt;proparse.dll&lt;/filename&gt; and
+-                &lt;filename&gt;proparse_jni.dll&lt;/filename&gt; can be found.&lt;/para&gt;
+-              &lt;/listitem&gt;
+-
+-              &lt;listitem&gt;
+-                &lt;para&gt;Now you can run the regression tests. Navigate to
+-                &lt;filename&gt;org.prorefactor.core.unittest.AllJPPlusTests.java&lt;/filename&gt;,
+-                and run it as a JUnit test. There should be no
+-                failures.&lt;/para&gt;
+-              &lt;/listitem&gt;
+-            &lt;/orderedlist&gt;
+-          &lt;/listitem&gt;
+-        &lt;/varlistentry&gt;
+-
+-        &lt;varlistentry&gt;
+-          &lt;term&gt;Step 4. Check Out RefactorPack&lt;/term&gt;
+-
+-          &lt;listitem&gt;
+-            &lt;orderedlist&gt;
+-              &lt;listitem&gt;
+-                &lt;para&gt;Check out &lt;literal&gt;refactorpack&lt;/literal&gt; from the
+-                Subversion repository, again as a Java project.&lt;/para&gt;
+-              &lt;/listitem&gt;
+-
+-              &lt;listitem&gt;
+-                &lt;para&gt;Switch to the Java perspective. Open the refactorpack
+-                project properties dialog. Select &lt;guilabel&gt;Java Build
+-                Path&lt;/guilabel&gt;, and the &lt;guilabel&gt;Libraries&lt;/guilabel&gt; tab.
+-                Click the &lt;guibutton&gt;Add Library&lt;/guibutton&gt; button, and add
+-                &lt;guilabel&gt;Required Plug-ins&lt;/guilabel&gt;. The project should now
+-                build cleanly, and
+-                &lt;filename&gt;org.prorefactor.refactor.unittest.AllRefactorpackTests.java&lt;/filename&gt;
+-                (a JUnit test) should run cleanly.&lt;/para&gt;
+-              &lt;/listitem&gt;
+-            &lt;/orderedlist&gt;
+-          &lt;/listitem&gt;
+-        &lt;/varlistentry&gt;
+-
+-        &lt;varlistentry&gt;
+-          &lt;term&gt;Step 5. Check Out ProRefactor&lt;/term&gt;
+-
+-          &lt;listitem&gt;
+-            &lt;orderedlist&gt;
+-              &lt;listitem&gt;
+-                &lt;para&gt;Check out the &lt;literal&gt;prorefactor&lt;/literal&gt; project
+-                from the Subversion repository, again as a Java
+-                project.&lt;/para&gt;
+-              &lt;/listitem&gt;
+-
+-              &lt;listitem&gt;
+-                &lt;para&gt;Switch to the Java perspective. Open the prorefactor
+-                project properties dialog. Select &lt;guilabel&gt;Java Build
+-                Path&lt;/guilabel&gt;, and the &lt;guilabel&gt;Libraries&lt;/guilabel&gt; tab.
+-                Click the &lt;guibutton&gt;Add Library&lt;/guibutton&gt; button, and add
+-                &lt;guilabel&gt;Required Plug-ins&lt;/guilabel&gt;. You don't need to
+-                select any projects individually - you can just click
+-                &lt;guibutton&gt;Finish&lt;/guibutton&gt;. The project should now build
+-                cleanly.&lt;/para&gt;
+-              &lt;/listitem&gt;
+-
+-              &lt;listitem&gt;
+-                &lt;para&gt;To launch the Run-time Workbench, choose
+-                &lt;guimenuitem&gt;Run &gt; Run As &gt; Run-time
+-                Workbench&lt;/guimenuitem&gt;. From the Run-time Workbench, you
+-                should be able to select the ProRefactor perspective, create
+-                test projects, and launch the ProRefactor menu actions. Here
+-                is where you would test any changes or additions that you make
+-                to ProRefactor or your own plug-ins.&lt;/para&gt;
+-              &lt;/listitem&gt;
+-            &lt;/orderedlist&gt;
+-          &lt;/listitem&gt;
+-        &lt;/varlistentry&gt;
+-      &lt;/variablelist&gt;
++      &lt;para&gt;To launch the Run-time Workbench, choose &lt;guimenuitem&gt;Run &gt; Run
++      As &gt; Run-time Workbench&lt;/guimenuitem&gt;. From the Run-time Workbench,
++      you should be able to select the ProRefactor perspective, create test
++      projects, and launch the ProRefactor menu actions. This is where you
++      would test any changes or additions that you make to ProRefactor or your
++      own plug-ins.&lt;/para&gt;
+     &lt;/section&gt;
+ 
+     &lt;section&gt;
+@@ -1325,7 +1193,7 @@
+ 
+       &lt;para&gt;In the &lt;guilabel&gt;Classpath&lt;/guilabel&gt; tab, choose the
+       &lt;guibutton&gt;Add Folders...&lt;/guibutton&gt; button, and add the
+-      &lt;filename&gt;jpplus/bin&lt;/filename&gt; folder.&lt;/para&gt;
++      &lt;filename&gt;org.prorefactor.core/bin&lt;/filename&gt; folder.&lt;/para&gt;
+ 
+       &lt;para&gt;Leave the JRE set to launch a separate JRE. Running from the same
+       JRE as the workspace does not set up the class path correctly for our
+@@ -1768,8 +1636,8 @@
+               bug could cause some field names to be missed when writing your
+               proparse.schema file. (Needed &quot;DICTDB&quot; prefix on _field in the
+               FOR loops, otherwise it missed some records. I don't know why.)
+-              See Project Configuration or jpplus/4gl/api for the updated two
+-              schemadump program files.&lt;/para&gt;
++              See Project Configuration for the updated two schemadump program
++              files.&lt;/para&gt;
+             &lt;/listitem&gt;
+ 
+             &lt;listitem&gt;
+
+Deleted: trunk/org.prorefactor.doc/toc.xml
+===================================================================
+--- trunk/org.prorefactor.doc/toc.xml	2005-01-18 19:32:38 UTC (rev 4)
++++ trunk/org.prorefactor.doc/toc.xml	2005-01-19 01:56:41 UTC (rev 5)
+@@ -1,73 +0,0 @@
+-&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; standalone=&quot;no&quot;?&gt;
+-&lt;toc label=&quot;Joanju ProRefactor&#8482;&quot; topic=&quot;index.html&quot;&gt;
+-  &lt;topic label=&quot;Introduction&quot; href=&quot;ch01.html&quot;&gt;
+-    &lt;topic label=&quot;Computer Assisted Refactoring&quot; href=&quot;ch01s01.html&quot;/&gt;
+-  &lt;/topic&gt;
+-  &lt;topic label=&quot;Getting Started&quot; href=&quot;ch02.html&quot;&gt;
+-    &lt;topic label=&quot;Installing ProRefactor&quot; href=&quot;ch02s01.html&quot;&gt;
+-      &lt;topic label=&quot;Java&quot; href=&quot;ch02s01.html#id4713314&quot;/&gt;
+-      &lt;topic label=&quot;Eclipse&quot; href=&quot;ch02s01.html#id4712205&quot;/&gt;
+-      &lt;topic label=&quot;ProRefactor&quot; href=&quot;ch02s01.html#id4712240&quot;/&gt;
+-      &lt;topic label=&quot;Linux and Unixes&quot; href=&quot;ch02s01.html#id4712259&quot;/&gt;
+-      &lt;topic label=&quot;All Done&quot; href=&quot;ch02s01.html#id4712307&quot;/&gt;
+-    &lt;/topic&gt;
+-    &lt;topic label=&quot;Working with Projects&quot; href=&quot;ch02s02.html&quot;&gt;
+-      &lt;topic label=&quot;Project Nature&quot; href=&quot;ch02s02.html#id4712341&quot;/&gt;
+-      &lt;topic label=&quot;Create a ProRefactor Project&quot; href=&quot;ch02s02.html#id4712375&quot;/&gt;
+-      &lt;topic label=&quot;Project Configuration&quot; href=&quot;ch02s02.html#sec_proj_config&quot;/&gt;
+-    &lt;/topic&gt;
+-  &lt;/topic&gt;
+-  &lt;topic label=&quot;User Interface&quot; href=&quot;cha_user_interface.html&quot;&gt;
+-    &lt;topic label=&quot;Eclipse Workbench&quot; href=&quot;ch03s01.html&quot;/&gt;
+-    &lt;topic label=&quot;Menus&quot; href=&quot;ch03s02.html&quot;/&gt;
+-    &lt;topic label=&quot;Operating on Many Resources&quot; href=&quot;ch03s03.html&quot;/&gt;
+-    &lt;topic label=&quot;Expand and Contract Selection&quot; href=&quot;ch03s04.html&quot;/&gt;
+-    &lt;topic label=&quot;Parse&quot; href=&quot;ch03s05.html&quot;/&gt;
+-    &lt;topic label=&quot;Output Directory&quot; href=&quot;sec_output_directory.html&quot;/&gt;
+-  &lt;/topic&gt;
+-  &lt;topic label=&quot;Catalog of Refactorings&quot; href=&quot;ch04.html&quot;&gt;
+-    &lt;topic label=&quot;Names Refactoring (tables and fields)&quot; href=&quot;ch04s01.html&quot;&gt;
+-      &lt;topic label=&quot;Usage&quot; href=&quot;ch04s01.html#id4775079&quot;/&gt;
+-      &lt;topic label=&quot;Example Output&quot; href=&quot;ch04s01.html#id4775142&quot;/&gt;
+-    &lt;/topic&gt;
+-    &lt;topic label=&quot;NO-UNDO Refactoring&quot; href=&quot;ch04s02.html&quot;&gt;
+-      &lt;topic label=&quot;Usage&quot; href=&quot;ch04s02.html#id4775208&quot;/&gt;
+-      &lt;topic label=&quot;Features&quot; href=&quot;ch04s02.html#id4775261&quot;/&gt;
+-    &lt;/topic&gt;
+-    &lt;topic label=&quot;Rename Schema Refactoring&quot; href=&quot;ch04s03.html&quot;&gt;
+-      &lt;topic label=&quot;Usage&quot; href=&quot;ch04s03.html#id4775412&quot;/&gt;
+-      &lt;topic label=&quot;Features&quot; href=&quot;ch04s03.html#id4775495&quot;/&gt;
+-      &lt;topic label=&quot;Caveats&quot; href=&quot;ch04s03.html#id4775529&quot;/&gt;
+-      &lt;topic label=&quot;Example&quot; href=&quot;ch04s03.html#id4775566&quot;/&gt;
+-    &lt;/topic&gt;
+-    &lt;topic label=&quot;SUBSTITUTE Refactoring&quot; href=&quot;ch04s04.html&quot;/&gt;
+-    &lt;topic label=&quot;Qualify Fields Refactoring&quot; href=&quot;ch04s05.html&quot;&gt;
+-      &lt;topic label=&quot;Usage&quot; href=&quot;ch04s05.html#id4775790&quot;/&gt;
+-      &lt;topic label=&quot;Features&quot; href=&quot;ch04s05.html#id4775853&quot;/&gt;
+-    &lt;/topic&gt;
+-  &lt;/topic&gt;
+-  &lt;topic label=&quot;Extending ProRefactor&quot; href=&quot;ch05.html&quot;&gt;
+-    &lt;topic label=&quot;Prepare Your Eclipse Workspace&quot; href=&quot;ch05s01.html&quot;/&gt;
+-    &lt;topic label=&quot;Option One: Import ProRefactor Plug-in Source&quot; href=&quot;sec_import_source.html&quot;/&gt;
+-    &lt;topic label=&quot;Option Two: Checkout ProRefactor from Subversion&quot; href=&quot;sec_checkout_source.html&quot;/&gt;
+-    &lt;topic label=&quot;Building Tree Parsers&quot; href=&quot;ch05s04.html&quot;/&gt;
+-    &lt;topic label=&quot;Your Own Plugin&quot; href=&quot;ch05s05.html&quot;&gt;
+-      &lt;topic label=&quot;What Next?&quot; href=&quot;ch05s05.html#id4777262&quot;/&gt;
+-    &lt;/topic&gt;
+-  &lt;/topic&gt;
+-  &lt;topic label=&quot;Program Code Listings&quot; href=&quot;app_program_code_listings.html&quot;&gt;
+-    &lt;topic label=&quot;configdump.p&quot; href=&quot;sec_configdump.html&quot;/&gt;
+-    &lt;topic label=&quot;schemadump.p&quot; href=&quot;sec_schemadump.html&quot;/&gt;
+-  &lt;/topic&gt;
+-  &lt;topic label=&quot;Troubleshooting&quot; href=&quot;apb.html&quot;&gt;
+-    &lt;topic label=&quot;Eclipse shuts down when parsing&quot; href=&quot;apbs01.html&quot;&gt;
+-      &lt;topic label=&quot;Summary&quot; href=&quot;apbs01.html#id4711266&quot;/&gt;
+-      &lt;topic label=&quot;Details&quot; href=&quot;apbs01.html#id4711280&quot;/&gt;
+-    &lt;/topic&gt;
+-  &lt;/topic&gt;
+-  &lt;topic label=&quot;Links&quot; href=&quot;app_links.html&quot;&gt;
+-    &lt;topic label=&quot;Directory Diff&quot; href=&quot;sec_directory_diff.html&quot;/&gt;
+-    &lt;topic label=&quot;Prolint&quot; href=&quot;sec_prolint.html&quot;/&gt;
+-  &lt;/topic&gt;
+-  &lt;topic label=&quot;Release Notes&quot; href=&quot;app_rel_notes.html&quot;/&gt;
+-&lt;/toc&gt;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000001.html">[Prorefactor-svn] r4 - in trunk: org.prorefactor.core org.prorefactor.eclipse org.prorefactor.feature org.prorefactor.refactor
+</A></li>
+	<LI>Next message: <A HREF="000003.html">[Prorefactor-svn] r6 - trunk/org.prorefactor.doc
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2">[ date ]</a>
+              <a href="thread.html#2">[ thread ]</a>
+              <a href="subject.html#2">[ subject ]</a>
+              <a href="author.html#2">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">More information about the Prorefactor-svn
+mailing list</a><br>
+</body></html>

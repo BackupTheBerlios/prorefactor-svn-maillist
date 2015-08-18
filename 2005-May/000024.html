@@ -1,0 +1,2759 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Prorefactor-svn] r28 - in trunk: org.prorefactor.core org.prorefactor.core/src/org/prorefactor/core org.prorefactor.core/src/org/prorefactor/nodetypes org.prorefactor.core/src/org/prorefactor/treeparserbase org.prorefactor.lib org.prorefactor.lib/jakarta org.prorefactor.lib/jakarta/commons-lang org.prorefactor.refactor org.prorefactor.refactor/src/org/prorefactor/refactor org.prorefactor.refactor/src/org/prorefactor/refactor/unittest
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/prorefactor-svn/2005-May/index.html" >
+   <LINK REL="made" HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r28%20-%20in%20trunk%3A%20org.prorefactor.core%20org.prorefactor.core/src/org/prorefactor/core%20org.prorefactor.core/src/org/prorefactor/nodetypes%20org.prorefactor.core/src/org/prorefactor/treeparserbase%20org.prorefactor.lib%20org.prorefactor.lib/jakarta%20org.prorefactor.lib/jakarta/commons-lang%20org.prorefactor.refactor%20org.prorefactor.refactor/src/org/prorefactor/refactor%20org.prorefactor.refactor/src/org/prorefactor/refactor/unittest&In-Reply-To=%3C200505132138.j4DLc0nS029801%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000022.html">
+   <LINK REL="Next"  HREF="000023.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Prorefactor-svn] r28 - in trunk: org.prorefactor.core org.prorefactor.core/src/org/prorefactor/core org.prorefactor.core/src/org/prorefactor/nodetypes org.prorefactor.core/src/org/prorefactor/treeparserbase org.prorefactor.lib org.prorefactor.lib/jakarta org.prorefactor.lib/jakarta/commons-lang org.prorefactor.refactor org.prorefactor.refactor/src/org/prorefactor/refactor org.prorefactor.refactor/src/org/prorefactor/refactor/unittest</H1>
+    <B>John Green at BerliOS</B> 
+    <A HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r28%20-%20in%20trunk%3A%20org.prorefactor.core%20org.prorefactor.core/src/org/prorefactor/core%20org.prorefactor.core/src/org/prorefactor/nodetypes%20org.prorefactor.core/src/org/prorefactor/treeparserbase%20org.prorefactor.lib%20org.prorefactor.lib/jakarta%20org.prorefactor.lib/jakarta/commons-lang%20org.prorefactor.refactor%20org.prorefactor.refactor/src/org/prorefactor/refactor%20org.prorefactor.refactor/src/org/prorefactor/refactor/unittest&In-Reply-To=%3C200505132138.j4DLc0nS029801%40sheep.berlios.de%3E"
+       TITLE="[Prorefactor-svn] r28 - in trunk: org.prorefactor.core org.prorefactor.core/src/org/prorefactor/core org.prorefactor.core/src/org/prorefactor/nodetypes org.prorefactor.core/src/org/prorefactor/treeparserbase org.prorefactor.lib org.prorefactor.lib/jakarta org.prorefactor.lib/jakarta/commons-lang org.prorefactor.refactor org.prorefactor.refactor/src/org/prorefactor/refactor org.prorefactor.refactor/src/org/prorefactor/refactor/unittest">johnallengreen at sheep.berlios.de
+       </A><BR>
+    <I>Fri May 13 23:38:00 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000022.html">[Prorefactor-svn] r27 - in trunk/org.prorefactor.lib/jakarta: . commons-io
+</A></li>
+        <LI>Next message: <A HREF="000023.html">[Prorefactor-svn] r29 - in trunk/org.prorefactor.refactor/prorefactor/projects/sports2000/pubs/data: pub rename/t01/orig
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#24">[ date ]</a>
+              <a href="thread.html#24">[ thread ]</a>
+              <a href="subject.html#24">[ subject ]</a>
+              <a href="author.html#24">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: johnallengreen
+Date: 2005-05-13 23:37:59 +0200 (Fri, 13 May 2005)
+New Revision: 28
+
+Added:
+   trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/ProparseDirectiveNode.java
+   trunk/org.prorefactor.lib/jakarta/commons-lang/
+   trunk/org.prorefactor.lib/jakarta/commons-lang/LICENSE.txt
+   trunk/org.prorefactor.lib/jakarta/commons-lang/RELEASE-NOTES.txt
+   trunk/org.prorefactor.lib/jakarta/commons-lang/commons-lang.jar
+   trunk/org.prorefactor.lib/jakarta/commons-lang/src.zip
+Modified:
+   trunk/org.prorefactor.core/.classpath
+   trunk/org.prorefactor.core/plugin.xml
+   trunk/org.prorefactor.core/src/org/prorefactor/core/IConstants.java
+   trunk/org.prorefactor.core/src/org/prorefactor/core/JPNode.java
+   trunk/org.prorefactor.core/src/org/prorefactor/core/TokenTypes.java
+   trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/BlockNode.java
+   trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/FieldRefNode.java
+   trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/NodeFactory.java
+   trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/RecordNameNode.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/JPTreeParserTokenTypes.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/JPTreeParserTokenTypes.txt
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/ProParserTokenTypes.txt
+   trunk/org.prorefactor.lib/.classpath
+   trunk/org.prorefactor.lib/plugin.xml
+   trunk/org.prorefactor.refactor/.classpath
+   trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/PUB.java
+   trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/unittest/PUBTest.java
+Log:
+Updated the libraries with more recent Jakarta Commons-Lang.
+Added support for storing the syntax tree in the PUB files.
+Changed TokenTypes to a static class instead of an interface. Added several static methods to it.
+
+
+Modified: trunk/org.prorefactor.core/.classpath
+===================================================================
+--- trunk/org.prorefactor.core/.classpath	2005-05-06 21:01:36 UTC (rev 27)
++++ trunk/org.prorefactor.core/.classpath	2005-05-13 21:37:59 UTC (rev 28)
+@@ -1,7 +1,7 @@
+ &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+ &lt;classpath&gt;
+-	&lt;classpathentry kind=&quot;src&quot; path=&quot;src/&quot;/&gt;
+-	&lt;classpathentry kind=&quot;con&quot; path=&quot;org.eclipse.pde.core.requiredPlugins&quot;/&gt;
++	&lt;classpathentry kind=&quot;src&quot; path=&quot;src&quot;/&gt;
++	&lt;classpathentry exported=&quot;true&quot; kind=&quot;con&quot; path=&quot;org.eclipse.pde.core.requiredPlugins&quot;/&gt;
+ 	&lt;classpathentry kind=&quot;con&quot; path=&quot;org.eclipse.jdt.launching.JRE_CONTAINER&quot;/&gt;
+ 	&lt;classpathentry kind=&quot;output&quot; path=&quot;bin&quot;/&gt;
+ &lt;/classpath&gt;
+
+Modified: trunk/org.prorefactor.core/plugin.xml
+===================================================================
+--- trunk/org.prorefactor.core/plugin.xml	2005-05-06 21:01:36 UTC (rev 27)
++++ trunk/org.prorefactor.core/plugin.xml	2005-05-13 21:37:59 UTC (rev 28)
+@@ -17,6 +17,7 @@
+    &lt;requires&gt;
+       &lt;import plugin=&quot;org.junit&quot; export=&quot;true&quot;/&gt;
+       &lt;import plugin=&quot;org.prorefactor.antlr&quot; export=&quot;true&quot;/&gt;
++      &lt;import plugin=&quot;org.prorefactor.lib&quot; export=&quot;true&quot;/&gt;
+    &lt;/requires&gt;
+ 
+ &lt;/plugin&gt;
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/core/IConstants.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/core/IConstants.java	2005-05-06 21:01:36 UTC (rev 27)
++++ trunk/org.prorefactor.core/src/org/prorefactor/core/IConstants.java	2005-05-13 21:37:59 UTC (rev 28)
+@@ -106,5 +106,8 @@
+ 	/** A scanner token which is scheduled to be cut from the token list */
+ 	public int TO_BE_CUT = 11010;
+ 
++	
++	// Joanju uses 49000+ for scratch and otherwise non-persistent attributes.
+ 
++
+ } // interface IConstants
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/core/JPNode.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/core/JPNode.java	2005-05-06 21:01:36 UTC (rev 27)
++++ trunk/org.prorefactor.core/src/org/prorefactor/core/JPNode.java	2005-05-13 21:37:59 UTC (rev 28)
+@@ -1,32 +1,29 @@
+-/**
+- * JPNode
+- * @author John Green
+- * October, 2002
+- * www.joanju.com
++/** Created: October, 2002
++ * Authors: John Green
+  * 
+- * Copyright (c) 2002-2004 Joanju Limited.
++ * Copyright (c) 2002-2005 Joanju (www.joanju.com)
+  * All rights reserved. This program and the accompanying materials 
+  * are made available under the terms of the Eclipse Public License v1.0
+  * which accompanies this distribution, and is available at
+  * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
+- * 
+  */
+ 
+ package org.prorefactor.core;
+ 
+ 
+-import com.joanju.ProparseLdr;
++import java.util.ArrayList;
++import java.util.HashMap;
+ 
++import org.prorefactor.nodetypes.NodeFactory;
++
+ import antlr.BaseAST;
+ import antlr.Token;
+ import antlr.collections.AST;
+ 
+-import java.util.HashMap;
++import com.joanju.ProparseLdr;
+ 
+-import org.prorefactor.nodetypes.NodeFactory;
+ 
+ 
+-
+ /**
+  * Extension to antlr.BaseAST, which allows us to extract an
+  * external &quot;antlr&quot; AST view of a Proparse AST, which we can
+@@ -37,6 +34,8 @@
+  */
+ public class JPNode extends BaseAST implements IJPNode {
+ 
++	/** For creating from persistent storage */
++	public JPNode() { }
+ 
+ 	public JPNode(int handle) {
+ 		nodeHandle = handle;
+@@ -62,12 +61,11 @@
+ 	/** Just an Integer object for the int IConstants.CONTEXT_QUALIFIER */
+ 	public static final Integer CONTEXT_QUALIFIER = new Integer(IConstants.CONTEXT_QUALIFIER);
+ 
++	
+ 	/** A valid value for setLink() and getLink() */
+ 	public static final Integer SYMBOL = new Integer(-210);
+-
+ 	/** A valid value for setLink() and getLink() */
+ 	public static final Integer TETNode = new Integer(-211);
+-
+ 	/** A valid value for setLink() and getLink().
+ 	 * Link to a BufferScope object, set by tp01 for RECORD_NAME nodes
+ 	 * and for Field_ref nodes for Field (not for Variable).
+@@ -76,14 +74,16 @@
+ 	 * @see #BUFFERSYMBOL
+ 	 */
+ 	public static final Integer BUFFERSCOPE = new Integer(-212);
+-
+ 	/** A valid value for setLink() and getLink().
+ 	 * You should not use this directly. Only JPNodes of subtype BlockNode
+ 	 * will have this set, so use BlockNode.getBlock instead.
+ 	 * @see org.prorefactor.nodetypes.BlockNode.
+ 	 */
+ 	public static final Integer BLOCK = new Integer(-214);
++	/** A valid value for setLink() and getLink() */
++	private static final Integer COMMENTS = new Integer(-215);
+ 
++	
+ 	static private ProparseLdr parser = ProparseLdr.getInstance();
+ 
+ 	private int column = -1;
+@@ -114,6 +114,11 @@
+ 		 * Note that if &quot;disconnected&quot;, this flag is meaningless.
+ 		 */
+ 		public boolean storePosition = false;
++		/** Store the comments?
++		 * By default, a &quot;disconnected&quot; tree does not store comments.
++		 * @see JPNode#getComments().
++		 */
++		public boolean storeComments = false;
+ 	} // class TreeConfig
+ 
+ 
+@@ -148,9 +153,9 @@
+ 
+ 
+ 	//// Member funcs
+-
+-
+-
++	
++	
++	
+ 	/** Get an attribute from proparse if connected, from JPNode if disconnected */
+ 	public int attrGet(int key) {
+ 		if (nodeHandle!=0) return parser.attrGetI(nodeHandle, key);
+@@ -211,6 +216,8 @@
+ 			filename = config.filenames[fileIndex];
+ 			line = parser.getNodeLine(nodeHandle);
+ 			column = parser.getNodeColumn(nodeHandle);
++			if (config.storeComments) setComments(getComments());
++			// And, the final step in making this node &quot;disconnected&quot;...
+ 			nodeHandle = 0;
+ 		} else if (config.storePosition) {  // storePosition is meaningless if disconnected
+ 			fileIndex = parser.getNodeFileIndex(nodeHandle);
+@@ -261,16 +268,16 @@
+ 	/**
+ 	 * First Natural Child is found by repeating firstChild() until a natural node is found.
+ 	 * If the start node is a natural node, then it is returned.
+-	 * The test for &quot;natural&quot; node is line number. Synthetic node line numbers == 0.
+ 	 * Note: This is very different than Prolint's &quot;NextNaturalNode&quot; in lintsuper.p.
++	 * @see TokenTypes#isNatural(int)
+ 	 */
+ 	public JPNode firstNaturalChild() {
+-		if (getLine()&gt;0) return this;
+-		for (JPNode n = (JPNode)getFirstChild(); n!=null; n = (JPNode)n.getFirstChild()) {
+-			if (n.getLine()&gt;0) return n;
++		if (TokenTypes.isNatural(getType())) return this;
++		for (JPNode n = firstChild(); n!=null; n = n.firstChild()) {
++			if (TokenTypes.isNatural(n.getType())) return n;
+ 		}
+ 		return null;
+-	} // firstNaturalChild()
++	}
+ 
+ 
+ 
+@@ -278,6 +285,42 @@
+ 		if (column == -1) return parser.getNodeColumn(nodeHandle);
+ 		return column;
+ 	}
++	
++	
++	
++	/** Get the comments that precede this node.
++	 * Gets the comments from Proparse if &quot;connected&quot;, otherwise gets
++	 * the comments stored within this node object.
++	 * CAUTION: We want to know if line breaks exist between comments and nodes,
++	 * and if they exist between consecutive comments. To preserve that information,
++	 * the String returned here may have &quot;\n&quot; in front of the first comment,
++	 * may have &quot;\n&quot; separating comments, and may have &quot;\n&quot; appended to the
++	 * last comment. We do not preserve the number of newlines, nor do we
++	 * preserve any other whitespace.
++	 * @return null if no comments.
++	 */
++	public String getComments() {
++		if (nodeHandle==0) return (String) getLink(COMMENTS);
++		StringBuffer buff = new StringBuffer();
++		boolean newline = false;
++		for (	int isAvail = parser.hiddenGetFirst(nodeHandle)
++			;	isAvail&gt;0
++			;	isAvail=parser.hiddenGetNext()
++			) {
++			if (	parser.hiddenGetType().equals(&quot;WS&quot;)
++				&amp;&amp;	parser.hiddenGetText().indexOf('\n') &gt; -1
++				)
++				newline = true;
++			if (parser.hiddenGetType().equals(&quot;COMMENT&quot;)) {
++				if (newline) buff.append(&quot;\n&quot;);
++				buff.append(parser.hiddenGetText());
++			}
++		}
++		if (buff.length()==0) return null;
++		// Trailine newline(s)?
++		if (newline) buff.append(&quot;\n&quot;);
++		return buff.toString();
++	}
+ 
+ 
+ 
+@@ -332,15 +375,34 @@
+ 	public int getState2() {
+ 		return attrGet(JPNode.STATE2);
+ 	}
++	
++	
++	/** Every JPNode subtype has its own index. Used for persistent storage. */
++	public int getSubtypeIndex() { return 1; }
+ 
+ 
+ 
+ 	private void initMap() {
+ 		if (attrMap==null) attrMap = new HashMap();
+ 	}
+-
+-
+-
++	
++	
++	
++	/** Is this a natural node (from real source text)?
++	 * If not, then it is a synthetic node, added just for tree structure.
++	 * @see TokenTypes#isNatural(int)
++	 */
++	public boolean isNatural() { return TokenTypes.isNatural(type); }
++	
++	
++	
++	/** Does this node have the Proparse STATEHEAD attribute? */
++	public boolean isStateHead() {
++		return attrGet(IConstants.STATEHEAD) == IConstants.TRUE;
++	}
++	
++	
++	
+ 	/** Return the last immediate child (no grandchildren). */
+ 	public JPNode lastChild() {
+ 		JPNode ret = firstChild();
+@@ -384,8 +446,38 @@
+ 		}
+ 		throw new AssertionError(&quot;JPNode.prevNode() failed - corrupt tree?&quot;);
+ 	}
++	
++	
++	
++	/** Get an array of all descendant nodes (including this node) of a given type.
++	 * Same idea as Proparse's &quot;query&quot; functions.
++	 */
++	public JPNode [] query(int type) {
++		ArrayList list = new ArrayList();
++		if (this.type == type) list.add(this);
++		queryHelper(this.firstChild(), type, list);
++		JPNode [] ret = new JPNode[list.size()];
++		list.toArray(ret);
++		return ret;
++	}
++	private static void queryHelper(JPNode node, int type, ArrayList list) {
++		if (node==null) return;
++		if (node.type == type) list.add(node);
++		queryHelper(node.firstChild(), type, list);
++		queryHelper(node.nextSibling(), type, list);
++	}
+ 
+ 
++
++	/** Set the comments preceding this node.
++	 * CAUTION: Does not change any values in Proparse. Only use this
++	 * if the JPNode tree is &quot;disconnected&quot;, because getComments returns
++	 * the comments from the &quot;hidden tokens&quot; in Proparse in &quot;connected&quot; mode.
++	 */
++	public void setComments(String comments) { setLink(COMMENTS, comments); }
++
++	
++
+ 	/** @see #getLink(Integer) */
+ 	public void setLink(Integer key, Object value) {
+ 		if (attrMap==null) initMap(); 
+@@ -394,9 +486,9 @@
+ 
+ 
+ 
+-	private void setParentInChildren() {
+-		for (AST child = getFirstChild(); child!=null; child = child.getNextSibling()) {
+-			((JPNode)child).parent = this;
++	public void setParentInChildren() {
++		for (JPNode child = firstChild(); child!=null; child = child.nextSibling()) {
++			child.parent = this;
+ 		}
+ 	}
+ 
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/core/TokenTypes.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/core/TokenTypes.java	2005-05-06 21:01:36 UTC (rev 27)
++++ trunk/org.prorefactor.core/src/org/prorefactor/core/TokenTypes.java	2005-05-13 21:37:59 UTC (rev 28)
+@@ -2,7 +2,7 @@
+  * Created on Nov 20, 2003
+  * John Green
+  *
+- * Copyright (C) 2003 Joanju Limited
++ * Copyright (C) 2003, 2005 Joanju (www.joanju.com)
+  * All rights reserved. This program and the accompanying materials 
+  * are made available under the terms of the Eclipse Public License v1.0
+  * which accompanies this distribution, and is available at
+@@ -12,10 +12,1054 @@
+ 
+ import org.prorefactor.treeparserbase.JPTreeParserTokenTypes;
+ 
++import com.joanju.ProparseLdr;
++
+ /**
+- * Ick. This interface is just a hack to get us a nice short
+- * interface to the token types that exist in the tree parsers.
+- * I don't know of a more elegant way.
++ * This static class provides information about Proparse's token types
++ * as well as all of the static, final names for each token type.
+  */
+-public interface TokenTypes extends JPTreeParserTokenTypes {
++public class TokenTypes implements JPTreeParserTokenTypes {
++
++	private static TokenInfo [] allTokens = new TokenInfo[Last_Token_Number + 1];
++	private static ProparseLdr parser = ProparseLdr.getInstance();
++	
++	private static class TokenInfo {
++		boolean isNatural = true;
++		String keywordText = null;
++	}
++
++	static
++	{
++		for (int i = 0; i &lt;= Last_Token_Number; i++) {
++			String typeName = parser.getTokenTypeName(i);
++			if (typeName.length()==0) continue;
++			TokenInfo info = new TokenInfo();
++			info.isNatural = typeName.equals(typeName.toUpperCase());
++			allTokens[i] = info;
++		}
++		
++		// Deal with Proparse's 10877/1087 token number issue.
++		TokenInfo info = new TokenInfo();
++		info.isNatural = true;
++		allTokens[1087] = info;
++
++		assignKeywordsText();
++	}
++	
++	private static TokenInfo getInfo(int tokenType) {
++		// One stupid mistake in Proparse's token numbers causes us headaches.
++		// Is an issue in Proparse 2.2b01, hopefully will be fixed next release.
++		if (tokenType == 10877) return allTokens[1087];
++		if (tokenType &lt; 1 || tokenType &gt; Last_Token_Number) return null;
++		return allTokens[tokenType];
++	}
++	
++	/** For integer token types that represent a keyword in the
++	 * syntax, this returns the full keyword text/name.
++	 * @return null if invalid token type or is not a keyword according to Proparse.
++	 * @see #isKeyword(int)
++	 */
++	public static String getKeywordText(int tokenType) {
++		TokenInfo info = getInfo(tokenType);
++		if (info==null) return null;
++		return info.keywordText;
++	}
++
++	/** Get the token name for this token type.
++	 * Uses ProparseLdr.getTokenTypeName(int tokenType), but returns
++	 * null if the input type is invalid.
++	 * @return null if invalid token type.
++	 * @see ProparseLdr#getTokenTypeName(int)
++	 */
++	public static String getTokenName(int tokenType) {
++		TokenInfo info = getInfo(tokenType);
++		if (info==null) return null;
++		return parser.getTokenTypeName(tokenType);
++	}
++	
++	/** A &quot;natural&quot; node is one that represents a real token in the
++	 * original source code. A &quot;synthetic&quot; token is one that was created
++	 * by the parser just for syntax tree organization.
++	 * By convention, a natural node has a node name that is ALLCAPS, and
++	 * a synthetic node has a node name which is Mixed_Case.
++	 */
++	public static boolean isNatural(int tokenType) {
++		TokenInfo info = getInfo(tokenType);
++		if (info==null) return false;
++		return info.isNatural;
++	}
++	
++	/** Proparse tracks keywords that are part of the syntax, but does not
++	 * track keywords that are only attribute/method names. DISPLAY is
++	 * a keyword type, ID is not.
++	 * See Proparse's node attribute documentation for NODE_TYPE_KEYWORD.
++	 */
++	public static boolean isKeyword(int tokenType) {
++		TokenInfo info = getInfo(tokenType);
++		if (info==null) return false;
++		return (info.keywordText != null);
++	}
++	
++	/** Is the integer a valid token type? */
++	public static boolean isValid(int tokenType) {
++		return (getInfo(tokenType) != null);
++	}
++
++	
++	private static void assignKeywordsText() {
++		allTokens[AACBIT].keywordText = &quot;_CBIT&quot;;
++		allTokens[AACONTROL].keywordText = &quot;_CONTROL&quot;;
++		allTokens[AALIST].keywordText = &quot;_LIST&quot;;
++		allTokens[AAMEMORY].keywordText = &quot;_MEMORY&quot;;
++		allTokens[AAMSG].keywordText = &quot;_MSG&quot;;
++		allTokens[AAPCONTROL].keywordText = &quot;_PCONTROL&quot;;
++		allTokens[AASERIAL].keywordText = &quot;_SERIAL-NUM&quot;;
++		allTokens[AATRACE].keywordText = &quot;_TRACE&quot;;
++		allTokens[ABSOLUTE].keywordText = &quot;ABSOLUTE&quot;;
++		allTokens[ACCELERATOR].keywordText = &quot;ACCELERATOR&quot;;
++		allTokens[ACCUMULATE].keywordText = &quot;ACCUMULATE&quot;;
++		allTokens[ACTIVEWINDOW].keywordText = &quot;ACTIVE-WINDOW&quot;;
++		allTokens[ADD].keywordText = &quot;ADD&quot;;
++		allTokens[ADVISE].keywordText = &quot;ADVISE&quot;;
++		allTokens[ALERTBOX].keywordText = &quot;ALERT-BOX&quot;;
++		allTokens[ALIAS].keywordText = &quot;ALIAS&quot;;
++		allTokens[ALL].keywordText = &quot;ALL&quot;;
++		allTokens[ALLOWREPLICATION].keywordText = &quot;ALLOW-REPLICATION&quot;;
++		allTokens[ALTER].keywordText = &quot;ALTER&quot;;
++		allTokens[ALTERNATEKEY].keywordText = &quot;ALTERNATE-KEY&quot;;
++		allTokens[AMBIGUOUS].keywordText = &quot;AMBIGUOUS&quot;;
++		allTokens[ANALYZE].keywordText = &quot;ANALYZE&quot;;
++		allTokens[AND].keywordText = &quot;AND&quot;;
++		allTokens[ANSIONLY].keywordText = &quot;ANSI-ONLY&quot;;
++		allTokens[ANY].keywordText = &quot;ANY&quot;;
++		allTokens[ANYWHERE].keywordText = &quot;ANYWHERE&quot;;
++		allTokens[APPEND].keywordText = &quot;APPEND&quot;;
++		allTokens[APPLICATION].keywordText = &quot;APPLICATION&quot;;
++		allTokens[APPLY].keywordText = &quot;APPLY&quot;;
++		allTokens[ARRAYMESSAGE].keywordText = &quot;ARRAY-MESSAGE&quot;;
++		allTokens[AS].keywordText = &quot;AS&quot;;
++		allTokens[ASC].keywordText = &quot;ASC&quot;;
++		allTokens[ASCENDING].keywordText = &quot;ASCENDING&quot;;
++		allTokens[ASKOVERWRITE].keywordText = &quot;ASK-OVERWRITE&quot;;
++		allTokens[ASSIGN].keywordText = &quot;ASSIGN&quot;;
++		allTokens[ASYNCHRONOUS].keywordText = &quot;ASYNCHRONOUS&quot;;
++		allTokens[AT].keywordText = &quot;AT&quot;;
++		allTokens[ATTACHMENT].keywordText = &quot;ATTACHMENT&quot;;
++		allTokens[ATTRSPACE].keywordText = &quot;ATTR-SPACE&quot;;
++		allTokens[AUTHORIZATION].keywordText = &quot;AUTHORIZATION&quot;;
++		allTokens[AUTOCOMPLETION].keywordText = &quot;AUTO-COMPLETION&quot;;
++		allTokens[AUTOENDKEY].keywordText = &quot;AUTO-END-KEY&quot;;
++		allTokens[AUTOGO].keywordText = &quot;AUTO-GO&quot;;
++		allTokens[AUTOMATIC].keywordText = &quot;AUTOMATIC&quot;;
++		allTokens[AUTORETURN].keywordText = &quot;AUTO-RETURN&quot;;
++		allTokens[AVAILABLE].keywordText = &quot;AVAILABLE&quot;;
++		allTokens[AVERAGE].keywordText = &quot;AVERAGE&quot;;
++		allTokens[AVG].keywordText = &quot;AVG&quot;;
++		allTokens[BACKGROUND].keywordText = &quot;BACKGROUND&quot;;
++		allTokens[BACKWARDS].keywordText = &quot;BACKWARDS&quot;;
++		allTokens[BASEKEY].keywordText = &quot;BASE-KEY&quot;;
++		allTokens[BEFOREHIDE].keywordText = &quot;BEFORE-HIDE&quot;;
++		allTokens[BEGINS].keywordText = &quot;BEGINS&quot;;
++		allTokens[BELL].keywordText = &quot;BELL&quot;;
++		allTokens[BETWEEN].keywordText = &quot;BETWEEN&quot;;
++		allTokens[BGCOLOR].keywordText = &quot;BGCOLOR&quot;;
++		allTokens[BIGENDIAN].keywordText = &quot;BIG-ENDIAN&quot;;
++		allTokens[BINARY].keywordText = &quot;BINARY&quot;;
++		allTokens[BINDWHERE].keywordText = &quot;BIND-WHERE&quot;;
++		allTokens[BLANK].keywordText = &quot;BLANK&quot;;
++		allTokens[BOTH].keywordText = &quot;BOTH&quot;;
++		allTokens[BOTTOM].keywordText = &quot;BOTTOM&quot;;
++		allTokens[BREAK].keywordText = &quot;BREAK&quot;;
++		allTokens[BROWSE].keywordText = &quot;BROWSE&quot;;
++		allTokens[BTOS].keywordText = &quot;BTOS&quot;;
++		allTokens[BUFFER].keywordText = &quot;BUFFER&quot;;
++		allTokens[BUFFERCHARS].keywordText = &quot;BUFFER-CHARS&quot;;
++		allTokens[BUFFERCOMPARE].keywordText = &quot;BUFFER-COMPARE&quot;;
++		allTokens[BUFFERCOPY].keywordText = &quot;BUFFER-COPY&quot;;
++		allTokens[BUFFERLINES].keywordText = &quot;BUFFER-LINES&quot;;
++		allTokens[BUFFERNAME].keywordText = &quot;BUFFER-NAME&quot;;
++		allTokens[BUTTON].keywordText = &quot;BUTTON&quot;;
++		allTokens[BUTTONS].keywordText = &quot;BUTTONS&quot;;
++		allTokens[BY].keywordText = &quot;BY&quot;;
++		allTokens[BYPOINTER].keywordText = &quot;BY-POINTER&quot;;
++		allTokens[BYTE].keywordText = &quot;BYTE&quot;;
++		allTokens[BYVARIANTPOINTER].keywordText = &quot;BY-VARIANT-POINTER&quot;;
++		allTokens[CACHE].keywordText = &quot;CACHE&quot;;
++		allTokens[CACHESIZE].keywordText = &quot;CACHE-SIZE&quot;;
++		allTokens[CALL].keywordText = &quot;CALL&quot;;
++		allTokens[CANDO].keywordText = &quot;CAN-DO&quot;;
++		allTokens[CANFIND].keywordText = &quot;CAN-FIND&quot;;
++		allTokens[CANQUERY].keywordText = &quot;CAN-QUERY&quot;;
++		allTokens[CANSET].keywordText = &quot;CAN-SET&quot;;
++		allTokens[CANCELBUTTON].keywordText = &quot;CANCEL-BUTTON&quot;;
++		allTokens[CAPS].keywordText = &quot;UPPER&quot;;
++		allTokens[CASE].keywordText = &quot;CASE&quot;;
++		allTokens[CASESENSITIVE].keywordText = &quot;CASE-SENSITIVE&quot;;
++		allTokens[CDECL_KW].keywordText = &quot;CDECL&quot;;
++		allTokens[CENTERED].keywordText = &quot;CENTERED&quot;;
++		allTokens[CHAINED].keywordText = &quot;CHAINED&quot;;
++		allTokens[CHARACTER].keywordText = &quot;CHARACTER&quot;;
++		allTokens[CHARACTERLENGTH].keywordText = &quot;CHARACTERLENGTH&quot;;
++		allTokens[CHECK].keywordText = &quot;CHECK&quot;;
++		allTokens[CHOOSE].keywordText = &quot;CHOOSE&quot;;
++		allTokens[CHR].keywordText = &quot;CHR&quot;;
++		allTokens[CLEAR].keywordText = &quot;CLEAR&quot;;
++		allTokens[CLIPBOARD].keywordText = &quot;CLIPBOARD&quot;;
++		allTokens[CLOSE].keywordText = &quot;CLOSE&quot;;
++		allTokens[CODEBASELOCATOR].keywordText = &quot;CODEBASE-LOCATOR&quot;;
++		allTokens[CODEPAGECONVERT].keywordText = &quot;CODEPAGE-CONVERT&quot;;
++		allTokens[COLLATE].keywordText = &quot;COLLATE&quot;;
++		allTokens[COLOF].keywordText = &quot;COL-OF&quot;;
++		allTokens[COLON].keywordText = &quot;COLON&quot;;
++		allTokens[COLONALIGNED].keywordText = &quot;COLON-ALIGNED&quot;;
++		allTokens[COLOR].keywordText = &quot;COLOR&quot;;
++		allTokens[COLORTABLE].keywordText = &quot;COLOR-TABLE&quot;;
++		allTokens[COLUMN].keywordText = &quot;COLUMN&quot;;
++		allTokens[COLUMNBGCOLOR].keywordText = &quot;COLUMN-BGCOLOR&quot;;
++		allTokens[COLUMNDCOLOR].keywordText = &quot;COLUMN-DCOLOR&quot;;
++		allTokens[COLUMNFGCOLOR].keywordText = &quot;COLUMN-FGCOLOR&quot;;
++		allTokens[COLUMNFONT].keywordText = &quot;COLUMN-FONT&quot;;
++		allTokens[COLUMNLABEL].keywordText = &quot;COLUMN-LABEL&quot;;
++		allTokens[COLUMNOF].keywordText = &quot;COLUMN-OF&quot;;
++		allTokens[COLUMNPFCOLOR].keywordText = &quot;COLUMN-PFCOLOR&quot;;
++		allTokens[COLUMNS].keywordText = &quot;COLUMNS&quot;;
++		allTokens[COMHANDLE].keywordText = &quot;COMPONENT-HANDLE&quot;;
++		allTokens[COMBOBOX].keywordText = &quot;COMBO-BOX&quot;;
++		allTokens[COMMAND].keywordText = &quot;COMMAND&quot;;
++		allTokens[COMPARE].keywordText = &quot;COMPARE&quot;;
++		allTokens[COMPARES].keywordText = &quot;COMPARES&quot;;
++		allTokens[COMPLETE].keywordText = &quot;COMPLETE&quot;;
++		allTokens[COMPILE].keywordText = &quot;COMPILE&quot;;
++		allTokens[COMPILER].keywordText = &quot;COMPILER&quot;;
++		allTokens[COMSELF].keywordText = &quot;COM-SELF&quot;;
++		allTokens[CONFIGNAME].keywordText = &quot;CONFIG-NAME&quot;;
++		allTokens[CONNECT].keywordText = &quot;CONNECT&quot;;
++		allTokens[CONNECTED].keywordText = &quot;CONNECTED&quot;;
++		allTokens[CONTAINS].keywordText = &quot;CONTAINS&quot;;
++		allTokens[CONTENTS].keywordText = &quot;CONTENTS&quot;;
++		allTokens[CONTEXT].keywordText = &quot;CONTEXT&quot;;
++		allTokens[CONTEXTHELP].keywordText = &quot;CONTEXT-HELP&quot;;
++		allTokens[CONTEXTHELPFILE].keywordText = &quot;CONTEXT-HELP-FILE&quot;;
++		allTokens[CONTEXTHELPID].keywordText = &quot;CONTEXT-HELP-ID&quot;;
++		allTokens[CONTEXTPOPUP].keywordText = &quot;CONTEXT-POPUP&quot;;
++		allTokens[CONTROL].keywordText = &quot;CONTROL&quot;;
++		allTokens[CONTROLFRAME].keywordText = &quot;CONTROL-FRAME&quot;;
++		allTokens[CONVERT].keywordText = &quot;CONVERT&quot;;
++		allTokens[CONVERT3DCOLORS].keywordText = &quot;CONVERT-3D-COLORS&quot;;
++		allTokens[COUNT].keywordText = &quot;COUNT&quot;;
++		allTokens[COUNTOF].keywordText = &quot;COUNT-OF&quot;;
++		allTokens[CREATE].keywordText = &quot;CREATE&quot;;
++		allTokens[CREATETESTFILE].keywordText = &quot;CREATE-TEST-FILE&quot;;
++		allTokens[CURRENT].keywordText = &quot;CURRENT&quot;;
++		allTokens[CURRENTCHANGED].keywordText = &quot;CURRENT-CHANGED&quot;;
++		allTokens[CURRENTENVIRONMENT].keywordText = &quot;CURRENT-ENVIRONMENT&quot;;
++		allTokens[CURRENTLANGUAGE].keywordText = &quot;CURRENT-LANGUAGE&quot;;
++		allTokens[CURRENTRESULTROW].keywordText = &quot;CURRENT-RESULT-ROW&quot;;
++		allTokens[CURRENTVALUE].keywordText = &quot;CURRENT-VALUE&quot;;
++		allTokens[CURRENTWINDOW].keywordText = &quot;CURRENT-WINDOW&quot;;
++		allTokens[CURSOR].keywordText = &quot;CURSOR&quot;;
++		allTokens[DATABASE].keywordText = &quot;DATABASE&quot;;
++		allTokens[DATABIND].keywordText = &quot;DATA-BIND&quot;;
++		allTokens[DATASERVERS].keywordText = &quot;DATASERVERS&quot;;
++		allTokens[DATE].keywordText = &quot;DATE&quot;;
++		allTokens[DAY].keywordText = &quot;DAY&quot;;
++		allTokens[DBCODEPAGE].keywordText = &quot;DBCODEPAGE&quot;;
++		allTokens[DBCOLLATION].keywordText = &quot;DBCOLLATION&quot;;
++		allTokens[DBIMS].keywordText = &quot;DBIMS&quot;;
++		allTokens[DBNAME].keywordText = &quot;DBNAME&quot;;
++		allTokens[DBPARAM].keywordText = &quot;DBPARAM&quot;;
++		allTokens[DBRESTRICTIONS].keywordText = &quot;DBRESTRICTIONS&quot;;
++		allTokens[DBTASKID].keywordText = &quot;DBTASKID&quot;;
++		allTokens[DBTYPE].keywordText = &quot;DBTYPE&quot;;
++		allTokens[DBVERSION].keywordText = &quot;DBVERSION&quot;;
++		allTokens[DCOLOR].keywordText = &quot;DCOLOR&quot;;
++		allTokens[DDE].keywordText = &quot;DDE&quot;;
++		allTokens[DEBLANK].keywordText = &quot;DEBLANK&quot;;
++		allTokens[DEBUG].keywordText = &quot;DEBUG&quot;;
++		allTokens[DEBUGLIST].keywordText = &quot;DEBUG-LIST&quot;;
++		allTokens[DEBUGGER].keywordText = &quot;DEBUGGER&quot;;
++		allTokens[DECIMAL].keywordText = &quot;DECIMAL&quot;;
++		allTokens[DECIMALS].keywordText = &quot;DECIMALS&quot;;
++		allTokens[DECLARE].keywordText = &quot;DECLARE&quot;;
++		allTokens[DEFAULT].keywordText = &quot;DEFAULT&quot;;
++		allTokens[DEFAULTBUTTON].keywordText = &quot;DEFAULT-BUTTON&quot;;
++		allTokens[DEFAULTEXTENSION].keywordText = &quot;DEFAULT-EXTENSION&quot;;
++		allTokens[DEFAULTNOXLATE].keywordText = &quot;DEFAULT-NOXLATE&quot;;
++		allTokens[DEFAULTWINDOW].keywordText = &quot;DEFAULT-WINDOW&quot;;
++		allTokens[DEFERLOBFETCH].keywordText = &quot;DEFER-LOB-FETCH&quot;;
++		allTokens[DEFINE].keywordText = &quot;DEFINE&quot;;
++		allTokens[DEFINED].keywordText = &quot;DEFINED&quot;;
++		allTokens[DELETE_KW].keywordText = &quot;DELETE&quot;;
++		allTokens[DELETERESULTLISTENTRY].keywordText = &quot;DELETE-RESULT-LIST-ENTRY&quot;;
++		allTokens[DELIMITER].keywordText = &quot;DELIMITER&quot;;
++		allTokens[DESCENDING].keywordText = &quot;DESCENDING&quot;;
++		allTokens[DESELECTION].keywordText = &quot;DESELECTION&quot;;
++		allTokens[DIALOGBOX].keywordText = &quot;DIALOG-BOX&quot;;
++		allTokens[DIALOGHELP].keywordText = &quot;DIALOG-HELP&quot;;
++		allTokens[DICTIONARY].keywordText = &quot;DICTIONARY&quot;;
++		allTokens[DIR].keywordText = &quot;DIR&quot;;
++		allTokens[DISABLE].keywordText = &quot;DISABLE&quot;;
++		allTokens[DISABLEAUTOZAP].keywordText = &quot;DISABLE-AUTO-ZAP&quot;;
++		allTokens[DISABLED].keywordText = &quot;DISABLED&quot;;
++		allTokens[DISCONNECT].keywordText = &quot;DISCONNECT&quot;;
++		allTokens[DISPLAY].keywordText = &quot;DISPLAY&quot;;
++		allTokens[DISTINCT].keywordText = &quot;DISTINCT&quot;;
++		allTokens[DO].keywordText = &quot;DO&quot;;
++		allTokens[DOS].keywordText = &quot;DOS&quot;;
++		allTokens[DOUBLE].keywordText = &quot;DOUBLE&quot;;
++		allTokens[DOWN].keywordText = &quot;DOWN&quot;;
++		allTokens[DROP].keywordText = &quot;DROP&quot;;
++		allTokens[DROPDOWN].keywordText = &quot;DROP-DOWN&quot;;
++		allTokens[DROPDOWNLIST].keywordText = &quot;DROP-DOWN-LIST&quot;;
++		allTokens[DROPFILENOTIFY].keywordText = &quot;DROP-FILE-NOTIFY&quot;;
++		allTokens[DROPTARGET].keywordText = &quot;DROP-TARGET&quot;;
++		allTokens[DUMP].keywordText = &quot;DUMP&quot;;
++		allTokens[DYNAMIC].keywordText = &quot;DYNAMIC&quot;;
++		allTokens[DYNAMICFUNCTION].keywordText = &quot;DYNAMIC-FUNCTION&quot;;
++		allTokens[EACH].keywordText = &quot;EACH&quot;;
++		allTokens[ECHO].keywordText = &quot;ECHO&quot;;
++		allTokens[EDGECHARS].keywordText = &quot;EDGE-CHARS&quot;;
++		allTokens[EDGEPIXELS].keywordText = &quot;EDGE-PIXELS&quot;;
++		allTokens[EDITUNDO].keywordText = &quot;EDIT-UNDO&quot;;
++		allTokens[EDITING].keywordText = &quot;EDITING&quot;;
++		allTokens[EDITOR].keywordText = &quot;EDITOR&quot;;
++		allTokens[ELSE].keywordText = &quot;ELSE&quot;;
++		allTokens[EMPTY].keywordText = &quot;EMPTY&quot;;
++		allTokens[ENABLE].keywordText = &quot;ENABLE&quot;;
++		allTokens[ENCODE].keywordText = &quot;ENCODE&quot;;
++		allTokens[END].keywordText = &quot;END&quot;;
++		allTokens[ENDMOVE].keywordText = &quot;END-MOVE&quot;;
++		allTokens[ENDRESIZE].keywordText = &quot;END-RESIZE&quot;;
++		allTokens[ENDROWRESIZE].keywordText = &quot;END-ROW-RESIZE&quot;;
++		allTokens[ENDKEY].keywordText = &quot;END-KEY&quot;;
++		allTokens[ENTERED].keywordText = &quot;ENTERED&quot;;
++		allTokens[ENTRY].keywordText = &quot;ENTRY&quot;;
++		allTokens[EQ].keywordText = &quot;EQ&quot;;
++		allTokens[ERROR].keywordText = &quot;ERROR&quot;;
++		allTokens[ERRORSTATUS].keywordText = &quot;ERROR-STATUS&quot;;
++		allTokens[ESCAPE].keywordText = &quot;ESCAPE&quot;;
++		allTokens[ETIME_KW].keywordText = &quot;ETIME&quot;;
++		allTokens[EVENTPROCEDURE].keywordText = &quot;EVENT-PROCEDURE&quot;;
++		allTokens[EVENTS].keywordText = &quot;EVENTS&quot;;
++		allTokens[EXCEPT].keywordText = &quot;EXCEPT&quot;;
++		allTokens[EXCLUSIVEID].keywordText = &quot;EXCLUSIVE-ID&quot;;
++		allTokens[EXCLUSIVELOCK].keywordText = &quot;EXCLUSIVE-LOCK&quot;;
++		allTokens[EXCLUSIVEWEBUSER].keywordText = &quot;EXCLUSIVE-WEB-USER&quot;;
++		allTokens[EXECUTE].keywordText = &quot;EXECUTE&quot;;
++		allTokens[EXISTS].keywordText = &quot;EXISTS&quot;;
++		allTokens[EXP].keywordText = &quot;EXP&quot;;
++		allTokens[EXPAND].keywordText = &quot;EXPAND&quot;;
++		allTokens[EXPANDABLE].keywordText = &quot;EXPANDABLE&quot;;
++		allTokens[EXPLICIT].keywordText = &quot;EXPLICIT&quot;;
++		allTokens[EXPORT].keywordText = &quot;EXPORT&quot;;
++		allTokens[EXTENDED].keywordText = &quot;EXTENDED&quot;;
++		allTokens[EXTENT].keywordText = &quot;EXTENT&quot;;
++		allTokens[EXTERNAL].keywordText = &quot;EXTERNAL&quot;;
++		allTokens[FALSE_KW].keywordText = &quot;FALSE&quot;;
++		allTokens[FETCH].keywordText = &quot;FETCH&quot;;
++		allTokens[FGCOLOR].keywordText = &quot;FGCOLOR&quot;;
++		allTokens[FIELD].keywordText = &quot;FIELD&quot;;
++		allTokens[FIELDS].keywordText = &quot;FIELDS&quot;;
++		allTokens[FILE].keywordText = &quot;FILE-NAME&quot;;
++		allTokens[FILEINFORMATION].keywordText = &quot;FILE-INFORMATION&quot;;
++		allTokens[FILL].keywordText = &quot;FILL&quot;;
++		allTokens[FILLIN].keywordText = &quot;FILL-IN&quot;;
++		allTokens[FILTERS].keywordText = &quot;FILTERS&quot;;
++		allTokens[FIND].keywordText = &quot;FIND&quot;;
++		allTokens[FINDCASESENSITIVE].keywordText = &quot;FIND-CASE-SENSITIVE&quot;;
++		allTokens[FINDER].keywordText = &quot;FINDER&quot;;
++		allTokens[FINDGLOBAL].keywordText = &quot;FIND-GLOBAL&quot;;
++		allTokens[FINDNEXTOCCURRENCE].keywordText = &quot;FIND-NEXT-OCCURRENCE&quot;;
++		allTokens[FINDPREVOCCURRENCE].keywordText = &quot;FIND-PREV-OCCURRENCE&quot;;
++		allTokens[FINDSELECT].keywordText = &quot;FIND-SELECT&quot;;
++		allTokens[FINDWRAPAROUND].keywordText = &quot;FIND-WRAP-AROUND&quot;;
++		allTokens[FIRST].keywordText = &quot;FIRST&quot;;
++		allTokens[FIRSTOF].keywordText = &quot;FIRST-OF&quot;;
++		allTokens[FITLASTCOLUMN].keywordText = &quot;FIT-LAST-COLUMN&quot;;
++		allTokens[FIXEDONLY].keywordText = &quot;FIXED-ONLY&quot;;
++		allTokens[FLATBUTTON].keywordText = &quot;FLAT-BUTTON&quot;;
++		allTokens[FLOAT].keywordText = &quot;FLOAT&quot;;
++		allTokens[FOCUS].keywordText = &quot;FOCUS&quot;;
++		allTokens[FONT].keywordText = &quot;FONT&quot;;
++		allTokens[FONTBASEDLAYOUT].keywordText = &quot;FONT-BASED-LAYOUT&quot;;
++		allTokens[FONTTABLE].keywordText = &quot;FONT-TABLE&quot;;
++		allTokens[FOR].keywordText = &quot;FOR&quot;;
++		allTokens[FORCEFILE].keywordText = &quot;FORCE-FILE&quot;;
++		allTokens[FORMINPUT].keywordText = &quot;FORMINPUT&quot;;
++		allTokens[FORMAT].keywordText = &quot;FORMAT&quot;;
++		allTokens[FORWARDS].keywordText = &quot;FORWARDS&quot;;
++		allTokens[FRAME].keywordText = &quot;FRAME&quot;;
++		allTokens[FRAMECOL].keywordText = &quot;FRAME-COL&quot;;
++		allTokens[FRAMEDB].keywordText = &quot;FRAME-DB&quot;;
++		allTokens[FRAMEDOWN].keywordText = &quot;FRAME-DOWN&quot;;
++		allTokens[FRAMEFIELD].keywordText = &quot;FRAME-FIELD&quot;;
++		allTokens[FRAMEFILE].keywordText = &quot;FRAME-FILE&quot;;
++		allTokens[FRAMEINDEX].keywordText = &quot;FRAME-INDEX&quot;;
++		allTokens[FRAMELINE].keywordText = &quot;FRAME-LINE&quot;;
++		allTokens[FRAMENAME].keywordText = &quot;FRAME-NAME&quot;;
++		allTokens[FRAMEROW].keywordText = &quot;FRAME-ROW&quot;;
++		allTokens[FRAMEVALUE].keywordText = &quot;FRAME-VALUE&quot;;
++		allTokens[FREQUENCY].keywordText = &quot;FREQUENCY&quot;;
++		allTokens[FROM].keywordText = &quot;FROM&quot;;
++		allTokens[FROMCURRENT].keywordText = &quot;FROM-CURRENT&quot;;
++		allTokens[FUNCTION].keywordText = &quot;FUNCTION&quot;;
++		allTokens[GE].keywordText = &quot;GE&quot;;
++		allTokens[GENERATEMD5].keywordText = &quot;GENERATE-MD5&quot;;
++		allTokens[GET].keywordText = &quot;GET&quot;;
++		allTokens[GETBITS].keywordText = &quot;GET-BITS&quot;;
++		allTokens[GETBUFFERHANDLE].keywordText = &quot;GET-BUFFER-HANDLE&quot;;
++		allTokens[GETBYTE].keywordText = &quot;GET-BYTE&quot;;
++		allTokens[GETBYTES].keywordText = &quot;GET-BYTES&quot;;
++		allTokens[GETBYTEORDER].keywordText = &quot;GET-BYTE-ORDER&quot;;
++		allTokens[GETCGILIST].keywordText = &quot;GET-CGI-LIST&quot;;
++		allTokens[GETCGIVALUE].keywordText = &quot;GET-CGI-VALUE&quot;;
++		allTokens[GETCODEPAGES].keywordText = &quot;GET-CODEPAGES&quot;;
++		allTokens[GETCOLLATIONS].keywordText = &quot;GET-COLLATIONS&quot;;
++		allTokens[GETCONFIGVALUE].keywordText = &quot;GET-CONFIG-VALUE&quot;;
++		allTokens[GETDOUBLE].keywordText = &quot;GET-DOUBLE&quot;;
++		allTokens[GETFILE].keywordText = &quot;GET-FILE&quot;;
++		allTokens[GETFLOAT].keywordText = &quot;GET-FLOAT&quot;;
++		allTokens[GETKEYVALUE].keywordText = &quot;GET-KEY-VALUE&quot;;
++		allTokens[GETLICENSE].keywordText = &quot;GET-LICENSE&quot;;
++		allTokens[GETLONG].keywordText = &quot;GET-LONG&quot;;
++		allTokens[GETPOINTERVALUE].keywordText = &quot;GET-POINTER-VALUE&quot;;
++		allTokens[GETSHORT].keywordText = &quot;GET-SHORT&quot;;
++		allTokens[GETSIZE].keywordText = &quot;GET-SIZE&quot;;
++		allTokens[GETSTRING].keywordText = &quot;GET-STRING&quot;;
++		allTokens[GETUNSIGNEDSHORT].keywordText = &quot;GET-UNSIGNED-SHORT&quot;;
++		allTokens[GLOBAL].keywordText = &quot;GLOBAL&quot;;
++		allTokens[GOON].keywordText = &quot;GO-ON&quot;;
++		allTokens[GOPENDING].keywordText = &quot;GO-PENDING&quot;;
++		allTokens[GRANT].keywordText = &quot;GRANT&quot;;
++		allTokens[GRAPHICEDGE].keywordText = &quot;GRAPHIC-EDGE&quot;;
++		allTokens[GROUP].keywordText = &quot;GROUP&quot;;
++		allTokens[GTHAN].keywordText = &quot;GT&quot;;
++		allTokens[HANDLE].keywordText = &quot;HANDLE&quot;;
++		allTokens[HAVING].keywordText = &quot;HAVING&quot;;
++		allTokens[HEADER].keywordText = &quot;HEADER&quot;;
++		allTokens[HEIGHT].keywordText = &quot;HEIGHT&quot;;
++		allTokens[HELP].keywordText = &quot;HELP&quot;;
++		allTokens[HELPTOPIC].keywordText = &quot;HELP-TOPIC&quot;;
++		allTokens[HIDE].keywordText = &quot;HIDE&quot;;
++		allTokens[HINT].keywordText = &quot;HINT&quot;;
++		allTokens[HORIZONTAL].keywordText = &quot;HORIZONTAL&quot;;
++		allTokens[HOSTBYTEORDER].keywordText = &quot;HOST-BYTE-ORDER&quot;;
++		allTokens[HTMLENDOFLINE].keywordText = &quot;HTML-END-OF-LINE&quot;;
++		allTokens[HTMLFRAMEBEGIN].keywordText = &quot;HTML-FRAME-BEGIN&quot;;
++		allTokens[HTMLFRAMEEND].keywordText = &quot;HTML-FRAME-END&quot;;
++		allTokens[HTMLHEADERBEGIN].keywordText = &quot;HTML-HEADER-BEGIN&quot;;
++		allTokens[HTMLHEADEREND].keywordText = &quot;HTML-HEADER-END&quot;;
++		allTokens[HTMLTITLEBEGIN].keywordText = &quot;HTML-TITLE-BEGIN&quot;;
++		allTokens[HTMLTITLEEND].keywordText = &quot;HTML-TITLE-END&quot;;
++		allTokens[IF].keywordText = &quot;IF&quot;;
++		allTokens[IMAGE].keywordText = &quot;IMAGE&quot;;
++		allTokens[IMAGEDOWN].keywordText = &quot;IMAGE-DOWN&quot;;
++		allTokens[IMAGEINSENSITIVE].keywordText = &quot;IMAGE-INSENSITIVE&quot;;
++		allTokens[IMAGESIZE].keywordText = &quot;IMAGE-SIZE&quot;;
++		allTokens[IMAGESIZECHARS].keywordText = &quot;IMAGE-SIZE-CHARS&quot;;
++		allTokens[IMAGESIZEPIXELS].keywordText = &quot;IMAGE-SIZE-PIXELS&quot;;
++		allTokens[IMAGEUP].keywordText = &quot;IMAGE-UP&quot;;
++		allTokens[IMPORT].keywordText = &quot;IMPORT&quot;;
++		allTokens[IN_KW].keywordText = &quot;IN&quot;;
++		allTokens[INCREMENTEXCLUSIVEID].keywordText = &quot;INCREMENT-EXCLUSIVE-ID&quot;;
++		allTokens[INDEX].keywordText = &quot;INDEX&quot;;
++		allTokens[INDEXHINT].keywordText = &quot;INDEX-HINT&quot;;
++		allTokens[INDEXEDREPOSITION].keywordText = &quot;INDEXED-REPOSITION&quot;;
++		allTokens[INDICATOR].keywordText = &quot;INDICATOR&quot;;
++		allTokens[INFORMATION].keywordText = &quot;INFORMATION&quot;;
++		allTokens[INITIAL].keywordText = &quot;INITIAL&quot;;
++		allTokens[INITIALDIR].keywordText = &quot;INITIAL-DIR&quot;;
++		allTokens[INITIALFILTER].keywordText = &quot;INITIAL-FILTER&quot;;
++		allTokens[INITIATE].keywordText = &quot;INITIATE&quot;;
++		allTokens[INNER].keywordText = &quot;INNER&quot;;
++		allTokens[INNERCHARS].keywordText = &quot;INNER-CHARS&quot;;
++		allTokens[INNERLINES].keywordText = &quot;INNER-LINES&quot;;
++		allTokens[INPUT].keywordText = &quot;INPUT&quot;;
++		allTokens[INPUTOUTPUT].keywordText = &quot;INPUT-OUTPUT&quot;;
++		allTokens[INSERT].keywordText = &quot;INSERT&quot;;
++		allTokens[INTEGER].keywordText = &quot;INTEGER&quot;;
++		allTokens[INTO].keywordText = &quot;INTO&quot;;
++		allTokens[IS].keywordText = &quot;IS&quot;;
++		allTokens[ISATTRSPACE].keywordText = &quot;IS-ATTR-SPACE&quot;;
++		allTokens[ISLEADBYTE].keywordText = &quot;IS-LEAD-BYTE&quot;;
++		allTokens[ITEM].keywordText = &quot;ITEM&quot;;
++		allTokens[JOIN].keywordText = &quot;JOIN&quot;;
++		allTokens[JOINBYSQLDB].keywordText = &quot;JOIN-BY-SQLDB&quot;;
++		allTokens[KBLABEL].keywordText = &quot;KBLABEL&quot;;
++		allTokens[KEEPMESSAGES].keywordText = &quot;KEEP-MESSAGES&quot;;
++		allTokens[KEEPTABORDER].keywordText = &quot;KEEP-TAB-ORDER&quot;;
++		allTokens[KEY].keywordText = &quot;KEY&quot;;
++		allTokens[KEYCODE].keywordText = &quot;KEY-CODE&quot;;
++		allTokens[KEYFUNCTION].keywordText = &quot;KEY-FUNCTION&quot;;
++		allTokens[KEYLABEL].keywordText = &quot;KEY-LABEL&quot;;
++		allTokens[KEYS].keywordText = &quot;KEYS&quot;;
++		allTokens[KEYWORD].keywordText = &quot;KEYWORD&quot;;
++		allTokens[KEYWORDALL].keywordText = &quot;KEYWORD-ALL&quot;;
++		allTokens[LABEL].keywordText = &quot;LABEL&quot;;
++		allTokens[LABELBGCOLOR].keywordText = &quot;LABEL-BGCOLOR&quot;;
++		allTokens[LABELDCOLOR].keywordText = &quot;LABEL-DCOLOR&quot;;
++		allTokens[LABELFGCOLOR].keywordText = &quot;LABEL-FGCOLOR&quot;;
++		allTokens[LABELFONT].keywordText = &quot;LABEL-FONT&quot;;
++		allTokens[LANDSCAPE].keywordText = &quot;LANDSCAPE&quot;;
++		allTokens[LANGUAGES].keywordText = &quot;LANGUAGES&quot;;
++		allTokens[LARGE].keywordText = &quot;LARGE&quot;;
++		allTokens[LARGETOSMALL].keywordText = &quot;LARGE-TO-SMALL&quot;;
++		allTokens[LAST].keywordText = &quot;LAST&quot;;
++		allTokens[LASTEVENT].keywordText = &quot;LAST-EVENT&quot;;
++		allTokens[LASTOF].keywordText = &quot;LAST-OF&quot;;
++		allTokens[LASTKEY].keywordText = &quot;LAST-KEY&quot;;
++		allTokens[LC].keywordText = &quot;LOWER&quot;;
++		allTokens[LDBNAME].keywordText = &quot;LDBNAME&quot;;
++		allTokens[LE].keywordText = &quot;LE&quot;;
++		allTokens[LEAVE].keywordText = &quot;LEAVE&quot;;
++		allTokens[LEFT].keywordText = &quot;LEFT&quot;;
++		allTokens[LEFTALIGNED].keywordText = &quot;LEFT-ALIGNED&quot;;
++		allTokens[LEFTTRIM].keywordText = &quot;LEFT-TRIM&quot;;
++		allTokens[LENGTH].keywordText = &quot;LENGTH&quot;;
++		allTokens[LIBRARY].keywordText = &quot;LIBRARY&quot;;
++		allTokens[LIKE].keywordText = &quot;LIKE&quot;;
++		allTokens[LINECOUNTER].keywordText = &quot;LINE-COUNTER&quot;;
++		allTokens[LISTEVENTS].keywordText = &quot;LIST-EVENTS&quot;;
++		allTokens[LISTITEMPAIRS].keywordText = &quot;LIST-ITEM-PAIRS&quot;;
++		allTokens[LISTITEMS].keywordText = &quot;LIST-ITEMS&quot;;
++		allTokens[LISTQUERYATTRS].keywordText = &quot;LIST-QUERY-ATTRS&quot;;
++		allTokens[LISTSETATTRS].keywordText = &quot;LIST-SET-ATTRS&quot;;
++		allTokens[LISTWIDGETS].keywordText = &quot;LIST-WIDGETS&quot;;
++		allTokens[LISTING].keywordText = &quot;LISTING&quot;;
++		allTokens[LITTLEENDIAN].keywordText = &quot;LITTLE-ENDIAN&quot;;
++		allTokens[LOAD].keywordText = &quot;LOAD&quot;;
++		allTokens[LOADPICTURE].keywordText = &quot;LOAD-PICTURE&quot;;
++		allTokens[LOCKED].keywordText = &quot;LOCKED&quot;;
++		allTokens[LOG].keywordText = &quot;LOG&quot;;
++		allTokens[LOGICAL].keywordText = &quot;LOGICAL&quot;;
++		allTokens[LONG].keywordText = &quot;LONG&quot;;
++		allTokens[LOOKAHEAD].keywordText = &quot;LOOKAHEAD&quot;;
++		allTokens[LOOKUP].keywordText = &quot;LOOKUP&quot;;
++		allTokens[LTHAN].keywordText = &quot;LT&quot;;
++		allTokens[MACHINECLASS].keywordText = &quot;MACHINE-CLASS&quot;;
++		allTokens[MAP].keywordText = &quot;MAP&quot;;
++		allTokens[MARGINEXTRA].keywordText = &quot;MARGIN-EXTRA&quot;;
++		allTokens[MATCHES].keywordText = &quot;MATCHES&quot;;
++		allTokens[MAXCHARS].keywordText = &quot;MAX-CHARS&quot;;
++		allTokens[MAXROWS].keywordText = &quot;MAX-ROWS&quot;;
++		allTokens[MAXSIZE].keywordText = &quot;MAX-SIZE&quot;;
++		allTokens[MAXVALUE].keywordText = &quot;MAX-VALUE&quot;;
++		allTokens[MAXIMIZE].keywordText = &quot;MAXIMIZE&quot;;
++		allTokens[MAXIMUM].keywordText = &quot;MAXIMUM&quot;;
++		allTokens[MEMBER].keywordText = &quot;MEMBER&quot;;
++		allTokens[MEMPTR].keywordText = &quot;MEMPTR&quot;;
++		allTokens[MENU].keywordText = &quot;MENU&quot;;
++		allTokens[MENUITEM].keywordText = &quot;MENU-ITEM&quot;;
++		allTokens[MENUBAR].keywordText = &quot;MENU-BAR&quot;;
++		allTokens[MESSAGE].keywordText = &quot;MESSAGE&quot;;
++		allTokens[MESSAGELINE].keywordText = &quot;MESSAGE-LINE&quot;;
++		allTokens[MESSAGELINES].keywordText = &quot;MESSAGE-LINES&quot;;
++		allTokens[MINSIZE].keywordText = &quot;MIN-SIZE&quot;;
++		allTokens[MINVALUE].keywordText = &quot;MIN-VALUE&quot;;
++		allTokens[MINIMUM].keywordText = &quot;MINIMUM&quot;;
++		allTokens[MODULO].keywordText = &quot;MODULO&quot;;
++		allTokens[MONTH].keywordText = &quot;MONTH&quot;;
++		allTokens[MOUSE].keywordText = &quot;MOUSE&quot;;
++		allTokens[MOUSEPOINTER].keywordText = &quot;MOUSE-POINTER&quot;;
++		allTokens[MPE].keywordText = &quot;MPE&quot;;
++		allTokens[MULTIPLE].keywordText = &quot;MULTIPLE&quot;;
++		allTokens[MULTIPLEKEY].keywordText = &quot;MULTIPLE-KEY&quot;;
++		allTokens[MUSTEXIST].keywordText = &quot;MUST-EXIST&quot;;
++		allTokens[NATIVE].keywordText = &quot;NATIVE&quot;;
++		allTokens[NE].keywordText = &quot;NE&quot;;
++		allTokens[NEW].keywordText = &quot;NEW&quot;;
++		allTokens[NEXT].keywordText = &quot;NEXT&quot;;
++		allTokens[NEXTPROMPT].keywordText = &quot;NEXT-PROMPT&quot;;
++		allTokens[NEXTVALUE].keywordText = &quot;NEXT-VALUE&quot;;
++		allTokens[NO].keywordText = &quot;NO&quot;;
++		allTokens[NOAPPLY].keywordText = &quot;NO-APPLY&quot;;
++		allTokens[NOARRAYMESSAGE].keywordText = &quot;NO-ARRAY-MESSAGE&quot;;
++		allTokens[NOASSIGN].keywordText = &quot;NO-ASSIGN&quot;;
++		allTokens[NOATTRLIST].keywordText = &quot;NO-ATTR-LIST&quot;;
++		allTokens[NOATTRSPACE].keywordText = &quot;NO-ATTR-SPACE&quot;;
++		allTokens[NOAUTOVALIDATE].keywordText = &quot;NO-AUTO-VALIDATE&quot;;
++		allTokens[NOBINDWHERE].keywordText = &quot;NO-BIND-WHERE&quot;;
++		allTokens[NOBOX].keywordText = &quot;NO-BOX&quot;;
++		allTokens[NOCOLUMNSCROLLING].keywordText = &quot;NO-COLUMN-SCROLLING&quot;;
++		allTokens[NOCONSOLE].keywordText = &quot;NO-CONSOLE&quot;;
++		allTokens[NOCONVERT].keywordText = &quot;NO-CONVERT&quot;;
++		allTokens[NOCONVERT3DCOLORS].keywordText = &quot;NO-CONVERT-3D-COLORS&quot;;
++		allTokens[NOCURRENTVALUE].keywordText = &quot;NO-CURRENT-VALUE&quot;;
++		allTokens[NODEBUG].keywordText = &quot;NO-DEBUG&quot;;
++		allTokens[NODRAG].keywordText = &quot;NO-DRAG&quot;;
++		allTokens[NOECHO].keywordText = &quot;NO-ECHO&quot;;
++		allTokens[NOEMPTYSPACE].keywordText = &quot;NO-EMPTY-SPACE&quot;;
++		allTokens[NOERROR_KW].keywordText = &quot;NO-ERROR&quot;;
++		allTokens[NOFILL].keywordText = &quot;NO-FILL&quot;;
++		allTokens[NOFOCUS].keywordText = &quot;NO-FOCUS&quot;;
++		allTokens[NOHELP].keywordText = &quot;NO-HELP&quot;;
++		allTokens[NOHIDE].keywordText = &quot;NO-HIDE&quot;;
++		allTokens[NOINDEXHINT].keywordText = &quot;NO-INDEX-HINT&quot;;
++		allTokens[NOJOINBYSQLDB].keywordText = &quot;NO-JOIN-BY-SQLDB&quot;;
++		allTokens[NOLABELS].keywordText = &quot;NO-LABELS&quot;;
++		allTokens[NOLOCK].keywordText = &quot;NO-LOCK&quot;;
++		allTokens[NOLOOKAHEAD].keywordText = &quot;NO-LOOKAHEAD&quot;;
++		allTokens[NOMAP].keywordText = &quot;NO-MAP&quot;;
++		allTokens[NOMESSAGE].keywordText = &quot;NO-MESSAGE&quot;;
++		allTokens[NONE].keywordText = &quot;NONE&quot;;
++		allTokens[NOPAUSE].keywordText = &quot;NO-PAUSE&quot;;
++		allTokens[NOPREFETCH].keywordText = &quot;NO-PREFETCH&quot;;
++		allTokens[NORETURNVALUE].keywordText = &quot;NO-RETURN-VALUE&quot;;
++		allTokens[NORMAL].keywordText = &quot;NORMAL&quot;;
++		allTokens[NOROWMARKERS].keywordText = &quot;NO-ROW-MARKERS&quot;;
++		allTokens[NOSCROLLBARVERTICAL].keywordText = &quot;NO-SCROLLBAR-VERTICAL&quot;;
++		allTokens[NOSEPARATECONNECTION].keywordText = &quot;NO-SEPARATE-CONNECTION&quot;;
++		allTokens[NOSEPARATORS].keywordText = &quot;NO-SEPARATORS&quot;;
++		allTokens[NOTABSTOP].keywordText = &quot;NO-TAB-STOP&quot;;
++		allTokens[NOUNDERLINE].keywordText = &quot;NO-UNDERLINE&quot;;
++		allTokens[NOUNDO].keywordText = &quot;NO-UNDO&quot;;
++		allTokens[NOVALIDATE].keywordText = &quot;NO-VALIDATE&quot;;
++		allTokens[NOWAIT].keywordText = &quot;NO-WAIT&quot;;
++		allTokens[NOWORDWRAP].keywordText = &quot;NO-WORD-WRAP&quot;;
++		allTokens[NOT].keywordText = &quot;NOT&quot;;
++		allTokens[NULL_KW].keywordText = &quot;NULL&quot;;
++		allTokens[NUMALIASES].keywordText = &quot;NUM-ALIASES&quot;;
++		allTokens[NUMCOPIES].keywordText = &quot;NUM-COPIES&quot;;
++		allTokens[NUMDBS].keywordText = &quot;NUM-DBS&quot;;
++		allTokens[NUMENTRIES].keywordText = &quot;NUM-ENTRIES&quot;;
++		allTokens[NUMRESULTS].keywordText = &quot;NUM-RESULTS&quot;;
++		allTokens[NUMERIC].keywordText = &quot;NUMERIC&quot;;
++		allTokens[OBJECT].keywordText = &quot;OBJECT&quot;;
++		allTokens[OCTETLENGTH].keywordText = &quot;OCTET-LENGTH&quot;;
++		allTokens[OF].keywordText = &quot;OF&quot;;
++		allTokens[OFF].keywordText = &quot;OFF&quot;;
++		allTokens[OK].keywordText = &quot;OK&quot;;
++		allTokens[OKCANCEL].keywordText = &quot;OK-CANCEL&quot;;
++		allTokens[OLD].keywordText = &quot;OLD&quot;;
++		allTokens[ON].keywordText = &quot;ON&quot;;
++		allTokens[ONLY].keywordText = &quot;ONLY&quot;;
++		allTokens[OPEN].keywordText = &quot;OPEN&quot;;
++		allTokens[OPSYS].keywordText = &quot;OPSYS&quot;;
++		allTokens[OPTION].keywordText = &quot;OPTION&quot;;
++		allTokens[OR].keywordText = &quot;OR&quot;;
++		allTokens[ORDER].keywordText = &quot;ORDER&quot;;
++		allTokens[ORDEREDJOIN].keywordText = &quot;ORDERED-JOIN&quot;;
++		allTokens[ORDINAL].keywordText = &quot;ORDINAL&quot;;
++		allTokens[OS2].keywordText = &quot;OS2&quot;;
++		allTokens[OS400].keywordText = &quot;OS400&quot;;
++		allTokens[OSAPPEND].keywordText = &quot;OS-APPEND&quot;;
++		allTokens[OSCOMMAND].keywordText = &quot;OS-COMMAND&quot;;
++		allTokens[OSCOPY].keywordText = &quot;OS-COPY&quot;;
++		allTokens[OSCREATEDIR].keywordText = &quot;OS-CREATE-DIR&quot;;
++		allTokens[OSDELETE].keywordText = &quot;OS-DELETE&quot;;
++		allTokens[OSDIR].keywordText = &quot;OS-DIR&quot;;
++		allTokens[OSDRIVES].keywordText = &quot;OS-DRIVES&quot;;
++		allTokens[OSERROR].keywordText = &quot;OS-ERROR&quot;;
++		allTokens[OSGETENV].keywordText = &quot;OS-GETENV&quot;;
++		allTokens[OSRENAME].keywordText = &quot;OS-RENAME&quot;;
++		allTokens[OTHERWISE].keywordText = &quot;OTHERWISE&quot;;
++		allTokens[OUTER].keywordText = &quot;OUTER&quot;;
++		allTokens[OUTERJOIN].keywordText = &quot;OUTER-JOIN&quot;;
++		allTokens[OUTPUT].keywordText = &quot;OUTPUT&quot;;
++		allTokens[OVERLAY].keywordText = &quot;OVERLAY&quot;;
++		allTokens[OVERRIDE].keywordText = &quot;OVERRIDE&quot;;
++		allTokens[PAGE].keywordText = &quot;PAGE&quot;;
++		allTokens[PAGEBOTTOM].keywordText = &quot;PAGE-BOTTOM&quot;;
++		allTokens[PAGENUMBER].keywordText = &quot;PAGE-NUMBER&quot;;
++		allTokens[PAGESIZE_KW].keywordText = &quot;PAGE-SIZE&quot;;
++		allTokens[PAGETOP].keywordText = &quot;PAGE-TOP&quot;;
++		allTokens[PAGEWIDTH].keywordText = &quot;PAGE-WIDTH&quot;;
++		allTokens[PAGED].keywordText = &quot;PAGED&quot;;
++		allTokens[PARAMETER].keywordText = &quot;PARAMETER&quot;;
++		allTokens[PARENT].keywordText = &quot;PARENT&quot;;
++		allTokens[PARTIALKEY].keywordText = &quot;PARTIAL-KEY&quot;;
++		allTokens[PASCAL_KW].keywordText = &quot;PASCAL&quot;;
++		allTokens[PAUSE].keywordText = &quot;PAUSE&quot;;
++		allTokens[PDBNAME].keywordText = &quot;PDBNAME&quot;;
++		allTokens[PERFORMANCE].keywordText = &quot;PERFORMANCE&quot;;
++		allTokens[PERSISTENT].keywordText = &quot;PERSISTENT&quot;;
++		allTokens[PFCOLOR].keywordText = &quot;PFCOLOR&quot;;
++		allTokens[PINNABLE].keywordText = &quot;PINNABLE&quot;;
++		allTokens[PORTRAIT].keywordText = &quot;PORTRAIT&quot;;
++		allTokens[POSITION].keywordText = &quot;POSITION&quot;;
++		allTokens[PRECISION].keywordText = &quot;PRECISION&quot;;
++		allTokens[PREPROCESS].keywordText = &quot;PREPROCESS&quot;;
++		allTokens[PRESELECT].keywordText = &quot;PRESELECT&quot;;
++		allTokens[PREV].keywordText = &quot;PREV&quot;;
++		allTokens[PRIMARY].keywordText = &quot;PRIMARY&quot;;
++		allTokens[PRINTER].keywordText = &quot;PRINTER&quot;;
++		allTokens[PRINTERSETUP].keywordText = &quot;PRINTER-SETUP&quot;;
++		allTokens[PRIVATE].keywordText = &quot;PRIVATE&quot;;
++		allTokens[PRIVILEGES].keywordText = &quot;PRIVILEGES&quot;;
++		allTokens[PROCTEXT].keywordText = &quot;PROC-TEXT&quot;;
++		allTokens[PROCTEXTBUFFER].keywordText = &quot;PROC-TEXT-BUFFER&quot;;
++		allTokens[PROCHANDLE].keywordText = &quot;PROC-HANDLE&quot;;
++		allTokens[PROCSTATUS].keywordText = &quot;PROC-STATUS&quot;;
++		allTokens[PROCEDURE].keywordText = &quot;PROCEDURE&quot;;
++		allTokens[PROCESS].keywordText = &quot;PROCESS&quot;;
++		allTokens[PROFILER].keywordText = &quot;PROFILER&quot;;
++		allTokens[PROGRAMNAME].keywordText = &quot;PROGRAM-NAME&quot;;
++		allTokens[PROGRESS].keywordText = &quot;PROGRESS&quot;;
++		allTokens[PROMPT].keywordText = &quot;PROMPT&quot;;
++		allTokens[PROMPTFOR].keywordText = &quot;PROMPT-FOR&quot;;
++		allTokens[PROMSGS].keywordText = &quot;PROMSGS&quot;;
++		allTokens[PROPATH].keywordText = &quot;PROPATH&quot;;
++		allTokens[PROVERSION].keywordText = &quot;PROVERSION&quot;;
++		allTokens[PUBLIC].keywordText = &quot;PUBLIC&quot;;
++		allTokens[PUBLISH].keywordText = &quot;PUBLISH&quot;;
++		allTokens[PUT].keywordText = &quot;PUT&quot;;
++		allTokens[PUTBITS].keywordText = &quot;PUT-BITS&quot;;
++		allTokens[PUTBYTE].keywordText = &quot;PUT-BYTE&quot;;
++		allTokens[PUTBYTES].keywordText = &quot;PUT-BYTES&quot;;
++		allTokens[PUTDOUBLE].keywordText = &quot;PUT-DOUBLE&quot;;
++		allTokens[PUTFLOAT].keywordText = &quot;PUT-FLOAT&quot;;
++		allTokens[PUTKEYVALUE].keywordText = &quot;PUT-KEY-VALUE&quot;;
++		allTokens[PUTLONG].keywordText = &quot;PUT-LONG&quot;;
++		allTokens[PUTSHORT].keywordText = &quot;PUT-SHORT&quot;;
++		allTokens[PUTSTRING].keywordText = &quot;PUT-STRING&quot;;
++		allTokens[PUTUNSIGNEDSHORT].keywordText = &quot;PUT-UNSIGNED-SHORT&quot;;
++		allTokens[QUERY].keywordText = &quot;QUERY&quot;;
++		allTokens[QUERYCLOSE].keywordText = &quot;QUERY-CLOSE&quot;;
++		allTokens[QUERYOFFEND].keywordText = &quot;QUERY-OFF-END&quot;;
++		allTokens[QUERYTUNING].keywordText = &quot;QUERY-TUNING&quot;;
++		allTokens[QUESTION].keywordText = &quot;QUESTION&quot;;
++		allTokens[QUIT].keywordText = &quot;QUIT&quot;;
++		allTokens[QUOTER].keywordText = &quot;QUOTER&quot;;
++		allTokens[RINDEX].keywordText = &quot;R-INDEX&quot;;
++		allTokens[RADIOBUTTONS].keywordText = &quot;RADIO-BUTTONS&quot;;
++		allTokens[RADIOSET].keywordText = &quot;RADIO-SET&quot;;
++		allTokens[RANDOM].keywordText = &quot;RANDOM&quot;;
++		allTokens[RAW].keywordText = &quot;RAW&quot;;
++		allTokens[RAWTRANSFER].keywordText = &quot;RAW-TRANSFER&quot;;
++		allTokens[RCODEINFORMATION].keywordText = &quot;RCODE-INFORMATION&quot;;
++		allTokens[READ].keywordText = &quot;READ&quot;;
++		allTokens[READAVAILABLE].keywordText = &quot;READ-AVAILABLE&quot;;
++		allTokens[READEXACTNUM].keywordText = &quot;READ-EXACT-NUM&quot;;
++		allTokens[READONLY].keywordText = &quot;READ-ONLY&quot;;
++		allTokens[READKEY].keywordText = &quot;READKEY&quot;;
++		allTokens[REAL].keywordText = &quot;REAL&quot;;
++		allTokens[RECID].keywordText = &quot;RECID&quot;;
++		allTokens[RECORDLENGTH].keywordText = &quot;RECORD-LENGTH&quot;;
++		allTokens[RECTANGLE].keywordText = &quot;RECTANGLE&quot;;
++		allTokens[RECURSIVE].keywordText = &quot;RECURSIVE&quot;;
++		allTokens[RELEASE].keywordText = &quot;RELEASE&quot;;
++		allTokens[REPEAT].keywordText = &quot;REPEAT&quot;;
++		allTokens[REPLACE].keywordText = &quot;REPLACE&quot;;
++		allTokens[REPLICATIONCREATE].keywordText = &quot;REPLICATION-CREATE&quot;;
++		allTokens[REPLICATIONDELETE].keywordText = &quot;REPLICATION-DELETE&quot;;
++		allTokens[REPLICATIONWRITE].keywordText = &quot;REPLICATION-WRITE&quot;;
++		allTokens[REPOSITION].keywordText = &quot;REPOSITION&quot;;
++		allTokens[REPOSITIONFORWARD].keywordText = &quot;REPOSITION-FORWARD&quot;;
++		allTokens[REPOSITIONBACKWARD].keywordText = &quot;REPOSITION-BACKWARD&quot;;
++		allTokens[REPOSITIONTOROW].keywordText = &quot;REPOSITION-TO-ROW&quot;;
++		allTokens[REPOSITIONTOROWID].keywordText = &quot;REPOSITION-TO-ROWID&quot;;
++		allTokens[REQUEST].keywordText = &quot;REQUEST&quot;;
++		allTokens[RESULT].keywordText = &quot;RESULT&quot;;
++		allTokens[RETAIN].keywordText = &quot;RETAIN&quot;;
++		allTokens[RETAINSHAPE].keywordText = &quot;RETAIN-SHAPE&quot;;
++		allTokens[RETRY].keywordText = &quot;RETRY&quot;;
++		allTokens[RETRYCANCEL].keywordText = &quot;RETRY-CANCEL&quot;;
++		allTokens[RETURN].keywordText = &quot;RETURN&quot;;
++		allTokens[RETURNTOSTARTDIR].keywordText = &quot;RETURN-TO-START-DIR&quot;;
++		allTokens[RETURNVALUE].keywordText = &quot;RETURN-VALUE&quot;;
++		allTokens[RETURNS].keywordText = &quot;RETURNS&quot;;
++		allTokens[REVERSEFROM].keywordText = &quot;REVERSE-FROM&quot;;
++		allTokens[REVERT].keywordText = &quot;REVERT&quot;;
++		allTokens[REVOKE].keywordText = &quot;REVOKE&quot;;
++		allTokens[RGBVALUE].keywordText = &quot;RGB-VALUE&quot;;
++		allTokens[RIGHT].keywordText = &quot;RIGHT&quot;;
++		allTokens[RIGHTALIGNED].keywordText = &quot;RIGHT-ALIGNED&quot;;
++		allTokens[RIGHTTRIM].keywordText = &quot;RIGHT-TRIM&quot;;
++		allTokens[ROUND].keywordText = &quot;ROUND&quot;;
++		allTokens[ROW].keywordText = &quot;ROW&quot;;
++		allTokens[ROWHEIGHTCHARS].keywordText = &quot;ROW-HEIGHT-CHARS&quot;;
++		allTokens[ROWHEIGHTPIXELS].keywordText = &quot;ROW-HEIGHT-PIXELS&quot;;
++		allTokens[ROWID].keywordText = &quot;ROWID&quot;;
++		allTokens[ROWOF].keywordText = &quot;ROW-OF&quot;;
++		allTokens[RULE].keywordText = &quot;RULE&quot;;
++		allTokens[RUN].keywordText = &quot;RUN&quot;;
++		allTokens[RUNPROCEDURE].keywordText = &quot;RUN-PROCEDURE&quot;;
++		allTokens[SAVE].keywordText = &quot;SAVE&quot;;
++		allTokens[SAVECACHE].keywordText = &quot;SAVECACHE&quot;;
++		allTokens[SAVEAS].keywordText = &quot;SAVE-AS&quot;;
++		allTokens[SAXREADER].keywordText = &quot;SAX-READER&quot;;
++		allTokens[SCHEMA].keywordText = &quot;SCHEMA&quot;;
++		allTokens[SCREEN].keywordText = &quot;SCREEN&quot;;
++		allTokens[SCREENIO].keywordText = &quot;SCREEN-IO&quot;;
++		allTokens[SCREENLINES].keywordText = &quot;SCREEN-LINES&quot;;
++		allTokens[SCROLL].keywordText = &quot;SCROLL&quot;;
++		allTokens[SCROLLABLE].keywordText = &quot;SCROLLABLE&quot;;
++		allTokens[SCROLLBARHORIZONTAL].keywordText = &quot;SCROLLBAR-HORIZONTAL&quot;;
++		allTokens[SCROLLBARVERTICAL].keywordText = &quot;SCROLLBAR-VERTICAL&quot;;
++		allTokens[SCROLLING].keywordText = &quot;SCROLLING&quot;;
++		allTokens[SDBNAME].keywordText = &quot;SDBNAME&quot;;
++		allTokens[SEARCH].keywordText = &quot;SEARCH&quot;;
++		allTokens[SEARCHSELF].keywordText = &quot;SEARCH-SELF&quot;;
++		allTokens[SEARCHTARGET].keywordText = &quot;SEARCH-TARGET&quot;;
++		allTokens[SECTION].keywordText = &quot;SECTION&quot;;
++		allTokens[SEEK].keywordText = &quot;SEEK&quot;;
++		allTokens[SELECT].keywordText = &quot;SELECT&quot;;
++		allTokens[SELECTION].keywordText = &quot;SELECTION&quot;;
++		allTokens[SELECTIONLIST].keywordText = &quot;SELECTION-LIST&quot;;
++		allTokens[SELF].keywordText = &quot;SELF&quot;;
++		allTokens[SEND].keywordText = &quot;SEND&quot;;
++		allTokens[SENDSQLSTATEMENT].keywordText = &quot;SEND-SQL-STATEMENT&quot;;
++		allTokens[SEPARATECONNECTION].keywordText = &quot;SEPARATE-CONNECTION&quot;;
++		allTokens[SEPARATORS].keywordText = &quot;SEPARATORS&quot;;
++		allTokens[SERVER].keywordText = &quot;SERVER&quot;;
++		allTokens[SERVERSOCKET].keywordText = &quot;SERVER-SOCKET&quot;;
++		allTokens[SESSION].keywordText = &quot;SESSION&quot;;
++		allTokens[SET].keywordText = &quot;SET&quot;;
++		allTokens[SETBYTEORDER].keywordText = &quot;SET-BYTE-ORDER&quot;;
++		allTokens[SETCONTENTS].keywordText = &quot;SET-CONTENTS&quot;;
++		allTokens[SETCURRENTVALUE].keywordText = &quot;SET-CURRENT-VALUE&quot;;
++		allTokens[SETPOINTERVALUE].keywordText = &quot;SET-POINTER-VALUE&quot;;
++		allTokens[SETSIZE].keywordText = &quot;SET-SIZE&quot;;
++		allTokens[SETUSERID].keywordText = &quot;SETUSERID&quot;;
++		allTokens[SHARELOCK].keywordText = &quot;SHARE-LOCK&quot;;
++		allTokens[SHARED].keywordText = &quot;SHARED&quot;;
++		allTokens[SHOWSTATS].keywordText = &quot;SHOW-STATS&quot;;
++		allTokens[SIDELABELS].keywordText = &quot;SIDE-LABELS&quot;;
++		allTokens[SILENT].keywordText = &quot;SILENT&quot;;
++		allTokens[SIMPLE].keywordText = &quot;SIMPLE&quot;;
++		allTokens[SINGLE].keywordText = &quot;SINGLE&quot;;
++		allTokens[SIZE].keywordText = &quot;SIZE&quot;;
++		allTokens[SIZECHARS].keywordText = &quot;SIZE-CHARS&quot;;
++		allTokens[SIZEPIXELS].keywordText = &quot;SIZE-PIXELS&quot;;
++		allTokens[SKIP].keywordText = &quot;SKIP&quot;;
++		allTokens[SKIPDELETEDRECORD].keywordText = &quot;SKIP-DELETED-RECORD&quot;;
++		allTokens[SLIDER].keywordText = &quot;SLIDER&quot;;
++		allTokens[SMALLINT].keywordText = &quot;SMALLINT&quot;;
++		allTokens[SOCKET].keywordText = &quot;SOCKET&quot;;
++		allTokens[SOME].keywordText = &quot;SOME&quot;;
++		allTokens[SORT].keywordText = &quot;SORT&quot;;
++		allTokens[SOURCE].keywordText = &quot;SOURCE&quot;;
++		allTokens[SOURCEPROCEDURE].keywordText = &quot;SOURCE-PROCEDURE&quot;;
++		allTokens[SPACE].keywordText = &quot;SPACE&quot;;
++		allTokens[SQL].keywordText = &quot;SQL&quot;;
++		allTokens[SQRT].keywordText = &quot;SQRT&quot;;
++		allTokens[START].keywordText = &quot;START&quot;;
++		allTokens[STARTMOVE].keywordText = &quot;START-MOVE&quot;;
++		allTokens[STARTRESIZE].keywordText = &quot;START-RESIZE&quot;;
++		allTokens[STARTROWRESIZE].keywordText = &quot;START-ROW-RESIZE&quot;;
++		allTokens[STATUS].keywordText = &quot;STATUS&quot;;
++		allTokens[STATUSBAR].keywordText = &quot;STATUS-BAR&quot;;
++		allTokens[STDCALL_KW].keywordText = &quot;STDCALL&quot;;
++		allTokens[STRETCHTOFIT].keywordText = &quot;STRETCH-TO-FIT&quot;;
++		allTokens[STOP].keywordText = &quot;STOP&quot;;
++		allTokens[STOREDPROCEDURE].keywordText = &quot;STORED-PROCEDURE&quot;;
++		allTokens[STREAM].keywordText = &quot;STREAM&quot;;
++		allTokens[STREAMIO].keywordText = &quot;STREAM-IO&quot;;
++		allTokens[STRING].keywordText = &quot;STRING&quot;;
++		allTokens[STRINGXREF].keywordText = &quot;STRING-XREF&quot;;
++		allTokens[SUBAVERAGE].keywordText = &quot;SUB-AVERAGE&quot;;
++		allTokens[SUBCOUNT].keywordText = &quot;SUB-COUNT&quot;;
++		allTokens[SUBMAXIMUM].keywordText = &quot;SUB-MAXIMUM&quot;;
++		allTokens[SUBMENU].keywordText = &quot;SUB-MENU&quot;;
++		allTokens[SUBMENUHELP].keywordText = &quot;SUB-MENU-HELP&quot;;
++		allTokens[SUBMINIMUM].keywordText = &quot;SUB-MINIMUM&quot;;
++		allTokens[SUBTOTAL].keywordText = &quot;SUB-TOTAL&quot;;
++		allTokens[SUBSCRIBE].keywordText = &quot;SUBSCRIBE&quot;;
++		allTokens[SUBSTITUTE].keywordText = &quot;SUBSTITUTE&quot;;
++		allTokens[SUBSTRING].keywordText = &quot;SUBSTRING&quot;;
++		allTokens[SUM].keywordText = &quot;SUM&quot;;
++		allTokens[SUMMARY].keywordText = &quot;SUMMARY&quot;;
++		allTokens[SUPER].keywordText = &quot;SUPER&quot;;
++		allTokens[SYSTEMDIALOG].keywordText = &quot;SYSTEM-DIALOG&quot;;
++		allTokens[SYSTEMHELP].keywordText = &quot;SYSTEM-HELP&quot;;
++		allTokens[TABLE].keywordText = &quot;TABLE&quot;;
++		allTokens[TABLEHANDLE].keywordText = &quot;TABLE-HANDLE&quot;;
++		allTokens[TABLENUMBER].keywordText = &quot;TABLE-NUMBER&quot;;
++		allTokens[TARGET].keywordText = &quot;TARGET&quot;;
++		allTokens[TARGETPROCEDURE].keywordText = &quot;TARGET-PROCEDURE&quot;;
++		allTokens[TEMPTABLE].keywordText = &quot;TEMP-TABLE&quot;;
++		allTokens[TERMINAL].keywordText = &quot;TERMINAL&quot;;
++		allTokens[TERMINATE].keywordText = &quot;TERMINATE&quot;;
++		allTokens[TEXT].keywordText = &quot;TEXT&quot;;
++		allTokens[TEXTCURSOR].keywordText = &quot;TEXT-CURSOR&quot;;
++		allTokens[TEXTSEGGROW].keywordText = &quot;TEXT-SEG-GROWTH&quot;;
++		allTokens[THEN].keywordText = &quot;THEN&quot;;
++		allTokens[THISPROCEDURE].keywordText = &quot;THIS-PROCEDURE&quot;;
++		allTokens[THREED].keywordText = &quot;THREE-D&quot;;
++		allTokens[THROUGH].keywordText = &quot;THROUGH&quot;;
++		allTokens[TICMARKS].keywordText = &quot;TIC-MARKS&quot;;
++		allTokens[TIME].keywordText = &quot;TIME&quot;;
++		allTokens[TITLE].keywordText = &quot;TITLE&quot;;
++		allTokens[TO].keywordText = &quot;TO&quot;;
++		allTokens[TOOLBAR].keywordText = &quot;TOOL-BAR&quot;;
++		allTokens[TOOLTIP].keywordText = &quot;TOOLTIP&quot;;
++		allTokens[TOROWID].keywordText = &quot;TO-ROWID&quot;;
++		allTokens[TODAY].keywordText = &quot;TODAY&quot;;
++		allTokens[TOGGLEBOX].keywordText = &quot;TOGGLE-BOX&quot;;
++		allTokens[TOP].keywordText = &quot;TOP&quot;;
++		allTokens[TOPONLY].keywordText = &quot;TOP-ONLY&quot;;
++		allTokens[TOPIC].keywordText = &quot;TOPIC&quot;;
++		allTokens[TOTAL].keywordText = &quot;TOTAL&quot;;
++		allTokens[TRANSACTION].keywordText = &quot;TRANSACTION&quot;;
++		allTokens[TRANSACTIONMODE].keywordText = &quot;TRANSACTION-MODE&quot;;
++		allTokens[TRANSPARENT].keywordText = &quot;TRANSPARENT&quot;;
++		allTokens[TRAILING].keywordText = &quot;TRAILING&quot;;
++		allTokens[TRIGGER].keywordText = &quot;TRIGGER&quot;;
++		allTokens[TRIGGERS].keywordText = &quot;TRIGGERS&quot;;
++		allTokens[TRIM].keywordText = &quot;TRIM&quot;;
++		allTokens[TRUE_KW].keywordText = &quot;TRUE&quot;;
++		allTokens[TRUNCATE].keywordText = &quot;TRUNCATE&quot;;
++		allTokens[UNBUFFERED].keywordText = &quot;UNBUFFERED&quot;;
++		allTokens[UNDERLINE].keywordText = &quot;UNDERLINE&quot;;
++		allTokens[UNDO].keywordText = &quot;UNDO&quot;;
++		allTokens[UNFORMATTED].keywordText = &quot;UNFORMATTED&quot;;
++		allTokens[UNION].keywordText = &quot;UNION&quot;;
++		allTokens[UNIQUE].keywordText = &quot;UNIQUE&quot;;
++		allTokens[UNIQUEMATCH].keywordText = &quot;UNIQUE-MATCH&quot;;
++		allTokens[UNIX].keywordText = &quot;UNIX&quot;;
++		allTokens[UNLESSHIDDEN].keywordText = &quot;UNLESS-HIDDEN&quot;;
++		allTokens[UNLOAD].keywordText = &quot;UNLOAD&quot;;
++		allTokens[UNSUBSCRIBE].keywordText = &quot;UNSUBSCRIBE&quot;;
++		allTokens[UP].keywordText = &quot;UP&quot;;
++		allTokens[UPDATE].keywordText = &quot;UPDATE&quot;;
++		allTokens[URLDECODE].keywordText = &quot;URL-DECODE&quot;;
++		allTokens[URLENCODE].keywordText = &quot;URL-ENCODE&quot;;
++		allTokens[USE].keywordText = &quot;USE&quot;;
++		allTokens[USEDICTEXPS].keywordText = &quot;USE-DICT-EXPS&quot;;
++		allTokens[USEFILENAME].keywordText = &quot;USE-FILENAME&quot;;
++		allTokens[USEINDEX].keywordText = &quot;USE-INDEX&quot;;
++		allTokens[USER].keywordText = &quot;USER&quot;;
++		allTokens[USERID].keywordText = &quot;USERID&quot;;
++		allTokens[USEREVVIDEO].keywordText = &quot;USE-REVVIDEO&quot;;
++		allTokens[USETEXT].keywordText = &quot;USE-TEXT&quot;;
++		allTokens[USEUNDERLINE].keywordText = &quot;USE-UNDERLINE&quot;;
++		allTokens[USING].keywordText = &quot;USING&quot;;
++		allTokens[V6FRAME].keywordText = &quot;V6FRAME&quot;;
++		allTokens[VALIDEVENT].keywordText = &quot;VALID-EVENT&quot;;
++		allTokens[VALIDHANDLE].keywordText = &quot;VALID-HANDLE&quot;;
++		allTokens[VALIDATE].keywordText = &quot;VALIDATE&quot;;
++		allTokens[VALUE].keywordText = &quot;VALUE&quot;;
++		allTokens[VALUECHANGED].keywordText = &quot;VALUE-CHANGED&quot;;
++		allTokens[VALUES].keywordText = &quot;VALUES&quot;;
++		allTokens[VARIABLE].keywordText = &quot;VARIABLE&quot;;
++		allTokens[VERBOSE].keywordText = &quot;VERBOSE&quot;;
++		allTokens[VERTICAL].keywordText = &quot;VERTICAL&quot;;
++		allTokens[VIEW].keywordText = &quot;VIEW&quot;;
++		allTokens[VIEWAS].keywordText = &quot;VIEW-AS&quot;;
++		allTokens[VMS].keywordText = &quot;VMS&quot;;
++		allTokens[WAIT].keywordText = &quot;WAIT&quot;;
++		allTokens[WAITFOR].keywordText = &quot;WAIT-FOR&quot;;
++		allTokens[WARNING].keywordText = &quot;WARNING&quot;;
++		allTokens[WEBCONTEXT].keywordText = &quot;WEB-CONTEXT&quot;;
++		allTokens[WEEKDAY].keywordText = &quot;WEEKDAY&quot;;
++		allTokens[WHEN].keywordText = &quot;WHEN&quot;;
++		allTokens[WHERE].keywordText = &quot;WHERE&quot;;
++		allTokens[WHILE].keywordText = &quot;WHILE&quot;;
++		allTokens[WIDGET].keywordText = &quot;WIDGET&quot;;
++		allTokens[WIDGETHANDLE].keywordText = &quot;WIDGET-HANDLE&quot;;
++		allTokens[WIDGETPOOL].keywordText = &quot;WIDGET-POOL&quot;;
++		allTokens[WIDTH].keywordText = &quot;WIDTH&quot;;
++		allTokens[WIDTHCHARS].keywordText = &quot;WIDTH-CHARS&quot;;
++		allTokens[WIDTHPIXELS].keywordText = &quot;WIDTH-PIXELS&quot;;
++		allTokens[WINDOW].keywordText = &quot;WINDOW&quot;;
++		allTokens[WINDOWDELAYEDMINIMIZE].keywordText = &quot;WINDOW-DELAYED-MINIMIZE&quot;;
++		allTokens[WINDOWMAXIMIZED].keywordText = &quot;WINDOW-MAXIMIZED&quot;;
++		allTokens[WINDOWMINIMIZED].keywordText = &quot;WINDOW-MINIMIZED&quot;;
++		allTokens[WINDOWNAME].keywordText = &quot;WINDOW-NAME&quot;;
++		allTokens[WINDOWNORMAL].keywordText = &quot;WINDOW-NORMAL&quot;;
++		allTokens[WITH].keywordText = &quot;WITH&quot;;
++		allTokens[WORDINDEX].keywordText = &quot;WORD-INDEX&quot;;
++		allTokens[WORKTABLE].keywordText = &quot;WORK-TABLE&quot;;
++		allTokens[WRITE].keywordText = &quot;WRITE&quot;;
++		allTokens[X].keywordText = &quot;X&quot;;
++		allTokens[XDOCUMENT].keywordText = &quot;X-DOCUMENT&quot;;
++		allTokens[XNODEREF].keywordText = &quot;X-NODEREF&quot;;
++		allTokens[XOF].keywordText = &quot;X-OF&quot;;
++		allTokens[XCODE].keywordText = &quot;XCODE&quot;;
++		allTokens[XREF].keywordText = &quot;XREF&quot;;
++		allTokens[Y].keywordText = &quot;Y&quot;;
++		allTokens[YOF].keywordText = &quot;Y-OF&quot;;
++		allTokens[YEAR].keywordText = &quot;YEAR&quot;;
++		allTokens[YES].keywordText = &quot;YES&quot;;
++		allTokens[YESNO].keywordText = &quot;YES-NO&quot;;
++		allTokens[YESNOCANCEL].keywordText = &quot;YES-NO-CANCEL&quot;;
++		allTokens[FUNCTIONCALLTYPE].keywordText = &quot;FUNCTION-CALL-TYPE&quot;;
++		allTokens[GETATTRCALLTYPE].keywordText = &quot;GET-ATTR-CALL-TYPE&quot;;
++		allTokens[PROCEDURECALLTYPE].keywordText = &quot;PROCEDURE-CALL-TYPE&quot;;
++		allTokens[SAXCOMPLETE].keywordText = &quot;SAX-COMPLETE&quot;;
++		allTokens[SAXPARSERERROR].keywordText = &quot;SAX-PARSER-ERROR&quot;;
++		allTokens[SAXRUNNING].keywordText = &quot;SAX-RUNNING&quot;;
++		allTokens[SAXUNINITIALIZED].keywordText = &quot;SAX-UNINITIALIZED&quot;;
++		allTokens[SETATTRCALLTYPE].keywordText = &quot;SET-ATTR-CALL-TYPE&quot;;
++		allTokens[COPYLOB].keywordText = &quot;COPY-LOB&quot;;
++		allTokens[DATARELATION].keywordText = &quot;DATA-RELATION&quot;;
++		allTokens[DATASOURCE].keywordText = &quot;DATA-SOURCE&quot;;
++		allTokens[DATASET].keywordText = &quot;DATASET&quot;;
++		allTokens[DATASETHANDLE].keywordText = &quot;DATASET-HANDLE&quot;;
++		allTokens[LOGMANAGER].keywordText = &quot;LOG-MANAGER&quot;;
++		allTokens[NOLOBS].keywordText = &quot;NO-LOBS&quot;;
++		allTokens[NOW].keywordText = &quot;NOW&quot;;
++		allTokens[STARTING].keywordText = &quot;STARTING&quot;;
++		allTokens[BASE64].keywordText = &quot;BASE64&quot;;
++		allTokens[SOAPHEADER].keywordText = &quot;SOAP-HEADER&quot;;
++		allTokens[SOAPHEADERENTRYREF].keywordText = &quot;SOAP-HEADER-ENTRYREF&quot;;
++		allTokens[BLOB].keywordText = &quot;BLOB&quot;;
++		allTokens[CLOB].keywordText = &quot;CLOB&quot;;
++		allTokens[DATETIME].keywordText = &quot;DATETIME&quot;;
++		allTokens[DATETIMETZ].keywordText = &quot;DATETIME-TZ&quot;;
++		allTokens[LONGCHAR].keywordText = &quot;LONGCHAR&quot;;
++		allTokens[RELATIONFIELDS].keywordText = &quot;RELATION-FIELDS&quot;;
++		allTokens[TTCODEPAGE].keywordText = &quot;TTCODEPAGE&quot;;
++		allTokens[COLUMNCODEPAGE].keywordText = &quot;COLUMN-CODEPAGE&quot;;
++		allTokens[DYNAMICCURRENTVALUE].keywordText = &quot;DYNAMIC-CURRENT-VALUE&quot;;
++		allTokens[DYNAMICNEXTVALUE].keywordText = &quot;DYNAMIC-NEXT-VALUE&quot;;
++		allTokens[FIXCODEPAGE].keywordText = &quot;FIX-CODEPAGE&quot;;
++		allTokens[INTERVAL].keywordText = &quot;INTERVAL&quot;;
++		allTokens[ISCODEPAGEFIXED].keywordText = &quot;IS-CODEPAGE-FIXED&quot;;
++		allTokens[ISCOLUMNCODEPAGE].keywordText = &quot;IS-COLUMN-CODEPAGE&quot;;
++		allTokens[ISODATE].keywordText = &quot;ISO-DATE&quot;;
++		allTokens[MTIME].keywordText = &quot;MTIME&quot;;
++		allTokens[LOBDIR].keywordText = &quot;LOB-DIR&quot;;
++		allTokens[TIMEZONE].keywordText = &quot;TIMEZONE&quot;;
++		allTokens[BYVALUE].keywordText = &quot;BY-VALUE&quot;;
++		allTokens[BYREFERENCE].keywordText = &quot;BY-REFERENCE&quot;;
++		allTokens[ADDINTERVAL].keywordText = &quot;ADD-INTERVAL&quot;;
++		allTokens[GETDIR].keywordText = &quot;GET-DIR&quot;;
++		allTokens[CURRENCY].keywordText = &quot;CURRENCY&quot;;
++		allTokens[ERRORCODE].keywordText = &quot;ERROR-CODE&quot;;
++		allTokens[IUNKNOWN].keywordText = &quot;IUNKNOWN&quot;;
++		allTokens[SHORT].keywordText = &quot;SHORT&quot;;
++		allTokens[UNSIGNEDBYTE].keywordText = &quot;UNSIGNED-BYTE&quot;;
++		allTokens[UNSIGNEDSHORT].keywordText = &quot;UNSIGNED-SHORT&quot;;
++		allTokens[CODEPAGE].keywordText = &quot;CODEPAGE&quot;;
++		allTokens[BASE64DECODE].keywordText = &quot;BASE64-DECODE&quot;;
++		allTokens[BASE64ENCODE].keywordText = &quot;BASE64-ENCODE&quot;;
++		allTokens[BATCHSIZE].keywordText = &quot;BATCH-SIZE&quot;;
++		allTokens[BEFORETABLE].keywordText = &quot;BEFORE-TABLE&quot;;
++		allTokens[COPYDATASET].keywordText = &quot;COPY-DATASET&quot;;
++		allTokens[COPYTEMPTABLE].keywordText = &quot;COPY-TEMP-TABLE&quot;;
++		allTokens[DATASOURCEMODIFIED].keywordText = &quot;DATA-SOURCE-MODIFIED&quot;;
++		allTokens[DECRYPT].keywordText = &quot;DECRYPT&quot;;
++		allTokens[DELETECHARACTER].keywordText = &quot;DELETE-CHARACTER&quot;;
++		allTokens[ENABLEDFIELDS].keywordText = &quot;ENABLED-FIELDS&quot;;
++		allTokens[ENCRYPT].keywordText = &quot;ENCRYPT&quot;;
++		allTokens[ENCRYPTIONSALT].keywordText = &quot;ENCRYPTION-SALT&quot;;
++		allTokens[FORMLONGINPUT].keywordText = &quot;FORM-LONG-INPUT&quot;;
++		allTokens[GENERATEPBEKEY].keywordText = &quot;GENERATE-PBE-KEY&quot;;
++		allTokens[GENERATEPBESALT].keywordText = &quot;GENERATE-PBE-SALT&quot;;
++		allTokens[GENERATERANDOMKEY].keywordText = &quot;GENERATE-RANDOM-KEY&quot;;
++		allTokens[GETCGILONGVALUE].keywordText = &quot;GET-CGI-LONG-VALUE&quot;;
++		allTokens[LASTBATCH].keywordText = &quot;LAST-BATCH&quot;;
++		allTokens[MD5DIGEST].keywordText = &quot;MD5-DIGEST&quot;;
++		allTokens[MERGEBYFIELD].keywordText = &quot;MERGE-BY-FIELD&quot;;
++		allTokens[NORMALIZE].keywordText = &quot;NORMALIZE&quot;;
++		allTokens[PBEHASHALGORITHM].keywordText = &quot;PBE-HASH-ALGORITHM&quot;;
++		allTokens[PBEKEYROUNDS].keywordText = &quot;PBE-KEY-ROUNDS&quot;;
++		allTokens[PREFERDATASET].keywordText = &quot;PREFER-DATASET&quot;;
++		allTokens[REJECTED].keywordText = &quot;REJECTED&quot;;
++		allTokens[REPOSITIONMODE].keywordText = &quot;REPOSITION-MODE&quot;;
++		allTokens[ROWSTATE].keywordText = &quot;ROW-STATE&quot;;
++		allTokens[ROWUNMODIFIED].keywordText = &quot;ROW-UNMODIFIED&quot;;
++		allTokens[ROWDELETED].keywordText = &quot;ROW-DELETED&quot;;
++		allTokens[ROWMODIFIED].keywordText = &quot;ROW-MODIFIED&quot;;
++		allTokens[ROWCREATED].keywordText = &quot;ROW-CREATED&quot;;
++		allTokens[SECURITYPOLICY].keywordText = &quot;SECURITY-POLICY&quot;;
++		allTokens[SHA1DIGEST].keywordText = &quot;SHA1-DIGEST&quot;;
++		allTokens[SSLSERVERNAME].keywordText = &quot;SSL-SERVER-NAME&quot;;
++		allTokens[1087].keywordText = &quot;SYMMETRIC-ENCRYPTION-ALGORITHM&quot;;
++		allTokens[SYMMETRICENCRYPTIONIV].keywordText = &quot;SYMMETRIC-ENCRYPTION-IV&quot;;
++		allTokens[SYMMETRICENCRYPTIONKEY].keywordText = &quot;SYMMETRIC-ENCRYPTION-KEY&quot;;
++		allTokens[SYMMETRICSUPPORT].keywordText = &quot;SYMMETRIC-SUPPORT&quot;;
++		allTokens[TRANSINITPROCEDURE].keywordText = &quot;TRANS-INIT-PROCEDURE&quot;;
++	}
+ }
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/BlockNode.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/BlockNode.java	2005-05-06 21:01:36 UTC (rev 27)
++++ trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/BlockNode.java	2005-05-13 21:37:59 UTC (rev 28)
+@@ -16,6 +16,9 @@
+ 
+ public class BlockNode extends JPNode {
+ 
++	/** For creating from persistent storage */
++	public BlockNode() { super(); }
++
+ 	public BlockNode(int handle) { super(handle); }
+ 	public BlockNode(int handle, TreeConfig config) { super(handle, config); }
+ 	public BlockNode(int file, int line, int column) { super(file, line, column); }
+@@ -25,6 +28,10 @@
+ 		assert block != null;
+ 		return block;
+ 	}
++
++	/** Every JPNode subtype has its own index. Used for persistent storage. */
++	public int getSubtypeIndex() { return 2; }
++
+ 	public void setBlock(Block block) {
+ 		setLink(JPNode.BLOCK, block);
+ 	}
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/FieldRefNode.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/FieldRefNode.java	2005-05-06 21:01:36 UTC (rev 27)
++++ trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/FieldRefNode.java	2005-05-13 21:37:59 UTC (rev 28)
+@@ -22,6 +22,9 @@
+ 
+ public class FieldRefNode extends JPNode {
+ 
++	/** For creating from persistent storage */
++	public FieldRefNode() { super(); }
++
+ 	public FieldRefNode(int handle) { super(handle); }
+ 	public FieldRefNode(int handle, TreeConfig config) { super(handle, config); }
+ 	public FieldRefNode(int file, int line, int column) { super(file, line, column); }
+@@ -45,6 +48,9 @@
+ 		return idNode;
+ 	}
+ 	
++	/** Every JPNode subtype has its own index. Used for persistent storage. */
++	public int getSubtypeIndex() { return 3; }
++
+ 	/** Get the Symbol for a Field_ref node.
+ 	 * @return Always returns one of two Symbol types: Variable or FieldBuffer.
+ 	 */
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/NodeFactory.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/NodeFactory.java	2005-05-06 21:01:36 UTC (rev 27)
++++ trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/NodeFactory.java	2005-05-13 21:37:59 UTC (rev 28)
+@@ -43,6 +43,8 @@
+ 			return new FieldRefNode(handle);
+ 		case TokenTypes.RECORD_NAME:
+ 			return new RecordNameNode(handle);
++		case TokenTypes.PROPARSEDIRECTIVE:
++			return new ProparseDirectiveNode(handle);
+ 		case TokenTypes.DO:
+ 		case TokenTypes.FOR:
+ 		case TokenTypes.REPEAT:
+@@ -73,5 +75,22 @@
+ 			return new JPNode(handle);
+ 		}
+ 	}
++	
++	public static JPNode createByIndex(int index) {
++		switch (index) {
++		case 1:
++			return new JPNode();
++		case 2:
++			return new BlockNode();
++		case 3:
++			return new FieldRefNode();
++		case 4:
++			return new RecordNameNode();
++		case 5:
++			return new ProparseDirectiveNode();
++		default:
++			throw new IllegalArgumentException();
++		}
++	}
+ 
+ }
+
+Added: trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/ProparseDirectiveNode.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/ProparseDirectiveNode.java	2005-05-06 21:01:36 UTC (rev 27)
++++ trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/ProparseDirectiveNode.java	2005-05-13 21:37:59 UTC (rev 28)
+@@ -0,0 +1,42 @@
++/* Created Apr, 2005
++ * Authors: John Green
++ * 
++ * Copyright (c) 2005 Joanju (www.joanju.com)
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
++ */
++
++package org.prorefactor.nodetypes;
++
++import org.prorefactor.core.JPNode;
++
++import com.joanju.ProparseLdr;
++
++
++public class ProparseDirectiveNode extends JPNode {
++
++	/** For creating from persistent storage */
++	public ProparseDirectiveNode() { super(); }
++
++	public ProparseDirectiveNode(int handle) { super(handle); }
++	public ProparseDirectiveNode(int handle, TreeConfig config) { super(handle, config); }
++	public ProparseDirectiveNode(int file, int line, int column) { super(file, line, column); }
++	
++	private String directiveText = &quot;&quot;;
++
++	/** Get the directive text. Might return empty, but should not return null. */
++	public String getDirectiveText() {
++		if (getHandle()!=0)
++			return ProparseLdr.getInstance().attrGetS(getHandle(), &quot;PROPARSEDIRECTIVE&quot;);
++		else
++			return directiveText;
++	}
++
++	/** Every JPNode subtype has its own index. Used for persistent storage. */
++	public int getSubtypeIndex() { return 5; }
++
++	public void setDirectiveText(String text) { directiveText = text; }
++	
++}
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/RecordNameNode.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/RecordNameNode.java	2005-05-06 21:01:36 UTC (rev 27)
++++ trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/RecordNameNode.java	2005-05-13 21:37:59 UTC (rev 28)
+@@ -17,6 +17,9 @@
+ 
+ public class RecordNameNode extends JPNode {
+ 
++	/** For creating from persistent storage */
++	public RecordNameNode() { super(); }
++
+ 	public RecordNameNode(int handle) { super(handle); }
+ 	public RecordNameNode(int handle, TreeConfig config) { super(handle, config); }
+ 	public RecordNameNode(int file, int line, int column) { super(file, line, column); }
+@@ -27,6 +30,9 @@
+ 		return bufferScope;
+ 	}
+ 	
++	/** Every JPNode subtype has its own index. Used for persistent storage. */
++	public int getSubtypeIndex() { return 4; }
++
+ 	public TableBuffer getTableBuffer() {
+ 		TableBuffer buffer = (TableBuffer) getLink(JPNode.SYMBOL);
+ 		assert buffer != null;
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/JPTreeParserTokenTypes.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/JPTreeParserTokenTypes.java	2005-05-06 21:01:36 UTC (rev 27)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/JPTreeParserTokenTypes.java	2005-05-13 21:37:59 UTC (rev 28)
+@@ -1099,4 +1099,5 @@
+ 	int BIGINT = 1092;
+ 	int TIMESTAMP = 1093;
+ 	int FIXCHAR = 1094;
++	int Last_Token_Number = 1094;
+ }
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/JPTreeParserTokenTypes.txt
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/JPTreeParserTokenTypes.txt	2005-05-06 21:01:36 UTC (rev 27)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/JPTreeParserTokenTypes.txt	2005-05-13 21:37:59 UTC (rev 28)
+@@ -1090,3 +1090,4 @@
+ BIGINT=1092
+ TIMESTAMP=1093
+ FIXCHAR=1094
++Last_Token_Number=1094
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/ProParserTokenTypes.txt
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/ProParserTokenTypes.txt	2005-05-06 21:01:36 UTC (rev 27)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/ProParserTokenTypes.txt	2005-05-13 21:37:59 UTC (rev 28)
+@@ -1089,3 +1089,4 @@
+ BIGINT=1092
+ TIMESTAMP=1093
+ FIXCHAR=1094
++Last_Token_Number=1094
+
+Modified: trunk/org.prorefactor.lib/.classpath
+===================================================================
+--- trunk/org.prorefactor.lib/.classpath	2005-05-06 21:01:36 UTC (rev 27)
++++ trunk/org.prorefactor.lib/.classpath	2005-05-13 21:37:59 UTC (rev 28)
+@@ -4,7 +4,6 @@
+ 	&lt;classpathentry kind=&quot;con&quot; path=&quot;org.eclipse.jdt.launching.JRE_CONTAINER&quot;/&gt;
+ 	&lt;classpathentry exported=&quot;true&quot; kind=&quot;lib&quot; path=&quot;hibernate/cglib-full-2.0.2.jar&quot;/&gt;
+ 	&lt;classpathentry exported=&quot;true&quot; kind=&quot;lib&quot; path=&quot;hsqldb/hsqldb.jar&quot;/&gt;
+-	&lt;classpathentry exported=&quot;true&quot; kind=&quot;lib&quot; path=&quot;hibernate/commons-lang-1.0.1.jar&quot;/&gt;
+ 	&lt;classpathentry exported=&quot;true&quot; kind=&quot;lib&quot; path=&quot;hibernate/commons-logging-1.0.4.jar&quot;/&gt;
+ 	&lt;classpathentry exported=&quot;true&quot; kind=&quot;lib&quot; path=&quot;hibernate/dom4j-1.4.jar&quot;/&gt;
+ 	&lt;classpathentry exported=&quot;true&quot; kind=&quot;lib&quot; path=&quot;hibernate/ehcache-0.9.jar&quot;/&gt;
+@@ -15,5 +14,6 @@
+ 	&lt;classpathentry exported=&quot;true&quot; kind=&quot;lib&quot; path=&quot;hibernate/xml-apis.jar&quot;/&gt;
+ 	&lt;classpathentry exported=&quot;true&quot; sourcepath=&quot;jakarta/commons-collections/src.zip&quot; kind=&quot;lib&quot; path=&quot;jakarta/commons-collections/commons-collections.jar&quot;/&gt;
+ 	&lt;classpathentry exported=&quot;true&quot; sourcepath=&quot;jakarta/commons-io/src.zip&quot; kind=&quot;lib&quot; path=&quot;jakarta/commons-io/commons-io.jar&quot;/&gt;
++	&lt;classpathentry exported=&quot;true&quot; sourcepath=&quot;jakarta/commons-lang/src.zip&quot; kind=&quot;lib&quot; path=&quot;jakarta/commons-lang/commons-lang.jar&quot;/&gt;
+ 	&lt;classpathentry kind=&quot;output&quot; path=&quot;bin&quot;/&gt;
+ &lt;/classpath&gt;
+
+Added: trunk/org.prorefactor.lib/jakarta/commons-lang/LICENSE.txt
+===================================================================
+--- trunk/org.prorefactor.lib/jakarta/commons-lang/LICENSE.txt	2005-05-06 21:01:36 UTC (rev 27)
++++ trunk/org.prorefactor.lib/jakarta/commons-lang/LICENSE.txt	2005-05-13 21:37:59 UTC (rev 28)
+@@ -0,0 +1,53 @@
++/* ====================================================================
++ * The Apache Software License, Version 1.1
++ *
++ * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
++ * reserved.
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions
++ * are met:
++ *
++ * 1. Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ *
++ * 2. Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in
++ *    the documentation and/or other materials provided with the
++ *    distribution.
++ *
++ * 3. The end-user documentation included with the redistribution, if
++ *    any, must include the following acknowledgement:
++ *       &quot;This product includes software developed by the
++ *        Apache Software Foundation (<A HREF="http://www.apache.org/">http://www.apache.org/</A>).&quot;
++ *    Alternately, this acknowledgement may appear in the software itself,
++ *    if and wherever such third-party acknowledgements normally appear.
++ *
++ * 4. The names &quot;The Jakarta Project&quot;, &quot;Commons&quot;, and &quot;Apache Software
++ *    Foundation&quot; must not be used to endorse or promote products derived
++ *    from this software without prior written permission. For written
++ *    permission, please contact <A HREF="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">apache at apache.org.</A>
++ *
++ * 5. Products derived from this software may not be called &quot;Apache&quot;
++ *    nor may &quot;Apache&quot; appear in their names without prior written
++ *    permission of the Apache Software Foundation.
++ *
++ * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
++ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
++ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
++ * DISCLAIMED.  IN NO EVENT SHALL THE APACHE SOFTWARE FOUNDATION OR
++ * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
++ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
++ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
++ * USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
++ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
++ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
++ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
++ * SUCH DAMAGE.
++ * ====================================================================
++ *
++ * This software consists of voluntary contributions made by many
++ * individuals on behalf of the Apache Software Foundation.  For more
++ * information on the Apache Software Foundation, please see
++ * &lt;<A HREF="http://www.apache.org/">http://www.apache.org/</A>&gt;.
++ */
+
+Added: trunk/org.prorefactor.lib/jakarta/commons-lang/RELEASE-NOTES.txt
+===================================================================
+--- trunk/org.prorefactor.lib/jakarta/commons-lang/RELEASE-NOTES.txt	2005-05-06 21:01:36 UTC (rev 27)
++++ trunk/org.prorefactor.lib/jakarta/commons-lang/RELEASE-NOTES.txt	2005-05-13 21:37:59 UTC (rev 28)
+@@ -0,0 +1,661 @@
++$Id: RELEASE-NOTES.txt,v 1.26 2003/08/19 02:39:59 bayard Exp $
++
++                        Commons Lang Package
++                            Version 2.0
++                           Release Notes
++
++
++INTRODUCTION:
++
++This document contains the release notes for this version of the Commons
++Lang package. Commons Lang is a set of utility functions and reusable 
++components that should be a help in any Java environment.
++
++This release has involved a major clean and tidy exercise.
++Javadoc and Tests are now much more thorough.
++All methods should now be much clearer in what they do in unusual cases.
++
++
++INCOMPATIBLE CHANGES:
++Some StringUtils methods have changed functionality from 1.0:
++    isEmpty()
++    chomp(String)
++    chomp(String,String)
++    swapCase(String)
++Numerous other methods have changed null handling to accept nulls gracefully.
++As with all major version releases, check your code for incompatibilities.
++
++
++NEW FEATURES:
++
++Since the release of the 1.0 package the following classes have been added:
++
++lang package:
++    ArrayUtils
++    BitField
++    BooleanUtils
++    CharRange (previously package scoped)
++    ClassUtils
++    StringEscapeUtils
++    WordUtils
++    IllegalClassException
++    IncompleteArgumentException
++    NotImplementedException
++    NullArgumentException
++    SerializationException
++    UnhandledException
++    Validate
++
++
++math sub-package:
++    IntRange
++    LongRange
++    Range
++    DoubleRange
++    JVMRandom
++    NumberRange
++    FloatRange
++    NumberUtils
++    Fraction
++    RandomUtils
++
++time sub-package: 
++    DateFormatUtils
++    FastDateFormat
++    DateUtils
++    StopWatch
++
++Since the release of the 1.0 package the following classes have been changed:
++
++lang:
++    CharSet:
++        Added factory method, equals and hashCode().
++        Better defined and tested the set syntax.
++    CharSetUtils:
++        added keep method:  keep any characters specified in the CharSet string
++    RandomStringUtils:
++        random method:  overloaded to allow passing in of a Random class
++    SerializationUtils:
++        added empty constructor
++    StringUtils:
++        isEmpty() changed to not trim
++        chomp() changed to be more like Perl.
++        swapCase() no longer word based, but no difference if you pass in ASCII
++        Various methods changed in the handling of null (less exceptions).
++        Many new methods.
++        Various methods deprecated.
++    SystemUtils:
++        isJavaVersionAtLeast(int) added. getJavaVersion() deprecated.
++        host of new constants.
++
++enum:
++    Enum:
++        getEnumClass(Class) added
++    EnumUtils:
++        Removed irrelevant Comparable/Serializable interfaces.
++
++exception:
++    NestableDelegate:
++        Gained many new methods for dissecting an Exception.
++    ExceptionUtils:
++        Gained many new methods to improve handling of nested stack traces.
++        
++builder:
++    ReflectionToStringBuilder:
++        Handy class added for creating default toStrings.
++    All other builder classes received a set of new methods.
++
++
++BUG FIXES:
++
++ID Sev Pri Plt Owner State Result Summary 
++13367  [PATCH] StringUtil enhancement  
++13391  Javadoc nit  
++13771  Additional Lang Method Suggestions  
++14306  NullPointerException in CompareToBuilder  
++14357  static option for reversing the stacktrace  
++14447  ToStringBuilder doesn't work well in subclasses  
++14883  StringUtils.countMatches loops forever if substring empty  
++14884  NumberRange inaccurate for Long, etc.  
++14985  More flexibility for getRootCause in ExceptionUtils  
++15154  SystemUtils.IS_JAVA_1_5 Javadoc is wrong  
++15257  Hierarchy support in ToStringBuilder.reflectionToString()  
++15438  ArrayUtils.contains()  
++15439  Enum does not support inner sub-classes  
++15986  Infinite loop in ToStringBuilder.reflectionToString for inne  
++16076  Example in Javadoc for ToStringBuilder wrong for append.  
++16193  Hierarchy support in EqualsBuilder.reflectionEquals()  
++16202  typo in the javadoc example code  
++16204  Infinite loop in StringUtils.replace(text, repl, with) + FIX  
++16227  Added class hierachy support to CompareToBuilder.reflectionC  
++16228  Added class hierachy support to HashCodeBuilder.reflectionHa  
++16284  MethodUtils: Removed unused code/unused local vars.  
++16341  No Javadoc for NestableDelegate  
++16622  Removed compile warning in FastDateFormat  
++16669  JavaDoc Errata  
++16676  StackOverflow due to ToStringBuilder  
++16689  ExceptionUtils new methods.  
++16690  Specify initial size for Enum's HashMap.  
++16787  Removed compile warning in ObjectUtils  
++17250  [Lang] Should ToStringBuilder.reflectionToString handle arra  
++17654  EnumUtils nit: The import java.io.Serializable is never used  
++17882  Add join(..., char c) to StringUtils (and some performance f  
++18077  StringUtils.chomp does not match Perl  
++18723  RandomStringUtils infloops with length &lt; 1  
++18836  test.lang fails if compiled with non iso-8859-1 locales  
++18948  Resurrect the WordWrapUtils from commons-sandbox/utils  
++19296  [Lang] What to do with FastDateFormat unused private constru  
++19364  [Lang] time unit tests fail on Sundays  
++19756  [lang] java.lang.ExceptionInInitializerError thrown by JVMRa  
++19880  [lang] patch and test case fixing problem with RandomStringU  
++20165  [LANG] SystemUtils does not play nice in an Applet  
++20538  [lang] NumberUtils.isNumber allows illegal trailing characte  
++20592  [lang] RandomStringUtils.randomAlpha methods omit 'z'  
++20603  [lang] Make NestableDelegate methods public instead of packa  
++20632  Refactored reflection feature of ToStringBuilder into new Re  
++20652  StringUtils.chopNewLine - StringIndexOutOfBoundsException  
++21021  [PATCH] reduce object creation in ToStringBuilder  
++21068  [lang] [PATCH] NumberUtils min/max, BooleanUtils.xor, and Ar  
++21099  [lang][PATCH] Unused field 'startFinal' in DateIterator  
++21715  The javadoc says &quot;Mac&quot; instead of &quot;OS/2&quot;
++21734  [PATCH] all NumberUtils.createXXX(String) methods handle null
++21750  [lang] StringUtils javadoc and test enhancements
++21758  [lang] lang.builder classes javadoc edits (mostly typo fixes)
++21797  [lang] Add javadoc examples and tests for StringUtils
++21809  [lang] maven-beta10 checkstyle problem
++21904  NumberUtils.createBigDecimal(&quot;&quot;) NPE in Sun 1.3.1_08
++21952  [lang] Improved tests, javadoc for CharSetUtils, StringEscapeUtils
++22091  Adding tolerance to double[] search methods in ArrayUtils
++22094  A small, but important javadoc fix for Fraction proper whole/numerator
++22095  [lang] Javadoc, tests improvements for CharSet, CharSetUtils
++22098  [lang] Improve util.Validate tests
++22245  [lang] test.time fails in Japanese (non-us) locale.
++22286  [lang] Missing @since tags
++22367  Typo in documentation
++22386  [lang] Improve javadoc and overflow behavior of Fraction
++
++
++DEPRECATIONS:
++
++lang:
++    NumberRange:
++        now deprecated, see math subpackage
++    NumberUtils:
++        now deprecated, see math subpackage
++
++
++CHANGES:   [In 'diff' format]
++
++Jar changes
++===========
++&gt; org.apache.commons.lang.math.Range
++&gt; org.apache.commons.lang.math.FloatRange
++&gt; org.apache.commons.lang.math.NumberUtils
++&gt; org.apache.commons.lang.math.JVMRandom
++&gt; org.apache.commons.lang.math.IntRange
++&gt; org.apache.commons.lang.math.LongRange
++&gt; org.apache.commons.lang.math.DoubleRange
++&gt; org.apache.commons.lang.math.NumberRange
++&gt; org.apache.commons.lang.math.Fraction
++&gt; org.apache.commons.lang.math.RandomUtils
++&gt; org.apache.commons.lang.time.FastDateFormat
++&gt; org.apache.commons.lang.time.DateUtils$DateIterator
++&gt; org.apache.commons.lang.time.DateUtils
++&gt; org.apache.commons.lang.time.FastDateFormat$UnpaddedMonthField
++&gt; org.apache.commons.lang.time.FastDateFormat$StringLiteral
++&gt; org.apache.commons.lang.time.FastDateFormat$TwelveHourField
++&gt; org.apache.commons.lang.time.FastDateFormat$NumberRule
++&gt; org.apache.commons.lang.time.FastDateFormat$CharacterLiteral
++&gt; org.apache.commons.lang.time.FastDateFormat$TimeZoneNumberRule
++&gt; org.apache.commons.lang.time.FastDateFormat$TimeZoneNameRule
++&gt; org.apache.commons.lang.time.DateFormatUtils
++&gt; org.apache.commons.lang.time.FastDateFormat$TwoDigitMonthField
++&gt; org.apache.commons.lang.time.DurationFormatUtils
++&gt; org.apache.commons.lang.time.FastDateFormat$TimeZoneDisplayKey
++&gt; org.apache.commons.lang.time.FastDateFormat$UnpaddedNumberField
++&gt; org.apache.commons.lang.time.FastDateFormat$PaddedNumberField
++&gt; org.apache.commons.lang.time.StopWatch
++&gt; org.apache.commons.lang.time.FastDateFormat$TwentyFourHourField
++&gt; org.apache.commons.lang.time.FastDateFormat$Rule
++&gt; org.apache.commons.lang.time.FastDateFormat$TwoDigitNumberField
++&gt; org.apache.commons.lang.time.FastDateFormat$TextField
++&gt; org.apache.commons.lang.time.FastDateFormat$Pair
++&gt; org.apache.commons.lang.time.FastDateFormat$TwoDigitYearField
++&gt; org.apache.commons.lang.util.IdentifierUtils$StringNumericIdentifierFactory
++&gt; org.apache.commons.lang.util.IdentifierUtils$StringSessionIdentifierFactory
++&gt; org.apache.commons.lang.util.IdentifierUtils$LongNumericIdentifierFactory
++&gt; org.apache.commons.lang.util.IdentifierUtils$StringAlphanumericIdentifierFactory
++&gt; org.apache.commons.lang.util.Validate
++&gt; org.apache.commons.lang.util.LongIdentifierFactory
++&gt; org.apache.commons.lang.util.IdentifierUtils$1
++&gt; org.apache.commons.lang.util.StringIdentifierFactory
++&gt; org.apache.commons.lang.util.IdentifierUtils
++&gt; org.apache.commons.lang.util.IdentifierFactory
++&gt; org.apache.commons.lang.util.BitField
++&gt; org.apache.commons.lang.Entities
++&gt; org.apache.commons.lang.Entities$LookupEntityMap
++&gt; org.apache.commons.lang.NotImplementedException
++&gt; org.apache.commons.lang.NullArgumentException
++&lt; org.apache.commons.lang.ObjectUtils$1
++---
++&gt; org.apache.commons.lang.StringPrintWriter
++&gt; org.apache.commons.lang.UnhandledException
++&gt; org.apache.commons.lang.Entities$HashEntityMap
++&gt; org.apache.commons.lang.Entities$ArrayEntityMap
++&gt; org.apache.commons.lang.Entities$EntityMap
++&gt; org.apache.commons.lang.IntHashMap
++&gt; org.apache.commons.lang.BooleanUtils
++&gt; org.apache.commons.lang.IncompleteArgumentException
++&gt; org.apache.commons.lang.Entities$PrimitiveEntityMap
++&gt; org.apache.commons.lang.Entities$TreeEntityMap
++&gt; org.apache.commons.lang.WordUtils
++&gt; org.apache.commons.lang.StringEscapeUtils
++&gt; org.apache.commons.lang.ArrayUtils
++&gt; org.apache.commons.lang.Entities$BinaryEntityMap
++&gt; org.apache.commons.lang.ClassUtils
++&gt; org.apache.commons.lang.IntHashMap$Entry
++&gt; org.apache.commons.lang.IllegalClassException
++&gt; org.apache.commons.lang.builder.ReflectionToStringBuilder$1
++&gt; org.apache.commons.lang.builder.ReflectionToStringBuilder
++&gt; org.apache.commons.lang.Entities$MapIntMap
++
++
++Class changes
++=============
++org.apache.commons.lang.enum.EnumUtils
++--------------------
++&lt; public abstract class org.apache.commons.lang.enum.EnumUtils extends java.lang.Object implements java.lang.Comparable, java.io.Serializable {
++---
++&gt; public class org.apache.commons.lang.enum.EnumUtils extends java.lang.Object {
++&gt;     public org.apache.commons.lang.enum.EnumUtils();
++
++org.apache.commons.lang.enum.Enum$Entry
++--------------------
++&gt;     final java.util.Map unmodifiableMap;
++&gt;     final java.util.List unmodifiableList;
++
++org.apache.commons.lang.enum.Enum
++--------------------
++&gt;     protected transient java.lang.String iToString;
++&gt;     static java.lang.Class class$org$apache$commons$lang$enum$ValuedEnum;
++&gt;     public java.lang.Class getEnumClass();
++
++org.apache.commons.lang.enum.ValuedEnum
++--------------------
++&gt;     static {};
++
++org.apache.commons.lang.StringUtils
++--------------------
++&gt;     public static final java.lang.String EMPTY;
++&gt;     public static boolean isEmpty(java.lang.String);
++&gt;     public static boolean isNotEmpty(java.lang.String);
++&gt;     public static boolean isBlank(java.lang.String);
++&gt;     public static boolean isNotBlank(java.lang.String);
++&lt;     public static java.lang.String deleteSpaces(java.lang.String);
++&lt;     public static java.lang.String deleteWhitespace(java.lang.String);
++&lt;     public static boolean isNotEmpty(java.lang.String);
++&lt;     public static boolean isEmpty(java.lang.String);
++---
++&gt;     public static java.lang.String trimToNull(java.lang.String);
++&gt;     public static java.lang.String trimToEmpty(java.lang.String);
++&gt;     public static java.lang.String strip(java.lang.String);
++&gt;     public static java.lang.String stripToNull(java.lang.String);
++&gt;     public static java.lang.String stripToEmpty(java.lang.String);
++&gt;     public static java.lang.String strip(java.lang.String, java.lang.String);
++&gt;     public static java.lang.String stripStart(java.lang.String, java.lang.String);
++&gt;     public static java.lang.String stripEnd(java.lang.String, java.lang.String);
++&gt;     public static java.lang.String stripAll(java.lang.String[])[];
++&gt;     public static java.lang.String stripAll(java.lang.String[], java.lang.String)[];
++&gt;     public static int indexOf(java.lang.String, char);
++&gt;     public static int indexOf(java.lang.String, char, int);
++&gt;     public static int indexOf(java.lang.String, java.lang.String);
++&gt;     public static int indexOf(java.lang.String, java.lang.String, int);
++&gt;     public static int lastIndexOf(java.lang.String, char);
++&gt;     public static int lastIndexOf(java.lang.String, char, int);
++&gt;     public static int lastIndexOf(java.lang.String, java.lang.String);
++&gt;     public static int lastIndexOf(java.lang.String, java.lang.String, int);
++&gt;     public static boolean contains(java.lang.String, char);
++&gt;     public static boolean contains(java.lang.String, java.lang.String);
++&gt;     public static int indexOfAny(java.lang.String, char[]);
++&gt;     public static int indexOfAny(java.lang.String, java.lang.String);
++&gt;     public static int indexOfAnyBut(java.lang.String, char[]);
++&gt;     public static int indexOfAnyBut(java.lang.String, java.lang.String);
++&gt;     public static boolean containsOnly(java.lang.String, char[]);
++&gt;     public static boolean containsOnly(java.lang.String, java.lang.String);
++&gt;     public static boolean containsNone(java.lang.String, char[]);
++&gt;     public static boolean containsNone(java.lang.String, java.lang.String);
++&gt;     public static java.lang.String substringBefore(java.lang.String, java.lang.String);
++&gt;     public static java.lang.String substringAfter(java.lang.String, java.lang.String);
++&gt;     public static java.lang.String substringBeforeLast(java.lang.String, java.lang.String);
++&gt;     public static java.lang.String substringAfterLast(java.lang.String, java.lang.String);
++&gt;     public static java.lang.String substringBetween(java.lang.String, java.lang.String);
++&gt;     public static java.lang.String substringBetween(java.lang.String, java.lang.String, java.lang.String);
++&gt;     public static java.lang.String getNestedString(java.lang.String, java.lang.String);
++&gt;     public static java.lang.String getNestedString(java.lang.String, java.lang.String, java.lang.String);
++&gt;     public static java.lang.String split(java.lang.String, char)[];
++&gt;     public static java.lang.String join(java.lang.Object[]);
++&gt;     public static java.lang.String join(java.lang.Object[], char);
++&gt;     public static java.lang.String join(java.util.Iterator, char);
++&gt;     public static java.lang.String deleteSpaces(java.lang.String);
++&gt;     public static java.lang.String deleteWhitespace(java.lang.String);
++&gt;     public static java.lang.String replaceChars(java.lang.String, char, char);
++&gt;     public static java.lang.String replaceChars(java.lang.String, java.lang.String, java.lang.String);
++&lt;     public static java.lang.String center(java.lang.String, int);
++&lt;     public static java.lang.String center(java.lang.String, int, java.lang.String);
++---
++&gt;     public static java.lang.String overlay(java.lang.String, java.lang.String, int, int);
++&gt;     public static java.lang.String rightPad(java.lang.String, int, char);
++&gt;     public static java.lang.String leftPad(java.lang.String, int, char);
++&lt;     public static java.lang.String strip(java.lang.String);
++&lt;     public static java.lang.String strip(java.lang.String, java.lang.String);
++&lt;     public static java.lang.String stripAll(java.lang.String[])[];
++&lt;     public static java.lang.String stripAll(java.lang.String[], java.lang.String)[];
++&lt;     public static java.lang.String stripEnd(java.lang.String, java.lang.String);
++&lt;     public static java.lang.String stripStart(java.lang.String, java.lang.String);
++---
++&gt;     public static java.lang.String center(java.lang.String, int);
++&gt;     public static java.lang.String center(java.lang.String, int, char);
++&gt;     public static java.lang.String center(java.lang.String, int, java.lang.String);
++&lt;     public static java.lang.String uncapitalise(java.lang.String);
++---
++&gt;     public static java.lang.String capitalize(java.lang.String);
++&gt;     public static java.lang.String uncapitalize(java.lang.String);
++&gt;     public static java.lang.String uncapitalise(java.lang.String);
++&lt;     public static java.lang.String getNestedString(java.lang.String, java.lang.String);
++&lt;     public static java.lang.String getNestedString(java.lang.String, java.lang.String, java.lang.String);
++&gt;     public static boolean isWhitespace(java.lang.String);
++&gt;     public static java.lang.String reverseDelimited(java.lang.String, char);
++&gt;     public static java.lang.String abbreviate(java.lang.String, int);
++&gt;     public static java.lang.String abbreviate(java.lang.String, int, int);
++&gt;     public static java.lang.String difference(java.lang.String, java.lang.String);
++&gt;     public static int differenceAt(java.lang.String, java.lang.String);
++&lt;     public static boolean containsOnly(java.lang.String, char[]);
++---
++&gt;     static {};
++
++org.apache.commons.lang.ObjectUtils
++--------------------
++&gt;     public static java.lang.StringBuffer appendIdentityToString(java.lang.StringBuffer, java.lang.Object);
++&gt;     public static java.lang.String toString(java.lang.Object);
++&gt;     public static java.lang.String toString(java.lang.Object, java.lang.String);
++&lt;         org.apache.commons.lang.ObjectUtils.Null(org.apache.commons.lang.ObjectUtils$1);
++---
++&gt;         org.apache.commons.lang.ObjectUtils.Null();
++&gt;         static {};
++
++org.apache.commons.lang.exception.NestableDelegate
++--------------------
++&gt;     public static boolean topDown;
++&gt;     public static boolean trimStackFrames;
++&lt;     org.apache.commons.lang.exception.NestableDelegate(org.apache.commons.lang.exception.Nestable);
++&lt;     java.lang.String getMessage(int);
++&lt;     java.lang.String getMessage(java.lang.String);
++&lt;     java.lang.String getMessages()[];
++&lt;     java.lang.Throwable getThrowable(int);
++&lt;     int getThrowableCount();
++&lt;     java.lang.Throwable getThrowables()[];
++&lt;     int indexOfThrowable(java.lang.Class, int);
++---
++&gt;     public org.apache.commons.lang.exception.NestableDelegate(org.apache.commons.lang.exception.Nestable);
++&gt;     public java.lang.String getMessage(int);
++&gt;     public java.lang.String getMessage(java.lang.String);
++&gt;     public java.lang.String getMessages()[];
++&gt;     public java.lang.Throwable getThrowable(int);
++&gt;     public int getThrowableCount();
++&gt;     public java.lang.Throwable getThrowables()[];
++&gt;     public int indexOfThrowable(java.lang.Class, int);
++&gt;     protected java.lang.String getStackFrames(java.lang.Throwable)[];
++&gt;     protected void trimStackFrames(java.util.List);
++
++org.apache.commons.lang.exception.ExceptionUtils
++--------------------
++&lt;     protected static final java.lang.String CAUSE_METHOD_NAMES[];
++&lt;     protected static final java.lang.Object CAUSE_METHOD_PARAMS[];
++---
++&gt;     static final java.lang.String WRAPPED_MARKER;
++&lt;     protected org.apache.commons.lang.exception.ExceptionUtils();
++---
++&gt;     public org.apache.commons.lang.exception.ExceptionUtils();
++&gt;     public static void addCauseMethodName(java.lang.String);
++&gt;     public static boolean isThrowableNested();
++&gt;     public static boolean isNestedThrowable(java.lang.Throwable);
++&gt;     public static void printRootCauseStackTrace(java.lang.Throwable);
++&gt;     public static void printRootCauseStackTrace(java.lang.Throwable, java.io.PrintStream);
++&gt;     public static void printRootCauseStackTrace(java.lang.Throwable, java.io.PrintWriter);
++&gt;     public static java.lang.String getRootCauseStackTrace(java.lang.Throwable)[];
++&gt;     public static void removeCommonFrames(java.util.List, java.util.List);
++&gt;     public static java.lang.String getFullStackTrace(java.lang.Throwable);
++&gt;     static java.util.List getStackFrameList(java.lang.Throwable);
++
++org.apache.commons.lang.CharRange
++--------------------
++&lt; class org.apache.commons.lang.CharRange extends java.lang.Object {
++---
++&gt; public final class org.apache.commons.lang.CharRange extends java.lang.Object implements java.io.Serializable {
++&gt;     public org.apache.commons.lang.CharRange(char,boolean);
++&lt;     public org.apache.commons.lang.CharRange(java.lang.String,java.lang.String);
++---
++&gt;     public org.apache.commons.lang.CharRange(char,char,boolean);
++&lt;     public void setStart(char);
++&lt;     public void setEnd(char);
++&lt;     public boolean isRange();
++&lt;     public boolean inRange(char);
++&lt;     public void setNegated(boolean);
++---
++&gt;     public boolean contains(char);
++&gt;     public boolean contains(org.apache.commons.lang.CharRange);
++&gt;     public boolean equals(java.lang.Object);
++&gt;     public int hashCode();
++&gt;     static {};
++
++org.apache.commons.lang.ObjectUtils$1
++--------------------
++&lt; Compiled from ObjectUtils.java
++&lt; class org.apache.commons.lang.ObjectUtils$1 extends java.lang.Object {
++&lt; }
++---
++&gt; Class 'org.apache.commons.lang.ObjectUtils$1' has been removed
++
++org.apache.commons.lang.ObjectUtils$Null
++--------------------
++&lt;     org.apache.commons.lang.ObjectUtils.Null(org.apache.commons.lang.ObjectUtils$1);
++---
++&gt;     org.apache.commons.lang.ObjectUtils.Null();
++&gt;     static {};
++
++org.apache.commons.lang.SystemUtils
++--------------------
++&gt;     public static final java.lang.String FILE_ENCODING;
++&gt;     public static final java.lang.String JAVA_RUNTIME_NAME;
++&gt;     public static final java.lang.String JAVA_RUNTIME_VERSION;
++&gt;     public static final java.lang.String JAVA_VM_INFO;
++&gt;     public static final java.lang.String USER_COUNTRY;
++&gt;     public static final java.lang.String USER_LANGUAGE;
++&gt;     public static final float JAVA_VERSION_FLOAT;
++&gt;     public static final int JAVA_VERSION_INT;
++&gt;     public static final boolean IS_OS_AIX;
++&gt;     public static final boolean IS_OS_HP_UX;
++&gt;     public static final boolean IS_OS_IRIX;
++&gt;     public static final boolean IS_OS_LINUX;
++&gt;     public static final boolean IS_OS_MAC;
++&gt;     public static final boolean IS_OS_MAC_OSX;
++&gt;     public static final boolean IS_OS_OS2;
++&gt;     public static final boolean IS_OS_SOLARIS;
++&gt;     public static final boolean IS_OS_SUN_OS;
++&gt;     public static final boolean IS_OS_WINDOWS;
++&gt;     public static final boolean IS_OS_WINDOWS_2000;
++&gt;     public static final boolean IS_OS_WINDOWS_95;
++&gt;     public static final boolean IS_OS_WINDOWS_98;
++&gt;     public static final boolean IS_OS_WINDOWS_ME;
++&gt;     public static final boolean IS_OS_WINDOWS_NT;
++&gt;     public static final boolean IS_OS_WINDOWS_XP;
++&gt;     public static boolean isJavaVersionAtLeast(int);
++
++org.apache.commons.lang.SerializationUtils
++--------------------
++&gt;     public org.apache.commons.lang.SerializationUtils();
++
++org.apache.commons.lang.RandomStringUtils
++--------------------
++&gt;     public static java.lang.String random(int, int, int, boolean, boolean, char[], java.util.Random);
++
++org.apache.commons.lang.CharSet
++--------------------
++&lt; public class org.apache.commons.lang.CharSet extends java.lang.Object {
++---
++&gt; public class org.apache.commons.lang.CharSet extends java.lang.Object implements java.io.Serializable {
++&gt;     public static final org.apache.commons.lang.CharSet EMPTY;
++&gt;     public static final org.apache.commons.lang.CharSet ASCII_ALPHA;
++&gt;     public static final org.apache.commons.lang.CharSet ASCII_ALPHA_LOWER;
++&gt;     public static final org.apache.commons.lang.CharSet ASCII_ALPHA_UPPER;
++&gt;     public static final org.apache.commons.lang.CharSet ASCII_NUMERIC;
++&gt;     protected static final java.util.Map COMMON;
++&gt;     public static org.apache.commons.lang.CharSet getInstance(java.lang.String);
++&gt;     protected org.apache.commons.lang.CharSet(java.lang.String);
++&lt;     public boolean contains(char);
++&gt;     public org.apache.commons.lang.CharRange getCharRanges()[];
++&gt;     public boolean contains(char);
++&gt;     public boolean equals(java.lang.Object);
++&gt;     public int hashCode();
++&gt;     static {};
++
++org.apache.commons.lang.CharSetUtils
++--------------------
++&gt;     public static java.lang.String keep(java.lang.String, java.lang.String);
++&gt;     public static java.lang.String keep(java.lang.String, java.lang.String[]);
++
++org.apache.commons.lang.builder.ToStringBuilder
++--------------------
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder(java.lang.Object);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder(java.lang.Object,org.apache.commons.lang.builder.ToStringStyle);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder(java.lang.Object,org.apache.commons.lang.builder.ToStringStyle,java.lang.StringBuffer);
++&lt;     public static void setDefaultStyle(org.apache.commons.lang.builder.ToStringStyle);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.Object);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, java.lang.Object);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, java.lang.Object, boolean);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(long);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, long);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(int);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, int);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(short);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, short);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(char);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, char);
++---
++&gt;     public static java.lang.String reflectionToString(java.lang.Object, org.apache.commons.lang.builder.ToStringStyle, boolean, java.lang.Class);
++&gt;     public static void setDefaultStyle(org.apache.commons.lang.builder.ToStringStyle);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder(java.lang.Object);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder(java.lang.Object,org.apache.commons.lang.builder.ToStringStyle);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder(java.lang.Object,org.apache.commons.lang.builder.ToStringStyle,java.lang.StringBuffer);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(boolean);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(boolean[]);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, byte);
++---
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(byte[]);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(char);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(char[]);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, double);
++---
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(double[]);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, float);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(boolean);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, boolean);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.Object[]);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, java.lang.Object[]);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, java.lang.Object[], boolean);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(long[]);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, long[]);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, long[], boolean);
++---
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(float[]);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(int);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, int[]);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, int[], boolean);
++---
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(long);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(long[]);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.Object);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.Object[]);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(short);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, short[]);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, short[], boolean);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(char[]);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, char[]);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, char[], boolean);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(byte[]);
++---
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, boolean);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, boolean[]);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, boolean[], boolean);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, byte);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(double[]);
++---
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, char);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, char[]);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, char[], boolean);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, double);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(float[]);
++---
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, float);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(boolean[]);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, boolean[]);
++&lt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, boolean[], boolean);
++---
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, int);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, int[]);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, int[], boolean);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, long);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, long[]);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, long[], boolean);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, java.lang.Object);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, java.lang.Object, boolean);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, java.lang.Object[]);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, java.lang.Object[], boolean);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, short);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, short[]);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder append(java.lang.String, short[], boolean);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder appendAsObjectToString(java.lang.Object);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder appendSuper(java.lang.String);
++&gt;     public org.apache.commons.lang.builder.ToStringBuilder appendToString(java.lang.String);
++&gt;     public org.apache.commons.lang.builder.ToStringStyle getStyle();
++&gt;     public java.lang.Object getObject();
++
++org.apache.commons.lang.builder.StandardToStringStyle
++--------------------
++&gt;     public boolean isUseShortClassName();
++&gt;     public void setUseShortClassName(boolean);
++&gt;     public boolean isFieldSeparatorAtStart();
++&gt;     public void setFieldSeparatorAtStart(boolean);
++&gt;     public boolean isFieldSeparatorAtEnd();
++&gt;     public void setFieldSeparatorAtEnd(boolean);
++
++org.apache.commons.lang.builder.ToStringStyle
++--------------------
++&gt;     public void appendSuper(java.lang.StringBuffer, java.lang.String);
++&gt;     public void appendToString(java.lang.StringBuffer, java.lang.String);
++&gt;     protected void removeLastFieldSeparator(java.lang.StringBuffer);
++&gt;     protected void reflectionAppendArrayDetail(java.lang.StringBuffer, java.lang.String, java.lang.Object);
++&gt;     protected boolean isUseShortClassName();
++&gt;     protected void setUseShortClassName(boolean);
++&gt;     protected boolean isFieldSeparatorAtStart();
++&gt;     protected void setFieldSeparatorAtStart(boolean);
++&gt;     protected boolean isFieldSeparatorAtEnd();
++&gt;     protected void setFieldSeparatorAtEnd(boolean);
++
++org.apache.commons.lang.builder.HashCodeBuilder
++--------------------
++&gt;     public static int reflectionHashCode(int, int, java.lang.Object, boolean, java.lang.Class);
++&gt;     public org.apache.commons.lang.builder.HashCodeBuilder appendSuper(int);
++
++org.apache.commons.lang.builder.CompareToBuilder
++--------------------
++&gt;     public static int reflectionCompare(java.lang.Object, java.lang.Object, boolean, java.lang.Class);
++&gt;     public org.apache.commons.lang.builder.CompareToBuilder appendSuper(int);
++&gt;     public org.apache.commons.lang.builder.CompareToBuilder append(java.lang.Object, java.lang.Object, java.util.Comparator);
++&gt;     public org.apache.commons.lang.builder.CompareToBuilder append(java.lang.Object[], java.lang.Object[], java.util.Comparator);
++
++org.apache.commons.lang.builder.EqualsBuilder
++--------------------
++&gt;     public static boolean reflectionEquals(java.lang.Object, java.lang.Object, boolean, java.lang.Class);
++&gt;     public org.apache.commons.lang.builder.EqualsBuilder appendSuper(boolean);
++
+
+Added: trunk/org.prorefactor.lib/jakarta/commons-lang/commons-lang.jar
+===================================================================
+(Binary files differ)
+
+
+Property changes on: trunk/org.prorefactor.lib/jakarta/commons-lang/commons-lang.jar
+___________________________________________________________________
+Name: svn:mime-type
+   + application/octet-stream
+
+Added: trunk/org.prorefactor.lib/jakarta/commons-lang/src.zip
+===================================================================
+(Binary files differ)
+
+
+Property changes on: trunk/org.prorefactor.lib/jakarta/commons-lang/src.zip
+___________________________________________________________________
+Name: svn:mime-type
+   + application/octet-stream
+
+Modified: trunk/org.prorefactor.lib/plugin.xml
+===================================================================
+--- trunk/org.prorefactor.lib/plugin.xml	2005-05-06 21:01:36 UTC (rev 27)
++++ trunk/org.prorefactor.lib/plugin.xml	2005-05-13 21:37:59 UTC (rev 28)
+@@ -13,9 +13,6 @@
+       &lt;library name=&quot;hsqldb/hsqldb.jar&quot;&gt;
+          &lt;export name=&quot;*&quot;/&gt;
+       &lt;/library&gt;
+-      &lt;library name=&quot;hibernate/commons-lang-1.0.1.jar&quot;&gt;
+-         &lt;export name=&quot;*&quot;/&gt;
+-      &lt;/library&gt;
+       &lt;library name=&quot;hibernate/commons-logging-1.0.4.jar&quot;&gt;
+          &lt;export name=&quot;*&quot;/&gt;
+       &lt;/library&gt;
+@@ -49,6 +46,9 @@
+       &lt;library name=&quot;jakarta/commons-io/commons-io.jar&quot;&gt;
+          &lt;export name=&quot;*&quot;/&gt;
+       &lt;/library&gt;
++      &lt;library name=&quot;jakarta/commons-lang/commons-lang.jar&quot;&gt;
++         &lt;export name=&quot;*&quot;/&gt;
++      &lt;/library&gt;
+    &lt;/runtime&gt;
+ 
+ &lt;/plugin&gt;
+
+Modified: trunk/org.prorefactor.refactor/.classpath
+===================================================================
+--- trunk/org.prorefactor.refactor/.classpath	2005-05-06 21:01:36 UTC (rev 27)
++++ trunk/org.prorefactor.refactor/.classpath	2005-05-13 21:37:59 UTC (rev 28)
+@@ -1,7 +1,7 @@
+ &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+ &lt;classpath&gt;
+-	&lt;classpathentry kind=&quot;src&quot; path=&quot;src/&quot;/&gt;
+-	&lt;classpathentry kind=&quot;con&quot; path=&quot;org.eclipse.pde.core.requiredPlugins&quot;/&gt;
++	&lt;classpathentry kind=&quot;src&quot; path=&quot;src&quot;/&gt;
++	&lt;classpathentry exported=&quot;true&quot; kind=&quot;con&quot; path=&quot;org.eclipse.pde.core.requiredPlugins&quot;/&gt;
+ 	&lt;classpathentry kind=&quot;con&quot; path=&quot;org.eclipse.jdt.launching.JRE_CONTAINER&quot;/&gt;
+ 	&lt;classpathentry kind=&quot;output&quot; path=&quot;bin&quot;/&gt;
+ &lt;/classpath&gt;
+
+Modified: trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/PUB.java
+===================================================================
+--- trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/PUB.java	2005-05-06 21:01:36 UTC (rev 27)
++++ trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/PUB.java	2005-05-13 21:37:59 UTC (rev 28)
+@@ -29,9 +29,14 @@
+ import java.util.List;
+ import java.util.TreeMap;
+ 
++import org.apache.commons.collections.bidimap.DualHashBidiMap;
+ import org.prorefactor.core.IConstants;
++import org.prorefactor.core.JPNode;
++import org.prorefactor.core.TokenTypes;
+ import org.prorefactor.core.schema.Field;
+ import org.prorefactor.core.schema.Table;
++import org.prorefactor.nodetypes.NodeFactory;
++import org.prorefactor.nodetypes.ProparseDirectiveNode;
+ import org.prorefactor.refactor.source.CompileUnit;
+ import org.prorefactor.treeparser.FieldBuffer;
+ import org.prorefactor.treeparser.Symbol;
+@@ -55,7 +60,7 @@
+ 		pubFile = new File(refpack.getProRefactorProjectDir() + &quot;/pubs/&quot; + relPath + &quot;.pub&quot;);
+ 	}
+ 	
+-	public static final int LAYOUT_VERSION = 2;
++	public static final int LAYOUT_VERSION = 3;
+ 
+ 	/** loadTo(PUBFILE_TIMESTAMP) - just check if the binary exists and
+ 	 * check that it is newer than the compile unit file. Does not read anything
+@@ -72,18 +77,28 @@
+ 	public static final int IMPORTS = 30;
+ 	/** loadTo(EXPORTS) - new shared vars and public functions and procedures */
+ 	public static final int EXPORTS = 40;
+-	/** loadTo(AST) - minimal node data for a functional syntax tree */
++	/** loadTo(AST) - just loads the node types - you almost certainly need STRINGS as well. */
+ 	public static final int AST = 50;
++	/** loadTo(STRINGS) - load the strings into the syntax tree. */
++	public static final int STRINGS = 60;
+ 	/** loadTo(END) - all binary file segments will be loaded. */
+ 	public static final int END = 100;
++	
++	/** Scratch JPNode attributes for storing string index. */
++	private static final int NODETEXT = 49001;
++	/** Scratch JPNode attributes for storing string index. */
++	private static final int NODECOMMENTS = 49002;
+ 
+ 	private ArrayList exportList;
+ 	private ArrayList fileList;
+ 	private ArrayList importList;
++	private DualHashBidiMap stringTable;
+ 	private File cuFile;
+ 	private File pubFile;
++	private JPNode tree;
+ 	private ProparseLdr parser = ProparseLdr.getInstance();
+ 	private RefactorSession refpack = RefactorSession.getInstance();
++	private String [] stringArray;
+ 	private TreeMap tableMap;
+ 
+ 	/** A record of symbol type and name, for import/export tables. */
+@@ -114,6 +129,11 @@
+ 		fileList = new ArrayList();
+ 		importList = new ArrayList();
+ 		tableMap = new TreeMap();
++		stringTable = new DualHashBidiMap();
++		/* String index zero is not used.
++		 * This allows us to use 0 from JPNode.attrGet() to indicate &quot;no string value present&quot;.
++		 */
++		stringIndex(&quot;&quot;);
+ 	}
+ 
+ 
+@@ -138,6 +158,9 @@
+ 		writeSchemaSegment(out, allSymbols);
+ 		writeImportSegment(out, allSymbols);
+ 		writeExportSegment(out, allSymbols);
++		tree = cu.getTopNode();
++		writeTree(out, tree);
++		writeStrings(out);
+ 		out.close();
+ 		return cu;
+ 	}
+@@ -223,6 +246,11 @@
+ 	}
+ 	
+ 	
++	
++	/** Return the JPNode syntax tree that was loaded with load() */
++	public JPNode getTree() { return tree; }
++	
++	
+ 
+ 	/** Same as loadTo(PUB.END) */
+ 	public boolean load() { return loadTo(END); }
+@@ -253,6 +281,10 @@
+ 			if (lastSegmentToLoad==PUB.IMPORTS) return true;
+ 			readExportSegment(inStream);
+ 			if (lastSegmentToLoad==PUB.EXPORTS) return true;
++			tree = readTree(inStream);
++			if (lastSegmentToLoad==PUB.AST) return true;
++			readStrings(inStream);
++			setStrings(tree);
+ 		} catch (IOException e1) {
+ 			return false;
+ 		} finally {
+@@ -312,6 +344,37 @@
+ 	
+ 	
+ 	
++	private void readStrings(ObjectInputStream in) throws IOException {
++		int size = in.readInt();
++		stringArray = new String[size];
++		for(int i = 0; i &lt; size; i++) {
++			stringArray[i] = in.readUTF();
++		}
++	}
++	
++	
++	
++	private JPNode readTree(ObjectInputStream in) throws IOException {
++		int nodeClass = in.readInt();
++		if (nodeClass == -1) return null;
++		JPNode node = NodeFactory.createByIndex(nodeClass);
++		node.setType(in.readInt());
++		int key;
++		int value;
++		for (	key=in.readInt(), value=in.readInt()
++			;	key != -1
++			;	key=in.readInt(), value=in.readInt()
++			) {
++			node.attrSet(key, value);
++		}
++		node.setFirstChild(readTree(in));
++		node.setParentInChildren();
++		node.setNextSibling(readTree(in));
++		return node;
++	}
++	
++	
++	
+ 	/** Read the version, return false if the PUB file is out of date, true otherwise. */
+ 	private boolean readVersion(ObjectInputStream in) throws IOException {
+ 		if (in.readInt() != LAYOUT_VERSION) return false;
+@@ -320,6 +383,30 @@
+ 	
+ 	
+ 	
++	private void setStrings(JPNode node) {
++		if (node==null) return;
++		int index;
++		if ((index=node.attrGet(NODETEXT)) &gt; 0) node.setText(stringArray[index]);
++		if ((index=node.attrGet(NODECOMMENTS)) &gt; 0) node.setComments(stringArray[index]);
++		if ((index=node.attrGet(IConstants.PROPARSEDIRECTIVE)) &gt; 0)
++			((ProparseDirectiveNode)node).setDirectiveText(stringArray[index]);
++		setStrings(node.firstChild());
++		setStrings(node.nextSibling());
++	}
++	
++	
++	
++	private int stringIndex(String s) {
++		Integer index = (Integer) stringTable.getKey(s);
++		if (index==null) {
++			index = new Integer(stringTable.size()); // index is 0 if this is the first entry...
++			stringTable.put(index, s);
++		}
++		return index.intValue();
++	}
++	
++	
++	
+ 	private boolean testTimeStamps() {
+ 		long pubTime = pubFile.lastModified();
+ 		for (Iterator it = fileList.iterator(); it.hasNext();) {
+@@ -374,6 +461,52 @@
+ 	
+ 	
+ 	
++	private void writeTree(ObjectOutputStream out, JPNode node) throws IOException {
++		out.writeInt(node.getSubtypeIndex());
++		out.writeInt(node.getType());
++		if ( ! TokenTypes.isKeyword(node.getType()) ) {
++			out.writeInt(NODETEXT);
++			out.writeInt(stringIndex(node.getText()));
++		}
++		String comments = node.getComments();
++		if (comments != null) {
++			out.writeInt(NODECOMMENTS);
++			out.writeInt(stringIndex(comments));
++		}
++		if (node.attrGet(IConstants.STATEHEAD) == IConstants.TRUE) {
++			out.writeInt(IConstants.STATEHEAD);
++			out.writeInt(IConstants.TRUE);
++			out.writeInt(IConstants.STATE2);
++			out.writeInt(node.getState2());
++		}
++		int attrVal;
++		if ( (attrVal = node.attrGet(IConstants.STORETYPE)) &gt; 0 ) {
++			out.writeInt(IConstants.STORETYPE);
++			out.writeInt(attrVal);
++		}
++		if (node instanceof ProparseDirectiveNode) {
++			out.writeInt(IConstants.PROPARSEDIRECTIVE);
++			out.writeInt(stringIndex(((ProparseDirectiveNode)node).getDirectiveText()));
++		}
++		if ( (attrVal = node.attrGet(IConstants.OPERATOR)) &gt; 0 ) {
++			out.writeInt(IConstants.OPERATOR);
++			out.writeInt(attrVal);
++		}
++		if ( (attrVal = node.attrGet(IConstants.INLINE_VAR_DEF)) &gt; 0 ) {
++			out.writeInt(IConstants.INLINE_VAR_DEF);
++			out.writeInt(attrVal);
++		}
++		out.writeInt(-1);
++		out.writeInt(-1); // Terminate the attribute key/value pairs.
++		JPNode next;
++		if ( (next = node.firstChild()) != null ) writeTree(out, next);
++		else out.writeInt(-1);
++		if ( (next = node.nextSibling()) != null ) writeTree(out, next);
++		else out.writeInt(-1);
++	}
++	
++	
++	
+ 	private void writeSchemaSegment(ObjectOutputStream out, List allSymbols) throws IOException {
+ 		for (Iterator it = allSymbols.iterator(); it.hasNext();) {
+ 			Object obj = it.next();
+@@ -411,6 +544,16 @@
+ 		tableMap.put(lowerName, tableRef);
+ 		return tableRef;
+ 	}
++	
++	
++	
++	private void writeStrings(ObjectOutputStream out) throws IOException {
++		int size = stringTable.size();
++		out.writeInt(size);
++		for(int i = 0; i &lt; size; i++) {
++			out.writeUTF((String) stringTable.get(new Integer(i)));
++		}
++	}
+ 
+ 
+ 
+
+Modified: trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/unittest/PUBTest.java
+===================================================================
+--- trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/unittest/PUBTest.java	2005-05-06 21:01:36 UTC (rev 27)
++++ trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/unittest/PUBTest.java	2005-05-13 21:37:59 UTC (rev 28)
+@@ -15,6 +15,7 @@
+ import java.io.File;
+ import java.util.ArrayList;
+ 
++import org.prorefactor.core.JPNode;
+ import org.prorefactor.core.TokenTypes;
+ import org.prorefactor.core.unittest.UnitTestBase2;
+ import org.prorefactor.refactor.PUB;
+@@ -85,6 +86,17 @@
+ 		assertTrue(exp.progressType == TokenTypes.FRAME);
+ 		assertTrue(exp.symbolName.equals(&quot;myFrame&quot;));
+ 		
++		// Test that there are comments in front of the first real node
++		JPNode topNode = pub.getTree();
++		assertTrue(topNode.firstNaturalChild().getComments().length() &gt; 2);
++		
++		// Test that the ID nodes have text.
++		JPNode [] idNodes = topNode.query(TokenTypes.ID);
++		for (int i = 0; i &lt; idNodes.length; i++) {
++			JPNode node = idNodes[i];
++			assertTrue(node.getText().length() &gt; 0);
++		}
++		
+ 	}
+ 
+ }
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000022.html">[Prorefactor-svn] r27 - in trunk/org.prorefactor.lib/jakarta: . commons-io
+</A></li>
+	<LI>Next message: <A HREF="000023.html">[Prorefactor-svn] r29 - in trunk/org.prorefactor.refactor/prorefactor/projects/sports2000/pubs/data: pub rename/t01/orig
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#24">[ date ]</a>
+              <a href="thread.html#24">[ thread ]</a>
+              <a href="subject.html#24">[ subject ]</a>
+              <a href="author.html#24">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">More information about the Prorefactor-svn
+mailing list</a><br>
+</body></html>

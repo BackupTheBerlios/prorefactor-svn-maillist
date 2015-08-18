@@ -1,0 +1,363 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Prorefactor-svn] r35 - trunk/org.prorefactor.lib/stringtemplate
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/prorefactor-svn/2005-July/index.html" >
+   <LINK REL="made" HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r35%20-%20trunk/org.prorefactor.lib/stringtemplate&In-Reply-To=%3C200507182136.j6ILaDuF022998%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000029.html">
+   <LINK REL="Next"  HREF="000031.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Prorefactor-svn] r35 - trunk/org.prorefactor.lib/stringtemplate</H1>
+    <B>John Green at BerliOS</B> 
+    <A HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r35%20-%20trunk/org.prorefactor.lib/stringtemplate&In-Reply-To=%3C200507182136.j6ILaDuF022998%40sheep.berlios.de%3E"
+       TITLE="[Prorefactor-svn] r35 - trunk/org.prorefactor.lib/stringtemplate">johnallengreen at berlios.de
+       </A><BR>
+    <I>Mon Jul 18 23:36:13 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000029.html">[Prorefactor-svn] r34 - trunk/org.prorefactor.eclipse
+</A></li>
+        <LI>Next message: <A HREF="000031.html">[Prorefactor-svn] r36 - in trunk/org.prorefactor.core: data/tp01tests src/org/prorefactor/treeparser01
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#30">[ date ]</a>
+              <a href="thread.html#30">[ thread ]</a>
+              <a href="subject.html#30">[ subject ]</a>
+              <a href="author.html#30">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: johnallengreen
+Date: 2005-07-18 23:36:10 +0200 (Mon, 18 Jul 2005)
+New Revision: 35
+
+Modified:
+   trunk/org.prorefactor.lib/stringtemplate/doc.html
+   trunk/org.prorefactor.lib/stringtemplate/release.html
+   trunk/org.prorefactor.lib/stringtemplate/src.zip
+   trunk/org.prorefactor.lib/stringtemplate/stringtemplate.jar
+Log:
+Updated StringTemplate with the latest.
+
+Modified: trunk/org.prorefactor.lib/stringtemplate/doc.html
+===================================================================
+--- trunk/org.prorefactor.lib/stringtemplate/doc.html	2005-07-15 00:26:51 UTC (rev 34)
++++ trunk/org.prorefactor.lib/stringtemplate/doc.html	2005-07-18 21:36:10 UTC (rev 35)
+@@ -468,7 +468,7 @@
+ StringTemplate a = new StringTemplate(&quot;$user.name$, $user.phone$&quot;);
+ HashMap user = new HashMap();
+ user.put(&quot;name&quot;, &quot;Terence&quot;);
+-user.put(&quot;name&quot;, &quot;none-of-your-business&quot;);
++user.put(&quot;phone&quot;, &quot;none-of-your-business&quot;);
+ a.setAttribute(&quot;user&quot;, user);
+ String results = a.toString();
+ &lt;/PRE&gt;&lt;/FONT&gt;
+
+Modified: trunk/org.prorefactor.lib/stringtemplate/release.html
+===================================================================
+--- trunk/org.prorefactor.lib/stringtemplate/release.html	2005-07-15 00:26:51 UTC (rev 34)
++++ trunk/org.prorefactor.lib/stringtemplate/release.html	2005-07-18 21:36:10 UTC (rev 35)
+@@ -1,10 +1,10 @@
+ &lt;HTML&gt;
+ &lt;HEAD&gt;
+ &lt;body bgcolor=#FFFFFF text=#000000&gt;
+-&lt;title&gt;StringTemplate 2.1 Release Notes&lt;/title&gt;
++&lt;title&gt;StringTemplate 2.2 Release Notes&lt;/title&gt;
+ &lt;/HEAD&gt;
+ &lt;BODY&gt;
+-&lt;H1&gt;StringTemplate 2.1 Release Notes&lt;/H1&gt;
++&lt;H1&gt;StringTemplate 2.2 Release Notes&lt;/H1&gt;
+ 
+ 
+ &lt;P&gt;Brought to you by that maniac that brings you
+@@ -17,85 +17,200 @@
+ &lt;A HREF=&quot;<A HREF="http://www.stringtemplate.org">http://www.stringtemplate.org</A>&quot;&gt;&lt;B&gt;<A HREF="http://www.stringtemplate.org&lt;/B">http://www.stringtemplate.org&lt;/B</A>&gt;&lt;/A&gt; &lt;BR&gt;
+ (StringTemplate released under BSD License)
+ 
+-&lt;P&gt;Version 2.1, January 22, 2005
++&lt;P&gt;Version 2.2, July ??, 2005
+ 
+-&lt;P&gt;2.1 is a bug fix and small feature enhancement release.  2.1 should be
+-a drop-in replacement for those using &lt;TT&gt;StringTemplate&lt;/TT&gt; for websites.
+-Some newline handling differences exist, particularly for
+-those using the group file format.  (If you are generating code not
+-html, you will note some newlines are missing that used to be there;
+-see the use of &lt;TT&gt;&lt;\n&gt;&lt;/TT&gt; below).
++&lt;P&gt;2.2 fixes a few bugs, but mainly 2.2 adds lots of great new features.
++2.The features were added in response to my needs building ANTLR v3's
++2.code generator and from feedback by StringTemplate users.
++
++&lt;P&gt;2.2 should be a drop-in replacement for those using &lt;TT&gt;StringTemplate&lt;/TT&gt;
++for websites and code generation with a few minor potential
++incompatibilities.
+ &lt;H2&gt;Enhancements&lt;/H2&gt;
+ 
+ &lt;UL&gt;
+-&lt;LI&gt;Added 
++&lt;LI&gt;You can define arguments for anonymous templates now, which is much
++nicer that using &lt;TT&gt;it&lt;/TT&gt; all the time:
+ 
+ &lt;FONT SIZE=2&gt;&lt;PRE&gt;
+-/** Specify a StringTemplateWriter implementing class to use for
+- *  filtering output
+- */
+-public void setStringTemplateWriter(Class c) {
+-	userSpecifiedWriter = c;
+-}
++$names:{n| &lt;b&gt;$n$&lt;/b&gt;&lt;br&gt;}; separator=&quot;,&quot;$
+ &lt;/PRE&gt;&lt;/FONT&gt;
+ 
+ 
+-and made StringTemplate.toString() sensitive to it.
+ &lt;/LI&gt;
+-&lt;LI&gt;added support for nonlocal file encodings; added property
+-fileCharEncoding.  The template loading routines are now sensitive to
+-this property. Defaults to the file.encoding system property.
++&lt;LI&gt;added parallel attribute iteration where you can apply a template to
++multiple lists of values; works for anonymous templates only:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++{$names,phones:{n,p | $n$: $p$}$}
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++An error is generated if you have too many args for the number of
++parallel lists.  Iteration proceeds while at least one of the
++attributes (&lt;TT&gt;names&lt;/TT&gt; or &lt;TT&gt;phones&lt;/TT&gt;, in this case) has values.
+ &lt;/LI&gt;
+-&lt;LI&gt;updated testing harness to be same as ANTLR 3.0's which is more
+-sophisticated.
++&lt;LI&gt;added '&lt;TT&gt;+&lt;/TT&gt;' cat operator for multi-valued attributes, yielding
++single, longer multi-valued attribute.  &lt;TT&gt;$mine+yours$&lt;/TT&gt; is a new list
++with both elements; all of &lt;TT&gt;mine&lt;/TT&gt; first then all of &lt;TT&gt;yours&lt;/TT&gt;.
+ &lt;/LI&gt;
+-&lt;LI&gt;addressed whitespace at begin/end of template .st file issue.
+-Decided to let it continue to strip all front/back whitespace and then
+-make you add it directly.  This is a simple rule and can be made to do
+-what you want.  It is consistent with the strip newline before &gt;&gt;
+-rule too.
++&lt;LI&gt;any template invocation assumes sole formal argument name if just
++one formal argument defined in target template.  For example, if you
++do &lt;TT&gt;$bold(name)$&lt;/TT&gt; and &lt;TT&gt;bold&lt;/TT&gt; has one formal argument, then it gets the
++value of name.  This works also for template application:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++test(names) ::= &quot;&lt;names:bold(),italics()&gt;&quot;
++bold(x) ::= &quot;*&lt;x&gt;*&quot;
++italics(y) ::= &quot;_&lt;y&gt;_&quot;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++&lt;B&gt;Note&lt;/B&gt;: The binding of a value to the name of a sole formal argument is
++done dynamically so that indirect template invocation and lazy
++evaluation stuff works properly.  For example &lt;TT&gt;(templateName)(value)&lt;/TT&gt;
++should work for different templates with differently-named (but sole)
++formal arguments.  See unit test
++testInvokeIndirectTemplateWithSingleFormalArgs().
+ &lt;/LI&gt;
+-&lt;LI&gt;newlines ignored before &lt;else&gt; and &lt;endif&gt;.  Rule is: kill a single
+-newline after &lt;if&gt;, &lt;&lt;, &lt;else&gt;, and &lt;endif&gt; (but for &lt;endif&gt; only if
+-it's on a line by itself) . Kill newlines before &lt;else&gt; and &lt;endif&gt;
+-and &gt;&gt;.  the newline immediately preceding &gt;&gt; in a template group file
+-is tossed out just like the newline right after the &lt;&lt;
++&lt;LI&gt;Added operators to get first, rest, last attribute elements; e.g.,
++&lt;TT&gt;first(users)&lt;/TT&gt; yields the first value of &lt;TT&gt;users&lt;/TT&gt;.  &lt;TT&gt;rest(users)&lt;/TT&gt;
++returns all elements of &lt;TT&gt;users&lt;/TT&gt; except the first; it returns nothing
++if &lt;TT&gt;users&lt;/TT&gt; is single-valued.  This introduces a function-like syntax,
++which necessitated the &quot;&lt;em&gt;assign to sole formal arg&lt;/em&gt;&quot; functionality
++above that supports things like &lt;TT&gt;bold(name)&lt;/TT&gt;.  You can combine
++operations to say things like &lt;TT&gt;first(rest(names))&lt;/TT&gt; to get second
++element.  Can say &lt;TT&gt;first(mine+yours)&lt;/TT&gt; to get the first of a combine
++list.  These operators work on any iterable object.  [&lt;em&gt;backward
++incompatible if you used first,last,tail as an attribute or template
++name&lt;/em&gt;]
+ &lt;/LI&gt;
+-&lt;LI&gt;added &lt;n&gt;, &lt;r&gt;, &lt;t&gt;, &lt; &gt; (space char)
++&lt;LI&gt;Added maps to StringTemplate groups.  For example,
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++typeInitMap ::= [&quot;int&quot;=&quot;0&quot;, &quot;float&quot;=&quot;0.0&quot;, default=&quot;null&quot;]
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++then within a template you can refer to them &lt;TT&gt;&lt;typeInitMap.int&gt;&lt;/TT&gt;,
++which returns &quot;0&quot;.  Those strings are actually templates, but I can't
++really think of a use for that just yet. ;) If your type name is an
++attribute not a constant like int, then use
++&lt;TT&gt;&lt;typeInitMap.(typeName)&gt;&lt;/TT&gt;.  The maps are defined in the group's scope
++and are visible if no attribute hides them.  For example, if you
++define a formal argument called &lt;TT&gt;typeInitMap&lt;/TT&gt; in template &lt;TT&gt;foo&lt;/TT&gt; then
++&lt;TT&gt;foo&lt;/TT&gt; cannot see the map defined in the group (though you could pass
++it in, which would be the point).  If a name is not an attribute and
++it's not in the group's maps table, then the super group is consulted
++etc...  You may not redefine a map and it may not have the same name
++as a template in that group.  The &lt;TT&gt;default&lt;/TT&gt; value is used if you use a
++key as a property that doesn't exist.  For example &lt;TT&gt;&lt;typeInitMap.foo&gt;&lt;/TT&gt;
++returns &quot;&lt;TT&gt;null&lt;/TT&gt;&quot;.
+ &lt;/LI&gt;
+-&lt;LI&gt;added $!...!$ and &lt;!...!&gt; comments (version 2.1b3)
++&lt;LI&gt;Added renderers per template and group.  Templates are inherited
++from super group.  New Interface &lt;TT&gt;AttributeRenderer&lt;/TT&gt; defines how an
++object is rendered to String.  Here is a renderer that display &lt;TT&gt;Date&lt;/TT&gt;
++objects that renders &lt;TT&gt;Calendar&lt;/TT&gt; date objects tersely.
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++public class DateRenderer implements AttributeRenderer {
++	public String toString(Object o) {
++		SimpleDateFormat f = new SimpleDateFormat(&quot;yyyy.MM.dd&quot;);
++		return f.format(((Calendar)o).getTime());
++	}
++}
++...
++StringTemplate st =new StringTemplate(
++		&quot;date: &lt;created&gt;&quot;,
++		AngleBracketTemplateLexer.class);
++st.setAttribute(&quot;created&quot;, new GregorianCalendar(2005, 07-1, 05));
++st.registerRenderer(GregorianCalendar.class, new DateRenderer());
++String expecting = &quot;date: 2005.07.05&quot;;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++You can set the renderer for a class either at the group level or the
++individual template level.  Thanks to Anton Keks for his suggestion and sample
++implementation.
+ &lt;/LI&gt;
+-&lt;LI&gt;allow HashMap, Hashtable precisely but not Map in attribute.property lookup
++&lt;LI&gt;literal arguments are now templates not just strings. :)
++  You can even use &lt;TT&gt;&lt;&lt;...&gt;&gt;&lt;/TT&gt; literals as argument now.
++  From the bug list:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++Template inclusion expressions won't accept a nested template
++as an argument.  I'd like to be able to write &lt;foo(bar={...})&gt;, which
++would mean the same thing as &lt;foo(bar=&quot;&quot;:{...})&gt;.
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++Now you can do &lt;TT&gt;&lt;foo(bar=&quot;&lt;firstName&gt; &lt;lastName&gt;&quot;)&gt;&lt;/TT&gt;.
+ &lt;/LI&gt;
+-&lt;LI&gt;Attribute &lt;TT&gt;attributes$&lt;/TT&gt; is a text string when lint mode is on that
+-recursively dumps out types, properties, etc... (no values)
++&lt;LI&gt;added default values for formal arguments like
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++bold(x=&quot;empty&quot;) ::= ...
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++Note: because of lazy evaluation semantics, default value templates may refer
++to argument values.  Everything is evaluated after arg values are set.
++This works for invoked templates and templates you create with code.
+ &lt;/LI&gt;
+-&lt;LI&gt;Templates track their embedded instances; can ask for embedded
++&lt;LI&gt;when calling another template, y, with formal arguments from within
++a template, x, none of the
++  x parameters are visible to y because the formal parameters force you to
++  define values.  This prevents surprises and makes it easy to ensure a
++  a value is empty unless you specifically set it for that template.  The
++  problem is that you need to factor templates sometimes and want to refine
++  behavior with a subclass or just invoke another shared template but
++  &lt;TT&gt;&lt;y()&gt;&lt;/TT&gt; erases all of x's parameters.  Now, use &lt;TT&gt;&lt;y(...)&gt;&lt;/TT&gt; as a
++  syntax to indicate y should inherit all values.  &lt;TT&gt;&lt;y(name=&quot;foo&quot;, ...)&gt;&lt;/TT&gt;
++  would set one arg, but the others are inherited whereas 
++  &lt;TT&gt;&lt;y(name=&quot;foo&quot;)&gt;&lt;/TT&gt; only has &lt;TT&gt;name&lt;/TT&gt; set; others are empty. You can set
++manually with
++  &lt;TT&gt;StringTemplate.setPassThroughAttributes()&lt;/TT&gt;.
+ &lt;/LI&gt;
+-&lt;LI&gt;added isXXX accessor properties so x.special invokes x.getSpecial
+-then x.isSpecial if not successful.
++&lt;LI&gt;When a property or argument is not found, you get a better error.  I show the
++template context (nested tree of templates); e.g.,
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++no such attribute: decisionNumber in template context
++ [outputFile lexer cyclicDFA cyclicDFAState cyclicDFAEdge lookaheadTest]
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
+ &lt;/LI&gt;
+-&lt;LI&gt;Empty output for a single attribute expression one a line by itself gets no newline (i.e., you don't get a blank line).
++&lt;LI&gt;added ability to use indirect property names.  &lt;TT&gt;$user.(propName)$&lt;/TT&gt;
++evaluates &lt;TT&gt;(propName)&lt;/TT&gt; to find the name of the property and then looks
++it up in user object whereas &lt;TT&gt;$user.foo$&lt;/TT&gt; looks for literally property
++&lt;TT&gt;foo&lt;/TT&gt; in &lt;TT&gt;user&lt;/TT&gt; object.
+ &lt;/LI&gt;
+ 
+ &lt;/UL&gt;
+ &lt;H2&gt;Bug Fixes&lt;/H2&gt;
+ 
+ &lt;UL&gt;
+-&lt;LI&gt;bug in st.attribute...if no attributes table, got null ptr exception
++&lt;LI&gt;When you invoke foo(x=y), x must be an attribute of foo (well if you
++have formal args defined that is) and y is evaluated within the
++context of the surrounding template; more precisely, it's evaluated in
++the context of the actual template invocation (which can have
++predefined attributes like &lt;TT&gt;attr&lt;/TT&gt;, &lt;TT&gt;it&lt;/TT&gt;, and &lt;TT&gt;i&lt;/TT&gt;).  It's weird, but
++&lt;TT&gt;foo(x=x)&lt;/TT&gt; also makes sense.  See new unit test
++&lt;TT&gt;testArgEvaluationContext()&lt;/TT&gt;.  This was not working before, though I
++thought it was!
+ &lt;/LI&gt;
+-&lt;LI&gt;fixed n refs in TestStringTemplate unit tests to be portable newline reference.
++&lt;LI&gt;Collections, Maps, and Iterators that are non-null but have no elements
++  return false in conditionals; e.g., $if(users)$ is false if users is
++  an empty list.
+ &lt;/LI&gt;
+-&lt;LI&gt;STG.templateIsDefinedInThisGroup -&gt; isDefinedInThisGroup
++&lt;LI&gt;To define an empty template, you had to write &lt;&lt;&gt;&gt;; &quot;&quot; didn't work.
+ &lt;/LI&gt;
+-&lt;LI&gt;added isDefined(name) that checks whole hierarchy
++&lt;LI&gt;Previous release (2.1) notes forgot to mention that I added field access
++to public object fields now instead of via just accessors.
+ &lt;/LI&gt;
+-&lt;LI&gt;trap all antlr generated errors now and send to listener.
+-&lt;/LI&gt;
+-&lt;LI&gt;Made null indirect template generate nothing; used to generate
+-null-ptr exception.
+-&lt;/LI&gt;
+ 
+ &lt;/UL&gt;
+-&lt;/BODY&gt;
++
++&lt;P&gt;&lt;/BODY&gt;
+ &lt;/HTML&gt;
+
+Modified: trunk/org.prorefactor.lib/stringtemplate/src.zip
+===================================================================
+(Binary files differ)
+
+Modified: trunk/org.prorefactor.lib/stringtemplate/stringtemplate.jar
+===================================================================
+(Binary files differ)
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000029.html">[Prorefactor-svn] r34 - trunk/org.prorefactor.eclipse
+</A></li>
+	<LI>Next message: <A HREF="000031.html">[Prorefactor-svn] r36 - in trunk/org.prorefactor.core: data/tp01tests src/org/prorefactor/treeparser01
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#30">[ date ]</a>
+              <a href="thread.html#30">[ thread ]</a>
+              <a href="subject.html#30">[ subject ]</a>
+              <a href="author.html#30">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">More information about the Prorefactor-svn
+mailing list</a><br>
+</body></html>

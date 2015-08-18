@@ -1,0 +1,319 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Prorefactor-svn] r73 - in trunk: org.prorefactor.core/META-INF org.prorefactor.doc org.prorefactor.doc/META-INF org.prorefactor.eclipse/META-INF org.prorefactor.feature org.prorefactor.javadoc org.prorefactor.javadoc/META-INF org.prorefactor.lib/META-INF org.prorefactor.update
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/prorefactor-svn/2006-May/index.html" >
+   <LINK REL="made" HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r73%20-%20in%20trunk%3A%20org.prorefactor.core/META-INF%20org.prorefactor.doc%20org.prorefactor.doc/META-INF%20org.prorefactor.eclipse/META-INF%20org.prorefactor.feature%20org.prorefactor.javadoc%20org.prorefactor.javadoc/META-INF%20org.prorefactor.lib/META-INF%20org.prorefactor.update&In-Reply-To=%3C200605310504.k4V5455V016072%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000059.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Prorefactor-svn] r73 - in trunk: org.prorefactor.core/META-INF org.prorefactor.doc org.prorefactor.doc/META-INF org.prorefactor.eclipse/META-INF org.prorefactor.feature org.prorefactor.javadoc org.prorefactor.javadoc/META-INF org.prorefactor.lib/META-INF org.prorefactor.update</H1>
+    <B>johnallengreen at BerliOS</B> 
+    <A HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r73%20-%20in%20trunk%3A%20org.prorefactor.core/META-INF%20org.prorefactor.doc%20org.prorefactor.doc/META-INF%20org.prorefactor.eclipse/META-INF%20org.prorefactor.feature%20org.prorefactor.javadoc%20org.prorefactor.javadoc/META-INF%20org.prorefactor.lib/META-INF%20org.prorefactor.update&In-Reply-To=%3C200605310504.k4V5455V016072%40sheep.berlios.de%3E"
+       TITLE="[Prorefactor-svn] r73 - in trunk: org.prorefactor.core/META-INF org.prorefactor.doc org.prorefactor.doc/META-INF org.prorefactor.eclipse/META-INF org.prorefactor.feature org.prorefactor.javadoc org.prorefactor.javadoc/META-INF org.prorefactor.lib/META-INF org.prorefactor.update">johnallengreen at berlios.de
+       </A><BR>
+    <I>Wed May 31 07:04:05 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000059.html">[Prorefactor-svn] r72 - in trunk/org.prorefactor.core/src/org/prorefactor: core treeparser01 treeparser03 treeparserbase
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#60">[ date ]</a>
+              <a href="thread.html#60">[ thread ]</a>
+              <a href="subject.html#60">[ subject ]</a>
+              <a href="author.html#60">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: johnallengreen
+Date: 2006-05-31 07:03:55 +0200 (Wed, 31 May 2006)
+New Revision: 73
+
+Added:
+   trunk/org.prorefactor.javadoc/build.xml
+Removed:
+   trunk/org.prorefactor.javadoc/javadoc.xml
+Modified:
+   trunk/org.prorefactor.core/META-INF/MANIFEST.MF
+   trunk/org.prorefactor.doc/META-INF/MANIFEST.MF
+   trunk/org.prorefactor.doc/manual.xml
+   trunk/org.prorefactor.eclipse/META-INF/MANIFEST.MF
+   trunk/org.prorefactor.feature/feature.xml
+   trunk/org.prorefactor.javadoc/META-INF/MANIFEST.MF
+   trunk/org.prorefactor.lib/META-INF/MANIFEST.MF
+   trunk/org.prorefactor.update/site.xml
+Log:
+Version 1.5.0.
+
+Modified: trunk/org.prorefactor.core/META-INF/MANIFEST.MF
+===================================================================
+--- trunk/org.prorefactor.core/META-INF/MANIFEST.MF	2006-05-31 03:18:46 UTC (rev 72)
++++ trunk/org.prorefactor.core/META-INF/MANIFEST.MF	2006-05-31 05:03:55 UTC (rev 73)
+@@ -2,7 +2,7 @@
+ Bundle-ManifestVersion: 2
+ Bundle-Name: ProRefactor Core
+ Bundle-SymbolicName: org.prorefactor.core
+-Bundle-Version: 1.4.0
++Bundle-Version: 1.5.0
+ Bundle-ClassPath: core.jar
+ Bundle-Vendor: ProRefactor.org
+ Bundle-Localization: plugin
+
+Modified: trunk/org.prorefactor.doc/META-INF/MANIFEST.MF
+===================================================================
+--- trunk/org.prorefactor.doc/META-INF/MANIFEST.MF	2006-05-31 03:18:46 UTC (rev 72)
++++ trunk/org.prorefactor.doc/META-INF/MANIFEST.MF	2006-05-31 05:03:55 UTC (rev 73)
+@@ -2,7 +2,7 @@
+ Bundle-ManifestVersion: 2
+ Bundle-Name: ProRefactor Documentation
+ Bundle-SymbolicName: org.prorefactor.doc; singleton:=true
+-Bundle-Version: 1.4.0
++Bundle-Version: 1.5.0
+ Bundle-Vendor: ProRefactor.org
+ Bundle-Localization: plugin
+ Require-Bundle: org.eclipse.help
+
+Modified: trunk/org.prorefactor.doc/manual.xml
+===================================================================
+--- trunk/org.prorefactor.doc/manual.xml	2006-05-31 03:18:46 UTC (rev 72)
++++ trunk/org.prorefactor.doc/manual.xml	2006-05-31 05:03:55 UTC (rev 73)
+@@ -7,7 +7,7 @@
+ 
+     &lt;date&gt;2006&lt;/date&gt;
+ 
+-    &lt;pubdate&gt;March 2006, ProRefactor version 1.4.0&lt;/pubdate&gt;
++    &lt;pubdate&gt;May 2006, ProRefactor version 1.5.0&lt;/pubdate&gt;
+ 
+     &lt;author&gt;
+       &lt;firstname&gt;John&lt;/firstname&gt;
+@@ -1494,6 +1494,23 @@
+ 
+     &lt;variablelist&gt;
+       &lt;varlistentry&gt;
++        &lt;term&gt;Version 1.5.0&lt;/term&gt;
++
++        &lt;listitem&gt;
++          &lt;itemizedlist&gt;
++            &lt;listitem&gt;
++              &lt;para&gt;More support for 10.1 and Proparse 3.0.&lt;/para&gt;
++            &lt;/listitem&gt;
++
++            &lt;listitem&gt;
++              &lt;para&gt;Various internal fixes and tweaks, mostly for
++              Callgraph.&lt;/para&gt;
++            &lt;/listitem&gt;
++          &lt;/itemizedlist&gt;
++        &lt;/listitem&gt;
++      &lt;/varlistentry&gt;
++
++      &lt;varlistentry&gt;
+         &lt;term&gt;Version 1.4.0&lt;/term&gt;
+ 
+         &lt;listitem&gt;
+
+Modified: trunk/org.prorefactor.eclipse/META-INF/MANIFEST.MF
+===================================================================
+--- trunk/org.prorefactor.eclipse/META-INF/MANIFEST.MF	2006-05-31 03:18:46 UTC (rev 72)
++++ trunk/org.prorefactor.eclipse/META-INF/MANIFEST.MF	2006-05-31 05:03:55 UTC (rev 73)
+@@ -2,7 +2,7 @@
+ Bundle-ManifestVersion: 2
+ Bundle-Name: ProRefactor
+ Bundle-SymbolicName: org.prorefactor.eclipse; singleton:=true
+-Bundle-Version: 1.4.0
++Bundle-Version: 1.5.0
+ Bundle-ClassPath: eclipse.jar
+ Bundle-Activator: org.prorefactor.eclipse.Plugin
+ Bundle-Vendor: ProRefactor.org
+
+Modified: trunk/org.prorefactor.feature/feature.xml
+===================================================================
+--- trunk/org.prorefactor.feature/feature.xml	2006-05-31 03:18:46 UTC (rev 72)
++++ trunk/org.prorefactor.feature/feature.xml	2006-05-31 05:03:55 UTC (rev 73)
+@@ -2,7 +2,7 @@
+ &lt;feature
+       id=&quot;org.prorefactor&quot;
+       label=&quot;org.prorefactor&quot;
+-      version=&quot;1.4.0&quot;
++      version=&quot;1.5.0&quot;
+       provider-name=&quot;ProRefactor.org&quot;
+       plugin=&quot;org.prorefactor.eclipse&quot;&gt;
+ 
+@@ -69,31 +69,31 @@
+          id=&quot;org.prorefactor.core&quot;
+          download-size=&quot;0&quot;
+          install-size=&quot;0&quot;
+-         version=&quot;1.4.0&quot;/&gt;
++         version=&quot;1.5.0&quot;/&gt;
+ 
+    &lt;plugin
+          id=&quot;org.prorefactor.eclipse&quot;
+          download-size=&quot;0&quot;
+          install-size=&quot;0&quot;
+-         version=&quot;1.4.0&quot;/&gt;
++         version=&quot;1.5.0&quot;/&gt;
+ 
+    &lt;plugin
+          id=&quot;org.prorefactor.javadoc&quot;
+          download-size=&quot;0&quot;
+          install-size=&quot;0&quot;
+-         version=&quot;1.4.0&quot;/&gt;
++         version=&quot;1.5.0&quot;/&gt;
+ 
+    &lt;plugin
+          id=&quot;org.prorefactor.doc&quot;
+          download-size=&quot;0&quot;
+          install-size=&quot;0&quot;
+-         version=&quot;1.4.0&quot;/&gt;
++         version=&quot;1.5.0&quot;/&gt;
+ 
+    &lt;plugin
+          id=&quot;org.prorefactor.lib&quot;
+          download-size=&quot;0&quot;
+          install-size=&quot;0&quot;
+-         version=&quot;1.4.0&quot;/&gt;
++         version=&quot;1.5.0&quot;/&gt;
+ 
+    &lt;plugin
+          id=&quot;org.prolint&quot;
+
+Modified: trunk/org.prorefactor.javadoc/META-INF/MANIFEST.MF
+===================================================================
+--- trunk/org.prorefactor.javadoc/META-INF/MANIFEST.MF	2006-05-31 03:18:46 UTC (rev 72)
++++ trunk/org.prorefactor.javadoc/META-INF/MANIFEST.MF	2006-05-31 05:03:55 UTC (rev 73)
+@@ -2,7 +2,7 @@
+ Bundle-ManifestVersion: 2
+ Bundle-Name: ProRefactor Javadoc
+ Bundle-SymbolicName: org.prorefactor.javadoc; singleton:=true
+-Bundle-Version: 1.4.0
++Bundle-Version: 1.5.0
+ Bundle-Vendor: ProRefactor.org
+ Bundle-Localization: plugin
+ Require-Bundle: org.eclipse.help
+
+Copied: trunk/org.prorefactor.javadoc/build.xml (from rev 66, trunk/org.prorefactor.javadoc/javadoc.xml)
+===================================================================
+--- trunk/org.prorefactor.javadoc/javadoc.xml	2006-03-31 19:19:00 UTC (rev 66)
++++ trunk/org.prorefactor.javadoc/build.xml	2006-05-31 05:03:55 UTC (rev 73)
+@@ -0,0 +1,27 @@
++&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
++&lt;project name=&quot;ProRefactor&quot; default=&quot;javadoc&quot;&gt;
++  &lt;target name=&quot;javadoc&quot; description=&quot;Build javadoc dir&quot;&gt;
++	  &lt;javadoc 
++	           destdir=&quot;javadoc&quot;
++	           source=&quot;5.0&quot;
++	           author=&quot;true&quot;
++	           version=&quot;true&quot;
++	           use=&quot;true&quot;
++	           classpath=&quot;../org.prorefactor.antlr/bin;../org.prorefactor.core/bin;../org.prorefactor.eclipse/bin;&quot;
++	           windowtitle=&quot;ProRefactor&quot;&gt;
++	    &lt;fileset dir=&quot;../org.prorefactor.core/src&quot; defaultexcludes=&quot;yes&quot;&gt;
++	      &lt;include name=&quot;**/*.java&quot;/&gt;
++	      &lt;exclude name=&quot;org/prorefactor/treeparserbase/JPTreeParser**&quot;/&gt;
++	      &lt;exclude name=&quot;org/prorefactor/treeparser01/TreeParser01**&quot;/&gt;
++	      &lt;exclude name=&quot;org/prorefactor/treeparser02/TreeParser02**&quot;/&gt;
++	    &lt;/fileset&gt;
++	    &lt;fileset dir=&quot;../org.prorefactor.eclipse/src&quot; defaultexcludes=&quot;yes&quot;&gt;
++	      &lt;include name=&quot;**/*.java&quot;/&gt;
++	    &lt;/fileset&gt;
++	    &lt;doctitle&gt;&lt;![CDATA[&lt;h1&gt;ProRefactor 1.5.0&lt;/h1&gt;]]&gt;&lt;/doctitle&gt;
++	    &lt;bottom&gt;&lt;![CDATA[&lt;i&gt;Copyright &#169; 2002-2006 Joanju Software and others. All Rights Reserved.&lt;/i&gt;]]&gt;&lt;/bottom&gt;
++	    &lt;tag name=&quot;todo&quot; scope=&quot;all&quot; description=&quot;To do:&quot; /&gt;
++	  &lt;/javadoc&gt;
++      &lt;zip zipfile=&quot;doc.zip&quot; basedir=&quot;javadoc&quot; filesonly=&quot;false&quot; whenempty=&quot;skip&quot; update=&quot;false&quot;/&gt;
++  &lt;/target&gt;
++&lt;/project&gt;
+
+Deleted: trunk/org.prorefactor.javadoc/javadoc.xml
+===================================================================
+--- trunk/org.prorefactor.javadoc/javadoc.xml	2006-05-31 03:18:46 UTC (rev 72)
++++ trunk/org.prorefactor.javadoc/javadoc.xml	2006-05-31 05:03:55 UTC (rev 73)
+@@ -1,27 +0,0 @@
+-&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+-&lt;project name=&quot;ProRefactor&quot; default=&quot;javadoc&quot;&gt;
+-  &lt;target name=&quot;javadoc&quot; description=&quot;Build javadoc dir&quot;&gt;
+-	  &lt;javadoc 
+-	           destdir=&quot;javadoc&quot;
+-	           source=&quot;5.0&quot;
+-	           author=&quot;true&quot;
+-	           version=&quot;true&quot;
+-	           use=&quot;true&quot;
+-	           classpath=&quot;../org.prorefactor.antlr/bin;../org.prorefactor.core/bin;../org.prorefactor.eclipse/bin;&quot;
+-	           windowtitle=&quot;ProRefactor&quot;&gt;
+-	    &lt;fileset dir=&quot;../org.prorefactor.core/src&quot; defaultexcludes=&quot;yes&quot;&gt;
+-	      &lt;include name=&quot;**/*.java&quot;/&gt;
+-	      &lt;exclude name=&quot;org/prorefactor/treeparserbase/JPTreeParser**&quot;/&gt;
+-	      &lt;exclude name=&quot;org/prorefactor/treeparser01/TreeParser01**&quot;/&gt;
+-	      &lt;exclude name=&quot;org/prorefactor/treeparser02/TreeParser02**&quot;/&gt;
+-	    &lt;/fileset&gt;
+-	    &lt;fileset dir=&quot;../org.prorefactor.eclipse/src&quot; defaultexcludes=&quot;yes&quot;&gt;
+-	      &lt;include name=&quot;**/*.java&quot;/&gt;
+-	    &lt;/fileset&gt;
+-	    &lt;doctitle&gt;&lt;![CDATA[&lt;h1&gt;ProRefactor 1.4.0&lt;/h1&gt;]]&gt;&lt;/doctitle&gt;
+-	    &lt;bottom&gt;&lt;![CDATA[&lt;i&gt;Copyright &#169; 2002-2006 Joanju Software and others. All Rights Reserved.&lt;/i&gt;]]&gt;&lt;/bottom&gt;
+-	    &lt;tag name=&quot;todo&quot; scope=&quot;all&quot; description=&quot;To do:&quot; /&gt;
+-	  &lt;/javadoc&gt;
+-      &lt;zip zipfile=&quot;doc.zip&quot; basedir=&quot;javadoc&quot; filesonly=&quot;false&quot; whenempty=&quot;skip&quot; update=&quot;false&quot;/&gt;
+-  &lt;/target&gt;
+-&lt;/project&gt;
+
+Modified: trunk/org.prorefactor.lib/META-INF/MANIFEST.MF
+===================================================================
+--- trunk/org.prorefactor.lib/META-INF/MANIFEST.MF	2006-05-31 03:18:46 UTC (rev 72)
++++ trunk/org.prorefactor.lib/META-INF/MANIFEST.MF	2006-05-31 05:03:55 UTC (rev 73)
+@@ -2,7 +2,7 @@
+ Bundle-ManifestVersion: 2
+ Bundle-Name: ProRefactor required Libraries
+ Bundle-SymbolicName: org.prorefactor.lib
+-Bundle-Version: 1.4.0
++Bundle-Version: 1.5.0
+ Bundle-ClassPath: antlr/antlr.jar,
+  jakarta/commons-collections/commons-collections.jar,
+  hibernate/cglib-full-2.0.2.jar,
+
+Modified: trunk/org.prorefactor.update/site.xml
+===================================================================
+--- trunk/org.prorefactor.update/site.xml	2006-05-31 03:18:46 UTC (rev 72)
++++ trunk/org.prorefactor.update/site.xml	2006-05-31 05:03:55 UTC (rev 73)
+@@ -6,6 +6,9 @@
+    &lt;feature url=&quot;features/org.prorefactor_1.4.0.jar&quot; id=&quot;org.prorefactor&quot; version=&quot;1.4.0&quot;&gt;
+       &lt;category name=&quot;ProRefactor.org&quot;/&gt;
+    &lt;/feature&gt;
++   &lt;feature url=&quot;features/org.prorefactor_1.5.0.jar&quot; id=&quot;org.prorefactor&quot; version=&quot;1.5.0&quot;&gt;
++      &lt;category name=&quot;ProRefactor.org&quot;/&gt;
++   &lt;/feature&gt;
+    &lt;category-def name=&quot;ProRefactor.org&quot; label=&quot;ProRefactor.org&quot;&gt;
+       &lt;description&gt;
+          Analysis and refactoring for Progress OE ABL source code.
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000059.html">[Prorefactor-svn] r72 - in trunk/org.prorefactor.core/src/org/prorefactor: core treeparser01 treeparser03 treeparserbase
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#60">[ date ]</a>
+              <a href="thread.html#60">[ thread ]</a>
+              <a href="subject.html#60">[ subject ]</a>
+              <a href="author.html#60">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">More information about the Prorefactor-svn
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,383 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Prorefactor-svn] r63 - in trunk/org.prorefactor.core/src/org/prorefactor: core/unittest treeparser treeparser01
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/prorefactor-svn/2006-March/index.html" >
+   <LINK REL="made" HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r63%20-%20in%20trunk/org.prorefactor.core/src/org/prorefactor%3A%20core/unittest%20treeparser%20treeparser01&In-Reply-To=%3C200603301904.k2UJ47U9016509%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000052.html">
+   <LINK REL="Next"  HREF="000054.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Prorefactor-svn] r63 - in trunk/org.prorefactor.core/src/org/prorefactor: core/unittest treeparser treeparser01</H1>
+    <B>johnallengreen at BerliOS</B> 
+    <A HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r63%20-%20in%20trunk/org.prorefactor.core/src/org/prorefactor%3A%20core/unittest%20treeparser%20treeparser01&In-Reply-To=%3C200603301904.k2UJ47U9016509%40sheep.berlios.de%3E"
+       TITLE="[Prorefactor-svn] r63 - in trunk/org.prorefactor.core/src/org/prorefactor: core/unittest treeparser treeparser01">johnallengreen at berlios.de
+       </A><BR>
+    <I>Thu Mar 30 21:04:07 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000052.html">[Prorefactor-svn] r62 - in trunk: org.prorefactor.core/META-INF org.prorefactor.doc org.prorefactor.doc/META-INF org.prorefactor.eclipse/META-INF org.prorefactor.feature org.prorefactor.javadoc org.prorefactor.javadoc/META-INF org.prorefactor.lib/META-INF org.prorefactor.update
+</A></li>
+        <LI>Next message: <A HREF="000054.html">[Prorefactor-svn] r64 - in trunk/org.prorefactor.core/src/org/prorefactor: core/unittest treeparser treeparser01
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#53">[ date ]</a>
+              <a href="thread.html#53">[ thread ]</a>
+              <a href="subject.html#53">[ subject ]</a>
+              <a href="author.html#53">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: johnallengreen
+Date: 2006-03-30 21:04:04 +0200 (Thu, 30 Mar 2006)
+New Revision: 63
+
+Modified:
+   trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/Config.java
+   trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/TP01ProcessActionTest.java
+   trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/TP01SymbolActionTest.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Call.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Routine.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/RunHandle.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/SymbolScope.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01ProcessAction.java
+Log:
+Dealt with various warnings like Java 5 generics.
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/Config.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/Config.java	2006-03-30 02:42:57 UTC (rev 62)
++++ trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/Config.java	2006-03-30 19:04:04 UTC (rev 63)
+@@ -3,6 +3,11 @@
+  * @author Peter Dalbadie
+  * 21-Sep-2004
+  * 
++ * Copyright (c) 2004,2006 ProRefactor.org.
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
+  */
+ 
+ package org.prorefactor.core.unittest;
+@@ -46,7 +51,7 @@
+ 		parser.configSet(&quot;proversion&quot;, getEnvProperty(&quot;proversion&quot;));
+ 		parser.configSet(&quot;window-system&quot;, getEnvProperty(&quot;window_system&quot;));
+ 	
+-		// dbAliases();
++		dbAliases();
+ 		
+ 		parser.configSet(&quot;init&quot;,&quot;true&quot;);
+ 	}
+@@ -54,10 +59,9 @@
+ 	/**
+ 	 * @return
+ 	 */
+-	private void dbAliases() {
++	private static void dbAliases() {
+ 		parser.schemaAliasDelete(&quot;&quot;); // deletes all
+ 		String [] alias = getEnvProperty(&quot;database_aliases&quot;).split(&quot;,&quot;);
+-		
+ 		for (int i = 0; i &lt; alias.length - 1; i = i + 2) {
+ 			parser.schemaAliasCreate(alias[i], alias[i+1]);
+ 		}
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/TP01ProcessActionTest.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/TP01ProcessActionTest.java	2006-03-30 02:42:57 UTC (rev 62)
++++ trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/TP01ProcessActionTest.java	2006-03-30 19:04:04 UTC (rev 63)
+@@ -3,12 +3,17 @@
+  * @author Peter Dalbadie
+  * 21-Sep-2004
+  * 
++ * Copyright (c) 2004,2006 ProRefactor.org.
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
+  */
+ 
+ package org.prorefactor.core.unittest;
+ 
+ import java.util.ArrayList;
+-import java.util.Collection;
++import java.util.Map;
+ 
+ import junit.framework.TestCase;
+ 
+@@ -90,29 +95,29 @@
+ 			Call getCompileListCall = new Call(externalName,getCompileList.getName());
+ 			
+ 			// Create expected result set for root scope: enable-ui, user-action, disable-ui.
+-			ArrayList expectedRootCalls = new ArrayList();
++			ArrayList&lt;Call&gt; expectedRootCalls = new ArrayList&lt;Call&gt;();
+ 			expectedRootCalls.add(disableUiCall);
+ 			expectedRootCalls.add(enableUiCall);
+ 			expectedRootCalls.add(userActionCall);
+ 			
+ 
+ 			// Get actual calls found in code and test against expected.
+-			Collection actualRootCalls = processAction.getRootScope().getCallList();
+-			assertTrue(actualRootCalls.containsAll(expectedRootCalls));
+-			assertTrue(! actualRootCalls.contains(setStateCall));			
+-			assertTrue(! actualRootCalls.contains(getCompileListCall));			
++			Map&lt;String, Call&gt; actualRootCalls = processAction.getRootScope().getCallMap();
++			assertTrue(actualRootCalls.values().containsAll(expectedRootCalls));
++			assertTrue(! actualRootCalls.values().contains(setStateCall));			
++			assertTrue(! actualRootCalls.values().contains(getCompileListCall));			
+ 			
+ 			// Internal proc enable-ui calls: setState.
+-			Collection actualEnableUiCalls = enableUi.getRoutineScope().getCallList();
+-			assertTrue(actualEnableUiCalls.contains(setStateCall));
++			Map&lt;String, Call&gt; actualEnableUiCalls = enableUi.getRoutineScope().getCallMap();
++			assertTrue(actualEnableUiCalls.values().contains(setStateCall));
+ 			
+ 			// Internal proc user-action calls: get-compile-list.
+-			Collection actualUserActionCalls = userAction.getRoutineScope().getCallList();
+-			assertTrue(actualUserActionCalls.contains(getCompileListCall));
++			Map&lt;String, Call&gt; actualUserActionCalls = userAction.getRoutineScope().getCallMap();
++			assertTrue(actualUserActionCalls.values().contains(getCompileListCall));
+ 			
+ 			// Internal proc get-compile-list calls: setState x 3.
+-			Collection actualGetCompileListCalls = getCompileList.getRoutineScope().getCallList();
+-			assertTrue(actualGetCompileListCalls.contains(setStateCall));
++			Map&lt;String, Call&gt; actualGetCompileListCalls = getCompileList.getRoutineScope().getCallMap();
++			assertTrue(actualGetCompileListCalls.values().contains(setStateCall));
+ 						
+ 		} catch (RecognitionException e) {
+ 			e.printStackTrace();
+@@ -155,23 +160,23 @@
+ 			Call test01InternalCall = new Call(externalName,test01.getName());
+ 			
+ 			// Expected root procedure calls.
+-			ArrayList expectedRootCalls = new ArrayList();
++			ArrayList&lt;Call&gt; expectedRootCalls = new ArrayList&lt;Call&gt;();
+ 			expectedRootCalls.add(persistentProcCall);
+ 			expectedRootCalls.add(test01InHandleCall);
+ 			expectedRootCalls.add(test01InternalCall);
+ 
+ 			// Expected calls in procedure test_01
+-			ArrayList expectedTest01Calls = new ArrayList();
++			ArrayList&lt;Call&gt; expectedTest01Calls = new ArrayList&lt;Call&gt;();
+ 			expectedTest01Calls.add(test02InHandleCall);
+ 			
+ 			// Test actual root calls agains expected root calls.
+-			Collection actualRootCalls = processAction.getCallList();
+-			assertTrue(actualRootCalls.containsAll(expectedRootCalls));
+-			assertTrue(! actualRootCalls.contains(test02InHandleCall));			
++			Map&lt;String, Call&gt; actualRootCalls = processAction.getCallList();
++			assertTrue(actualRootCalls.values().containsAll(expectedRootCalls));
++			assertTrue(! actualRootCalls.values().contains(test02InHandleCall));			
+ 
+ 			// Test actual calls in test_01 against expected calls.
+-			Collection actualTest01Calls = test01.getRoutineScope().getCallList();
+-			assertTrue(actualTest01Calls.containsAll(expectedTest01Calls));
++			Map&lt;String, Call&gt; actualTest01Calls = test01.getRoutineScope().getCallMap();
++			assertTrue(actualTest01Calls.values().containsAll(expectedTest01Calls));
+ 			
+ 		} catch (RecognitionException e) {
+ 			e.printStackTrace();
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/TP01SymbolActionTest.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/TP01SymbolActionTest.java	2006-03-30 02:42:57 UTC (rev 62)
++++ trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/TP01SymbolActionTest.java	2006-03-30 19:04:04 UTC (rev 63)
+@@ -3,6 +3,11 @@
+  * @author Peter Dalbadie
+  * 21-Sep-2004
+  * 
++ * Copyright (c) 2004,2006 ProRefactor.org.
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
+  */
+ 
+ package org.prorefactor.core.unittest;
+@@ -22,7 +27,6 @@
+  *
+  */
+ public class TP01SymbolActionTest extends TestCase {
+-	private Config config = null;
+ 	private ProparseLdr parser = null;
+ 	private TP01Support walkAction;
+ 	private TreeParser01 walker;
+@@ -42,7 +46,6 @@
+ 	}
+ 	
+ 	public void setUp(){
+-		config = Config.getInstance();
+ 		parser = ProparseLdr.getInstance();
+ 		walkAction = new TP01Support();
+ 		walker = new TreeParser01();
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Call.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Call.java	2006-03-30 02:42:57 UTC (rev 62)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Call.java	2006-03-30 19:04:04 UTC (rev 63)
+@@ -3,6 +3,11 @@
+  * @author Peter Dalbadie
+  * 21-Sep-2004
+  * 
++ * Copyright (c) 2004,2006 ProRefactor.org.
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
+  */
+ 
+ package org.prorefactor.treeparser;
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Routine.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Routine.java	2006-03-30 02:42:57 UTC (rev 62)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Routine.java	2006-03-30 19:04:04 UTC (rev 63)
+@@ -3,7 +3,7 @@
+  * @author Peter Dalbadie
+  * 21-Sep-2004
+  * 
+- * Copyright (C) 2004-2006 Joanju and others.
++ * Copyright (c) 2004,2006 ProRefactor.org.
+  * All rights reserved. This program and the accompanying materials 
+  * are made available under the terms of the Eclipse Public License v1.0
+  * which accompanies this distribution, and is available at
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/RunHandle.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/RunHandle.java	2006-03-30 02:42:57 UTC (rev 62)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/RunHandle.java	2006-03-30 19:04:04 UTC (rev 63)
+@@ -3,6 +3,11 @@
+  * @author Peter Dalbadie
+  * 21-Sep-2004
+  * 
++ * Copyright (c) 2004,2006 ProRefactor.org.
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
+  */
+ 
+ package org.prorefactor.treeparser;
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/SymbolScope.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/SymbolScope.java	2006-03-30 02:42:57 UTC (rev 62)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/SymbolScope.java	2006-03-30 19:04:04 UTC (rev 63)
+@@ -13,7 +13,6 @@
+ 
+ 
+ import java.util.ArrayList;
+-import java.util.Collection;
+ import java.util.HashMap;
+ import java.util.Map;
+ import java.util.Set;
+@@ -389,28 +388,17 @@
+ 
+ 
+ 
+-	public void setRootBlock(Block block) { rootBlock = block; }
++	public void registerCall(Call call) { callMap.put(call.id(), call); }
+ 
+ 
+-	/**
+-	 * @param call
+-	 */
+-	public void registerCall(Call call) {
+-		callMap.put(call.id(), call);
+-	}
++	public void setRootBlock(Block block) { rootBlock = block; }
+ 
+ 
+-	/**
+-	 * @return a Collection view of the calls registered in
+-	 * this SymbolScope. Caution: changes to the Collection
+-	 * will affect the internal list in the SymbolScope.
+-	 */
+-	public Collection&lt;Call&gt; getCallList() {
+-		// TODO - change signature to Map to allow key search.
+-		return callMap.values();
+-	}
+ 
++	/** Get the call map. */
++	public Map&lt;String, Call&gt; getCallMap() { return callMap; }
+ 
++
+ 	/**
+ 	 * @param name
+ 	 * @return
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01ProcessAction.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01ProcessAction.java	2006-03-30 02:42:57 UTC (rev 62)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01ProcessAction.java	2006-03-30 19:04:04 UTC (rev 63)
+@@ -3,13 +3,18 @@
+  * @author Peter Dalbadie
+  * 21-Sep-2004
+  * 
++ * Copyright (c) 2004,2006 ProRefactor.org.
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
+  */
+ 
+ 
+ package org.prorefactor.treeparser01;
+ 
+ 
+-import java.util.Collection;
++import java.util.Map;
+ 
+ import org.prorefactor.core.JPNode;
+ import org.prorefactor.treeparser.Call;
+@@ -203,14 +208,11 @@
+ 	public void exprtSystemHandleName(AST sysHandleName) {
+ 	}
+ 
+-	/**
+-	 * @return a Collection containing all the Call objects
+-	 * registered in the currentScope.
+-	 */
+-	public Collection getCallList() {
+-		return currentScope.getCallList();
+-	}
+ 
++	/** @return the Map of Call objects registered in the currentScope. */
++	public Map&lt;String, Call&gt; getCallList() { return currentScope.getCallMap(); }
++
++
+ 	/**
+ 	 * @return
+ 	 */
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000052.html">[Prorefactor-svn] r62 - in trunk: org.prorefactor.core/META-INF org.prorefactor.doc org.prorefactor.doc/META-INF org.prorefactor.eclipse/META-INF org.prorefactor.feature org.prorefactor.javadoc org.prorefactor.javadoc/META-INF org.prorefactor.lib/META-INF org.prorefactor.update
+</A></li>
+	<LI>Next message: <A HREF="000054.html">[Prorefactor-svn] r64 - in trunk/org.prorefactor.core/src/org/prorefactor: core/unittest treeparser treeparser01
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#53">[ date ]</a>
+              <a href="thread.html#53">[ thread ]</a>
+              <a href="subject.html#53">[ subject ]</a>
+              <a href="author.html#53">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">More information about the Prorefactor-svn
+mailing list</a><br>
+</body></html>

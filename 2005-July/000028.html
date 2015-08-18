@@ -1,0 +1,615 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Prorefactor-svn] r33 - in trunk: org.prorefactor.core/src/org/prorefactor/core org.prorefactor.core/src/org/prorefactor/nodetypes org.prorefactor.core/src/org/prorefactor/treeparser org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.core/src/org/prorefactor/widgettypes org.prorefactor.eclipse/src/org/prorefactor/eclipse/actions org.prorefactor.refactor/src/org/prorefactor/refactor
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/prorefactor-svn/2005-July/index.html" >
+   <LINK REL="made" HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r33%20-%20in%20trunk%3A%20org.prorefactor.core/src/org/prorefactor/core%20org.prorefactor.core/src/org/prorefactor/nodetypes%20org.prorefactor.core/src/org/prorefactor/treeparser%20org.prorefactor.core/src/org/prorefactor/treeparser01%20org.prorefactor.core/src/org/prorefactor/widgettypes%20org.prorefactor.eclipse/src/org/prorefactor/eclipse/actions%20org.prorefactor.refactor/src/org/prorefactor/refactor&In-Reply-To=%3C200507060053.j660r6cj025261%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000029.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Prorefactor-svn] r33 - in trunk: org.prorefactor.core/src/org/prorefactor/core org.prorefactor.core/src/org/prorefactor/nodetypes org.prorefactor.core/src/org/prorefactor/treeparser org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.core/src/org/prorefactor/widgettypes org.prorefactor.eclipse/src/org/prorefactor/eclipse/actions org.prorefactor.refactor/src/org/prorefactor/refactor</H1>
+    <B>John Green at BerliOS</B> 
+    <A HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r33%20-%20in%20trunk%3A%20org.prorefactor.core/src/org/prorefactor/core%20org.prorefactor.core/src/org/prorefactor/nodetypes%20org.prorefactor.core/src/org/prorefactor/treeparser%20org.prorefactor.core/src/org/prorefactor/treeparser01%20org.prorefactor.core/src/org/prorefactor/widgettypes%20org.prorefactor.eclipse/src/org/prorefactor/eclipse/actions%20org.prorefactor.refactor/src/org/prorefactor/refactor&In-Reply-To=%3C200507060053.j660r6cj025261%40sheep.berlios.de%3E"
+       TITLE="[Prorefactor-svn] r33 - in trunk: org.prorefactor.core/src/org/prorefactor/core org.prorefactor.core/src/org/prorefactor/nodetypes org.prorefactor.core/src/org/prorefactor/treeparser org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.core/src/org/prorefactor/widgettypes org.prorefactor.eclipse/src/org/prorefactor/eclipse/actions org.prorefactor.refactor/src/org/prorefactor/refactor">johnallengreen at berlios.de
+       </A><BR>
+    <I>Wed Jul  6 02:53:06 CEST 2005</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000029.html">[Prorefactor-svn] r34 - trunk/org.prorefactor.eclipse
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#28">[ date ]</a>
+              <a href="thread.html#28">[ thread ]</a>
+              <a href="subject.html#28">[ subject ]</a>
+              <a href="author.html#28">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: johnallengreen
+Date: 2005-07-06 02:52:58 +0200 (Wed, 06 Jul 2005)
+New Revision: 33
+
+Added:
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/FieldLevelWidget.java
+Modified:
+   trunk/org.prorefactor.core/src/org/prorefactor/core/IConstants.java
+   trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/FieldRefNode.java
+   trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/NodeFactory.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Block.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/FieldLookupResult.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/SymbolScope.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/TreeParserWrapper.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Support.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01TokenTypes.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01TokenTypes.txt
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/treeparser01.g
+   trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Browse.java
+   trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Button.java
+   trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Image.java
+   trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Rectangle.java
+   trunk/org.prorefactor.eclipse/src/org/prorefactor/eclipse/actions/ActionManager.java
+   trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/RefactorSession.java
+Log:
+Fixed a bug where field level widgets were not being added for lookup in
+in syntax for frames. Added FieldLevelWidget as a subclass of Widget. A
+Field_ref node may be referencing one of these FieldLevelWidget Symbol objects.
+
+Fixed a bug in the scope handling in TRIGGERS phrases.
+
+Fixed bug: uppercase file names .W and .P were not being parsed.
+
+RefactorSession.loadProject(...) now checks whether the schema file has been
+modified - in which case the schema should be reloaded.
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/core/IConstants.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/core/IConstants.java	2005-05-17 19:02:19 UTC (rev 32)
++++ trunk/org.prorefactor.core/src/org/prorefactor/core/IConstants.java	2005-07-06 00:52:58 UTC (rev 33)
+@@ -18,6 +18,8 @@
+ /**
+  * Constants commonly used when working with Proparse.
+  * See Proparse documentation, &quot;Node Attributes Reference&quot;.
++ * Joanju uses 49000-49999 for scratch and otherwise non-persistent attributes.
++ * Attributes 50000+ are reserved for non-Joanju use.
+  */
+ public interface IConstants {
+ 
+@@ -107,7 +109,8 @@
+ 	public int TO_BE_CUT = 11010;
+ 
+ 	
+-	// Joanju uses 49000+ for scratch and otherwise non-persistent attributes.
++	// Joanju uses 49000-49999 for scratch and otherwise non-persistent attributes.
++	// Attributes 50000+ are reserved for non-Joanju use.
+ 
+ 
+ } // interface IConstants
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/FieldRefNode.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/FieldRefNode.java	2005-05-17 19:02:19 UTC (rev 32)
++++ trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/FieldRefNode.java	2005-07-06 00:52:58 UTC (rev 33)
+@@ -15,6 +15,7 @@
+ import org.prorefactor.treeparser.BufferScope;
+ import org.prorefactor.treeparser.DataType;
+ import org.prorefactor.treeparser.FieldBuffer;
++import org.prorefactor.treeparser.FieldLevelWidget;
+ import org.prorefactor.treeparser.Primative;
+ import org.prorefactor.treeparser.Symbol;
+ import org.prorefactor.treeparser.Variable;
+@@ -69,6 +70,10 @@
+ 		assert symbol!=null;
+ 		setLink(JPNode.SYMBOL, symbol);
+ 	}
++	public void setSymbol(FieldLevelWidget symbol) {
++		assert symbol!=null;
++		setLink(JPNode.SYMBOL, symbol);
++	}
+ 	public void setSymbol(Variable symbol) {
+ 		assert symbol!=null;
+ 		setLink(JPNode.SYMBOL, symbol);
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/NodeFactory.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/NodeFactory.java	2005-05-17 19:02:19 UTC (rev 32)
++++ trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/NodeFactory.java	2005-07-06 00:52:58 UTC (rev 33)
+@@ -49,7 +49,6 @@
+ 		case TokenTypes.FOR:
+ 		case TokenTypes.REPEAT:
+ 		case TokenTypes.FUNCTION:
+-		case TokenTypes.ON:
+ 		case TokenTypes.PROCEDURE:
+ 			// We check that these are statement heads, whether the keyword is reserved or not.
+ 			if (parser.attrGetI(handle, IConstants.STATEHEAD) != 0 )
+@@ -61,15 +60,16 @@
+ 			// CANFIND is reserved, and only used in the syntax for the CAN-FIND function.
+ 			// It is a &quot;block&quot; because it has special buffer/index-cursor handling.
+ 			return new BlockNode(handle);
+-		case TokenTypes.TRIGGERS:
++		case TokenTypes.ON:
+ 			{
++				if (parser.attrGetI(handle, IConstants.STATEHEAD) != 0 )
++					return new BlockNode(handle);
+ 				int temp = parser.getHandle();
+ 				int childType = parser.nodeFirstChildI(handle, temp);
+ 				parser.releaseHandle(temp);
+-				if (childType == TokenTypes.Code_block)
++				if (childType == TokenTypes.Event_list)
+ 					return new BlockNode(handle);
+-				else
+-					return new JPNode(handle);
++				return new JPNode(handle);
+ 			}
+ 		default:
+ 			return new JPNode(handle);
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Block.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Block.java	2005-05-17 19:02:19 UTC (rev 32)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Block.java	2005-07-06 00:52:58 UTC (rev 33)
+@@ -297,9 +297,11 @@
+ 		int lastDot = name.lastIndexOf('.');
+ 		// Variable or unqualified field
+ 		if (lastDot == -1) {
+-			// Variables come first.
++			// Variables and FieldLevelWidgets come first.
+ 			result.variable = symbolScope.lookupVariable(name);
+ 			if (result.variable != null) return result;
++			result.fieldLevelWidget = symbolScope.lookupFieldLevelWidget(name);
++			if (result.fieldLevelWidget!=null) return result;
+ 			// Lookup unqualified field by buffers in nearest scopes.
+ 			result = lookupUnqualifiedField(name);
+ 			// Lookup unqualified field by any table.
+
+Added: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/FieldLevelWidget.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/FieldLevelWidget.java	2005-05-17 19:02:19 UTC (rev 32)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/FieldLevelWidget.java	2005-07-06 00:52:58 UTC (rev 33)
+@@ -0,0 +1,24 @@
++/* Created on Jun 28, 2005
++ * Authors: john
++ * 
++ * Copyright (c) 2005 Joanju (www.joanju.com)
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
++ */
++package org.prorefactor.treeparser;
++
++
++/** Field-level widgets can be used in some of the same syntax
++ * as variables can. (Ex: GUI statements such as frame definitions, display statemements, etc.)
++ * In fact, symbol names within a scope must be unique across all VARIABLEs, BROWSEs, BUTTONs,
++ * IMAGEs, and RECTANGLEs.
++ */
++public abstract class FieldLevelWidget extends Widget {
++
++	public FieldLevelWidget(String name, SymbolScope scope) {
++		super(name, scope);
++	}
++
++}
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/FieldLookupResult.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/FieldLookupResult.java	2005-05-17 19:02:19 UTC (rev 32)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/FieldLookupResult.java	2005-07-06 00:52:58 UTC (rev 33)
+@@ -20,5 +20,6 @@
+ 	public boolean isUnqualified = false;
+ 	public BufferScope bufferScope = null;
+ 	public Variable variable = null;
++	public FieldLevelWidget fieldLevelWidget = null;
+ 	public FieldBuffer field = null;
+ }
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/SymbolScope.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/SymbolScope.java	2005-05-17 19:02:19 UTC (rev 32)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/SymbolScope.java	2005-07-06 00:52:58 UTC (rev 33)
+@@ -44,6 +44,7 @@
+ 	private Block rootBlock;
+ 	protected Map bufferMap = new HashMap();
+ 	protected Map callMap = new HashMap();
++	protected Map fieldLevelWidgetMap = new HashMap();
+ 	protected Map routineMap = new HashMap();
+ 	protected Map unnamedBuffers = new HashMap();
+ 	protected Map typeMap = new HashMap();
+@@ -70,13 +71,15 @@
+ 	}
+ 
+ 
++	/** Add a FieldLevelWidget for names lookup. */
++	public void add(FieldLevelWidget widget) {
++	}
+ 	
+ 	/** Add a Routine for call handling. */
+ 	public void add(Routine routine){
+ 		routineMap.put(routine.getName().toLowerCase(), routine);
+ 	}
+ 
+-	
+ 	/** Add a Variable for names lookup. */
+ 	public void add(Variable var) {
+ 		variableMap.put(var.getName().toLowerCase(), var);
+@@ -84,13 +87,17 @@
+ 
+ 	/** Add a Symbol for names lookup. */
+ 	public void add(Symbol symbol) {
+-		Integer type = new Integer(symbol.getProgressType());
+-		Map map = (Map) typeMap.get(type);
+-		if (map==null) {
+-			map = new HashMap();
+-			typeMap.put(type, map);
++		if (symbol instanceof FieldLevelWidget) {
++			fieldLevelWidgetMap.put(symbol.getName().toLowerCase(), symbol);
++		} else {
++			Integer type = new Integer(symbol.getProgressType());
++			Map map = (Map) typeMap.get(type);
++			if (map==null) {
++				map = new HashMap();
++				typeMap.put(type, map);
++			}
++			map.put(symbol.getName().toLowerCase(), symbol);
+ 		}
+-		map.put(symbol.getName().toLowerCase(), symbol);
+ 	}
+ 
+ 
+@@ -282,7 +289,6 @@
+ 	public Query lookupQuery(String name) { return (Query) lookupSymbol(QUERY, name); }
+ 	
+ 	public Stream lookupStream(String name) { return (Stream) lookupSymbol(STREAM, name); }
+-
+ 	
+ 	private Object lookupSymbol(Integer symbolType, String name) {
+ 		Map map = (Map) typeMap.get(symbolType);
+@@ -291,7 +297,16 @@
+ 	}
+ 
+ 
++	
++	/** Lookup a FieldLevelWidget in this scope or an enclosing scope. */
++	public FieldLevelWidget lookupFieldLevelWidget(String inName) {
++		FieldLevelWidget wid = (FieldLevelWidget) fieldLevelWidgetMap.get(inName.toLowerCase());
++		if (wid==null &amp;&amp; parentScope!=null) return parentScope.lookupFieldLevelWidget(inName);
++		return wid;
++	}
+ 
++
++
+ 	/** Lookup a Table or a BufferSymbol, schema table first.
+ 	 * It seems to work like this: unabbreviated schema name, then
+ 	 * buffer/temp/work name, then abbreviated schema names. Sheesh.
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/TreeParserWrapper.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/TreeParserWrapper.java	2005-05-17 19:02:19 UTC (rev 32)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/TreeParserWrapper.java	2005-07-06 00:52:58 UTC (rev 33)
+@@ -129,8 +129,8 @@
+ 	public static void run2(IJPTreeParser tp, JPNode theAST) throws PRCException {
+ 		try {
+ 			tp.program(theAST);
+-		} catch (antlr.RecognitionException e) {
+-			String s = new String(e.getMessage());
++		} catch (Throwable e) {
++			String s = e.getMessage();
+ 			JPNode leftOff = (JPNode) tp.get_retTree();
+ 			if (leftOff != null) {
+ 				int theNode = leftOff.getHandle();
+@@ -154,8 +154,6 @@
+ 				s += &quot; -&gt; No return node. Error on line one?&quot;;
+ 			}
+ 			throw new PRCException(s, e);
+-		} catch (Throwable e) {
+-			throw new PRCException(e.getMessage(), e);
+ 		}
+ 	} // run2
+ 
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Support.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Support.java	2005-05-17 19:02:19 UTC (rev 32)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Support.java	2005-07-06 00:52:58 UTC (rev 33)
+@@ -384,6 +384,12 @@
+ 			refNode.attrSet(IConstants.STORETYPE, IConstants.ST_VAR);
+ 			result.variable.noteReference(contextQualifier);
+ 		}
++		// FieldLevelWidget
++		if (result.fieldLevelWidget != null) {
++			refNode.setSymbol(result.fieldLevelWidget);
++			refNode.attrSet(IConstants.STORETYPE, IConstants.ST_VAR);
++			result.fieldLevelWidget.noteReference(contextQualifier);
++		}
+ 		// Buffer attributes
+ 		if (result.bufferScope != null) {
+ 			refNode.setBufferScope(result.bufferScope);
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01.java	2005-05-17 19:02:19 UTC (rev 32)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01.java	2005-07-06 00:52:58 UTC (rev 33)
+@@ -42770,16 +42770,16 @@
+ 	public final void triggerphrase(AST _t) throws RecognitionException {
+ 		
+ 		AST triggerphrase_AST_in = (_t == ASTNULL) ? null : (AST)_t;
+-		AST t = null;
++		AST on = null;
+ 		
+ 		AST __t2285 = _t;
+-		t = _t==ASTNULL ? null :(AST)_t;
++		AST tmp3035_AST_in = (AST)_t;
+ 		match(_t,TRIGGERS);
+ 		_t = _t.getFirstChild();
+ 		block_colon(_t);
+ 		_t = _retTree;
+ 		AST __t2286 = _t;
+-		AST tmp3035_AST_in = (AST)_t;
++		AST tmp3036_AST_in = (AST)_t;
+ 		match(_t,Code_block);
+ 		_t = _t.getFirstChild();
+ 		{
+@@ -42788,9 +42788,12 @@
+ 			if (_t==null) _t=ASTNULL;
+ 			if ((_t.getType()==ON)) {
+ 				AST __t2288 = _t;
+-				AST tmp3036_AST_in = (AST)_t;
++				on = _t==ASTNULL ? null :(AST)_t;
+ 				match(_t,ON);
+ 				_t = _t.getFirstChild();
++				if ( inputState.guessing==0 ) {
++					action.scopeAdd(on);
++				}
+ 				eventlist(_t);
+ 				_t = _retTree;
+ 				{
+@@ -43050,14 +43053,8 @@
+ 				case BLOCK_LABEL:
+ 				case COPYLOB:
+ 				{
+-					if ( inputState.guessing==0 ) {
+-						action.scopeAdd(t);
+-					}
+ 					blockorstate(_t);
+ 					_t = _retTree;
+-					if ( inputState.guessing==0 ) {
+-						action.scopeClose(t);
+-					}
+ 					break;
+ 				}
+ 				default:
+@@ -43066,6 +43063,9 @@
+ 				}
+ 				}
+ 				}
++				if ( inputState.guessing==0 ) {
++					action.scopeClose(on);
++				}
+ 				_t = __t2288;
+ 				_t = _t.getNextSibling();
+ 			}
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01TokenTypes.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01TokenTypes.java	2005-05-17 19:02:19 UTC (rev 32)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01TokenTypes.java	2005-07-06 00:52:58 UTC (rev 33)
+@@ -1096,6 +1096,10 @@
+ 	int SYMMETRICENCRYPTIONKEY = 1089;
+ 	int SYMMETRICSUPPORT = 1090;
+ 	int TRANSINITPROCEDURE = 1091;
++	int BIGINT = 1092;
++	int TIMESTAMP = 1093;
++	int FIXCHAR = 1094;
++	int Last_Token_Number = 1095;
+ 	int SYMMETRICENCRYPTIONALGORITHM = 10877;
+ 	int PARAM = 10878;
+ }
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01TokenTypes.txt
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01TokenTypes.txt	2005-05-17 19:02:19 UTC (rev 32)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01TokenTypes.txt	2005-07-06 00:52:58 UTC (rev 33)
+@@ -1085,5 +1085,9 @@
+ SYMMETRICENCRYPTIONKEY=1089
+ SYMMETRICSUPPORT=1090
+ TRANSINITPROCEDURE=1091
++BIGINT=1092
++TIMESTAMP=1093
++FIXCHAR=1094
++Last_Token_Number=1095
+ SYMMETRICENCRYPTIONALGORITHM=10877
+ PARAM=10878
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/treeparser01.g
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/treeparser01.g	2005-05-17 19:02:19 UTC (rev 32)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/treeparser01.g	2005-07-06 00:52:58 UTC (rev 33)
+@@ -3287,12 +3287,12 @@
+ 	;
+ 
+ triggerphrase
+-	:	#(	t:TRIGGERS block_colon
++	:	#(	TRIGGERS block_colon
+ 			#(	Code_block
+-				(	#(ON eventlist (ANYWHERE)?
+-						(	PERSISTENT runstate
+-						|	{action.scopeAdd(#t);} blockorstate {action.scopeClose(#t);}
+-						) 
++				(	#(	on:ON {action.scopeAdd(#on);}
++						eventlist (ANYWHERE)?
++						(PERSISTENT runstate | blockorstate)
++						{action.scopeClose(#on);}
+ 					) 
+ 				)*
+ 			)
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Browse.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Browse.java	2005-05-17 19:02:19 UTC (rev 32)
++++ trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Browse.java	2005-07-06 00:52:58 UTC (rev 33)
+@@ -10,11 +10,11 @@
+ package org.prorefactor.widgettypes;
+ 
+ import org.prorefactor.core.TokenTypes;
++import org.prorefactor.treeparser.FieldLevelWidget;
+ import org.prorefactor.treeparser.SymbolScope;
+-import org.prorefactor.treeparser.Widget;
+ 
+ 
+-public class Browse extends Widget {
++public class Browse extends FieldLevelWidget {
+ 
+ 	public Browse(String name, SymbolScope scope) { super(name, scope); }
+ 
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Button.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Button.java	2005-05-17 19:02:19 UTC (rev 32)
++++ trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Button.java	2005-07-06 00:52:58 UTC (rev 33)
+@@ -10,11 +10,11 @@
+ package org.prorefactor.widgettypes;
+ 
+ import org.prorefactor.core.TokenTypes;
++import org.prorefactor.treeparser.FieldLevelWidget;
+ import org.prorefactor.treeparser.SymbolScope;
+-import org.prorefactor.treeparser.Widget;
+ 
+ 
+-public class Button extends Widget {
++public class Button extends FieldLevelWidget {
+ 
+ 	public Button(String name, SymbolScope scope) { super(name, scope); }
+ 
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Image.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Image.java	2005-05-17 19:02:19 UTC (rev 32)
++++ trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Image.java	2005-07-06 00:52:58 UTC (rev 33)
+@@ -10,11 +10,11 @@
+ package org.prorefactor.widgettypes;
+ 
+ import org.prorefactor.core.TokenTypes;
++import org.prorefactor.treeparser.FieldLevelWidget;
+ import org.prorefactor.treeparser.SymbolScope;
+-import org.prorefactor.treeparser.Widget;
+ 
+ 
+-public class Image extends Widget {
++public class Image extends FieldLevelWidget {
+ 
+ 	public Image(String name, SymbolScope scope) { super(name, scope); }
+ 
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Rectangle.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Rectangle.java	2005-05-17 19:02:19 UTC (rev 32)
++++ trunk/org.prorefactor.core/src/org/prorefactor/widgettypes/Rectangle.java	2005-07-06 00:52:58 UTC (rev 33)
+@@ -10,11 +10,11 @@
+ package org.prorefactor.widgettypes;
+ 
+ import org.prorefactor.core.TokenTypes;
++import org.prorefactor.treeparser.FieldLevelWidget;
+ import org.prorefactor.treeparser.SymbolScope;
+-import org.prorefactor.treeparser.Widget;
+ 
+ 
+-public class Rectangle extends Widget {
++public class Rectangle extends FieldLevelWidget {
+ 
+ 	public Rectangle(String name, SymbolScope scope) { super(name, scope); }
+ 
+
+Modified: trunk/org.prorefactor.eclipse/src/org/prorefactor/eclipse/actions/ActionManager.java
+===================================================================
+--- trunk/org.prorefactor.eclipse/src/org/prorefactor/eclipse/actions/ActionManager.java	2005-05-17 19:02:19 UTC (rev 32)
++++ trunk/org.prorefactor.eclipse/src/org/prorefactor/eclipse/actions/ActionManager.java	2005-07-06 00:52:58 UTC (rev 33)
+@@ -127,7 +127,7 @@
+ 	
+ 	protected void addFile(IFile theFile) {
+ 		String extension = theFile.getFileExtension();
+-		if (extension!=null &amp;&amp; (extension.equals(&quot;p&quot;) || extension.equals(&quot;w&quot;)))
++		if (extension!=null &amp;&amp; (extension.equalsIgnoreCase(&quot;p&quot;) || extension.equalsIgnoreCase(&quot;w&quot;)))
+ 			fileList.add(theFile);
+ 	}
+ 
+
+Modified: trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/RefactorSession.java
+===================================================================
+--- trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/RefactorSession.java	2005-05-17 19:02:19 UTC (rev 32)
++++ trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/RefactorSession.java	2005-07-06 00:52:58 UTC (rev 33)
+@@ -28,6 +28,7 @@
+  */
+ public class RefactorSession {
+ 
++	private long timeStamp;
+ 	private ApplicationSettings appSettings = null;
+ 	private String projectName = null;
+ 	private ProgressProjectSettings progressSettings = null;
+@@ -163,7 +164,10 @@
+ 	public void loadProject(String projectName) throws Exception {
+ 		if (projectName==null || projectName.length()==0)
+ 			throw new Exception(&quot;No project selected&quot;);
+-		if (this.projectName!=null &amp;&amp; this.projectName.equals(projectName)) return;
++		if (	this.projectName!=null
++			&amp;&amp;	this.projectName.equals(projectName)
++			&amp;&amp;	schemaFileIsCurrent()
++			) return;
+ 		try {appSettings.loadSettings();} catch (FileNotFoundException e) {}
+ 		progressSettings = new ProgressProjectSettings(getProgressSettingsFilename(projectName));
+ 		try {progressSettings.loadSettings();} catch (FileNotFoundException e) {}
+@@ -175,6 +179,7 @@
+ 		try {proparseSettings.loadSettings();} catch (FileNotFoundException e) {}
+ 		configureProparse();
+ 		this.projectName = projectName;
++		timeStamp = System.currentTimeMillis();
+ 	}
+ 
+ 
+@@ -185,6 +190,13 @@
+ 	}
+ 
+ 
++	/** Check that the schema file has not been modified since load. */
++	private boolean schemaFileIsCurrent() {
++		assert (proparseSettings != null);
++		File schemaFile = new File(proparseSettings.schemaFile);
++		if (! schemaFile.exists()) return true; // scratch projects might have no schema
++		return (schemaFile.lastModified() &lt; timeStamp);
++	}
+ 
+ 
+ } // class
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000029.html">[Prorefactor-svn] r34 - trunk/org.prorefactor.eclipse
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#28">[ date ]</a>
+              <a href="thread.html#28">[ thread ]</a>
+              <a href="subject.html#28">[ subject ]</a>
+              <a href="author.html#28">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">More information about the Prorefactor-svn
+mailing list</a><br>
+</body></html>

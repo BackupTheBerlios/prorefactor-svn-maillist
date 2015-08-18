@@ -1,0 +1,1146 @@
+From johnallengreen at sheep.berlios.de  Tue Jan 18 20:24:57 2005
+From: johnallengreen at sheep.berlios.de (John Green at BerliOS)
+Date: Tue, 18 Jan 2005 20:24:57 +0100
+Subject: [Prorefactor-svn] r3 - trunk/org.prorefactor.antlr
+Message-ID: <200501181924.j0IJOvLt003742@sheep.berlios.de>
+
+Author: johnallengreen
+Date: 2005-01-18 20:24:56 +0100 (Tue, 18 Jan 2005)
+New Revision: 3
+
+Modified:
+   trunk/org.prorefactor.antlr/
+Log:
+Added bin directory to ignore list.
+
+
+Property changes on: trunk/org.prorefactor.antlr
+___________________________________________________________________
+Name: svn:ignore
+   + bin
+
+
+
+
+From johnallengreen at sheep.berlios.de  Tue Jan 18 20:32:39 2005
+From: johnallengreen at sheep.berlios.de (John Green at BerliOS)
+Date: Tue, 18 Jan 2005 20:32:39 +0100
+Subject: [Prorefactor-svn] r4 - in trunk: org.prorefactor.core org.prorefactor.eclipse org.prorefactor.feature org.prorefactor.refactor
+Message-ID: <200501181932.j0IJWdmQ004262@sheep.berlios.de>
+
+Author: johnallengreen
+Date: 2005-01-18 20:32:38 +0100 (Tue, 18 Jan 2005)
+New Revision: 4
+
+Modified:
+   trunk/org.prorefactor.core/
+   trunk/org.prorefactor.eclipse/
+   trunk/org.prorefactor.feature/
+   trunk/org.prorefactor.refactor/
+Log:
+Added bin directories to ignore lists.
+
+
+Property changes on: trunk/org.prorefactor.core
+___________________________________________________________________
+Name: svn:ignore
+   + bin
+
+
+
+Property changes on: trunk/org.prorefactor.eclipse
+___________________________________________________________________
+Name: svn:ignore
+   + bin
+
+
+
+Property changes on: trunk/org.prorefactor.feature
+___________________________________________________________________
+Name: svn:ignore
+   + bin
+
+
+
+Property changes on: trunk/org.prorefactor.refactor
+___________________________________________________________________
+Name: svn:ignore
+   + bin
+
+
+
+
+From johnallengreen at sheep.berlios.de  Wed Jan 19 02:56:54 2005
+From: johnallengreen at sheep.berlios.de (John Green at BerliOS)
+Date: Wed, 19 Jan 2005 02:56:54 +0100
+Subject: [Prorefactor-svn] r5 - trunk/org.prorefactor.doc
+Message-ID: <200501190156.j0J1usxb029071@sheep.berlios.de>
+
+Author: johnallengreen
+Date: 2005-01-19 02:56:41 +0100 (Wed, 19 Jan 2005)
+New Revision: 5
+
+Removed:
+   trunk/org.prorefactor.doc/toc.xml
+Modified:
+   trunk/org.prorefactor.doc/
+   trunk/org.prorefactor.doc/manual.xml
+Log:
+Updated the user manual with ProRefactor.org instead of Joanju.com.
+Updated the user manual with new repository check out instructions,
+and new instructions for working with that checked-out source.
+Added top level directory *.html to the ignore list.
+Removed toc.xml (will be added to ignore list next), since it is a
+generated file.
+
+
+Property changes on: trunk/org.prorefactor.doc
+___________________________________________________________________
+Name: svn:ignore
+   + *.html
+manual.pdf
+
+
+Modified: trunk/org.prorefactor.doc/manual.xml
+===================================================================
+--- trunk/org.prorefactor.doc/manual.xml	2005-01-18 19:32:38 UTC (rev 4)
++++ trunk/org.prorefactor.doc/manual.xml	2005-01-19 01:56:41 UTC (rev 5)
+@@ -973,9 +973,9 @@
+     projects.</para>
+ 
+     <para>Experience programming in Java with Eclipse's IDE is not necessary,
+-    but since this document glosses over a few details, it would be helpful if
+-    you were at familiar with the workbench menu items and basics of the IDE
+-    such as creating a Java project.</para>
++    but since these instructions gloss over a few details, it would be helpful
++    if you were familiar with Eclipse basics such as creating a Java
++    project.</para>
+ 
+     <section>
+       <title>Prepare Your Eclipse Workspace</title>
+@@ -1093,8 +1093,8 @@
+           <option>-Djava.library.path=<replaceable>/your/path</replaceable></option>
+           to the default VM args, where
+           <filename><replaceable>/your/path</replaceable></filename> is the
+-          jpplus plug-in directory (which is where
+-          <filename>proparse.dll</filename> and
++          <filename>org.prorefactor.core</filename> plug-in directory (which
++          is where <filename>proparse.dll</filename> and
+           <filename>proparse_jni.dll</filename> can be found).</para>
+         </listitem>
+       </orderedlist>
+@@ -1105,197 +1105,65 @@
+ 
+       <para>For this option, it is not necessary to have installed ProRefactor
+       into Eclipse. You will need to follow the links from the ProRefactor.org
+-      web site to gain access to the development project and
+-      repository.</para>
++      web site to gain access to the development project and repository. The
++      project web page has instructions for both anonymous and developer
++      access to the repository.</para>
+ 
+-      <para>ProRefactor's source is stored in a <ulink
+-      url="http://subversion.tigris.org/">Subversion</ulink> repository. Here,
+-      we will assume that you will use the <ulink
+-      url="http://subclipse.tigris.org/">Subclipse</ulink> plug-in to Eclipse
+-      for Subversion repository access, but other options are available from
+-      the Subversion web site.</para>
++      <note>
++        <para>There are three top level directories in the ProRefactor
++        repository: <filename>branches</filename>, <filename>tags</filename>,
++        and <filename>trunk</filename>. You only want the
++        <filename>trunk</filename> directory, not the entire project
++        repository.</para>
++      </note>
+ 
+-      <para>XXXXX This all needs to change.</para>
++      <para>For example, you might use the following Subversion command for
++      checking out the source code anonymously.</para>
+ 
+-      <variablelist>
+-        <varlistentry>
+-          <term>Step 1. Use Subclipse to Access the Repository</term>
++      <programlisting>svn checkout svn://svn.berlios.de/prorefactor/trunk</programlisting>
+ 
+-          <listitem>
+-            <orderedlist>
+-              <listitem>
+-                <para>First install the Subclipse Eclipse plug-in. The
+-                installation directions are on their web site of course, but
+-                as of this writing, the directions are simply: <quote>Add
+-                http://subclipse.tigris.org/update as an update site in
+-                Eclipse's update manager (which you can find in the Help
+-                menu).</quote></para>
+-              </listitem>
++      <para>This will create several directories named
++      <filename>org.prorefactor.*</filename>.</para>
+ 
+-              <listitem>
+-                <para>Switch to the SVN Repository Exploring
+-                perspective.</para>
+-              </listitem>
++      <para>Once you have checked the source out from the repository, you are
++      ready to load that source into Eclipse projects.</para>
+ 
+-              <listitem>
+-                <para>Right click on the SVN Repository view to get the pop-up
+-                menu, and choose <guimenuitem>New &gt; Repository
+-                Location</guimenuitem>. Enter the details for your access to
+-                the project repository.</para>
+-              </listitem>
+-            </orderedlist>
+-          </listitem>
+-        </varlistentry>
++      <para>From the Eclipse menu, choose <guimenuitem>File &gt; Import...
++      &gt; Existing Project into Workspace</guimenuitem> for each of the
++      <literal>org.prorefactor</literal> project directories in the following
++      order: <literal>antlr</literal>, <literal>core</literal>,
++      <literal>refactor</literal>, <literal>eclipse</literal>,
++      <literal>javadoc</literal>, <literal>doc</literal>,
++      <literal>feature</literal>, <literal>update</literal>. Eclipse will
++      automatically build (compile) each project as you import it.</para>
+ 
+-        <varlistentry>
+-          <term>Step 2. Check Out Antlr</term>
++      <para>In <guilabel>Window &gt; Preferences &gt; Java &gt; Installed
++      JREs</guilabel>, edit your default JRE. Add:
++      <option>-Djava.library.path=<replaceable>/your/path</replaceable></option>
++      to the default VM args, where <replaceable>/your/path</replaceable> is
++      your <filename>org.prorefactor.core</filename> project directory, where
++      <filename>proparse.dll</filename> and
++      <filename>proparse_jni.dll</filename> can be found.</para>
+ 
+-          <listitem>
+-            <orderedlist>
+-              <listitem>
+-                <para>Select <literal>antlr</literal> in the Subclipse
+-                repository browser. From the pop-up menu, choose
+-                <guimenuitem>Check Out As... &gt; Java Project</guimenuitem>.
+-                Use separate source and output folders. Click
+-                <guibutton>Finish</guibutton>. Once you click Finish, there
+-                appears to be a bug in Subversion's project creation; a dialog
+-                appears warning that the resource already exists, delete it?
+-                Just click <guibutton>OK</guibutton>, and the project will be
+-                created by Subversion. Be patient, as the initial check out
+-                can take a while.</para>
+-              </listitem>
++      <para>Now you can run the regression tests. You can navigate to the
++      following two source files, and run them as JUnit tests:</para>
+ 
+-              <listitem>
+-                <para>Switch to the Java perspective. Open the
+-                <literal>antlr</literal> project properties dialog. Select
+-                <guilabel>Java Build Path</guilabel>, and the
+-                <guilabel>Libraries</guilabel> tab. Click the <guibutton>Add
+-                Library</guibutton> button, and select <guilabel>Required
+-                Plug-ins</guilabel>. Click <guibutton>Next</guibutton> and
+-                then click <guibutton>Finish</guibutton>. Click
+-                <guibutton>OK</guibutton> to close the Preferences dialog.
+-                (This is necessary for the rest of the projects, but for the
+-                Antlr project, we only do this to force a change and force the
+-                <filename>.classpath</filename> file to be written out, so
+-                that the project will compile. There appears to be a bug in
+-                Subclipse in this regard.)</para>
+-              </listitem>
++      <itemizedlist>
++        <listitem>
++          <para><filename>org.prorefactor.core.unittest.AllPRCoreTests.java</filename></para>
++        </listitem>
+ 
+-              <listitem>
+-                <para>Once you have finished configuring the project, Eclipse
+-                will build the project (Eclipse default behavior is to build
+-                automatically). There will be some warnings, but there should
+-                be no errors.</para>
+-              </listitem>
+-            </orderedlist>
+-          </listitem>
+-        </varlistentry>
++        <listitem>
++          <para><filename>org.prorefactor.refactor.unittest.AllRefactorTests.java</filename></para>
++        </listitem>
++      </itemizedlist>
+ 
+-        <varlistentry>
+-          <term>Step 3. Check Out JPPlus</term>
+-
+-          <listitem>
+-            <orderedlist>
+-              <listitem>
+-                <para>Check out <literal>jpplus</literal> from the Subversion
+-                repository, again as a Java project.</para>
+-              </listitem>
+-
+-              <listitem>
+-                <para>Switch to the Java perspective. Open the
+-                <literal>jpplus</literal> project properties dialog. Select
+-                <guilabel>Java Build Path</guilabel>, and the
+-                <guilabel>Libraries</guilabel> tab. Click the <guibutton>Add
+-                Library</guibutton> button, and add <guilabel>Required
+-                Plug-ins</guilabel>.</para>
+-              </listitem>
+-
+-              <listitem>
+-                <para>Once you have finished configuring the jpplus project,
+-                Eclipse will build the project (Eclipse default behavior is to
+-                build automatically). There will be some warnings, but there
+-                should be no errors.</para>
+-              </listitem>
+-
+-              <listitem>
+-                <para>In <guilabel>Window &gt; Preferences &gt; Java &gt;
+-                Installed JREs</guilabel>, edit your default JRE. Add:
+-                <option>-Djava.library.path=<replaceable>/your/path</replaceable></option>
+-                to the default VM args, where
+-                <replaceable>/your/path</replaceable> is your jpplus project
+-                directory, where <filename>proparse.dll</filename> and
+-                <filename>proparse_jni.dll</filename> can be found.</para>
+-              </listitem>
+-
+-              <listitem>
+-                <para>Now you can run the regression tests. Navigate to
+-                <filename>org.prorefactor.core.unittest.AllJPPlusTests.java</filename>,
+-                and run it as a JUnit test. There should be no
+-                failures.</para>
+-              </listitem>
+-            </orderedlist>
+-          </listitem>
+-        </varlistentry>
+-
+-        <varlistentry>
+-          <term>Step 4. Check Out RefactorPack</term>
+-
+-          <listitem>
+-            <orderedlist>
+-              <listitem>
+-                <para>Check out <literal>refactorpack</literal> from the
+-                Subversion repository, again as a Java project.</para>
+-              </listitem>
+-
+-              <listitem>
+-                <para>Switch to the Java perspective. Open the refactorpack
+-                project properties dialog. Select <guilabel>Java Build
+-                Path</guilabel>, and the <guilabel>Libraries</guilabel> tab.
+-                Click the <guibutton>Add Library</guibutton> button, and add
+-                <guilabel>Required Plug-ins</guilabel>. The project should now
+-                build cleanly, and
+-                <filename>org.prorefactor.refactor.unittest.AllRefactorpackTests.java</filename>
+-                (a JUnit test) should run cleanly.</para>
+-              </listitem>
+-            </orderedlist>
+-          </listitem>
+-        </varlistentry>
+-
+-        <varlistentry>
+-          <term>Step 5. Check Out ProRefactor</term>
+-
+-          <listitem>
+-            <orderedlist>
+-              <listitem>
+-                <para>Check out the <literal>prorefactor</literal> project
+-                from the Subversion repository, again as a Java
+-                project.</para>
+-              </listitem>
+-
+-              <listitem>
+-                <para>Switch to the Java perspective. Open the prorefactor
+-                project properties dialog. Select <guilabel>Java Build
+-                Path</guilabel>, and the <guilabel>Libraries</guilabel> tab.
+-                Click the <guibutton>Add Library</guibutton> button, and add
+-                <guilabel>Required Plug-ins</guilabel>. You don't need to
+-                select any projects individually - you can just click
+-                <guibutton>Finish</guibutton>. The project should now build
+-                cleanly.</para>
+-              </listitem>
+-
+-              <listitem>
+-                <para>To launch the Run-time Workbench, choose
+-                <guimenuitem>Run &gt; Run As &gt; Run-time
+-                Workbench</guimenuitem>. From the Run-time Workbench, you
+-                should be able to select the ProRefactor perspective, create
+-                test projects, and launch the ProRefactor menu actions. Here
+-                is where you would test any changes or additions that you make
+-                to ProRefactor or your own plug-ins.</para>
+-              </listitem>
+-            </orderedlist>
+-          </listitem>
+-        </varlistentry>
+-      </variablelist>
++      <para>To launch the Run-time Workbench, choose <guimenuitem>Run &gt; Run
++      As &gt; Run-time Workbench</guimenuitem>. From the Run-time Workbench,
++      you should be able to select the ProRefactor perspective, create test
++      projects, and launch the ProRefactor menu actions. This is where you
++      would test any changes or additions that you make to ProRefactor or your
++      own plug-ins.</para>
+     </section>
+ 
+     <section>
+@@ -1325,7 +1193,7 @@
+ 
+       <para>In the <guilabel>Classpath</guilabel> tab, choose the
+       <guibutton>Add Folders...</guibutton> button, and add the
+-      <filename>jpplus/bin</filename> folder.</para>
++      <filename>org.prorefactor.core/bin</filename> folder.</para>
+ 
+       <para>Leave the JRE set to launch a separate JRE. Running from the same
+       JRE as the workspace does not set up the class path correctly for our
+@@ -1768,8 +1636,8 @@
+               bug could cause some field names to be missed when writing your
+               proparse.schema file. (Needed "DICTDB" prefix on _field in the
+               FOR loops, otherwise it missed some records. I don't know why.)
+-              See Project Configuration or jpplus/4gl/api for the updated two
+-              schemadump program files.</para>
++              See Project Configuration for the updated two schemadump program
++              files.</para>
+             </listitem>
+ 
+             <listitem>
+
+Deleted: trunk/org.prorefactor.doc/toc.xml
+===================================================================
+--- trunk/org.prorefactor.doc/toc.xml	2005-01-18 19:32:38 UTC (rev 4)
++++ trunk/org.prorefactor.doc/toc.xml	2005-01-19 01:56:41 UTC (rev 5)
+@@ -1,73 +0,0 @@
+-<?xml version="1.0" encoding="utf-8" standalone="no"?>
+-<toc label="Joanju ProRefactor?" topic="index.html">
+-  <topic label="Introduction" href="ch01.html">
+-    <topic label="Computer Assisted Refactoring" href="ch01s01.html"/>
+-  </topic>
+-  <topic label="Getting Started" href="ch02.html">
+-    <topic label="Installing ProRefactor" href="ch02s01.html">
+-      <topic label="Java" href="ch02s01.html#id4713314"/>
+-      <topic label="Eclipse" href="ch02s01.html#id4712205"/>
+-      <topic label="ProRefactor" href="ch02s01.html#id4712240"/>
+-      <topic label="Linux and Unixes" href="ch02s01.html#id4712259"/>
+-      <topic label="All Done" href="ch02s01.html#id4712307"/>
+-    </topic>
+-    <topic label="Working with Projects" href="ch02s02.html">
+-      <topic label="Project Nature" href="ch02s02.html#id4712341"/>
+-      <topic label="Create a ProRefactor Project" href="ch02s02.html#id4712375"/>
+-      <topic label="Project Configuration" href="ch02s02.html#sec_proj_config"/>
+-    </topic>
+-  </topic>
+-  <topic label="User Interface" href="cha_user_interface.html">
+-    <topic label="Eclipse Workbench" href="ch03s01.html"/>
+-    <topic label="Menus" href="ch03s02.html"/>
+-    <topic label="Operating on Many Resources" href="ch03s03.html"/>
+-    <topic label="Expand and Contract Selection" href="ch03s04.html"/>
+-    <topic label="Parse" href="ch03s05.html"/>
+-    <topic label="Output Directory" href="sec_output_directory.html"/>
+-  </topic>
+-  <topic label="Catalog of Refactorings" href="ch04.html">
+-    <topic label="Names Refactoring (tables and fields)" href="ch04s01.html">
+-      <topic label="Usage" href="ch04s01.html#id4775079"/>
+-      <topic label="Example Output" href="ch04s01.html#id4775142"/>
+-    </topic>
+-    <topic label="NO-UNDO Refactoring" href="ch04s02.html">
+-      <topic label="Usage" href="ch04s02.html#id4775208"/>
+-      <topic label="Features" href="ch04s02.html#id4775261"/>
+-    </topic>
+-    <topic label="Rename Schema Refactoring" href="ch04s03.html">
+-      <topic label="Usage" href="ch04s03.html#id4775412"/>
+-      <topic label="Features" href="ch04s03.html#id4775495"/>
+-      <topic label="Caveats" href="ch04s03.html#id4775529"/>
+-      <topic label="Example" href="ch04s03.html#id4775566"/>
+-    </topic>
+-    <topic label="SUBSTITUTE Refactoring" href="ch04s04.html"/>
+-    <topic label="Qualify Fields Refactoring" href="ch04s05.html">
+-      <topic label="Usage" href="ch04s05.html#id4775790"/>
+-      <topic label="Features" href="ch04s05.html#id4775853"/>
+-    </topic>
+-  </topic>
+-  <topic label="Extending ProRefactor" href="ch05.html">
+-    <topic label="Prepare Your Eclipse Workspace" href="ch05s01.html"/>
+-    <topic label="Option One: Import ProRefactor Plug-in Source" href="sec_import_source.html"/>
+-    <topic label="Option Two: Checkout ProRefactor from Subversion" href="sec_checkout_source.html"/>
+-    <topic label="Building Tree Parsers" href="ch05s04.html"/>
+-    <topic label="Your Own Plugin" href="ch05s05.html">
+-      <topic label="What Next?" href="ch05s05.html#id4777262"/>
+-    </topic>
+-  </topic>
+-  <topic label="Program Code Listings" href="app_program_code_listings.html">
+-    <topic label="configdump.p" href="sec_configdump.html"/>
+-    <topic label="schemadump.p" href="sec_schemadump.html"/>
+-  </topic>
+-  <topic label="Troubleshooting" href="apb.html">
+-    <topic label="Eclipse shuts down when parsing" href="apbs01.html">
+-      <topic label="Summary" href="apbs01.html#id4711266"/>
+-      <topic label="Details" href="apbs01.html#id4711280"/>
+-    </topic>
+-  </topic>
+-  <topic label="Links" href="app_links.html">
+-    <topic label="Directory Diff" href="sec_directory_diff.html"/>
+-    <topic label="Prolint" href="sec_prolint.html"/>
+-  </topic>
+-  <topic label="Release Notes" href="app_rel_notes.html"/>
+-</toc>
+
+
+
+From johnallengreen at sheep.berlios.de  Wed Jan 19 02:57:59 2005
+From: johnallengreen at sheep.berlios.de (John Green at BerliOS)
+Date: Wed, 19 Jan 2005 02:57:59 +0100
+Subject: [Prorefactor-svn] r6 - trunk/org.prorefactor.doc
+Message-ID: <200501190157.j0J1vx4A029124@sheep.berlios.de>
+
+Author: johnallengreen
+Date: 2005-01-19 02:57:55 +0100 (Wed, 19 Jan 2005)
+New Revision: 6
+
+Modified:
+   trunk/org.prorefactor.doc/
+Log:
+Added toc.xml to the ignore list, since it is a generated file.
+
+
+Property changes on: trunk/org.prorefactor.doc
+___________________________________________________________________
+Name: svn:ignore
+   - *.html
+manual.pdf
+
+   + *.html
+manual.pdf
+toc.xml
+
+
+
+
+From johnallengreen at sheep.berlios.de  Wed Jan 19 19:49:13 2005
+From: johnallengreen at sheep.berlios.de (John Green at BerliOS)
+Date: Wed, 19 Jan 2005 19:49:13 +0100
+Subject: [Prorefactor-svn] r7 - trunk/org.prorefactor.eclipse
+Message-ID: <200501191849.j0JInDOA010636@sheep.berlios.de>
+
+Author: johnallengreen
+Date: 2005-01-19 19:49:08 +0100 (Wed, 19 Jan 2005)
+New Revision: 7
+
+Modified:
+   trunk/org.prorefactor.eclipse/plugin.xml
+Log:
+Renamed "Specialized" menu to "Experimental".
+Moved "Extract Method" to "Experimental".
+
+Modified: trunk/org.prorefactor.eclipse/plugin.xml
+===================================================================
+--- trunk/org.prorefactor.eclipse/plugin.xml	2005-01-19 01:57:55 UTC (rev 6)
++++ trunk/org.prorefactor.eclipse/plugin.xml	2005-01-19 18:49:08 UTC (rev 7)
+@@ -159,9 +159,9 @@
+                id="org.prorefactor.actions.names">
+          </action>
+          <menu
+-               label="S&amp;pecialized"
++               label="E&amp;xperimental"
+                path="org.prorefactor.MainMenu/separator1"
+-               id="prorefactor.specialized">
++               id="prorefactor.experimental">
+             <separator
+                   name="separator1">
+             </separator>
+@@ -170,21 +170,21 @@
+                label="&amp;Wrap Procedure Block..."
+                class="org.prorefactor.eclipse.actions.WrapProcedureBlock"
+                tooltip="Wrap procedural code into an internal procedure"
+-               menubarPath="org.prorefactor.MainMenu/prorefactor.specialized/separator1"
++               menubarPath="org.prorefactor.MainMenu/prorefactor.experimental/separator1"
+                id="org.prorefactor.actions.wrapProcedureBlock">
+          </action>
+          <action
+                label="&amp;Bubble Declarations..."
+                class="org.prorefactor.eclipse.actions.BubbleDeclarationsAction"
+                tooltip="Bubble Declarations Refactor"
+-               menubarPath="org.prorefactor.MainMenu/prorefactor.specialized/separator1"
++               menubarPath="org.prorefactor.MainMenu/prorefactor.experimental/separator1"
+                id="org.prorefactor.actions.bubbleDeclarations">
+          </action>
+          <action
+                label="&amp;Append Program..."
+                class="org.prorefactor.eclipse.actions.AppendProgramAction"
+                tooltip="Append one compilable program to another"
+-               menubarPath="org.prorefactor.MainMenu/prorefactor.specialized/separator1"
++               menubarPath="org.prorefactor.MainMenu/prorefactor.experimental/separator1"
+                id="org.prorefactor.actions.appendProgram">
+          </action>
+          <action
+@@ -304,21 +304,29 @@
+             </selection>
+          </action>
+          <action
+-               label="E&amp;xpand Selection"
++               enablesFor="*"
++               label="&amp;Expand Selection"
++               tooltip="Selects or expands selection of code around the cursor position."
++               class="org.prorefactor.eclipse.actions.ExpandSelectionAction"
+                icon="icons/expand.gif"
+-               class="org.prorefactor.eclipse.actions.ExpandSelectionAction"
+-               tooltip="Selects or expands selection of code around the cursor position."
+                menubarPath="org.prorefactor.popup.texteditor/group1"
+-               enablesFor="*"
+                id="org.prorefactor.textEditorContrib.expand">
+             <selection
+                   class="org.eclipse.jface.text.ITextSelection">
+             </selection>
+          </action>
++         <menu
++               label="E&amp;xperimental"
++               path="org.prorefactor.popup.texteditor/group1"
++               id="experimental">
++            <separator
++                  name="separator1">
++            </separator>
++         </menu>
+          <action
+                label="&amp;Extract Method"
+                class="org.prorefactor.eclipse.actions.ExtractMethodAction"
+-               menubarPath="org.prorefactor.popup.texteditor/group1"
++               menubarPath="org.prorefactor.popup.texteditor/experimental/separator1"
+                enablesFor="2+"
+                id="org.prorefactor.popup.texteditor.extractmethod">
+          </action>
+
+
+
+From johnallengreen at sheep.berlios.de  Thu Jan 20 01:28:02 2005
+From: johnallengreen at sheep.berlios.de (John Green at BerliOS)
+Date: Thu, 20 Jan 2005 01:28:02 +0100
+Subject: [Prorefactor-svn] r8 - trunk/org.prorefactor.update
+Message-ID: <200501200028.j0K0S2rm007513@sheep.berlios.de>
+
+Author: johnallengreen
+Date: 2005-01-20 01:27:59 +0100 (Thu, 20 Jan 2005)
+New Revision: 8
+
+Modified:
+   trunk/org.prorefactor.update/
+Log:
+Updated the ignore list.
+
+
+Property changes on: trunk/org.prorefactor.update
+___________________________________________________________________
+Name: svn:ignore
+   + features
+plugins
+.sitebuild
+
+
+
+
+From johnallengreen at sheep.berlios.de  Thu Jan 20 01:29:36 2005
+From: johnallengreen at sheep.berlios.de (John Green at BerliOS)
+Date: Thu, 20 Jan 2005 01:29:36 +0100
+Subject: [Prorefactor-svn] r9 - in trunk/org.prorefactor.refactor: . prorefactor tmp
+Message-ID: <200501200029.j0K0TauZ007930@sheep.berlios.de>
+
+Author: johnallengreen
+Date: 2005-01-20 01:29:34 +0100 (Thu, 20 Jan 2005)
+New Revision: 9
+
+Modified:
+   trunk/org.prorefactor.refactor/
+   trunk/org.prorefactor.refactor/prorefactor/
+   trunk/org.prorefactor.refactor/tmp/
+Log:
+
+
+
+Property changes on: trunk/org.prorefactor.refactor
+___________________________________________________________________
+Name: svn:ignore
+   - bin
+
+   + bin
+refactorsrc.zip
+
+
+
+Property changes on: trunk/org.prorefactor.refactor/prorefactor
+___________________________________________________________________
+Name: svn:ignore
+   + rollback
+
+
+
+Property changes on: trunk/org.prorefactor.refactor/tmp
+___________________________________________________________________
+Name: svn:ignore
+   + C_
+
+
+
+
+From johnallengreen at sheep.berlios.de  Thu Jan 20 01:30:23 2005
+From: johnallengreen at sheep.berlios.de (John Green at BerliOS)
+Date: Thu, 20 Jan 2005 01:30:23 +0100
+Subject: [Prorefactor-svn] r10 - trunk/org.prorefactor.antlr
+Message-ID: <200501200030.j0K0UNhr008268@sheep.berlios.de>
+
+Author: johnallengreen
+Date: 2005-01-20 01:30:11 +0100 (Thu, 20 Jan 2005)
+New Revision: 10
+
+Modified:
+   trunk/org.prorefactor.antlr/
+Log:
+Updated the ignore list.
+
+
+Property changes on: trunk/org.prorefactor.antlr
+___________________________________________________________________
+Name: svn:ignore
+   - bin
+
+   + bin
+antlrsrc.zip
+
+
+
+
+From johnallengreen at sheep.berlios.de  Thu Jan 20 01:31:43 2005
+From: johnallengreen at sheep.berlios.de (John Green at BerliOS)
+Date: Thu, 20 Jan 2005 01:31:43 +0100
+Subject: [Prorefactor-svn] r11 - trunk/org.prorefactor.core
+Message-ID: <200501200031.j0K0VhLY008605@sheep.berlios.de>
+
+Author: johnallengreen
+Date: 2005-01-20 01:31:01 +0100 (Thu, 20 Jan 2005)
+New Revision: 11
+
+Modified:
+   trunk/org.prorefactor.core/
+Log:
+Updated the ignore list.
+
+
+Property changes on: trunk/org.prorefactor.core
+___________________________________________________________________
+Name: svn:ignore
+   - bin
+
+   + bin
+coresrc.zip
+
+
+
+
+From johnallengreen at sheep.berlios.de  Thu Jan 20 01:33:01 2005
+From: johnallengreen at sheep.berlios.de (John Green at BerliOS)
+Date: Thu, 20 Jan 2005 01:33:01 +0100
+Subject: [Prorefactor-svn] r12 - trunk/org.prorefactor.doc
+Message-ID: <200501200033.j0K0X1cO009036@sheep.berlios.de>
+
+Author: johnallengreen
+Date: 2005-01-20 01:32:31 +0100 (Thu, 20 Jan 2005)
+New Revision: 12
+
+Modified:
+   trunk/org.prorefactor.doc/
+   trunk/org.prorefactor.doc/Makefile
+   trunk/org.prorefactor.doc/build.properties
+   trunk/org.prorefactor.doc/manual.xml
+Log:
+Updated various ignore lists.
+Changed the doc Makefile, so that the top directory doesn't get cluttered.
+Updated the manual with release notes, added a version number to the header.
+
+
+
+Property changes on: trunk/org.prorefactor.doc
+___________________________________________________________________
+Name: svn:ignore
+   - *.html
+manual.pdf
+toc.xml
+
+   + manual.pdf
+toc.xml
+html
+doc.zip
+
+
+Modified: trunk/org.prorefactor.doc/Makefile
+===================================================================
+--- trunk/org.prorefactor.doc/Makefile	2005-01-20 00:31:01 UTC (rev 11)
++++ trunk/org.prorefactor.doc/Makefile	2005-01-20 00:32:31 UTC (rev 12)
+@@ -1,6 +1,15 @@
+ 
+ # /c/progfile/fop-0.20.5/fop.bat -xml manual.xml -xsl c:/usr/share/xsl/docbook/fo/docbook.xsl -pdf manual.pdf
+ 
+-index.html: manual.xml joanju.xsl
+-	xmlto -x joanju.xsl html manual.xml
++html/index.html: manual.xml joanju.xsl Makefile
++	rm -rf html
++	xmlto -o html -x joanju.xsl html manual.xml
++	cp -r images html
++	cp -r screenshots html
++	cp *.css html
++	rm -rf html/images/.svn
++	rm -rf html/images/callouts/.svn
++	rm -rf html/screenshots/.svn
++	cp html/toc.xml .
++	cd html ; zip -r ../doc.zip *
+ 
+
+Modified: trunk/org.prorefactor.doc/build.properties
+===================================================================
+--- trunk/org.prorefactor.doc/build.properties	2005-01-20 00:31:01 UTC (rev 11)
++++ trunk/org.prorefactor.doc/build.properties	2005-01-20 00:32:31 UTC (rev 12)
+@@ -1,7 +1,5 @@
+ bin.includes = plugin.xml,\
+                about.html,\
+-               html/,\
+-               images/,\
+                build.properties,\
+                build.xml,\
+                helpcontexts.xml,\
+@@ -12,5 +10,6 @@
+                joanjupdf.xsl,\
+                manual.xml,\
+                pdf.bat,\
+-               screenshots/,\
+-               toc.xml
++               toc.xml,\
++               doc.zip,\
++               .project
+
+Modified: trunk/org.prorefactor.doc/manual.xml
+===================================================================
+--- trunk/org.prorefactor.doc/manual.xml	2005-01-20 00:31:01 UTC (rev 11)
++++ trunk/org.prorefactor.doc/manual.xml	2005-01-20 00:32:31 UTC (rev 12)
+@@ -7,6 +7,8 @@
+ 
+     <date>2005</date>
+ 
++    <releaseinfo>ProRefactor version 1.2.3</releaseinfo>
++
+     <author>
+       <firstname>John</firstname>
+ 
+@@ -18,6 +20,13 @@
+ 
+       <holder>Joanju and other ProRefactor.org Contributors</holder>
+     </copyright>
++
++    <legalnotice>
++      <para>All rights reserved. This user manual and the accompanying
++      materials are made available under the terms of the Eclipse Public
++      License v1.0 which accompanies the software distribution, and is
++      available at http://www.eclipse.org/legal/epl-v10.html.</para>
++    </legalnotice>
+   </bookinfo>
+ 
+   <chapter>
+@@ -1557,6 +1566,42 @@
+ 
+     <variablelist>
+       <varlistentry>
++        <term>Version 1.2.3</term>
++
++        <listitem>
++          <itemizedlist>
++            <listitem>
++              <para>Migration from Joanju.com to ProRefactor.org.</para>
++            </listitem>
++
++            <listitem>
++              <para>If you are updating your environment from the old
++              Joanju.com plugins, then:</para>
++
++              <itemizedlist>
++                <listitem>
++                  <para>Remove the old <literal>com.joanju.*</literal>
++                  features/plugins.</para>
++                </listitem>
++
++                <listitem>
++                  <para>Change your .project file to replace
++                  <literal>com.joanju.prorefactor.ProRefactorNature</literal>
++                  with
++                  <literal>org.prorefactor.eclipse.ProRefactorNature</literal>.</para>
++                </listitem>
++
++                <listitem>
++                  <para>Install ProRefactor from ProRefactor.org, and restart
++                  Eclipse. </para>
++                </listitem>
++              </itemizedlist>
++            </listitem>
++          </itemizedlist>
++        </listitem>
++      </varlistentry>
++
++      <varlistentry>
+         <term>Version 1.2.2</term>
+ 
+         <listitem>
+
+
+
+From johnallengreen at sheep.berlios.de  Thu Jan 20 01:33:38 2005
+From: johnallengreen at sheep.berlios.de (John Green at BerliOS)
+Date: Thu, 20 Jan 2005 01:33:38 +0100
+Subject: [Prorefactor-svn] r13 - trunk/org.prorefactor.eclipse
+Message-ID: <200501200033.j0K0XcqT009261@sheep.berlios.de>
+
+Author: johnallengreen
+Date: 2005-01-20 01:33:37 +0100 (Thu, 20 Jan 2005)
+New Revision: 13
+
+Modified:
+   trunk/org.prorefactor.eclipse/
+Log:
+Updated the ignore list.
+
+
+Property changes on: trunk/org.prorefactor.eclipse
+___________________________________________________________________
+Name: svn:ignore
+   - bin
+
+   + bin
+eclipsesrc.zip
+
+
+
+
+From johnallengreen at sheep.berlios.de  Thu Jan 20 01:34:55 2005
+From: johnallengreen at sheep.berlios.de (John Green at BerliOS)
+Date: Thu, 20 Jan 2005 01:34:55 +0100
+Subject: [Prorefactor-svn] r14 - trunk/org.prorefactor.javadoc
+Message-ID: <200501200034.j0K0Ytn1009550@sheep.berlios.de>
+
+Author: johnallengreen
+Date: 2005-01-20 01:34:44 +0100 (Thu, 20 Jan 2005)
+New Revision: 14
+
+Added:
+   trunk/org.prorefactor.javadoc/toc.xml
+Modified:
+   trunk/org.prorefactor.javadoc/
+   trunk/org.prorefactor.javadoc/build.properties
+   trunk/org.prorefactor.javadoc/javadoc.xml
+   trunk/org.prorefactor.javadoc/plugin.xml
+Log:
+Updated various ignore lists.
+Added ProRefactor javadoc to Eclipse's Help contents.
+
+
+Property changes on: trunk/org.prorefactor.javadoc
+___________________________________________________________________
+Name: svn:ignore
+   + javadoc
+doc.zip
+
+
+Modified: trunk/org.prorefactor.javadoc/build.properties
+===================================================================
+--- trunk/org.prorefactor.javadoc/build.properties	2005-01-20 00:33:37 UTC (rev 13)
++++ trunk/org.prorefactor.javadoc/build.properties	2005-01-20 00:34:44 UTC (rev 14)
+@@ -1,3 +1,8 @@
+ bin.includes = plugin.xml,\
+-               javadoc/,\
+-               *.html
++               *.html,\
++               *.zip,\
++               toc.xml,\
++               .project,\
++               build.properties,\
++               build.xml,\
++               javadoc.xml
+
+Modified: trunk/org.prorefactor.javadoc/javadoc.xml
+===================================================================
+--- trunk/org.prorefactor.javadoc/javadoc.xml	2005-01-20 00:33:37 UTC (rev 13)
++++ trunk/org.prorefactor.javadoc/javadoc.xml	2005-01-20 00:34:44 UTC (rev 14)
+@@ -24,9 +24,10 @@
+ 	    <fileset dir="../org.prorefactor.eclipse/src" defaultexcludes="yes">
+ 	      <include name="**/*.java"/>
+ 	    </fileset>
+-	    <doctitle><![CDATA[<h1>ProRefactor</h1>]]></doctitle>
++	    <doctitle><![CDATA[<h1>ProRefactor 1.2.3</h1>]]></doctitle>
+ 	    <bottom><![CDATA[<i>Copyright &#169; 2002-2005 Joanju and others. All Rights Reserved.</i>]]></bottom>
+ 	    <tag name="todo" scope="all" description="To do:" />
+ 	  </javadoc>
++      <zip zipfile="doc.zip" basedir="javadoc" filesonly="false" whenempty="skip" update="false"/>
+   </target>
+ </project>
+
+Modified: trunk/org.prorefactor.javadoc/plugin.xml
+===================================================================
+--- trunk/org.prorefactor.javadoc/plugin.xml	2005-01-20 00:33:37 UTC (rev 13)
++++ trunk/org.prorefactor.javadoc/plugin.xml	2005-01-20 00:34:44 UTC (rev 14)
+@@ -5,5 +5,14 @@
+    name="ProRefactor Javadoc"
+    version="1.2.3"
+    provider-name="ProRefactor.org">
++   <requires>
++      <import plugin="org.eclipse.help"/>
++   </requires>
++   <extension
++         point="org.eclipse.help.toc">
++      <toc
++            primary="true"
++            file="toc.xml"/>
++   </extension>
+ 
+ </plugin>
+
+Added: trunk/org.prorefactor.javadoc/toc.xml
+===================================================================
+--- trunk/org.prorefactor.javadoc/toc.xml	2005-01-20 00:33:37 UTC (rev 13)
++++ trunk/org.prorefactor.javadoc/toc.xml	2005-01-20 00:34:44 UTC (rev 14)
+@@ -0,0 +1,5 @@
++<?xml version="1.0" encoding="utf-8" standalone="no"?>
++<?NLS TYPE="org.eclipse.help.toc" ?>
++<toc label="ProRefactor javadoc" href="index.html">
++<topic label="javadoc" href="index.html"/>
++</toc>
+
+
+
+From johnallengreen at sheep.berlios.de  Thu Jan 20 01:39:24 2005
+From: johnallengreen at sheep.berlios.de (John Green at BerliOS)
+Date: Thu, 20 Jan 2005 01:39:24 +0100
+Subject: [Prorefactor-svn] r15 - in trunk/org.prorefactor.refactor/prorefactor: . projects/sports2000/pubs/data/rename/t01/orig
+Message-ID: <200501200039.j0K0dOK3010248@sheep.berlios.de>
+
+Author: johnallengreen
+Date: 2005-01-20 01:39:20 +0100 (Thu, 20 Jan 2005)
+New Revision: 15
+
+Removed:
+   trunk/org.prorefactor.refactor/prorefactor/noundo.messages
+   trunk/org.prorefactor.refactor/prorefactor/refactor.messages
+   trunk/org.prorefactor.refactor/prorefactor/rollback/
+Modified:
+   trunk/org.prorefactor.refactor/prorefactor/
+   trunk/org.prorefactor.refactor/prorefactor/projects/sports2000/pubs/data/rename/t01/orig/t01.p.pub
+Log:
+Updated ignore lists.
+
+
+Property changes on: trunk/org.prorefactor.refactor/prorefactor
+___________________________________________________________________
+Name: svn:ignore
+   - rollback
+
+   + rollback
+*.messages
+
+
+Deleted: trunk/org.prorefactor.refactor/prorefactor/noundo.messages
+===================================================================
+--- trunk/org.prorefactor.refactor/prorefactor/noundo.messages	2005-01-20 00:34:44 UTC (rev 14)
++++ trunk/org.prorefactor.refactor/prorefactor/noundo.messages	2005-01-20 00:39:20 UTC (rev 15)
+@@ -1,96 +0,0 @@
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar assignment might be undone at file:line: data/no-undo.p:28
+-(Refactor/UNDO) Field: myChar11 assignment might be undone at file:line: data/no-undo.p:42
+-(Refactor/UNDO) Field: myChar10 assignment might be undone at file:line: data/no-undo.p:42
+
+Modified: trunk/org.prorefactor.refactor/prorefactor/projects/sports2000/pubs/data/rename/t01/orig/t01.p.pub
+===================================================================
+(Binary files differ)
+
+Deleted: trunk/org.prorefactor.refactor/prorefactor/refactor.messages
+===================================================================
+--- trunk/org.prorefactor.refactor/prorefactor/refactor.messages	2005-01-20 00:34:44 UTC (rev 14)
++++ trunk/org.prorefactor.refactor/prorefactor/refactor.messages	2005-01-20 00:39:20 UTC (rev 15)
+@@ -1 +0,0 @@
+-(Thu Jan 13 15:21:29 PST 2005) Include file refactoring has multiple outcomes, file not written: .\data/names/display.i
+
+
+

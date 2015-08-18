@@ -1,0 +1,213 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Prorefactor-svn] r70 - in trunk: org.prorefactor.core org.prorefactor.core/src/org/prorefactor/refactor org.prorefactor.core/src/org/prorefactor/treeparser org.prorefactor.lib/hsqldb
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/prorefactor-svn/2006-April/index.html" >
+   <LINK REL="made" HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r70%20-%20in%20trunk%3A%20org.prorefactor.core%20org.prorefactor.core/src/org/prorefactor/refactor%20org.prorefactor.core/src/org/prorefactor/treeparser%20org.prorefactor.lib/hsqldb&In-Reply-To=%3C200604261707.k3QH76vd019490%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000057.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Prorefactor-svn] r70 - in trunk: org.prorefactor.core org.prorefactor.core/src/org/prorefactor/refactor org.prorefactor.core/src/org/prorefactor/treeparser org.prorefactor.lib/hsqldb</H1>
+    <B>johnallengreen at BerliOS</B> 
+    <A HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r70%20-%20in%20trunk%3A%20org.prorefactor.core%20org.prorefactor.core/src/org/prorefactor/refactor%20org.prorefactor.core/src/org/prorefactor/treeparser%20org.prorefactor.lib/hsqldb&In-Reply-To=%3C200604261707.k3QH76vd019490%40sheep.berlios.de%3E"
+       TITLE="[Prorefactor-svn] r70 - in trunk: org.prorefactor.core org.prorefactor.core/src/org/prorefactor/refactor org.prorefactor.core/src/org/prorefactor/treeparser org.prorefactor.lib/hsqldb">johnallengreen at berlios.de
+       </A><BR>
+    <I>Wed Apr 26 19:07:06 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000057.html">[Prorefactor-svn] r68 - trunk/org.prorefactor.core/src/org/prorefactor/treeparser01
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#58">[ date ]</a>
+              <a href="thread.html#58">[ thread ]</a>
+              <a href="subject.html#58">[ subject ]</a>
+              <a href="author.html#58">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: johnallengreen
+Date: 2006-04-26 19:05:22 +0200 (Wed, 26 Apr 2006)
+New Revision: 70
+
+Modified:
+   trunk/org.prorefactor.core/proparse.dll
+   trunk/org.prorefactor.core/src/org/prorefactor/refactor/PUB.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/ParseUnit.java
+   trunk/org.prorefactor.lib/hsqldb/hsqldb.jar
+   trunk/org.prorefactor.lib/hsqldb/hsqldb_lic.txt
+   trunk/org.prorefactor.lib/hsqldb/readme.txt
+Log:
+Updated Proparse.
+Updated hsqldb.
+Added a PUB buildOrLoad method to ParseUnit, so that the syntax tree and symbol tables could be loaded through one simple call in ParseUnit.
+
+Modified: trunk/org.prorefactor.core/proparse.dll
+===================================================================
+(Binary files differ)
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/refactor/PUB.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/refactor/PUB.java	2006-04-02 03:45:54 UTC (rev 69)
++++ trunk/org.prorefactor.core/src/org/prorefactor/refactor/PUB.java	2006-04-26 17:05:22 UTC (rev 70)
+@@ -153,6 +153,7 @@
+ 	private File cuFile;
+ 	private File pubFile;
+ 	private JPNode tree;
++	private ParseUnit parseUnit;
+ 	private ProparseLdr parser = ProparseLdr.getInstance();
+ 	private RefactorSession refpack = RefactorSession.getInstance();
+ 	private String className;
+@@ -209,14 +210,16 @@
+ 	 * a fresh build is really necessary. Once a build() has been done,
+ 	 * then all of the values for the PUB are available - it is not necessary
+ 	 * for you to call load() or loadTo().
+-	 * This takes care of creating the ParseUnit and running treeParser01.
++	 * This takes care of creating the ParseUnit (if not already set) and running treeParser01.
+ 	 * @throws RefactorException
+ 	 */
+ 	public ParseUnit build() throws IOException, RefactorException {
+-		ParseUnit pu = new ParseUnit(cuFile);
+-		pu.setPUB(this);
+-		pu.treeParser01(); // This calls build(TP01Support)
+-		return pu;
++		if (parseUnit==null) {
++			parseUnit = new ParseUnit(cuFile);
++			parseUnit.setPUB(this);
++		}
++		parseUnit.treeParser01(); // This calls build(TP01Support)
++		return parseUnit;
+ 	}
+ 	
+ 
+@@ -501,6 +504,10 @@
+ 	
+ 	
+ 	
++	public void setParseUnit(ParseUnit pu) {this.parseUnit = pu;}
++	
++	
++	
+ 	private void setStrings(JPNode node) {
+ 		if (node==null) return;
+ 		int index;
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/ParseUnit.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/ParseUnit.java	2006-04-02 03:45:54 UTC (rev 69)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/ParseUnit.java	2006-04-26 17:05:22 UTC (rev 70)
+@@ -13,6 +13,7 @@
+ package org.prorefactor.treeparser;
+ 
+ import java.io.File;
++import java.io.IOException;
+ 
+ import org.prorefactor.core.JPNode;
+ import org.prorefactor.core.PRCException;
+@@ -81,6 +82,7 @@
+ 			RefactorSession refpack = RefactorSession.getInstance();
+ 			String [] projFile = refpack.getIDE().getProjectRelativePath(getFile());
+ 			pub = new PUB(projFile[0], projFile[1], FileStuff.fullpath(file));
++			pub.setParseUnit(this);
+ 		}
+ 		return pub;
+ 	}
+@@ -91,6 +93,23 @@
+ 
+ 	/** Get the syntax tree top (Program_root) node */
+ 	public JPNode getTopNode() { return topNode; }
++	
++	
++	/** Load from PUB, or build PUB if it's out of date.
++	 * TreeParser01 is run in order to build the PUB.
++	 * If the PUB was up to date, then TreeParser01 is run
++	 * after the PUB is loaded. (Either way, the symbol tables
++	 * etc. are available.)
++	 */
++	public void loadOrBuildPUB() throws RefactorException, IOException {
++		getPUB();
++		if (pub.load()) {
++			setTopNode(pub.getTree());
++			treeParser01();
++		} else {
++			pub.build();
++		}
++	}
+ 
+ 
+ 	public void parse() throws RefactorException {
+
+Modified: trunk/org.prorefactor.lib/hsqldb/hsqldb.jar
+===================================================================
+(Binary files differ)
+
+Modified: trunk/org.prorefactor.lib/hsqldb/hsqldb_lic.txt
+===================================================================
+--- trunk/org.prorefactor.lib/hsqldb/hsqldb_lic.txt	2006-04-02 03:45:54 UTC (rev 69)
++++ trunk/org.prorefactor.lib/hsqldb/hsqldb_lic.txt	2006-04-26 17:05:22 UTC (rev 70)
+@@ -1,4 +1,4 @@
+-/* Copyright (c) 2001-2004, The HSQL Development Group
++/* Copyright (c) 2001-2005, The HSQL Development Group
+  * All rights reserved.
+  *
+  * Redistribution and use in source and binary forms, with or without
+
+Modified: trunk/org.prorefactor.lib/hsqldb/readme.txt
+===================================================================
+--- trunk/org.prorefactor.lib/hsqldb/readme.txt	2006-04-02 03:45:54 UTC (rev 69)
++++ trunk/org.prorefactor.lib/hsqldb/readme.txt	2006-04-26 17:05:22 UTC (rev 70)
+@@ -1,8 +1,8 @@
+ Readme File
+ 
+-Jan 2004
++April 2006
+ 
+-This package contains the latest revision 2 of HSQLDB 1.7.3
++This package contains HSQLDB 1.8.0.4
+ 
+ HSQLDB is a relational database engine and a set of tools written in Java.
+ 
+@@ -10,9 +10,6 @@
+ 
+ Documentation and license information can be found in the /doc directory.
+ 
+-Project home page: <A HREF="http://hsqldb.sourceforge.net">http://hsqldb.sourceforge.net</A>
++Project home page: <A HREF="http://hsqldb.org">http://hsqldb.org</A>
+ 
+-HSQLDB 1.8.0 is due for release in February or March and features many enhancements
+-over this release.
+-
+-Please check for availability and use the new version if possible.
++Please check the site periodically for updated versions.
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000057.html">[Prorefactor-svn] r68 - trunk/org.prorefactor.core/src/org/prorefactor/treeparser01
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#58">[ date ]</a>
+              <a href="thread.html#58">[ thread ]</a>
+              <a href="subject.html#58">[ subject ]</a>
+              <a href="author.html#58">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">More information about the Prorefactor-svn
+mailing list</a><br>
+</body></html>

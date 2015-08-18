@@ -1,0 +1,331 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Prorefactor-svn] r62 - in trunk: org.prorefactor.core/META-INF org.prorefactor.doc org.prorefactor.doc/META-INF org.prorefactor.eclipse/META-INF org.prorefactor.feature org.prorefactor.javadoc org.prorefactor.javadoc/META-INF org.prorefactor.lib/META-INF org.prorefactor.update
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/prorefactor-svn/2006-March/index.html" >
+   <LINK REL="made" HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r62%20-%20in%20trunk%3A%20org.prorefactor.core/META-INF%20org.prorefactor.doc%20org.prorefactor.doc/META-INF%20org.prorefactor.eclipse/META-INF%20org.prorefactor.feature%20org.prorefactor.javadoc%20org.prorefactor.javadoc/META-INF%20org.prorefactor.lib/META-INF%20org.prorefactor.update&In-Reply-To=%3C200603300243.k2U2h5sh017234%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000051.html">
+   <LINK REL="Next"  HREF="000053.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Prorefactor-svn] r62 - in trunk: org.prorefactor.core/META-INF org.prorefactor.doc org.prorefactor.doc/META-INF org.prorefactor.eclipse/META-INF org.prorefactor.feature org.prorefactor.javadoc org.prorefactor.javadoc/META-INF org.prorefactor.lib/META-INF org.prorefactor.update</H1>
+    <B>johnallengreen at BerliOS</B> 
+    <A HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r62%20-%20in%20trunk%3A%20org.prorefactor.core/META-INF%20org.prorefactor.doc%20org.prorefactor.doc/META-INF%20org.prorefactor.eclipse/META-INF%20org.prorefactor.feature%20org.prorefactor.javadoc%20org.prorefactor.javadoc/META-INF%20org.prorefactor.lib/META-INF%20org.prorefactor.update&In-Reply-To=%3C200603300243.k2U2h5sh017234%40sheep.berlios.de%3E"
+       TITLE="[Prorefactor-svn] r62 - in trunk: org.prorefactor.core/META-INF org.prorefactor.doc org.prorefactor.doc/META-INF org.prorefactor.eclipse/META-INF org.prorefactor.feature org.prorefactor.javadoc org.prorefactor.javadoc/META-INF org.prorefactor.lib/META-INF org.prorefactor.update">johnallengreen at berlios.de
+       </A><BR>
+    <I>Thu Mar 30 04:43:05 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000051.html">[Prorefactor-svn] r61 - in trunk: org.prorefactor.core org.prorefactor.core/prorefactor/projects org.prorefactor.core/src/org/prorefactor/core org.prorefactor.core/src/org/prorefactor/core/schema org.prorefactor.core/src/org/prorefactor/core/unittest org.prorefactor.core/src/org/prorefactor/nodetypes org.prorefactor.core/src/org/prorefactor/refactor org.prorefactor.core/src/org/prorefactor/refactor/action org.prorefactor.core/src/org/prorefactor/refactor/source org.prorefactor.core/src/org/prorefactor/treeparser org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.core/src/org/prorefactor/widgettypes org.prorefactor.eclipse/src/org/prorefactor/eclipse org.prorefactor.eclipse/src/org/prorefactor/eclipse/actions
+</A></li>
+        <LI>Next message: <A HREF="000053.html">[Prorefactor-svn] r63 - in trunk/org.prorefactor.core/src/org/prorefactor: core/unittest treeparser treeparser01
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#52">[ date ]</a>
+              <a href="thread.html#52">[ thread ]</a>
+              <a href="subject.html#52">[ subject ]</a>
+              <a href="author.html#52">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: johnallengreen
+Date: 2006-03-30 04:42:57 +0200 (Thu, 30 Mar 2006)
+New Revision: 62
+
+Modified:
+   trunk/org.prorefactor.core/META-INF/MANIFEST.MF
+   trunk/org.prorefactor.doc/META-INF/MANIFEST.MF
+   trunk/org.prorefactor.doc/manual.xml
+   trunk/org.prorefactor.eclipse/META-INF/MANIFEST.MF
+   trunk/org.prorefactor.feature/feature.xml
+   trunk/org.prorefactor.javadoc/META-INF/MANIFEST.MF
+   trunk/org.prorefactor.javadoc/javadoc.xml
+   trunk/org.prorefactor.lib/META-INF/MANIFEST.MF
+   trunk/org.prorefactor.update/site.xml
+Log:
+Version 1.4.0.
+
+Modified: trunk/org.prorefactor.core/META-INF/MANIFEST.MF
+===================================================================
+--- trunk/org.prorefactor.core/META-INF/MANIFEST.MF	2006-03-30 00:33:40 UTC (rev 61)
++++ trunk/org.prorefactor.core/META-INF/MANIFEST.MF	2006-03-30 02:42:57 UTC (rev 62)
+@@ -2,7 +2,7 @@
+ Bundle-ManifestVersion: 2
+ Bundle-Name: ProRefactor Core
+ Bundle-SymbolicName: org.prorefactor.core
+-Bundle-Version: 1.3.0
++Bundle-Version: 1.4.0
+ Bundle-ClassPath: core.jar
+ Bundle-Vendor: ProRefactor.org
+ Bundle-Localization: plugin
+
+Modified: trunk/org.prorefactor.doc/META-INF/MANIFEST.MF
+===================================================================
+--- trunk/org.prorefactor.doc/META-INF/MANIFEST.MF	2006-03-30 00:33:40 UTC (rev 61)
++++ trunk/org.prorefactor.doc/META-INF/MANIFEST.MF	2006-03-30 02:42:57 UTC (rev 62)
+@@ -2,7 +2,7 @@
+ Bundle-ManifestVersion: 2
+ Bundle-Name: ProRefactor Documentation
+ Bundle-SymbolicName: org.prorefactor.doc; singleton:=true
+-Bundle-Version: 1.3.0
++Bundle-Version: 1.4.0
+ Bundle-Vendor: ProRefactor.org
+ Bundle-Localization: plugin
+ Require-Bundle: org.eclipse.help
+
+Modified: trunk/org.prorefactor.doc/manual.xml
+===================================================================
+--- trunk/org.prorefactor.doc/manual.xml	2006-03-30 00:33:40 UTC (rev 61)
++++ trunk/org.prorefactor.doc/manual.xml	2006-03-30 02:42:57 UTC (rev 62)
+@@ -7,7 +7,7 @@
+ 
+     &lt;date&gt;2006&lt;/date&gt;
+ 
+-    &lt;pubdate&gt;February 2006, ProRefactor version 1.3.0&lt;/pubdate&gt;
++    &lt;pubdate&gt;March 2006, ProRefactor version 1.4.0&lt;/pubdate&gt;
+ 
+     &lt;author&gt;
+       &lt;firstname&gt;John&lt;/firstname&gt;
+@@ -18,7 +18,7 @@
+     &lt;copyright&gt;
+       &lt;year&gt;2004-2006&lt;/year&gt;
+ 
+-      &lt;holder&gt;Joanju and other ProRefactor.org Contributors&lt;/holder&gt;
++      &lt;holder&gt;Joanju Software and other ProRefactor.org Contributors&lt;/holder&gt;
+     &lt;/copyright&gt;
+ 
+     &lt;legalnotice&gt;
+@@ -439,9 +439,9 @@
+       units in those projects.&lt;/para&gt;
+ 
+       &lt;note&gt;
+-        &lt;para&gt;ProRefactor considers &lt;filename&gt;.p&lt;/filename&gt; and
+-        &lt;filename&gt;.w&lt;/filename&gt; files to be compile units. This may be
+-        configurable in future versions.&lt;/para&gt;
++        &lt;para&gt;ProRefactor considers &lt;filename&gt;.p&lt;/filename&gt;,
++        &lt;filename&gt;.w&lt;/filename&gt;, and &lt;filename&gt;.cls&lt;/filename&gt; files to be
++        compile units. This may be configurable in future versions.&lt;/para&gt;
+       &lt;/note&gt;
+ 
+       &lt;para&gt;ProRefactor stores information about your compile units, and it
+@@ -1494,6 +1494,24 @@
+ 
+     &lt;variablelist&gt;
+       &lt;varlistentry&gt;
++        &lt;term&gt;Version 1.4.0&lt;/term&gt;
++
++        &lt;listitem&gt;
++          &lt;itemizedlist&gt;
++            &lt;listitem&gt;
++              &lt;para&gt;Added support for class inheritance, 10.1 syntax, .cls
++              files, Proparse 3.0.&lt;/para&gt;
++            &lt;/listitem&gt;
++
++            &lt;listitem&gt;
++              &lt;para&gt;Internal: Merged sub-project &quot;refactor&quot; into sub-project
++              &quot;core&quot;, due to inter-dependencies.&lt;/para&gt;
++            &lt;/listitem&gt;
++          &lt;/itemizedlist&gt;
++        &lt;/listitem&gt;
++      &lt;/varlistentry&gt;
++
++      &lt;varlistentry&gt;
+         &lt;term&gt;Version 1.3.0&lt;/term&gt;
+ 
+         &lt;listitem&gt;
+
+Modified: trunk/org.prorefactor.eclipse/META-INF/MANIFEST.MF
+===================================================================
+--- trunk/org.prorefactor.eclipse/META-INF/MANIFEST.MF	2006-03-30 00:33:40 UTC (rev 61)
++++ trunk/org.prorefactor.eclipse/META-INF/MANIFEST.MF	2006-03-30 02:42:57 UTC (rev 62)
+@@ -2,7 +2,7 @@
+ Bundle-ManifestVersion: 2
+ Bundle-Name: ProRefactor
+ Bundle-SymbolicName: org.prorefactor.eclipse; singleton:=true
+-Bundle-Version: 1.3.0
++Bundle-Version: 1.4.0
+ Bundle-ClassPath: eclipse.jar
+ Bundle-Activator: org.prorefactor.eclipse.Plugin
+ Bundle-Vendor: ProRefactor.org
+
+Modified: trunk/org.prorefactor.feature/feature.xml
+===================================================================
+--- trunk/org.prorefactor.feature/feature.xml	2006-03-30 00:33:40 UTC (rev 61)
++++ trunk/org.prorefactor.feature/feature.xml	2006-03-30 02:42:57 UTC (rev 62)
+@@ -2,7 +2,7 @@
+ &lt;feature
+       id=&quot;org.prorefactor&quot;
+       label=&quot;org.prorefactor&quot;
+-      version=&quot;1.3.0&quot;
++      version=&quot;1.4.0&quot;
+       provider-name=&quot;ProRefactor.org&quot;
+       plugin=&quot;org.prorefactor.eclipse&quot;&gt;
+ 
+@@ -48,6 +48,10 @@
+ archives.
+    &lt;/license&gt;
+ 
++   &lt;url&gt;
++      &lt;update label=&quot;ProRefactor.org&quot; url=&quot;<A HREF="http://prorefactor.org/update/">http://prorefactor.org/update/</A>&quot;/&gt;
++   &lt;/url&gt;
++
+    &lt;requires&gt;
+       &lt;import plugin=&quot;org.eclipse.jface.text&quot;/&gt;
+       &lt;import plugin=&quot;org.eclipse.ui.workbench.texteditor&quot;/&gt;
+@@ -65,42 +69,36 @@
+          id=&quot;org.prorefactor.core&quot;
+          download-size=&quot;0&quot;
+          install-size=&quot;0&quot;
+-         version=&quot;0.0.0&quot;/&gt;
++         version=&quot;1.4.0&quot;/&gt;
+ 
+    &lt;plugin
+          id=&quot;org.prorefactor.eclipse&quot;
+          download-size=&quot;0&quot;
+          install-size=&quot;0&quot;
+-         version=&quot;0.0.0&quot;/&gt;
++         version=&quot;1.4.0&quot;/&gt;
+ 
+    &lt;plugin
+          id=&quot;org.prorefactor.javadoc&quot;
+          download-size=&quot;0&quot;
+          install-size=&quot;0&quot;
+-         version=&quot;0.0.0&quot;/&gt;
++         version=&quot;1.4.0&quot;/&gt;
+ 
+    &lt;plugin
+-         id=&quot;org.prorefactor.refactor&quot;
+-         download-size=&quot;0&quot;
+-         install-size=&quot;0&quot;
+-         version=&quot;0.0.0&quot;/&gt;
+-
+-   &lt;plugin
+          id=&quot;org.prorefactor.doc&quot;
+          download-size=&quot;0&quot;
+          install-size=&quot;0&quot;
+-         version=&quot;0.0.0&quot;/&gt;
++         version=&quot;1.4.0&quot;/&gt;
+ 
+    &lt;plugin
+          id=&quot;org.prorefactor.lib&quot;
+          download-size=&quot;0&quot;
+          install-size=&quot;0&quot;
+-         version=&quot;0.0.0&quot;/&gt;
++         version=&quot;1.4.0&quot;/&gt;
+ 
+    &lt;plugin
+          id=&quot;org.prolint&quot;
+          download-size=&quot;0&quot;
+          install-size=&quot;0&quot;
+-         version=&quot;0.0.0&quot;/&gt;
++         version=&quot;0.1.3&quot;/&gt;
+ 
+ &lt;/feature&gt;
+
+Modified: trunk/org.prorefactor.javadoc/META-INF/MANIFEST.MF
+===================================================================
+--- trunk/org.prorefactor.javadoc/META-INF/MANIFEST.MF	2006-03-30 00:33:40 UTC (rev 61)
++++ trunk/org.prorefactor.javadoc/META-INF/MANIFEST.MF	2006-03-30 02:42:57 UTC (rev 62)
+@@ -2,7 +2,7 @@
+ Bundle-ManifestVersion: 2
+ Bundle-Name: ProRefactor Javadoc
+ Bundle-SymbolicName: org.prorefactor.javadoc; singleton:=true
+-Bundle-Version: 1.3.0
++Bundle-Version: 1.4.0
+ Bundle-Vendor: ProRefactor.org
+ Bundle-Localization: plugin
+ Require-Bundle: org.eclipse.help
+
+Modified: trunk/org.prorefactor.javadoc/javadoc.xml
+===================================================================
+--- trunk/org.prorefactor.javadoc/javadoc.xml	2006-03-30 00:33:40 UTC (rev 61)
++++ trunk/org.prorefactor.javadoc/javadoc.xml	2006-03-30 02:42:57 UTC (rev 62)
+@@ -7,7 +7,7 @@
+ 	           author=&quot;true&quot;
+ 	           version=&quot;true&quot;
+ 	           use=&quot;true&quot;
+-	           classpath=&quot;../org.prorefactor.antlr/bin;../org.prorefactor.core/bin;../org.prorefactor.refactor/bin;../org.prorefactor.eclipse/bin;&quot;
++	           classpath=&quot;../org.prorefactor.antlr/bin;../org.prorefactor.core/bin;../org.prorefactor.eclipse/bin;&quot;
+ 	           windowtitle=&quot;ProRefactor&quot;&gt;
+ 	    &lt;fileset dir=&quot;../org.prorefactor.core/src&quot; defaultexcludes=&quot;yes&quot;&gt;
+ 	      &lt;include name=&quot;**/*.java&quot;/&gt;
+@@ -15,17 +15,11 @@
+ 	      &lt;exclude name=&quot;org/prorefactor/treeparser01/TreeParser01**&quot;/&gt;
+ 	      &lt;exclude name=&quot;org/prorefactor/treeparser02/TreeParser02**&quot;/&gt;
+ 	    &lt;/fileset&gt;
+-	    &lt;fileset dir=&quot;../org.prorefactor.refactor/src&quot; defaultexcludes=&quot;yes&quot;&gt;
+-	      &lt;include name=&quot;**/*.java&quot;/&gt;
+-	      &lt;exclude name=&quot;org/prorefactor/treeparser03/TreeParser03**&quot;/&gt;
+-	      &lt;exclude name=&quot;org/prorefactor/refactor/tp04/TP04.java&quot;/&gt;
+-	      &lt;exclude name=&quot;org/prorefactor/refactor/tp04/TP04TokenTypes.java&quot;/&gt;
+-	    &lt;/fileset&gt;
+ 	    &lt;fileset dir=&quot;../org.prorefactor.eclipse/src&quot; defaultexcludes=&quot;yes&quot;&gt;
+ 	      &lt;include name=&quot;**/*.java&quot;/&gt;
+ 	    &lt;/fileset&gt;
+-	    &lt;doctitle&gt;&lt;![CDATA[&lt;h1&gt;ProRefactor 1.3.0&lt;/h1&gt;]]&gt;&lt;/doctitle&gt;
+-	    &lt;bottom&gt;&lt;![CDATA[&lt;i&gt;Copyright &#169; 2002-2006 Joanju and others. All Rights Reserved.&lt;/i&gt;]]&gt;&lt;/bottom&gt;
++	    &lt;doctitle&gt;&lt;![CDATA[&lt;h1&gt;ProRefactor 1.4.0&lt;/h1&gt;]]&gt;&lt;/doctitle&gt;
++	    &lt;bottom&gt;&lt;![CDATA[&lt;i&gt;Copyright &#169; 2002-2006 Joanju Software and others. All Rights Reserved.&lt;/i&gt;]]&gt;&lt;/bottom&gt;
+ 	    &lt;tag name=&quot;todo&quot; scope=&quot;all&quot; description=&quot;To do:&quot; /&gt;
+ 	  &lt;/javadoc&gt;
+       &lt;zip zipfile=&quot;doc.zip&quot; basedir=&quot;javadoc&quot; filesonly=&quot;false&quot; whenempty=&quot;skip&quot; update=&quot;false&quot;/&gt;
+
+Modified: trunk/org.prorefactor.lib/META-INF/MANIFEST.MF
+===================================================================
+--- trunk/org.prorefactor.lib/META-INF/MANIFEST.MF	2006-03-30 00:33:40 UTC (rev 61)
++++ trunk/org.prorefactor.lib/META-INF/MANIFEST.MF	2006-03-30 02:42:57 UTC (rev 62)
+@@ -2,7 +2,7 @@
+ Bundle-ManifestVersion: 2
+ Bundle-Name: ProRefactor required Libraries
+ Bundle-SymbolicName: org.prorefactor.lib
+-Bundle-Version: 1.3.0
++Bundle-Version: 1.4.0
+ Bundle-ClassPath: antlr/antlr.jar,
+  jakarta/commons-collections/commons-collections.jar,
+  hibernate/cglib-full-2.0.2.jar,
+
+Modified: trunk/org.prorefactor.update/site.xml
+===================================================================
+--- trunk/org.prorefactor.update/site.xml	2006-03-30 00:33:40 UTC (rev 61)
++++ trunk/org.prorefactor.update/site.xml	2006-03-30 02:42:57 UTC (rev 62)
+@@ -3,7 +3,7 @@
+    &lt;description url=&quot;<A HREF="http://prorefactor.org/update/">http://prorefactor.org/update/</A>&quot;&gt;
+       ProRefactor Update Site
+    &lt;/description&gt;
+-   &lt;feature url=&quot;features/org.prorefactor_1.3.0.jar&quot; id=&quot;org.prorefactor&quot; version=&quot;1.3.0&quot;&gt;
++   &lt;feature url=&quot;features/org.prorefactor_1.4.0.jar&quot; id=&quot;org.prorefactor&quot; version=&quot;1.4.0&quot;&gt;
+       &lt;category name=&quot;ProRefactor.org&quot;/&gt;
+    &lt;/feature&gt;
+    &lt;category-def name=&quot;ProRefactor.org&quot; label=&quot;ProRefactor.org&quot;&gt;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000051.html">[Prorefactor-svn] r61 - in trunk: org.prorefactor.core org.prorefactor.core/prorefactor/projects org.prorefactor.core/src/org/prorefactor/core org.prorefactor.core/src/org/prorefactor/core/schema org.prorefactor.core/src/org/prorefactor/core/unittest org.prorefactor.core/src/org/prorefactor/nodetypes org.prorefactor.core/src/org/prorefactor/refactor org.prorefactor.core/src/org/prorefactor/refactor/action org.prorefactor.core/src/org/prorefactor/refactor/source org.prorefactor.core/src/org/prorefactor/treeparser org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.core/src/org/prorefactor/widgettypes org.prorefactor.eclipse/src/org/prorefactor/eclipse org.prorefactor.eclipse/src/org/prorefactor/eclipse/actions
+</A></li>
+	<LI>Next message: <A HREF="000053.html">[Prorefactor-svn] r63 - in trunk/org.prorefactor.core/src/org/prorefactor: core/unittest treeparser treeparser01
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#52">[ date ]</a>
+              <a href="thread.html#52">[ thread ]</a>
+              <a href="subject.html#52">[ subject ]</a>
+              <a href="author.html#52">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">More information about the Prorefactor-svn
+mailing list</a><br>
+</body></html>

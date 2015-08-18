@@ -1,0 +1,526 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Prorefactor-svn] r26 - in trunk/org.prorefactor.lib: . hibernate jakarta jakarta/commons-collections
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/prorefactor-svn/2005-May/index.html" >
+   <LINK REL="made" HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r26%20-%20in%20trunk/org.prorefactor.lib%3A%20.%20hibernate%20jakarta%20jakarta/commons-collections&In-Reply-To=%3C200505062042.j46Kgx82016409%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000020.html">
+   <LINK REL="Next"  HREF="000022.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Prorefactor-svn] r26 - in trunk/org.prorefactor.lib: . hibernate jakarta jakarta/commons-collections</H1>
+    <B>John Green at BerliOS</B> 
+    <A HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r26%20-%20in%20trunk/org.prorefactor.lib%3A%20.%20hibernate%20jakarta%20jakarta/commons-collections&In-Reply-To=%3C200505062042.j46Kgx82016409%40sheep.berlios.de%3E"
+       TITLE="[Prorefactor-svn] r26 - in trunk/org.prorefactor.lib: . hibernate jakarta jakarta/commons-collections">johnallengreen at sheep.berlios.de
+       </A><BR>
+    <I>Fri May  6 22:42:59 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000020.html">[Prorefactor-svn] r25 - in trunk: org.prorefactor.antlr org.prorefactor.core
+</A></li>
+        <LI>Next message: <A HREF="000022.html">[Prorefactor-svn] r27 - in trunk/org.prorefactor.lib/jakarta: . commons-io
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21">[ date ]</a>
+              <a href="thread.html#21">[ thread ]</a>
+              <a href="subject.html#21">[ subject ]</a>
+              <a href="author.html#21">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: johnallengreen
+Date: 2005-05-06 22:42:56 +0200 (Fri, 06 May 2005)
+New Revision: 26
+
+Added:
+   trunk/org.prorefactor.lib/jakarta/commons-collections/
+   trunk/org.prorefactor.lib/jakarta/commons-collections/LICENSE.txt
+   trunk/org.prorefactor.lib/jakarta/commons-collections/RELEASE-NOTES.html
+   trunk/org.prorefactor.lib/jakarta/commons-collections/commons-collections.jar
+   trunk/org.prorefactor.lib/jakarta/commons-collections/src.zip
+Removed:
+   trunk/org.prorefactor.lib/hibernate/commons-collections-2.1.1.jar
+   trunk/org.prorefactor.lib/jakarta/commons-io-1.0/
+Modified:
+   trunk/org.prorefactor.lib/.classpath
+   trunk/org.prorefactor.lib/build.properties
+   trunk/org.prorefactor.lib/plugin.xml
+Log:
+Remembered how to properly associate a jar libraries source with the jar file, which allowed me to remove the source files for commons-io.
+Updated commons-collections to version 3.1.
+
+Modified: trunk/org.prorefactor.lib/.classpath
+===================================================================
+--- trunk/org.prorefactor.lib/.classpath	2005-05-05 18:49:58 UTC (rev 25)
++++ trunk/org.prorefactor.lib/.classpath	2005-05-06 20:42:56 UTC (rev 26)
+@@ -1,11 +1,9 @@
+ &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+ &lt;classpath&gt;
+-	&lt;classpathentry kind=&quot;src&quot; path=&quot;jakarta/commons-io-1.0/src/java&quot;/&gt;
+ 	&lt;classpathentry exported=&quot;true&quot; kind=&quot;con&quot; path=&quot;org.eclipse.pde.core.requiredPlugins&quot;/&gt;
+ 	&lt;classpathentry kind=&quot;con&quot; path=&quot;org.eclipse.jdt.launching.JRE_CONTAINER&quot;/&gt;
+ 	&lt;classpathentry exported=&quot;true&quot; kind=&quot;lib&quot; path=&quot;hibernate/cglib-full-2.0.2.jar&quot;/&gt;
+ 	&lt;classpathentry exported=&quot;true&quot; kind=&quot;lib&quot; path=&quot;hsqldb/hsqldb.jar&quot;/&gt;
+-	&lt;classpathentry exported=&quot;true&quot; kind=&quot;lib&quot; path=&quot;hibernate/commons-collections-2.1.1.jar&quot;/&gt;
+ 	&lt;classpathentry exported=&quot;true&quot; kind=&quot;lib&quot; path=&quot;hibernate/commons-lang-1.0.1.jar&quot;/&gt;
+ 	&lt;classpathentry exported=&quot;true&quot; kind=&quot;lib&quot; path=&quot;hibernate/commons-logging-1.0.4.jar&quot;/&gt;
+ 	&lt;classpathentry exported=&quot;true&quot; kind=&quot;lib&quot; path=&quot;hibernate/dom4j-1.4.jar&quot;/&gt;
+@@ -15,5 +13,7 @@
+ 	&lt;classpathentry exported=&quot;true&quot; kind=&quot;lib&quot; path=&quot;hibernate/odmg-3.0.jar&quot;/&gt;
+ 	&lt;classpathentry exported=&quot;true&quot; kind=&quot;lib&quot; path=&quot;hibernate/xerces-2.4.0.jar&quot;/&gt;
+ 	&lt;classpathentry exported=&quot;true&quot; kind=&quot;lib&quot; path=&quot;hibernate/xml-apis.jar&quot;/&gt;
++	&lt;classpathentry exported=&quot;true&quot; sourcepath=&quot;jakarta/commons-collections/src.zip&quot; kind=&quot;lib&quot; path=&quot;jakarta/commons-collections/commons-collections.jar&quot;/&gt;
++	&lt;classpathentry exported=&quot;true&quot; sourcepath=&quot;jakarta/commons-io/src.zip&quot; kind=&quot;lib&quot; path=&quot;jakarta/commons-io/commons-io.jar&quot;/&gt;
+ 	&lt;classpathentry kind=&quot;output&quot; path=&quot;bin&quot;/&gt;
+ &lt;/classpath&gt;
+
+Modified: trunk/org.prorefactor.lib/build.properties
+===================================================================
+--- trunk/org.prorefactor.lib/build.properties	2005-05-05 18:49:58 UTC (rev 25)
++++ trunk/org.prorefactor.lib/build.properties	2005-05-06 20:42:56 UTC (rev 26)
+@@ -8,7 +8,8 @@
+                hsqldb/,\
+                jakarta/,\
+                readme.txt,\
+-               bin/
++               bin/,\
++               prorefactor.lib.jar
+ src.includes = .classpath,\
+                .project,\
+                build.properties,\
+@@ -33,4 +34,6 @@
+                readme.txt,\
+                jakarta/,\
+                bin/
+-jars.compile.order = 
++jars.compile.order = prorefactor.lib.jar
++source.prorefactor.lib.jar = jakarta/commons-io-1.0/src/
++output.prorefactor.lib.jar = bin/
+
+Deleted: trunk/org.prorefactor.lib/hibernate/commons-collections-2.1.1.jar
+===================================================================
+(Binary files differ)
+
+Added: trunk/org.prorefactor.lib/jakarta/commons-collections/LICENSE.txt
+===================================================================
+--- trunk/org.prorefactor.lib/jakarta/commons-collections/LICENSE.txt	2005-05-05 18:49:58 UTC (rev 25)
++++ trunk/org.prorefactor.lib/jakarta/commons-collections/LICENSE.txt	2005-05-06 20:42:56 UTC (rev 26)
+@@ -0,0 +1,202 @@
++
++                                 Apache License
++                           Version 2.0, January 2004
++                        <A HREF="http://www.apache.org/licenses/">http://www.apache.org/licenses/</A>
++
++   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
++
++   1. Definitions.
++
++      &quot;License&quot; shall mean the terms and conditions for use, reproduction,
++      and distribution as defined by Sections 1 through 9 of this document.
++
++      &quot;Licensor&quot; shall mean the copyright owner or entity authorized by
++      the copyright owner that is granting the License.
++
++      &quot;Legal Entity&quot; shall mean the union of the acting entity and all
++      other entities that control, are controlled by, or are under common
++      control with that entity. For the purposes of this definition,
++      &quot;control&quot; means (i) the power, direct or indirect, to cause the
++      direction or management of such entity, whether by contract or
++      otherwise, or (ii) ownership of fifty percent (50%) or more of the
++      outstanding shares, or (iii) beneficial ownership of such entity.
++
++      &quot;You&quot; (or &quot;Your&quot;) shall mean an individual or Legal Entity
++      exercising permissions granted by this License.
++
++      &quot;Source&quot; form shall mean the preferred form for making modifications,
++      including but not limited to software source code, documentation
++      source, and configuration files.
++
++      &quot;Object&quot; form shall mean any form resulting from mechanical
++      transformation or translation of a Source form, including but
++      not limited to compiled object code, generated documentation,
++      and conversions to other media types.
++
++      &quot;Work&quot; shall mean the work of authorship, whether in Source or
++      Object form, made available under the License, as indicated by a
++      copyright notice that is included in or attached to the work
++      (an example is provided in the Appendix below).
++
++      &quot;Derivative Works&quot; shall mean any work, whether in Source or Object
++      form, that is based on (or derived from) the Work and for which the
++      editorial revisions, annotations, elaborations, or other modifications
++      represent, as a whole, an original work of authorship. For the purposes
++      of this License, Derivative Works shall not include works that remain
++      separable from, or merely link (or bind by name) to the interfaces of,
++      the Work and Derivative Works thereof.
++
++      &quot;Contribution&quot; shall mean any work of authorship, including
++      the original version of the Work and any modifications or additions
++      to that Work or Derivative Works thereof, that is intentionally
++      submitted to Licensor for inclusion in the Work by the copyright owner
++      or by an individual or Legal Entity authorized to submit on behalf of
++      the copyright owner. For the purposes of this definition, &quot;submitted&quot;
++      means any form of electronic, verbal, or written communication sent
++      to the Licensor or its representatives, including but not limited to
++      communication on electronic mailing lists, source code control systems,
++      and issue tracking systems that are managed by, or on behalf of, the
++      Licensor for the purpose of discussing and improving the Work, but
++      excluding communication that is conspicuously marked or otherwise
++      designated in writing by the copyright owner as &quot;Not a Contribution.&quot;
++
++      &quot;Contributor&quot; shall mean Licensor and any individual or Legal Entity
++      on behalf of whom a Contribution has been received by Licensor and
++      subsequently incorporated within the Work.
++
++   2. Grant of Copyright License. Subject to the terms and conditions of
++      this License, each Contributor hereby grants to You a perpetual,
++      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
++      copyright license to reproduce, prepare Derivative Works of,
++      publicly display, publicly perform, sublicense, and distribute the
++      Work and such Derivative Works in Source or Object form.
++
++   3. Grant of Patent License. Subject to the terms and conditions of
++      this License, each Contributor hereby grants to You a perpetual,
++      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
++      (except as stated in this section) patent license to make, have made,
++      use, offer to sell, sell, import, and otherwise transfer the Work,
++      where such license applies only to those patent claims licensable
++      by such Contributor that are necessarily infringed by their
++      Contribution(s) alone or by combination of their Contribution(s)
++      with the Work to which such Contribution(s) was submitted. If You
++      institute patent litigation against any entity (including a
++      cross-claim or counterclaim in a lawsuit) alleging that the Work
++      or a Contribution incorporated within the Work constitutes direct
++      or contributory patent infringement, then any patent licenses
++      granted to You under this License for that Work shall terminate
++      as of the date such litigation is filed.
++
++   4. Redistribution. You may reproduce and distribute copies of the
++      Work or Derivative Works thereof in any medium, with or without
++      modifications, and in Source or Object form, provided that You
++      meet the following conditions:
++
++      (a) You must give any other recipients of the Work or
++          Derivative Works a copy of this License; and
++
++      (b) You must cause any modified files to carry prominent notices
++          stating that You changed the files; and
++
++      (c) You must retain, in the Source form of any Derivative Works
++          that You distribute, all copyright, patent, trademark, and
++          attribution notices from the Source form of the Work,
++          excluding those notices that do not pertain to any part of
++          the Derivative Works; and
++
++      (d) If the Work includes a &quot;NOTICE&quot; text file as part of its
++          distribution, then any Derivative Works that You distribute must
++          include a readable copy of the attribution notices contained
++          within such NOTICE file, excluding those notices that do not
++          pertain to any part of the Derivative Works, in at least one
++          of the following places: within a NOTICE text file distributed
++          as part of the Derivative Works; within the Source form or
++          documentation, if provided along with the Derivative Works; or,
++          within a display generated by the Derivative Works, if and
++          wherever such third-party notices normally appear. The contents
++          of the NOTICE file are for informational purposes only and
++          do not modify the License. You may add Your own attribution
++          notices within Derivative Works that You distribute, alongside
++          or as an addendum to the NOTICE text from the Work, provided
++          that such additional attribution notices cannot be construed
++          as modifying the License.
++
++      You may add Your own copyright statement to Your modifications and
++      may provide additional or different license terms and conditions
++      for use, reproduction, or distribution of Your modifications, or
++      for any such Derivative Works as a whole, provided Your use,
++      reproduction, and distribution of the Work otherwise complies with
++      the conditions stated in this License.
++
++   5. Submission of Contributions. Unless You explicitly state otherwise,
++      any Contribution intentionally submitted for inclusion in the Work
++      by You to the Licensor shall be under the terms and conditions of
++      this License, without any additional terms or conditions.
++      Notwithstanding the above, nothing herein shall supersede or modify
++      the terms of any separate license agreement you may have executed
++      with Licensor regarding such Contributions.
++
++   6. Trademarks. This License does not grant permission to use the trade
++      names, trademarks, service marks, or product names of the Licensor,
++      except as required for reasonable and customary use in describing the
++      origin of the Work and reproducing the content of the NOTICE file.
++
++   7. Disclaimer of Warranty. Unless required by applicable law or
++      agreed to in writing, Licensor provides the Work (and each
++      Contributor provides its Contributions) on an &quot;AS IS&quot; BASIS,
++      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
++      implied, including, without limitation, any warranties or conditions
++      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
++      PARTICULAR PURPOSE. You are solely responsible for determining the
++      appropriateness of using or redistributing the Work and assume any
++      risks associated with Your exercise of permissions under this License.
++
++   8. Limitation of Liability. In no event and under no legal theory,
++      whether in tort (including negligence), contract, or otherwise,
++      unless required by applicable law (such as deliberate and grossly
++      negligent acts) or agreed to in writing, shall any Contributor be
++      liable to You for damages, including any direct, indirect, special,
++      incidental, or consequential damages of any character arising as a
++      result of this License or out of the use or inability to use the
++      Work (including but not limited to damages for loss of goodwill,
++      work stoppage, computer failure or malfunction, or any and all
++      other commercial damages or losses), even if such Contributor
++      has been advised of the possibility of such damages.
++
++   9. Accepting Warranty or Additional Liability. While redistributing
++      the Work or Derivative Works thereof, You may choose to offer,
++      and charge a fee for, acceptance of support, warranty, indemnity,
++      or other liability obligations and/or rights consistent with this
++      License. However, in accepting such obligations, You may act only
++      on Your own behalf and on Your sole responsibility, not on behalf
++      of any other Contributor, and only if You agree to indemnify,
++      defend, and hold each Contributor harmless for any liability
++      incurred by, or claims asserted against, such Contributor by reason
++      of your accepting any such warranty or additional liability.
++
++   END OF TERMS AND CONDITIONS
++
++   APPENDIX: How to apply the Apache License to your work.
++
++      To apply the Apache License to your work, attach the following
++      boilerplate notice, with the fields enclosed by brackets &quot;[]&quot;
++      replaced with your own identifying information. (Don't include
++      the brackets!)  The text should be enclosed in the appropriate
++      comment syntax for the file format. We also recommend that a
++      file or class name and description of purpose be included on the
++      same &quot;printed page&quot; as the copyright notice for easier
++      identification within third-party archives.
++
++   Copyright [yyyy] [name of copyright owner]
++
++   Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
++   you may not use this file except in compliance with the License.
++   You may obtain a copy of the License at
++
++       <A HREF="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</A>
++
++   Unless required by applicable law or agreed to in writing, software
++   distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
++   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++   See the License for the specific language governing permissions and
++   limitations under the License.
+
+Added: trunk/org.prorefactor.lib/jakarta/commons-collections/RELEASE-NOTES.html
+===================================================================
+--- trunk/org.prorefactor.lib/jakarta/commons-collections/RELEASE-NOTES.html	2005-05-05 18:49:58 UTC (rev 25)
++++ trunk/org.prorefactor.lib/jakarta/commons-collections/RELEASE-NOTES.html	2005-05-06 20:42:56 UTC (rev 26)
+@@ -0,0 +1,126 @@
++ &lt;!--
++   Copyright 2003-2004 The Apache Software Foundation
++
++   Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
++   you may not use this file except in compliance with the License.
++   You may obtain a copy of the License at
++
++       <A HREF="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</A>
++
++   Unless required by applicable law or agreed to in writing, software
++   distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
++   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++   See the License for the specific language governing permissions and
++   limitations under the License.
++  --&gt;
++&lt;title&gt;RELEASE NOTES: COLLECTIONS 3.1&lt;/title&gt;
++
++&lt;center&gt;&lt;h2&gt;RELEASE NOTES: COLLECTIONS 3.1&lt;/h2&gt;&lt;/center&gt;
++
++&lt;p&gt;
++This release adds various new classes and fixes a number of bugs.
++All feedback should be directed to commons-user at jakarta.apache.org.
++
++&lt;hr /&gt;
++
++&lt;center&gt;&lt;h3&gt;COMPATABILITY&lt;/h3&gt;&lt;/center&gt;
++&lt;p&gt;
++This release is fully source and binary compatible with v3.0.
++(Checks performed using JDiff and Clirr, thanks).
++&lt;/p&gt;
++&lt;p&gt;
++The only new deprecations are in AbstractDualBidiMap.
++These only impact non commons-collections subclasses, and existing code will still work.
++&lt;/p&gt;
++&lt;p&gt;
++This release also enables a workaround of the binary compatability issue with IteratorUtils in v3.0.
++Collections v2.1.1 (with deprecations solved) and v3.1 are compatible with regards to iterators.
++&lt;/p&gt;
++
++&lt;center&gt;&lt;h3&gt;NEW CLASSES&lt;/h3&gt;&lt;/center&gt;
++&lt;ul&gt;
++&lt;li&gt;TreeList - A list implementation that is faster than ArrayList for insertions and removals&lt;/li&gt;
++&lt;li&gt;MultiKeyMap - A map that allows multiple keys to be used to map the value&lt;/li&gt;
++&lt;li&gt;SingletonMap - fully featured singleton Map implementation&lt;/li&gt;
++&lt;li&gt;ObjectGraphIterator - An iterator that can iterate over a graph of objects&lt;/li&gt;
++&lt;li&gt;MapBackedSet - Set created by decorating a map&lt;/li&gt;
++&lt;li&gt;ReferenceIdentityMap - Similar to ReferenceMap, but matching keys and values by identity [26503]&lt;/li&gt;
++&lt;li&gt;AbstractReferenceMap - New base class for reference maps [26503]&lt;/li&gt;
++&lt;li&gt;Empty*Iterator - Iterators over empty collections&lt;/li&gt;
++&lt;li&gt;TransformedPredicate - A predicate where the input object is transformed [26946]&lt;/li&gt;
++&lt;li&gt;PredicateDecorator - An interface to provide a uniform interface to the decorated predicates&lt;/li&gt;
++&lt;li&gt;AbstractSerializable*Decorator - Abstract classes for decorators that are Serializable&lt;/li&gt;
++&lt;/ul&gt;
++
++&lt;center&gt;&lt;h3&gt;ENHANCEMENTS&lt;/h3&gt;&lt;/center&gt;
++&lt;ul&gt;
++&lt;li&gt;ReferenceMap - Changed to extend AbstractReferenceMap, thus gaining a mapIterator() and subclassability [26503]&lt;/li&gt;
++&lt;li&gt;Fast3Map - Add clone() method&lt;/li&gt;
++&lt;li&gt;MultiKey - Add getKey(index) and size() methods and make constructor public&lt;/li&gt;
++&lt;li&gt;MultiHashMap - Add five methods to improve the API&lt;/li&gt;
++&lt;li&gt;AbstractHashedMap,AbstractLinkedMap - Add methods to access entry methods when protected scope blocks&lt;/li&gt;
++&lt;li&gt;Functors - Add get methods to retrieve internal state [27515]&lt;/li&gt;
++&lt;li&gt;Functors - Add additional getInstance() methods for consistency [27856,27857]&lt;/li&gt;
++&lt;li&gt;CollectionUtils - get(Object,int) method now supports primitive arrays&lt;/li&gt;
++&lt;li&gt;CollectionUtils - cardinality() now works faster for Set and Bag instances [28629]&lt;/li&gt;
++&lt;li&gt;CollectionUtils - Add size(Object) method to find the size of various collection-like objects [27909]&lt;/li&gt;
++&lt;li&gt;SingletonIterator - make remove() functionality optional&lt;/li&gt;
++&lt;li&gt;AbstractLinkedList/NodeCachingLinkedList - added getValue() and setValue() to Node, and made everything use them&lt;/li&gt;
++&lt;li&gt;LRUMap - The addMapping() method now uses isFull() to determine whether it is full&lt;/li&gt;
++&lt;li&gt;LRUMap - Add boolean flag, scanUntilRemovable, giving the removeLRU() method more power [28887]&lt;/li&gt;
++&lt;li&gt;InvokerTransformer - Add additional getInstance() method&lt;/li&gt;
++&lt;li&gt;Reduced inter-class and inter-package dependencies, especially via *Utils classes&lt;/li&gt;
++&lt;li&gt;ListOrderedSet - Add new factory method decorate(Set,List)&lt;/li&gt;
++&lt;li&gt;ListOrderedSet - Add public constructor that uses a HashSet and ArrayList&lt;/li&gt;
++&lt;li&gt;ListOrderedMap - Add public constructor that uses a HashMap and ArrayList&lt;/li&gt;
++&lt;/ul&gt;
++
++&lt;h4&gt;Made Serializable&lt;/h4&gt;
++&lt;ul&gt;
++&lt;li&gt;Fast3Map [27946]&lt;/li&gt;
++&lt;li&gt;ReferenceMap&lt;/li&gt;
++&lt;li&gt;UnboundedFifoBuffer&lt;/li&gt;
++&lt;li&gt;BoundedFifoBuffer&lt;/li&gt;
++&lt;li&gt;CircularFifoBuffer&lt;/li&gt;
++&lt;li&gt;TiedMapEntry&lt;/li&gt;
++&lt;li&gt;FixedSize* [18815]&lt;/li&gt;
++&lt;li&gt;Predicated* [18815]&lt;/li&gt;
++&lt;li&gt;Synchronized* [18815]&lt;/li&gt;
++&lt;li&gt;Transformed* [18815]&lt;/li&gt;
++&lt;li&gt;Typed* [18815]&lt;/li&gt;
++&lt;li&gt;Unmodifiable* [18815]&lt;/li&gt;
++&lt;li&gt;Lazy* [18815]&lt;/li&gt;
++&lt;li&gt;ListOrdered* [18815]&lt;/li&gt;
++&lt;li&gt;SetUniqueList [18815]&lt;/li&gt;
++&lt;/ul&gt;
++
++&lt;center&gt;&lt;h3&gt;BUG FIXES&lt;/h3&gt;&lt;/center&gt;
++&lt;ul&gt;
++&lt;li&gt;Map/BidiMap implementations only checked key and not value in entry set contains(Object) and remove(Object)&lt;/li&gt;
++&lt;li&gt;AbstractHashedMap subclasses failed to clone() correctly [27159]&lt;/li&gt;
++&lt;li&gt;ExtendedProperties - Close input stream in constructor [27737]&lt;/li&gt;
++&lt;li&gt;ExtendedProperties - Handle comma separated data in multiple keys&lt;/li&gt;
++&lt;li&gt;Flat3Map - Handle infinite loops in toString&lt;/li&gt;
++&lt;li&gt;LRUMap - The removeLRU() method was passed the wrong LinkEntry [28433]&lt;/li&gt;
++&lt;li&gt;EnumIterator/MapUtils - Changed enum references to enable JDK 1.5 compliance&lt;/li&gt;
++&lt;li&gt;UnmodifiableSortedBag - Fix to ensure unmodifiable&lt;/li&gt;
++&lt;li&gt;MultiHashMap - Fix copy constructor and clone to work properly [28972]&lt;/li&gt;
++&lt;li&gt;ListOrderedSet - Fix to throw IllegalArgumentException instead of NPE on null factory decorate(List)&lt;/li&gt;
++&lt;li&gt;*Dual*BidiMap - Fix poorly designed subclass method call from superclass constructor [29519]&lt;/li&gt;
++&lt;/ul&gt;
++
++&lt;center&gt;&lt;h3&gt;JAVADOC&lt;/h3&gt;&lt;/center&gt;
++&lt;ul&gt;
++&lt;li&gt;Bag - Indicate that no changes are likely to the interface despite its problems&lt;/li&gt;
++&lt;li&gt;TreeBidiMap - Add javadoc about requiring Comparable entries [26470]&lt;/li&gt;
++&lt;li&gt;MultiKey - Add extra explanatations, examples and warnings&lt;/li&gt;
++&lt;li&gt;MultiMap,MultiHashMap - Add extra documentation to clarify the interface and implementation&lt;/li&gt;
++&lt;li&gt;XxxUtils - Clarify the internal workings of the predicated decorator classes [28115]&lt;/li&gt;
++&lt;li&gt;BidiMap - Clarify 1 to 1 nature of the map&lt;/li&gt;
++&lt;li&gt;AbstractHashedMap - Fix isEqualValue() javadoc to refer to value not key&lt;/li&gt;
++&lt;li&gt;LRUMap - Added extra javadoc about method implementations&lt;/li&gt;
++&lt;li&gt;BoundedCollection/UnmodifiableBoundedCollection - reword to avoid misunderstandings&lt;/li&gt;
++&lt;li&gt;Closure/Predicate/Transformer/Factory - Additional javadoc with links&lt;/li&gt;
++&lt;li&gt;ClosureUtils/PredicateUtils/TransformerUtils/FactoryUtils - Additional links to implementations&lt;/li&gt;
++&lt;li&gt;Predicated* - Additional usage explanation [29018]&lt;/li&gt;
++&lt;/ul&gt;
+
+Added: trunk/org.prorefactor.lib/jakarta/commons-collections/commons-collections.jar
+===================================================================
+(Binary files differ)
+
+
+Property changes on: trunk/org.prorefactor.lib/jakarta/commons-collections/commons-collections.jar
+___________________________________________________________________
+Name: svn:mime-type
+   + application/octet-stream
+
+Added: trunk/org.prorefactor.lib/jakarta/commons-collections/src.zip
+===================================================================
+(Binary files differ)
+
+
+Property changes on: trunk/org.prorefactor.lib/jakarta/commons-collections/src.zip
+___________________________________________________________________
+Name: svn:mime-type
+   + application/octet-stream
+
+Modified: trunk/org.prorefactor.lib/plugin.xml
+===================================================================
+--- trunk/org.prorefactor.lib/plugin.xml	2005-05-05 18:49:58 UTC (rev 25)
++++ trunk/org.prorefactor.lib/plugin.xml	2005-05-06 20:42:56 UTC (rev 26)
+@@ -13,9 +13,6 @@
+       &lt;library name=&quot;hsqldb/hsqldb.jar&quot;&gt;
+          &lt;export name=&quot;*&quot;/&gt;
+       &lt;/library&gt;
+-      &lt;library name=&quot;hibernate/commons-collections-2.1.1.jar&quot;&gt;
+-         &lt;export name=&quot;*&quot;/&gt;
+-      &lt;/library&gt;
+       &lt;library name=&quot;hibernate/commons-lang-1.0.1.jar&quot;&gt;
+          &lt;export name=&quot;*&quot;/&gt;
+       &lt;/library&gt;
+@@ -43,9 +40,15 @@
+       &lt;library name=&quot;hibernate/xml-apis.jar&quot;&gt;
+          &lt;export name=&quot;*&quot;/&gt;
+       &lt;/library&gt;
+-      &lt;library name=&quot;jakarta/commons-io-1.0/commons-io-1.0.jar&quot;&gt;
++      &lt;library name=&quot;prorefactor.lib.jar&quot;&gt;
+          &lt;export name=&quot;*&quot;/&gt;
+       &lt;/library&gt;
++      &lt;library name=&quot;jakarta/commons-collections/commons-collections.jar&quot;&gt;
++         &lt;export name=&quot;*&quot;/&gt;
++      &lt;/library&gt;
++      &lt;library name=&quot;jakarta/commons-io/commons-io.jar&quot;&gt;
++         &lt;export name=&quot;*&quot;/&gt;
++      &lt;/library&gt;
+    &lt;/runtime&gt;
+ 
+ &lt;/plugin&gt;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000020.html">[Prorefactor-svn] r25 - in trunk: org.prorefactor.antlr org.prorefactor.core
+</A></li>
+	<LI>Next message: <A HREF="000022.html">[Prorefactor-svn] r27 - in trunk/org.prorefactor.lib/jakarta: . commons-io
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21">[ date ]</a>
+              <a href="thread.html#21">[ thread ]</a>
+              <a href="subject.html#21">[ subject ]</a>
+              <a href="author.html#21">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">More information about the Prorefactor-svn
+mailing list</a><br>
+</body></html>

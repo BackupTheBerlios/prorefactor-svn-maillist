@@ -1,0 +1,248 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Prorefactor-svn] r74 - in trunk: org.prolint.core/META-INF org.prolint.core/src/org/prolint/rules org.prorefactor.core/data org.prorefactor.core/data/bugsfixed org.prorefactor.core/src/org/prorefactor/core/unittest org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.feature
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/prorefactor-svn/2006-July/index.html" >
+   <LINK REL="made" HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r74%20-%20in%20trunk%3A%20org.prolint.core/META-INF%20org.prolint.core/src/org/prolint/rules%20org.prorefactor.core/data%20org.prorefactor.core/data/bugsfixed%20org.prorefactor.core/src/org/prorefactor/core/unittest%20org.prorefactor.core/src/org/prorefactor/treeparser01%20org.prorefactor.feature&In-Reply-To=%3C200607041953.k64JrDvS001779%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000062.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Prorefactor-svn] r74 - in trunk: org.prolint.core/META-INF org.prolint.core/src/org/prolint/rules org.prorefactor.core/data org.prorefactor.core/data/bugsfixed org.prorefactor.core/src/org/prorefactor/core/unittest org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.feature</H1>
+    <B>johnallengreen at BerliOS</B> 
+    <A HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r74%20-%20in%20trunk%3A%20org.prolint.core/META-INF%20org.prolint.core/src/org/prolint/rules%20org.prorefactor.core/data%20org.prorefactor.core/data/bugsfixed%20org.prorefactor.core/src/org/prorefactor/core/unittest%20org.prorefactor.core/src/org/prorefactor/treeparser01%20org.prorefactor.feature&In-Reply-To=%3C200607041953.k64JrDvS001779%40sheep.berlios.de%3E"
+       TITLE="[Prorefactor-svn] r74 - in trunk: org.prolint.core/META-INF org.prolint.core/src/org/prolint/rules org.prorefactor.core/data org.prorefactor.core/data/bugsfixed org.prorefactor.core/src/org/prorefactor/core/unittest org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.feature">johnallengreen at berlios.de
+       </A><BR>
+    <I>Tue Jul  4 21:53:13 CEST 2006</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000062.html">[Prorefactor-svn] r75 - in trunk: org.prorefactor.core/src/org/prorefactor/refactor org.prorefactor.core/src/org/prorefactor/treeparser org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.eclipse/src/org/prorefactor/eclipse
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#61">[ date ]</a>
+              <a href="thread.html#61">[ thread ]</a>
+              <a href="subject.html#61">[ subject ]</a>
+              <a href="author.html#61">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: johnallengreen
+Date: 2006-07-04 21:53:05 +0200 (Tue, 04 Jul 2006)
+New Revision: 74
+
+Added:
+   trunk/org.prorefactor.core/data/bugsfixed/
+   trunk/org.prorefactor.core/data/bugsfixed/bug01.p
+   trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/BugFixTests.java
+Modified:
+   trunk/org.prolint.core/META-INF/MANIFEST.MF
+   trunk/org.prolint.core/src/org/prolint/rules/NoEffect.java
+   trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/AllPRCoreTests.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Action.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/treeparser01.g
+   trunk/org.prorefactor.feature/feature.xml
+Log:
+Fixed a bug which caused a problem with input fields for INPUT BROWSE.
+Added LOCAL_METHOD_REF to ignore list for Prolint NoEffect.
+
+
+
+Modified: trunk/org.prolint.core/META-INF/MANIFEST.MF
+===================================================================
+--- trunk/org.prolint.core/META-INF/MANIFEST.MF	2006-05-31 05:03:55 UTC (rev 73)
++++ trunk/org.prolint.core/META-INF/MANIFEST.MF	2006-07-04 19:53:05 UTC (rev 74)
+@@ -2,7 +2,7 @@
+ Bundle-ManifestVersion: 2
+ Bundle-Name: Prolint/Eclipse Core
+ Bundle-SymbolicName: org.prolint; singleton:=true
+-Bundle-Version: 0.1.3
++Bundle-Version: 0.1.4
+ Bundle-ClassPath: core.jar,hibernate2.jar
+ Bundle-Activator: org.prolint.eclipse.Plugin
+ Bundle-Vendor: Prolint.org
+
+Modified: trunk/org.prolint.core/src/org/prolint/rules/NoEffect.java
+===================================================================
+--- trunk/org.prolint.core/src/org/prolint/rules/NoEffect.java	2006-05-31 05:03:55 UTC (rev 73)
++++ trunk/org.prolint.core/src/org/prolint/rules/NoEffect.java	2006-07-04 19:53:05 UTC (rev 74)
+@@ -39,10 +39,13 @@
+ 			new Integer(TokenTypes.Expr_statement)
+ 		};
+ 
++	@Override
+ 	public String getName() { return RULENAME; }
+ 
++	@Override
+ 	public Integer[] getWatchedNodeTypes() { return watchedTypes; }
+ 
++	@Override
+ 	public List run(JPNode node) {
+ 		int nodeType = node.getType();
+ 		assert nodeType==TokenTypes.Expr_statement;
+@@ -72,6 +75,7 @@
+ 		int nodeHandle = node.getHandle();
+ 		/* User-defined functions and the following built-in functions might have an effect. */
+ 		if (parser.queryCreate(nodeHandle, qname, &quot;USER_FUNC&quot;) &gt; 0) return true;
++		if (parser.queryCreate(nodeHandle, qname, &quot;LOCAL_METHOD_REF&quot;) &gt; 0) return true;
+ 		if (parser.queryCreate(nodeHandle, qname, &quot;DYNAMICFUNCTION&quot;) &gt; 0) return true;
+ 		if (parser.queryCreate(nodeHandle, qname, &quot;ETIME&quot;) &gt; 0) return true;
+ 		if (parser.queryCreate(nodeHandle, qname, &quot;SETUSERID&quot;) &gt; 0) return true;
+
+Added: trunk/org.prorefactor.core/data/bugsfixed/bug01.p
+===================================================================
+--- trunk/org.prorefactor.core/data/bugsfixed/bug01.p	2006-05-31 05:03:55 UTC (rev 73)
++++ trunk/org.prorefactor.core/data/bugsfixed/bug01.p	2006-07-04 19:53:05 UTC (rev 74)
+@@ -0,0 +1,14 @@
++
++def temp-table tra-vnote field note-code as character.
++
++DEFINE QUERY brs-3 FOR 
++      tra-vnote SCROLLING.
++
++DEFINE BROWSE brs-3
++  QUERY brs-3 NO-LOCK DISPLAY
++      tra-vnote.note-code
++    ENABLE
++      tra-vnote.note-code
++    WITH SEPARATORS SIZE 143.4 BY 7.38 ROW-HEIGHT-CHARS .62.
++
++ASSIGN INPUT BROWSE brs-3 tra-vnote.note-code.
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/AllPRCoreTests.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/AllPRCoreTests.java	2006-05-31 05:03:55 UTC (rev 73)
++++ trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/AllPRCoreTests.java	2006-07-04 19:53:05 UTC (rev 74)
+@@ -36,6 +36,7 @@
+ 		suite.addTest(new TestSuite(TP01SymbolActionTest.class));
+ 		suite.addTest(new TestSuite(TP01ProcessActionTest.class));
+ 		suite.addTest(new TestSuite(TP01FramesTest.class));
++		suite.addTest(new TestSuite(BugFixTests.class));
+ 		//$JUnit-END$
+ 		return suite;
+ 	}
+
+Added: trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/BugFixTests.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/BugFixTests.java	2006-05-31 05:03:55 UTC (rev 73)
++++ trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/BugFixTests.java	2006-07-04 19:53:05 UTC (rev 74)
+@@ -0,0 +1,32 @@
++/**
++ * Authors: John Green
++ * July 4, 2006.
++ * 
++ * Copyright (c) 2006 Joanju (www.joanju.com).
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
++ */
++
++package org.prorefactor.core.unittest;
++
++import java.io.File;
++
++import junit.framework.TestCase;
++
++import org.prorefactor.treeparser.ParseUnit;
++
++
++/** Test bug fixes. */
++public class BugFixTests extends TestCase {
++
++
++	public void test01() throws Exception {
++		File file = new File(&quot;data/bugsfixed/bug01.p&quot;);
++		ParseUnit pu = new ParseUnit(file);
++		pu.treeParser01();
++		// No further tests needed. Passes if parses clean.
++	}
++
++}
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Action.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Action.java	2006-05-31 05:03:55 UTC (rev 73)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Action.java	2006-07-04 19:53:05 UTC (rev 74)
+@@ -22,7 +22,7 @@
+ 
+ 
+ /** Superclass of empty actions methods for TreeParser01.
+- * Sublcasses can override and implement any of these methods,
++ * Subclasses can override and implement any of these methods,
+  * which are all called directly by TreeParser01.
+  * TP01Support is the default implementation.
+  */
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01.java	2006-05-31 05:03:55 UTC (rev 73)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01.java	2006-07-04 19:53:05 UTC (rev 74)
+@@ -7872,7 +7872,7 @@
+ 		_t = __t162;
+ 		_t = _t.getNextSibling();
+ 		if ( inputState.guessing==0 ) {
+-			action.frameRef(i);
++			action.browseRef(i);
+ 		}
+ 		_retTree = _t;
+ 	}
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/treeparser01.g
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/treeparser01.g	2006-05-31 05:03:55 UTC (rev 73)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/treeparser01.g	2006-07-04 19:53:05 UTC (rev 74)
+@@ -334,7 +334,7 @@
+ 	;
+ 
+ browse_ref
+-	:	#(BROWSE i:ID) { action.frameRef(#i); }
++	:	#(BROWSE i:ID) { action.browseRef(#i); }
+ 	;
+ 
+ buffercomparestate
+
+Modified: trunk/org.prorefactor.feature/feature.xml
+===================================================================
+--- trunk/org.prorefactor.feature/feature.xml	2006-05-31 05:03:55 UTC (rev 73)
++++ trunk/org.prorefactor.feature/feature.xml	2006-07-04 19:53:05 UTC (rev 74)
+@@ -99,6 +99,6 @@
+          id=&quot;org.prolint&quot;
+          download-size=&quot;0&quot;
+          install-size=&quot;0&quot;
+-         version=&quot;0.1.3&quot;/&gt;
++         version=&quot;0.1.4&quot;/&gt;
+ 
+ &lt;/feature&gt;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000062.html">[Prorefactor-svn] r75 - in trunk: org.prorefactor.core/src/org/prorefactor/refactor org.prorefactor.core/src/org/prorefactor/treeparser org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.eclipse/src/org/prorefactor/eclipse
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#61">[ date ]</a>
+              <a href="thread.html#61">[ thread ]</a>
+              <a href="subject.html#61">[ subject ]</a>
+              <a href="author.html#61">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">More information about the Prorefactor-svn
+mailing list</a><br>
+</body></html>

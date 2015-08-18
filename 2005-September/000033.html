@@ -1,0 +1,423 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Prorefactor-svn] r38 - in trunk: org.prorefactor.core/src/org/prorefactor/treeparser org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.core/src/org/prorefactor/treeparserbase org.prorefactor.refactor/src/org/prorefactor/treeparser03
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/prorefactor-svn/2005-September/index.html" >
+   <LINK REL="made" HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r38%20-%20in%20trunk%3A%20org.prorefactor.core/src/org/prorefactor/treeparser%20org.prorefactor.core/src/org/prorefactor/treeparser01%20org.prorefactor.core/src/org/prorefactor/treeparserbase%20org.prorefactor.refactor/src/org/prorefactor/treeparser03&In-Reply-To=%3C200509012146.j81LkcWk005688%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Prorefactor-svn] r38 - in trunk: org.prorefactor.core/src/org/prorefactor/treeparser org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.core/src/org/prorefactor/treeparserbase org.prorefactor.refactor/src/org/prorefactor/treeparser03</H1>
+    <B>John Green at BerliOS</B> 
+    <A HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r38%20-%20in%20trunk%3A%20org.prorefactor.core/src/org/prorefactor/treeparser%20org.prorefactor.core/src/org/prorefactor/treeparser01%20org.prorefactor.core/src/org/prorefactor/treeparserbase%20org.prorefactor.refactor/src/org/prorefactor/treeparser03&In-Reply-To=%3C200509012146.j81LkcWk005688%40sheep.berlios.de%3E"
+       TITLE="[Prorefactor-svn] r38 - in trunk: org.prorefactor.core/src/org/prorefactor/treeparser org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.core/src/org/prorefactor/treeparserbase org.prorefactor.refactor/src/org/prorefactor/treeparser03">johnallengreen at berlios.de
+       </A><BR>
+    <I>Thu Sep  1 23:46:38 CEST 2005</I>
+    <P><UL>
+        
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#33">[ date ]</a>
+              <a href="thread.html#33">[ thread ]</a>
+              <a href="subject.html#33">[ subject ]</a>
+              <a href="author.html#33">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: johnallengreen
+Date: 2005-09-01 23:46:36 +0200 (Thu, 01 Sep 2005)
+New Revision: 38
+
+Modified:
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/SymbolScope.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01TokenTypes.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01TokenTypes.txt
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/treeparser01.g
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/JPTreeParser.g
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/JPTreeParser.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/JPTreeParserTokenTypes.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/JPTreeParserTokenTypes.txt
+   trunk/org.prorefactor.refactor/src/org/prorefactor/treeparser03/TreeParser03.java
+   trunk/org.prorefactor.refactor/src/org/prorefactor/treeparser03/TreeParser03TokenTypes.java
+   trunk/org.prorefactor.refactor/src/org/prorefactor/treeparser03/TreeParser03TokenTypes.txt
+   trunk/org.prorefactor.refactor/src/org/prorefactor/treeparser03/treeparser03.g
+Log:
+Fixed PARAM token in tree parsers - should have been PARAMETER.
+Fixed bug in SymbolScope add(). I don't know what I was thinking, and I don't know how it ever worked.
+
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/SymbolScope.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/SymbolScope.java	2005-07-19 01:48:05 UTC (rev 37)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/SymbolScope.java	2005-09-01 21:46:36 UTC (rev 38)
+@@ -73,6 +73,7 @@
+ 	}
+ 
+ 
++	
+ 	/** Add a FieldLevelWidget for names lookup. */
+ 	public void add(FieldLevelWidget widget) {
+ 		fieldLevelWidgetMap.put(widget.getName().toLowerCase(), widget);
+@@ -90,17 +91,25 @@
+ 
+ 	/** Add a Symbol for names lookup. */
+ 	public void add(Symbol symbol) {
+-		Integer type = new Integer(symbol.getProgressType());
+-		Map map = (Map) typeMap.get(type);
+-		if (map==null) {
+-			map = new HashMap();
+-			typeMap.put(type, map);
++		if (symbol instanceof FieldLevelWidget) {
++			add((FieldLevelWidget)symbol);
++		} else if(symbol instanceof Variable) {
++			add((Variable)symbol);
++		} else if(symbol instanceof Routine) {
++			add((Routine)symbol);
++		} else {
++			Integer type = new Integer(symbol.getProgressType());
++			Map map = (Map) typeMap.get(type);
++			if (map==null) {
++				map = new HashMap();
++				typeMap.put(type, map);
++			}
++			map.put(symbol.getName().toLowerCase(), symbol);
+ 		}
+-		map.put(symbol.getName().toLowerCase(), symbol);
+ 	}
+ 
+ 
+-
++	
+ 	/** Add a new scope to this scope. */
+ 	public SymbolScope addScope() {
+ 		SymbolScope newScope = new SymbolScope(this);
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01.java	2005-07-19 01:48:05 UTC (rev 37)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01.java	2005-09-01 21:46:36 UTC (rev 38)
+@@ -30695,7 +30695,7 @@
+ 		case INPUT:
+ 		case INPUTOUTPUT:
+ 		case OUTPUT:
+-		case PARAM:
++		case PARAMETER:
+ 		{
+ 			parameter(_t);
+ 			_t = _retTree;
+@@ -30753,11 +30753,11 @@
+ 			_t = _t.getNextSibling();
+ 			break;
+ 		}
+-		case PARAM:
++		case PARAMETER:
+ 		{
+ 			AST __t46 = _t;
+ 			AST tmp1700_AST_in = (AST)_t;
+-			match(_t,PARAM);
++			match(_t,PARAMETER);
+ 			_t = _t.getFirstChild();
+ 			expression(_t);
+ 			_t = _retTree;
+@@ -32912,7 +32912,7 @@
+ 			_t = _t.getFirstChild();
+ 			{
+ 			if (_t==null) _t=ASTNULL;
+-			if (((_t.getType() &gt;= LEXDATE &amp;&amp; _t.getType() &lt;= PARAM))) {
++			if (((_t.getType() &gt;= LEXDATE &amp;&amp; _t.getType() &lt;= SYMMETRICENCRYPTIONALGORITHM))) {
+ 				AST tmp1888_AST_in = (AST)_t;
+ 				if ( _t==null ) throw new MismatchedTokenException();
+ 				_t = _t.getNextSibling();
+@@ -46182,7 +46182,7 @@
+ 			gwidget(_t);
+ 			_t = _retTree;
+ 		}
+-		else if (((_t.getType() &gt;= LEXDATE &amp;&amp; _t.getType() &lt;= PARAM))) {
++		else if (((_t.getType() &gt;= LEXDATE &amp;&amp; _t.getType() &lt;= SYMMETRICENCRYPTIONALGORITHM))) {
+ 		}
+ 		else {
+ 			throw new NoViableAltException(_t);
+@@ -54157,7 +54157,7 @@
+ 		for (int i = 11; i&lt;=12; i++) { data[i]=-1L; }
+ 		data[13]=-65L;
+ 		for (int i = 14; i&lt;=168; i++) { data[i]=-1L; }
+-		data[169]=9223372036854775807L;
++		data[169]=4611686018427387903L;
+ 		return data;
+ 	}
+ 	public static final BitSet _tokenSet_20 = new BitSet(mk_tokenSet_20());
+@@ -54410,7 +54410,7 @@
+ 		for (int i = 1; i&lt;=13; i++) { data[i]=-1L; }
+ 		data[14]=-5L;
+ 		for (int i = 15; i&lt;=168; i++) { data[i]=-1L; }
+-		data[169]=9223372036854775807L;
++		data[169]=4611686018427387903L;
+ 		return data;
+ 	}
+ 	public static final BitSet _tokenSet_35 = new BitSet(mk_tokenSet_35());
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01TokenTypes.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01TokenTypes.java	2005-07-19 01:48:05 UTC (rev 37)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01TokenTypes.java	2005-09-01 21:46:36 UTC (rev 38)
+@@ -1101,5 +1101,4 @@
+ 	int FIXCHAR = 1094;
+ 	int Last_Token_Number = 1095;
+ 	int SYMMETRICENCRYPTIONALGORITHM = 10877;
+-	int PARAM = 10878;
+ }
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01TokenTypes.txt
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01TokenTypes.txt	2005-07-19 01:48:05 UTC (rev 37)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01TokenTypes.txt	2005-09-01 21:46:36 UTC (rev 38)
+@@ -1090,4 +1090,3 @@
+ FIXCHAR=1094
+ Last_Token_Number=1095
+ SYMMETRICENCRYPTIONALGORITHM=10877
+-PARAM=10878
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/treeparser01.g
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/treeparser01.g	2005-07-19 01:48:05 UTC (rev 37)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/treeparser01.g	2005-09-01 21:46:36 UTC (rev 38)
+@@ -456,7 +456,7 @@
+ 	;
+ parameter
+ 	:	#(BUFFER tbl[CQ.INIT])
+-	|	#(PARAM expression EQUAL expression )
++	|	#(PARAMETER expression EQUAL expression )
+ 	|	#(OUTPUT parameter_arg )
+ 	|	#(INPUTOUTPUT parameter_arg )
+ 	|	#(INPUT parameter_arg )
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/JPTreeParser.g
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/JPTreeParser.g	2005-07-19 01:48:05 UTC (rev 37)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/JPTreeParser.g	2005-09-01 21:46:36 UTC (rev 38)
+@@ -407,7 +407,7 @@
+ 
+ parameter
+ 	:	#(BUFFER (RECORD_NAME | ID FOR RECORD_NAME ) )
+-	|	#(PARAM expression EQUAL expression )
++	|	#(PARAMETER expression EQUAL expression )
+ 	|	#(OUTPUT parameter_arg )
+ 	|	#(INPUTOUTPUT parameter_arg )
+ 	|	#(INPUT parameter_arg )
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/JPTreeParser.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/JPTreeParser.java	2005-07-19 01:48:05 UTC (rev 37)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/JPTreeParser.java	2005-09-01 21:46:36 UTC (rev 38)
+@@ -30430,11 +30430,11 @@
+ 			_t = _t.getNextSibling();
+ 			break;
+ 		}
+-		case PARAM:
++		case PARAMETER:
+ 		{
+ 			AST __t41 = _t;
+ 			AST tmp1821_AST_in = (AST)_t;
+-			match(_t,PARAM);
++			match(_t,PARAMETER);
+ 			_t = _t.getFirstChild();
+ 			expression(_t);
+ 			_t = _retTree;
+@@ -30869,7 +30869,7 @@
+ 		case INPUT:
+ 		case INPUTOUTPUT:
+ 		case OUTPUT:
+-		case PARAM:
++		case PARAMETER:
+ 		{
+ 			parameter(_t);
+ 			_t = _retTree;
+@@ -32482,7 +32482,7 @@
+ 			_t = _t.getFirstChild();
+ 			{
+ 			if (_t==null) _t=ASTNULL;
+-			if (((_t.getType() &gt;= LEXDATE &amp;&amp; _t.getType() &lt;= PARAM))) {
++			if (((_t.getType() &gt;= LEXDATE &amp;&amp; _t.getType() &lt;= SYMMETRICENCRYPTIONALGORITHM))) {
+ 				AST tmp2016_AST_in = (AST)_t;
+ 				if ( _t==null ) throw new MismatchedTokenException();
+ 				_t = _t.getNextSibling();
+@@ -45652,7 +45652,7 @@
+ 			gwidget(_t);
+ 			_t = _retTree;
+ 		}
+-		else if (((_t.getType() &gt;= LEXDATE &amp;&amp; _t.getType() &lt;= PARAM))) {
++		else if (((_t.getType() &gt;= LEXDATE &amp;&amp; _t.getType() &lt;= SYMMETRICENCRYPTIONALGORITHM))) {
+ 		}
+ 		else {
+ 			throw new NoViableAltException(_t);
+@@ -53629,7 +53629,7 @@
+ 		for (int i = 11; i&lt;=12; i++) { data[i]=-1L; }
+ 		data[13]=-65L;
+ 		for (int i = 14; i&lt;=168; i++) { data[i]=-1L; }
+-		data[169]=9223372036854775807L;
++		data[169]=4611686018427387903L;
+ 		return data;
+ 	}
+ 	public static final BitSet _tokenSet_20 = new BitSet(mk_tokenSet_20());
+@@ -53882,7 +53882,7 @@
+ 		for (int i = 1; i&lt;=13; i++) { data[i]=-1L; }
+ 		data[14]=-5L;
+ 		for (int i = 15; i&lt;=168; i++) { data[i]=-1L; }
+-		data[169]=9223372036854775807L;
++		data[169]=4611686018427387903L;
+ 		return data;
+ 	}
+ 	public static final BitSet _tokenSet_35 = new BitSet(mk_tokenSet_35());
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/JPTreeParserTokenTypes.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/JPTreeParserTokenTypes.java	2005-07-19 01:48:05 UTC (rev 37)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/JPTreeParserTokenTypes.java	2005-09-01 21:46:36 UTC (rev 38)
+@@ -1098,5 +1098,4 @@
+ 	int FIXCHAR = 1094;
+ 	int Last_Token_Number = 1095;
+ 	int SYMMETRICENCRYPTIONALGORITHM = 10877;
+-	int PARAM = 10878;
+ }
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/JPTreeParserTokenTypes.txt
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/JPTreeParserTokenTypes.txt	2005-07-19 01:48:05 UTC (rev 37)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/JPTreeParserTokenTypes.txt	2005-09-01 21:46:36 UTC (rev 38)
+@@ -1090,4 +1090,3 @@
+ FIXCHAR=1094
+ Last_Token_Number=1095
+ SYMMETRICENCRYPTIONALGORITHM=10877
+-PARAM=10878
+
+Modified: trunk/org.prorefactor.refactor/src/org/prorefactor/treeparser03/TreeParser03.java
+===================================================================
+--- trunk/org.prorefactor.refactor/src/org/prorefactor/treeparser03/TreeParser03.java	2005-07-19 01:48:05 UTC (rev 37)
++++ trunk/org.prorefactor.refactor/src/org/prorefactor/treeparser03/TreeParser03.java	2005-09-01 21:46:36 UTC (rev 38)
+@@ -30527,11 +30527,11 @@
+ 			_t = _t.getNextSibling();
+ 			break;
+ 		}
+-		case PARAM:
++		case PARAMETER:
+ 		{
+ 			AST __t41 = _t;
+ 			AST tmp1738_AST_in = (AST)_t;
+-			match(_t,PARAM);
++			match(_t,PARAMETER);
+ 			_t = _t.getFirstChild();
+ 			expression(_t);
+ 			_t = _retTree;
+@@ -30977,7 +30977,7 @@
+ 		case INPUT:
+ 		case INPUTOUTPUT:
+ 		case OUTPUT:
+-		case PARAM:
++		case PARAMETER:
+ 		{
+ 			parameter(_t);
+ 			_t = _retTree;
+@@ -32598,7 +32598,7 @@
+ 			_t = _t.getFirstChild();
+ 			{
+ 			if (_t==null) _t=ASTNULL;
+-			if (((_t.getType() &gt;= LEXDATE &amp;&amp; _t.getType() &lt;= PARAM))) {
++			if (((_t.getType() &gt;= LEXDATE &amp;&amp; _t.getType() &lt;= SYMMETRICENCRYPTIONALGORITHM))) {
+ 				AST tmp1931_AST_in = (AST)_t;
+ 				if ( _t==null ) throw new MismatchedTokenException();
+ 				_t = _t.getNextSibling();
+@@ -45788,7 +45788,7 @@
+ 			gwidget(_t);
+ 			_t = _retTree;
+ 		}
+-		else if (((_t.getType() &gt;= LEXDATE &amp;&amp; _t.getType() &lt;= PARAM))) {
++		else if (((_t.getType() &gt;= LEXDATE &amp;&amp; _t.getType() &lt;= SYMMETRICENCRYPTIONALGORITHM))) {
+ 		}
+ 		else {
+ 			throw new NoViableAltException(_t);
+@@ -53769,7 +53769,7 @@
+ 		for (int i = 11; i&lt;=12; i++) { data[i]=-1L; }
+ 		data[13]=-65L;
+ 		for (int i = 14; i&lt;=168; i++) { data[i]=-1L; }
+-		data[169]=9223372036854775807L;
++		data[169]=4611686018427387903L;
+ 		return data;
+ 	}
+ 	public static final BitSet _tokenSet_20 = new BitSet(mk_tokenSet_20());
+@@ -54022,7 +54022,7 @@
+ 		for (int i = 1; i&lt;=13; i++) { data[i]=-1L; }
+ 		data[14]=-5L;
+ 		for (int i = 15; i&lt;=168; i++) { data[i]=-1L; }
+-		data[169]=9223372036854775807L;
++		data[169]=4611686018427387903L;
+ 		return data;
+ 	}
+ 	public static final BitSet _tokenSet_35 = new BitSet(mk_tokenSet_35());
+
+Modified: trunk/org.prorefactor.refactor/src/org/prorefactor/treeparser03/TreeParser03TokenTypes.java
+===================================================================
+--- trunk/org.prorefactor.refactor/src/org/prorefactor/treeparser03/TreeParser03TokenTypes.java	2005-07-19 01:48:05 UTC (rev 37)
++++ trunk/org.prorefactor.refactor/src/org/prorefactor/treeparser03/TreeParser03TokenTypes.java	2005-09-01 21:46:36 UTC (rev 38)
+@@ -1098,5 +1098,4 @@
+ 	int FIXCHAR = 1094;
+ 	int Last_Token_Number = 1095;
+ 	int SYMMETRICENCRYPTIONALGORITHM = 10877;
+-	int PARAM = 10878;
+ }
+
+Modified: trunk/org.prorefactor.refactor/src/org/prorefactor/treeparser03/TreeParser03TokenTypes.txt
+===================================================================
+--- trunk/org.prorefactor.refactor/src/org/prorefactor/treeparser03/TreeParser03TokenTypes.txt	2005-07-19 01:48:05 UTC (rev 37)
++++ trunk/org.prorefactor.refactor/src/org/prorefactor/treeparser03/TreeParser03TokenTypes.txt	2005-09-01 21:46:36 UTC (rev 38)
+@@ -1090,4 +1090,3 @@
+ FIXCHAR=1094
+ Last_Token_Number=1095
+ SYMMETRICENCRYPTIONALGORITHM=10877
+-PARAM=10878
+
+Modified: trunk/org.prorefactor.refactor/src/org/prorefactor/treeparser03/treeparser03.g
+===================================================================
+--- trunk/org.prorefactor.refactor/src/org/prorefactor/treeparser03/treeparser03.g	2005-07-19 01:48:05 UTC (rev 37)
++++ trunk/org.prorefactor.refactor/src/org/prorefactor/treeparser03/treeparser03.g	2005-09-01 21:46:36 UTC (rev 38)
+@@ -417,7 +417,7 @@
+ 
+ parameter
+ 	:	#(BUFFER (record_name | ID FOR record_name ) )
+-	|	#(PARAM expression EQUAL expression )
++	|	#(PARAMETER expression EQUAL expression )
+ 	|	#(OUTPUT {tpSupport.updating(true);} parameter_arg {tpSupport.updating(false);} )
+ 	|	#(INPUTOUTPUT {tpSupport.updating(true);} parameter_arg {tpSupport.updating(false);} )
+ 	|	#(INPUT parameter_arg )
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#33">[ date ]</a>
+              <a href="thread.html#33">[ thread ]</a>
+              <a href="subject.html#33">[ subject ]</a>
+              <a href="author.html#33">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">More information about the Prorefactor-svn
+mailing list</a><br>
+</body></html>

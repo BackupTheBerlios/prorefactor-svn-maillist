@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Prorefactor-svn] r14 - trunk/org.prorefactor.javadoc
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/prorefactor-svn/2005-January/index.html" >
+   <LINK REL="made" HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r14%20-%20trunk/org.prorefactor.javadoc&In-Reply-To=%3C200501200034.j0K0Ytn1009550%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000010.html">
+   <LINK REL="Next"  HREF="000012.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Prorefactor-svn] r14 - trunk/org.prorefactor.javadoc</H1>
+    <B>John Green at BerliOS</B> 
+    <A HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r14%20-%20trunk/org.prorefactor.javadoc&In-Reply-To=%3C200501200034.j0K0Ytn1009550%40sheep.berlios.de%3E"
+       TITLE="[Prorefactor-svn] r14 - trunk/org.prorefactor.javadoc">johnallengreen at sheep.berlios.de
+       </A><BR>
+    <I>Thu Jan 20 01:34:55 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000010.html">[Prorefactor-svn] r13 - trunk/org.prorefactor.eclipse
+</A></li>
+        <LI>Next message: <A HREF="000012.html">[Prorefactor-svn] r15 - in trunk/org.prorefactor.refactor/prorefactor: . projects/sports2000/pubs/data/rename/t01/orig
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11">[ date ]</a>
+              <a href="thread.html#11">[ thread ]</a>
+              <a href="subject.html#11">[ subject ]</a>
+              <a href="author.html#11">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: johnallengreen
+Date: 2005-01-20 01:34:44 +0100 (Thu, 20 Jan 2005)
+New Revision: 14
+
+Added:
+   trunk/org.prorefactor.javadoc/toc.xml
+Modified:
+   trunk/org.prorefactor.javadoc/
+   trunk/org.prorefactor.javadoc/build.properties
+   trunk/org.prorefactor.javadoc/javadoc.xml
+   trunk/org.prorefactor.javadoc/plugin.xml
+Log:
+Updated various ignore lists.
+Added ProRefactor javadoc to Eclipse's Help contents.
+
+
+Property changes on: trunk/org.prorefactor.javadoc
+___________________________________________________________________
+Name: svn:ignore
+   + javadoc
+doc.zip
+
+
+Modified: trunk/org.prorefactor.javadoc/build.properties
+===================================================================
+--- trunk/org.prorefactor.javadoc/build.properties	2005-01-20 00:33:37 UTC (rev 13)
++++ trunk/org.prorefactor.javadoc/build.properties	2005-01-20 00:34:44 UTC (rev 14)
+@@ -1,3 +1,8 @@
+ bin.includes = plugin.xml,\
+-               javadoc/,\
+-               *.html
++               *.html,\
++               *.zip,\
++               toc.xml,\
++               .project,\
++               build.properties,\
++               build.xml,\
++               javadoc.xml
+
+Modified: trunk/org.prorefactor.javadoc/javadoc.xml
+===================================================================
+--- trunk/org.prorefactor.javadoc/javadoc.xml	2005-01-20 00:33:37 UTC (rev 13)
++++ trunk/org.prorefactor.javadoc/javadoc.xml	2005-01-20 00:34:44 UTC (rev 14)
+@@ -24,9 +24,10 @@
+ 	    &lt;fileset dir=&quot;../org.prorefactor.eclipse/src&quot; defaultexcludes=&quot;yes&quot;&gt;
+ 	      &lt;include name=&quot;**/*.java&quot;/&gt;
+ 	    &lt;/fileset&gt;
+-	    &lt;doctitle&gt;&lt;![CDATA[&lt;h1&gt;ProRefactor&lt;/h1&gt;]]&gt;&lt;/doctitle&gt;
++	    &lt;doctitle&gt;&lt;![CDATA[&lt;h1&gt;ProRefactor 1.2.3&lt;/h1&gt;]]&gt;&lt;/doctitle&gt;
+ 	    &lt;bottom&gt;&lt;![CDATA[&lt;i&gt;Copyright &#169; 2002-2005 Joanju and others. All Rights Reserved.&lt;/i&gt;]]&gt;&lt;/bottom&gt;
+ 	    &lt;tag name=&quot;todo&quot; scope=&quot;all&quot; description=&quot;To do:&quot; /&gt;
+ 	  &lt;/javadoc&gt;
++      &lt;zip zipfile=&quot;doc.zip&quot; basedir=&quot;javadoc&quot; filesonly=&quot;false&quot; whenempty=&quot;skip&quot; update=&quot;false&quot;/&gt;
+   &lt;/target&gt;
+ &lt;/project&gt;
+
+Modified: trunk/org.prorefactor.javadoc/plugin.xml
+===================================================================
+--- trunk/org.prorefactor.javadoc/plugin.xml	2005-01-20 00:33:37 UTC (rev 13)
++++ trunk/org.prorefactor.javadoc/plugin.xml	2005-01-20 00:34:44 UTC (rev 14)
+@@ -5,5 +5,14 @@
+    name=&quot;ProRefactor Javadoc&quot;
+    version=&quot;1.2.3&quot;
+    provider-name=&quot;ProRefactor.org&quot;&gt;
++   &lt;requires&gt;
++      &lt;import plugin=&quot;org.eclipse.help&quot;/&gt;
++   &lt;/requires&gt;
++   &lt;extension
++         point=&quot;org.eclipse.help.toc&quot;&gt;
++      &lt;toc
++            primary=&quot;true&quot;
++            file=&quot;toc.xml&quot;/&gt;
++   &lt;/extension&gt;
+ 
+ &lt;/plugin&gt;
+
+Added: trunk/org.prorefactor.javadoc/toc.xml
+===================================================================
+--- trunk/org.prorefactor.javadoc/toc.xml	2005-01-20 00:33:37 UTC (rev 13)
++++ trunk/org.prorefactor.javadoc/toc.xml	2005-01-20 00:34:44 UTC (rev 14)
+@@ -0,0 +1,5 @@
++&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; standalone=&quot;no&quot;?&gt;
++&lt;?NLS TYPE=&quot;org.eclipse.help.toc&quot; ?&gt;
++&lt;toc label=&quot;ProRefactor javadoc&quot; href=&quot;index.html&quot;&gt;
++&lt;topic label=&quot;javadoc&quot; href=&quot;index.html&quot;/&gt;
++&lt;/toc&gt;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000010.html">[Prorefactor-svn] r13 - trunk/org.prorefactor.eclipse
+</A></li>
+	<LI>Next message: <A HREF="000012.html">[Prorefactor-svn] r15 - in trunk/org.prorefactor.refactor/prorefactor: . projects/sports2000/pubs/data/rename/t01/orig
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11">[ date ]</a>
+              <a href="thread.html#11">[ thread ]</a>
+              <a href="subject.html#11">[ subject ]</a>
+              <a href="author.html#11">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">More information about the Prorefactor-svn
+mailing list</a><br>
+</body></html>

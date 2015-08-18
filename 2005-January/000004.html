@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Prorefactor-svn] r7 - trunk/org.prorefactor.eclipse
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/prorefactor-svn/2005-January/index.html" >
+   <LINK REL="made" HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r7%20-%20trunk/org.prorefactor.eclipse&In-Reply-To=%3C200501191849.j0JInDOA010636%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000003.html">
+   <LINK REL="Next"  HREF="000005.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Prorefactor-svn] r7 - trunk/org.prorefactor.eclipse</H1>
+    <B>John Green at BerliOS</B> 
+    <A HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r7%20-%20trunk/org.prorefactor.eclipse&In-Reply-To=%3C200501191849.j0JInDOA010636%40sheep.berlios.de%3E"
+       TITLE="[Prorefactor-svn] r7 - trunk/org.prorefactor.eclipse">johnallengreen at sheep.berlios.de
+       </A><BR>
+    <I>Wed Jan 19 19:49:13 CET 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000003.html">[Prorefactor-svn] r6 - trunk/org.prorefactor.doc
+</A></li>
+        <LI>Next message: <A HREF="000005.html">[Prorefactor-svn] r8 - trunk/org.prorefactor.update
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4">[ date ]</a>
+              <a href="thread.html#4">[ thread ]</a>
+              <a href="subject.html#4">[ subject ]</a>
+              <a href="author.html#4">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: johnallengreen
+Date: 2005-01-19 19:49:08 +0100 (Wed, 19 Jan 2005)
+New Revision: 7
+
+Modified:
+   trunk/org.prorefactor.eclipse/plugin.xml
+Log:
+Renamed &quot;Specialized&quot; menu to &quot;Experimental&quot;.
+Moved &quot;Extract Method&quot; to &quot;Experimental&quot;.
+
+Modified: trunk/org.prorefactor.eclipse/plugin.xml
+===================================================================
+--- trunk/org.prorefactor.eclipse/plugin.xml	2005-01-19 01:57:55 UTC (rev 6)
++++ trunk/org.prorefactor.eclipse/plugin.xml	2005-01-19 18:49:08 UTC (rev 7)
+@@ -159,9 +159,9 @@
+                id=&quot;org.prorefactor.actions.names&quot;&gt;
+          &lt;/action&gt;
+          &lt;menu
+-               label=&quot;S&amp;pecialized&quot;
++               label=&quot;E&amp;xperimental&quot;
+                path=&quot;org.prorefactor.MainMenu/separator1&quot;
+-               id=&quot;prorefactor.specialized&quot;&gt;
++               id=&quot;prorefactor.experimental&quot;&gt;
+             &lt;separator
+                   name=&quot;separator1&quot;&gt;
+             &lt;/separator&gt;
+@@ -170,21 +170,21 @@
+                label=&quot;&amp;Wrap Procedure Block...&quot;
+                class=&quot;org.prorefactor.eclipse.actions.WrapProcedureBlock&quot;
+                tooltip=&quot;Wrap procedural code into an internal procedure&quot;
+-               menubarPath=&quot;org.prorefactor.MainMenu/prorefactor.specialized/separator1&quot;
++               menubarPath=&quot;org.prorefactor.MainMenu/prorefactor.experimental/separator1&quot;
+                id=&quot;org.prorefactor.actions.wrapProcedureBlock&quot;&gt;
+          &lt;/action&gt;
+          &lt;action
+                label=&quot;&amp;Bubble Declarations...&quot;
+                class=&quot;org.prorefactor.eclipse.actions.BubbleDeclarationsAction&quot;
+                tooltip=&quot;Bubble Declarations Refactor&quot;
+-               menubarPath=&quot;org.prorefactor.MainMenu/prorefactor.specialized/separator1&quot;
++               menubarPath=&quot;org.prorefactor.MainMenu/prorefactor.experimental/separator1&quot;
+                id=&quot;org.prorefactor.actions.bubbleDeclarations&quot;&gt;
+          &lt;/action&gt;
+          &lt;action
+                label=&quot;&amp;Append Program...&quot;
+                class=&quot;org.prorefactor.eclipse.actions.AppendProgramAction&quot;
+                tooltip=&quot;Append one compilable program to another&quot;
+-               menubarPath=&quot;org.prorefactor.MainMenu/prorefactor.specialized/separator1&quot;
++               menubarPath=&quot;org.prorefactor.MainMenu/prorefactor.experimental/separator1&quot;
+                id=&quot;org.prorefactor.actions.appendProgram&quot;&gt;
+          &lt;/action&gt;
+          &lt;action
+@@ -304,21 +304,29 @@
+             &lt;/selection&gt;
+          &lt;/action&gt;
+          &lt;action
+-               label=&quot;E&amp;xpand Selection&quot;
++               enablesFor=&quot;*&quot;
++               label=&quot;&amp;Expand Selection&quot;
++               tooltip=&quot;Selects or expands selection of code around the cursor position.&quot;
++               class=&quot;org.prorefactor.eclipse.actions.ExpandSelectionAction&quot;
+                icon=&quot;icons/expand.gif&quot;
+-               class=&quot;org.prorefactor.eclipse.actions.ExpandSelectionAction&quot;
+-               tooltip=&quot;Selects or expands selection of code around the cursor position.&quot;
+                menubarPath=&quot;org.prorefactor.popup.texteditor/group1&quot;
+-               enablesFor=&quot;*&quot;
+                id=&quot;org.prorefactor.textEditorContrib.expand&quot;&gt;
+             &lt;selection
+                   class=&quot;org.eclipse.jface.text.ITextSelection&quot;&gt;
+             &lt;/selection&gt;
+          &lt;/action&gt;
++         &lt;menu
++               label=&quot;E&amp;xperimental&quot;
++               path=&quot;org.prorefactor.popup.texteditor/group1&quot;
++               id=&quot;experimental&quot;&gt;
++            &lt;separator
++                  name=&quot;separator1&quot;&gt;
++            &lt;/separator&gt;
++         &lt;/menu&gt;
+          &lt;action
+                label=&quot;&amp;Extract Method&quot;
+                class=&quot;org.prorefactor.eclipse.actions.ExtractMethodAction&quot;
+-               menubarPath=&quot;org.prorefactor.popup.texteditor/group1&quot;
++               menubarPath=&quot;org.prorefactor.popup.texteditor/experimental/separator1&quot;
+                enablesFor=&quot;2+&quot;
+                id=&quot;org.prorefactor.popup.texteditor.extractmethod&quot;&gt;
+          &lt;/action&gt;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000003.html">[Prorefactor-svn] r6 - trunk/org.prorefactor.doc
+</A></li>
+	<LI>Next message: <A HREF="000005.html">[Prorefactor-svn] r8 - trunk/org.prorefactor.update
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#4">[ date ]</a>
+              <a href="thread.html#4">[ thread ]</a>
+              <a href="subject.html#4">[ subject ]</a>
+              <a href="author.html#4">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">More information about the Prorefactor-svn
+mailing list</a><br>
+</body></html>

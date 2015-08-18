@@ -1,0 +1,881 @@
+From johnallengreen at berlios.de  Tue Jul  4 21:53:13 2006
+From: johnallengreen at berlios.de (johnallengreen at BerliOS)
+Date: Tue, 4 Jul 2006 21:53:13 +0200
+Subject: [Prorefactor-svn] r74 - in trunk: org.prolint.core/META-INF org.prolint.core/src/org/prolint/rules org.prorefactor.core/data org.prorefactor.core/data/bugsfixed org.prorefactor.core/src/org/prorefactor/core/unittest org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.feature
+Message-ID: <200607041953.k64JrDvS001779@sheep.berlios.de>
+
+Author: johnallengreen
+Date: 2006-07-04 21:53:05 +0200 (Tue, 04 Jul 2006)
+New Revision: 74
+
+Added:
+   trunk/org.prorefactor.core/data/bugsfixed/
+   trunk/org.prorefactor.core/data/bugsfixed/bug01.p
+   trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/BugFixTests.java
+Modified:
+   trunk/org.prolint.core/META-INF/MANIFEST.MF
+   trunk/org.prolint.core/src/org/prolint/rules/NoEffect.java
+   trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/AllPRCoreTests.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Action.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/treeparser01.g
+   trunk/org.prorefactor.feature/feature.xml
+Log:
+Fixed a bug which caused a problem with input fields for INPUT BROWSE.
+Added LOCAL_METHOD_REF to ignore list for Prolint NoEffect.
+
+
+
+Modified: trunk/org.prolint.core/META-INF/MANIFEST.MF
+===================================================================
+--- trunk/org.prolint.core/META-INF/MANIFEST.MF	2006-05-31 05:03:55 UTC (rev 73)
++++ trunk/org.prolint.core/META-INF/MANIFEST.MF	2006-07-04 19:53:05 UTC (rev 74)
+@@ -2,7 +2,7 @@
+ Bundle-ManifestVersion: 2
+ Bundle-Name: Prolint/Eclipse Core
+ Bundle-SymbolicName: org.prolint; singleton:=true
+-Bundle-Version: 0.1.3
++Bundle-Version: 0.1.4
+ Bundle-ClassPath: core.jar,hibernate2.jar
+ Bundle-Activator: org.prolint.eclipse.Plugin
+ Bundle-Vendor: Prolint.org
+
+Modified: trunk/org.prolint.core/src/org/prolint/rules/NoEffect.java
+===================================================================
+--- trunk/org.prolint.core/src/org/prolint/rules/NoEffect.java	2006-05-31 05:03:55 UTC (rev 73)
++++ trunk/org.prolint.core/src/org/prolint/rules/NoEffect.java	2006-07-04 19:53:05 UTC (rev 74)
+@@ -39,10 +39,13 @@
+ 			new Integer(TokenTypes.Expr_statement)
+ 		};
+ 
++	@Override
+ 	public String getName() { return RULENAME; }
+ 
++	@Override
+ 	public Integer[] getWatchedNodeTypes() { return watchedTypes; }
+ 
++	@Override
+ 	public List run(JPNode node) {
+ 		int nodeType = node.getType();
+ 		assert nodeType==TokenTypes.Expr_statement;
+@@ -72,6 +75,7 @@
+ 		int nodeHandle = node.getHandle();
+ 		/* User-defined functions and the following built-in functions might have an effect. */
+ 		if (parser.queryCreate(nodeHandle, qname, "USER_FUNC") > 0) return true;
++		if (parser.queryCreate(nodeHandle, qname, "LOCAL_METHOD_REF") > 0) return true;
+ 		if (parser.queryCreate(nodeHandle, qname, "DYNAMICFUNCTION") > 0) return true;
+ 		if (parser.queryCreate(nodeHandle, qname, "ETIME") > 0) return true;
+ 		if (parser.queryCreate(nodeHandle, qname, "SETUSERID") > 0) return true;
+
+Added: trunk/org.prorefactor.core/data/bugsfixed/bug01.p
+===================================================================
+--- trunk/org.prorefactor.core/data/bugsfixed/bug01.p	2006-05-31 05:03:55 UTC (rev 73)
++++ trunk/org.prorefactor.core/data/bugsfixed/bug01.p	2006-07-04 19:53:05 UTC (rev 74)
+@@ -0,0 +1,14 @@
++
++def temp-table tra-vnote field note-code as character.
++
++DEFINE QUERY brs-3 FOR 
++      tra-vnote SCROLLING.
++
++DEFINE BROWSE brs-3
++  QUERY brs-3 NO-LOCK DISPLAY
++      tra-vnote.note-code
++    ENABLE
++      tra-vnote.note-code
++    WITH SEPARATORS SIZE 143.4 BY 7.38 ROW-HEIGHT-CHARS .62.
++
++ASSIGN INPUT BROWSE brs-3 tra-vnote.note-code.
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/AllPRCoreTests.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/AllPRCoreTests.java	2006-05-31 05:03:55 UTC (rev 73)
++++ trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/AllPRCoreTests.java	2006-07-04 19:53:05 UTC (rev 74)
+@@ -36,6 +36,7 @@
+ 		suite.addTest(new TestSuite(TP01SymbolActionTest.class));
+ 		suite.addTest(new TestSuite(TP01ProcessActionTest.class));
+ 		suite.addTest(new TestSuite(TP01FramesTest.class));
++		suite.addTest(new TestSuite(BugFixTests.class));
+ 		//$JUnit-END$
+ 		return suite;
+ 	}
+
+Added: trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/BugFixTests.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/BugFixTests.java	2006-05-31 05:03:55 UTC (rev 73)
++++ trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/BugFixTests.java	2006-07-04 19:53:05 UTC (rev 74)
+@@ -0,0 +1,32 @@
++/**
++ * Authors: John Green
++ * July 4, 2006.
++ * 
++ * Copyright (c) 2006 Joanju (www.joanju.com).
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * http://www.eclipse.org/legal/epl-v10.html
++ */
++
++package org.prorefactor.core.unittest;
++
++import java.io.File;
++
++import junit.framework.TestCase;
++
++import org.prorefactor.treeparser.ParseUnit;
++
++
++/** Test bug fixes. */
++public class BugFixTests extends TestCase {
++
++
++	public void test01() throws Exception {
++		File file = new File("data/bugsfixed/bug01.p");
++		ParseUnit pu = new ParseUnit(file);
++		pu.treeParser01();
++		// No further tests needed. Passes if parses clean.
++	}
++
++}
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Action.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Action.java	2006-05-31 05:03:55 UTC (rev 73)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Action.java	2006-07-04 19:53:05 UTC (rev 74)
+@@ -22,7 +22,7 @@
+ 
+ 
+ /** Superclass of empty actions methods for TreeParser01.
+- * Sublcasses can override and implement any of these methods,
++ * Subclasses can override and implement any of these methods,
+  * which are all called directly by TreeParser01.
+  * TP01Support is the default implementation.
+  */
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01.java	2006-05-31 05:03:55 UTC (rev 73)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01.java	2006-07-04 19:53:05 UTC (rev 74)
+@@ -7872,7 +7872,7 @@
+ 		_t = __t162;
+ 		_t = _t.getNextSibling();
+ 		if ( inputState.guessing==0 ) {
+-			action.frameRef(i);
++			action.browseRef(i);
+ 		}
+ 		_retTree = _t;
+ 	}
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/treeparser01.g
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/treeparser01.g	2006-05-31 05:03:55 UTC (rev 73)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/treeparser01.g	2006-07-04 19:53:05 UTC (rev 74)
+@@ -334,7 +334,7 @@
+ 	;
+ 
+ browse_ref
+-	:	#(BROWSE i:ID) { action.frameRef(#i); }
++	:	#(BROWSE i:ID) { action.browseRef(#i); }
+ 	;
+ 
+ buffercomparestate
+
+Modified: trunk/org.prorefactor.feature/feature.xml
+===================================================================
+--- trunk/org.prorefactor.feature/feature.xml	2006-05-31 05:03:55 UTC (rev 73)
++++ trunk/org.prorefactor.feature/feature.xml	2006-07-04 19:53:05 UTC (rev 74)
+@@ -99,6 +99,6 @@
+          id="org.prolint"
+          download-size="0"
+          install-size="0"
+-         version="0.1.3"/>
++         version="0.1.4"/>
+ 
+ </feature>
+
+
+
+From johnallengreen at berlios.de  Wed Jul  5 00:03:36 2006
+From: johnallengreen at berlios.de (johnallengreen at BerliOS)
+Date: Wed, 5 Jul 2006 00:03:36 +0200
+Subject: [Prorefactor-svn] r75 - in trunk: org.prorefactor.core/src/org/prorefactor/refactor org.prorefactor.core/src/org/prorefactor/treeparser org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.eclipse/src/org/prorefactor/eclipse
+Message-ID: <200607042203.k64M3aUQ022957@sheep.berlios.de>
+
+Author: johnallengreen
+Date: 2006-07-05 00:03:35 +0200 (Wed, 05 Jul 2006)
+New Revision: 75
+
+Modified:
+   trunk/org.prorefactor.core/src/org/prorefactor/refactor/IDE.java
+   trunk/org.prorefactor.core/src/org/prorefactor/refactor/PUB.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/ParseUnit.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Support.java
+   trunk/org.prorefactor.eclipse/src/org/prorefactor/eclipse/ProRefactorIDEGateway.java
+Log:
+Added fixes for problems around linked resources.
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/refactor/IDE.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/refactor/IDE.java	2006-07-04 19:53:05 UTC (rev 74)
++++ trunk/org.prorefactor.core/src/org/prorefactor/refactor/IDE.java	2006-07-04 22:03:35 UTC (rev 75)
+@@ -31,7 +31,8 @@
+ 	 * The return is an array of two strings. The first entry is the project
+ 	 * name, ex: "projectName". The second entry is the relative path, ex:
+ 	 * "src/com/joanju/Example.cls".
+-	 * @return null if the IDE does not find the file.
++	 * @return Must never return null. The project name may be anything
++	 * including null. The relative path must never be null.
+ 	 */
+ 	String [] getProjectRelativePath(File file);
+ 	
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/refactor/PUB.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/refactor/PUB.java	2006-07-04 19:53:05 UTC (rev 74)
++++ trunk/org.prorefactor.core/src/org/prorefactor/refactor/PUB.java	2006-07-04 22:03:35 UTC (rev 75)
+@@ -78,20 +78,21 @@
+ 	 * @param fullPath The fully qualified path to the compile unit's source file.
+ 	 */
+ 	public PUB(String relPath, String fullPath) {
+-		init(null, relPath, fullPath);
++		init(relPath, fullPath, true);
+ 	}
+ 
+ 	/** Work with a PUB for any compile unit from any project.
++	 * For any project name other than the current RefactorSession getProjectName(),
++	 * the PUB file is treated as a "foreign" pub.
+ 	 * @see PUB(String, String)
+ 	 */
+ 	public PUB(String project, String relPath, String fullPath) {
+-		init(project, relPath, fullPath);
++		boolean isLocalProjectFile = (project!=null && project.equalsIgnoreCase(refpack.getProjectName()));
++		init(relPath, fullPath, isLocalProjectFile);
+ 	}
+ 	
+-	private void init(String project, String relPath, String fullPath) {
+-		String subdir;
+-		if (project==null || project.equalsIgnoreCase(refpack.getProjectName())) subdir = "/pubs/";
+-		else subdir = "/foreign_pubs/";
++	private void init(String relPath, String fullPath, boolean isLocalProjectFile) {
++		String subdir = isLocalProjectFile ? "/pubs/" : "/foreign_pubs/";
+ 		cuFile = new File(fullPath);
+ 		pubFile = new File(refpack.getProRefactorProjectDir() + subdir + relPath + ".pub");
+ 	}
+@@ -317,7 +318,9 @@
+ 	}
+ 	
+ 	
++	public ParseUnit getParseUnit() { return parseUnit; }
+ 	
++	
+ 	public String getSuperClassName() { return superClassName; }
+ 	
+ 	
+@@ -503,7 +506,10 @@
+ 	
+ 	
+ 	
+-	public void setParseUnit(ParseUnit pu) {this.parseUnit = pu;}
++	public void setParseUnit(ParseUnit pu) {
++		this.parseUnit = pu;
++		if (pu.getPUB()!=this) pu.setPUB(this);
++	}
+ 	
+ 	
+ 	
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/ParseUnit.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/ParseUnit.java	2006-07-04 19:53:05 UTC (rev 74)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/ParseUnit.java	2006-07-04 22:03:35 UTC (rev 75)
+@@ -133,7 +133,11 @@
+ 	}
+ 	
+ 	
+-	public ParseUnit setPUB(PUB pub) { this.pub = pub; return this; }
++	public ParseUnit setPUB(PUB pub) {
++		this.pub = pub;
++		if (pub.getParseUnit()!=this) pub.setParseUnit(this);
++		return this;
++	}
+ 
+ 	
+ 	public void setRootScope(SymbolScopeRoot rootScope) { this.rootScope = rootScope; }
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Support.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Support.java	2006-07-04 19:53:05 UTC (rev 74)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Support.java	2006-07-04 22:03:35 UTC (rev 75)
+@@ -216,7 +216,6 @@
+ 		if (! file.exists()) throw new Error("Could not find source on PROPATH for class: " + className);
+ 		RefactorSession refpack = RefactorSession.getInstance();
+ 		String [] projFile = refpack.getIDE().getProjectRelativePath(file);
+-		if (projFile==null) throw new Error("Could not find IDE project/file for class: " + className);
+ 		PUB pub = new PUB(projFile[0], projFile[1], FileStuff.fullpath(file));
+ 		boolean pubIsCurrent = pub.loadTo(PUB.HEADER);
+ 		ParseUnit pu = new ParseUnit(file);
+
+Modified: trunk/org.prorefactor.eclipse/src/org/prorefactor/eclipse/ProRefactorIDEGateway.java
+===================================================================
+--- trunk/org.prorefactor.eclipse/src/org/prorefactor/eclipse/ProRefactorIDEGateway.java	2006-07-04 19:53:05 UTC (rev 74)
++++ trunk/org.prorefactor.eclipse/src/org/prorefactor/eclipse/ProRefactorIDEGateway.java	2006-07-04 22:03:35 UTC (rev 75)
+@@ -12,20 +12,57 @@
+ import java.io.File;
+ 
+ import org.eclipse.core.resources.IFile;
++import org.eclipse.core.resources.IWorkspaceRoot;
++import org.eclipse.core.resources.ResourcesPlugin;
++import org.eclipse.core.runtime.Path;
++import org.prorefactor.refactor.FileStuff;
+ import org.prorefactor.refactor.IDE;
++import org.prorefactor.refactor.RefactorSession;
+ 
+ 
+ /** @see IDE */
+ public class ProRefactorIDEGateway implements IDE {
+ 
+-	/** @see IDE#getProjectRelativePath(File) */
++
++	/** Get the project relative path for a File object.
++	 * <p>
++	 * Returns an array of two strings.
++	 * <p>
++	 * If the file was found in the current RefactorSession getProjectName() project,
++	 * then that project name and the IFile relative path are returned.
++	 * <p>
++	 * If the file was found in <b>any</b> project, then the <b>first matching</b> project name and
++	 * the IFile relative path are returned.
++	 * <p>
++	 * Otherwise, the project name returned is null, and File.getPath() is returned.
++	 * @see IDE#getProjectRelativePath(File)
++	 */
+ 	public String [] getProjectRelativePath(File file) {
+-		IFile ifile = ResourceUtil.getIFile(file.getAbsolutePath());
+-		if (ifile==null) return null;
+ 		String [] ret = new String[2];
+-		ret[0] = ifile.getProject().getName();
+-		ret[1] = ifile.getProjectRelativePath().toString();
++		IWorkspaceRoot workspaceRoot = null;
++		IFile ifile = null;
++		try {
++			workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
++			String projectName = RefactorSession.getInstance().getProjectName();
++			for (IFile i : workspaceRoot.findFilesForLocation(Path.fromOSString(FileStuff.fullpath(file)))) {
++				if (i.getProject().getName().equalsIgnoreCase(projectName)) {
++					ifile = i;
++					break;
++				}
++				if (ifile==null) ifile = i;
++			}
++		} catch (IllegalStateException e) {
++			// The workspace is closed, and can't be searched.
++		}
++		if (ifile!=null) {
++			ret[0] = ifile.getProject().getName();
++			ret[1] = ifile.getProjectRelativePath().toString();
++		} else {
++			ret[0] = null;
++			ret[1] = file.getPath();
++		}
+ 		return ret;
+ 	}
+ 
++	
+ }
+
+
+
+From johnallengreen at berlios.de  Wed Jul  5 00:20:35 2006
+From: johnallengreen at berlios.de (johnallengreen at BerliOS)
+Date: Wed, 5 Jul 2006 00:20:35 +0200
+Subject: [Prorefactor-svn] r76 - in trunk: org.prorefactor.core/META-INF org.prorefactor.doc org.prorefactor.doc/META-INF org.prorefactor.eclipse/META-INF org.prorefactor.feature org.prorefactor.javadoc org.prorefactor.javadoc/META-INF org.prorefactor.lib/META-INF org.prorefactor.update
+Message-ID: <200607042220.k64MKZvp024316@sheep.berlios.de>
+
+Author: johnallengreen
+Date: 2006-07-05 00:20:34 +0200 (Wed, 05 Jul 2006)
+New Revision: 76
+
+Modified:
+   trunk/org.prorefactor.core/META-INF/MANIFEST.MF
+   trunk/org.prorefactor.doc/META-INF/MANIFEST.MF
+   trunk/org.prorefactor.doc/manual.xml
+   trunk/org.prorefactor.eclipse/META-INF/MANIFEST.MF
+   trunk/org.prorefactor.feature/feature.xml
+   trunk/org.prorefactor.javadoc/META-INF/MANIFEST.MF
+   trunk/org.prorefactor.javadoc/build.xml
+   trunk/org.prorefactor.lib/META-INF/MANIFEST.MF
+   trunk/org.prorefactor.update/site.xml
+Log:
+Version 1.5.1.
+
+Modified: trunk/org.prorefactor.core/META-INF/MANIFEST.MF
+===================================================================
+--- trunk/org.prorefactor.core/META-INF/MANIFEST.MF	2006-07-04 22:03:35 UTC (rev 75)
++++ trunk/org.prorefactor.core/META-INF/MANIFEST.MF	2006-07-04 22:20:34 UTC (rev 76)
+@@ -2,7 +2,7 @@
+ Bundle-ManifestVersion: 2
+ Bundle-Name: ProRefactor Core
+ Bundle-SymbolicName: org.prorefactor.core
+-Bundle-Version: 1.5.0
++Bundle-Version: 1.5.1
+ Bundle-ClassPath: core.jar
+ Bundle-Vendor: ProRefactor.org
+ Bundle-Localization: plugin
+
+Modified: trunk/org.prorefactor.doc/META-INF/MANIFEST.MF
+===================================================================
+--- trunk/org.prorefactor.doc/META-INF/MANIFEST.MF	2006-07-04 22:03:35 UTC (rev 75)
++++ trunk/org.prorefactor.doc/META-INF/MANIFEST.MF	2006-07-04 22:20:34 UTC (rev 76)
+@@ -2,7 +2,7 @@
+ Bundle-ManifestVersion: 2
+ Bundle-Name: ProRefactor Documentation
+ Bundle-SymbolicName: org.prorefactor.doc; singleton:=true
+-Bundle-Version: 1.5.0
++Bundle-Version: 1.5.1
+ Bundle-Vendor: ProRefactor.org
+ Bundle-Localization: plugin
+ Require-Bundle: org.eclipse.help
+
+Modified: trunk/org.prorefactor.doc/manual.xml
+===================================================================
+--- trunk/org.prorefactor.doc/manual.xml	2006-07-04 22:03:35 UTC (rev 75)
++++ trunk/org.prorefactor.doc/manual.xml	2006-07-04 22:20:34 UTC (rev 76)
+@@ -7,7 +7,7 @@
+ 
+     <date>2006</date>
+ 
+-    <pubdate>May 2006, ProRefactor version 1.5.0</pubdate>
++    <pubdate>May 2006, ProRefactor version 1.5.1</pubdate>
+ 
+     <author>
+       <firstname>John</firstname>
+@@ -1494,6 +1494,22 @@
+ 
+     <variablelist>
+       <varlistentry>
++        <term>Version 1.5.1</term>
++
++        <listitem>
++          <itemizedlist>
++            <listitem>
++              <para>Fixed INPUT BROWSE field bug.</para>
++            </listitem>
++
++            <listitem>
++              <para>Fixes for working with Eclipse linked resources.</para>
++            </listitem>
++          </itemizedlist>
++        </listitem>
++      </varlistentry>
++
++      <varlistentry>
+         <term>Version 1.5.0</term>
+ 
+         <listitem>
+
+Modified: trunk/org.prorefactor.eclipse/META-INF/MANIFEST.MF
+===================================================================
+--- trunk/org.prorefactor.eclipse/META-INF/MANIFEST.MF	2006-07-04 22:03:35 UTC (rev 75)
++++ trunk/org.prorefactor.eclipse/META-INF/MANIFEST.MF	2006-07-04 22:20:34 UTC (rev 76)
+@@ -2,7 +2,7 @@
+ Bundle-ManifestVersion: 2
+ Bundle-Name: ProRefactor
+ Bundle-SymbolicName: org.prorefactor.eclipse; singleton:=true
+-Bundle-Version: 1.5.0
++Bundle-Version: 1.5.1
+ Bundle-ClassPath: eclipse.jar
+ Bundle-Activator: org.prorefactor.eclipse.Plugin
+ Bundle-Vendor: ProRefactor.org
+
+Modified: trunk/org.prorefactor.feature/feature.xml
+===================================================================
+--- trunk/org.prorefactor.feature/feature.xml	2006-07-04 22:03:35 UTC (rev 75)
++++ trunk/org.prorefactor.feature/feature.xml	2006-07-04 22:20:34 UTC (rev 76)
+@@ -2,7 +2,7 @@
+ <feature
+       id="org.prorefactor"
+       label="org.prorefactor"
+-      version="1.5.0"
++      version="1.5.1"
+       provider-name="ProRefactor.org"
+       plugin="org.prorefactor.eclipse">
+ 
+@@ -69,31 +69,31 @@
+          id="org.prorefactor.core"
+          download-size="0"
+          install-size="0"
+-         version="1.5.0"/>
++         version="1.5.1"/>
+ 
+    <plugin
+          id="org.prorefactor.eclipse"
+          download-size="0"
+          install-size="0"
+-         version="1.5.0"/>
++         version="1.5.1"/>
+ 
+    <plugin
+          id="org.prorefactor.javadoc"
+          download-size="0"
+          install-size="0"
+-         version="1.5.0"/>
++         version="1.5.1"/>
+ 
+    <plugin
+          id="org.prorefactor.doc"
+          download-size="0"
+          install-size="0"
+-         version="1.5.0"/>
++         version="1.5.1"/>
+ 
+    <plugin
+          id="org.prorefactor.lib"
+          download-size="0"
+          install-size="0"
+-         version="1.5.0"/>
++         version="1.5.1"/>
+ 
+    <plugin
+          id="org.prolint"
+
+Modified: trunk/org.prorefactor.javadoc/META-INF/MANIFEST.MF
+===================================================================
+--- trunk/org.prorefactor.javadoc/META-INF/MANIFEST.MF	2006-07-04 22:03:35 UTC (rev 75)
++++ trunk/org.prorefactor.javadoc/META-INF/MANIFEST.MF	2006-07-04 22:20:34 UTC (rev 76)
+@@ -2,7 +2,7 @@
+ Bundle-ManifestVersion: 2
+ Bundle-Name: ProRefactor Javadoc
+ Bundle-SymbolicName: org.prorefactor.javadoc; singleton:=true
+-Bundle-Version: 1.5.0
++Bundle-Version: 1.5.1
+ Bundle-Vendor: ProRefactor.org
+ Bundle-Localization: plugin
+ Require-Bundle: org.eclipse.help
+
+Modified: trunk/org.prorefactor.javadoc/build.xml
+===================================================================
+--- trunk/org.prorefactor.javadoc/build.xml	2006-07-04 22:03:35 UTC (rev 75)
++++ trunk/org.prorefactor.javadoc/build.xml	2006-07-04 22:20:34 UTC (rev 76)
+@@ -18,7 +18,7 @@
+ 	    <fileset dir="../org.prorefactor.eclipse/src" defaultexcludes="yes">
+ 	      <include name="**/*.java"/>
+ 	    </fileset>
+-	    <doctitle><![CDATA[<h1>ProRefactor 1.5.0</h1>]]></doctitle>
++	    <doctitle><![CDATA[<h1>ProRefactor 1.5.1</h1>]]></doctitle>
+ 	    <bottom><![CDATA[<i>Copyright &#169; 2002-2006 Joanju Software and others. All Rights Reserved.</i>]]></bottom>
+ 	    <tag name="todo" scope="all" description="To do:" />
+ 	  </javadoc>
+
+Modified: trunk/org.prorefactor.lib/META-INF/MANIFEST.MF
+===================================================================
+--- trunk/org.prorefactor.lib/META-INF/MANIFEST.MF	2006-07-04 22:03:35 UTC (rev 75)
++++ trunk/org.prorefactor.lib/META-INF/MANIFEST.MF	2006-07-04 22:20:34 UTC (rev 76)
+@@ -2,7 +2,7 @@
+ Bundle-ManifestVersion: 2
+ Bundle-Name: ProRefactor required Libraries
+ Bundle-SymbolicName: org.prorefactor.lib
+-Bundle-Version: 1.5.0
++Bundle-Version: 1.5.1
+ Bundle-ClassPath: antlr/antlr.jar,
+  jakarta/commons-collections/commons-collections.jar,
+  hibernate/cglib-full-2.0.2.jar,
+
+Modified: trunk/org.prorefactor.update/site.xml
+===================================================================
+--- trunk/org.prorefactor.update/site.xml	2006-07-04 22:03:35 UTC (rev 75)
++++ trunk/org.prorefactor.update/site.xml	2006-07-04 22:20:34 UTC (rev 76)
+@@ -9,6 +9,9 @@
+    <feature url="features/org.prorefactor_1.5.0.jar" id="org.prorefactor" version="1.5.0">
+       <category name="ProRefactor.org"/>
+    </feature>
++   <feature url="features/org.prorefactor_1.5.1.jar" id="org.prorefactor" version="1.5.1">
++      <category name="ProRefactor.org"/>
++   </feature>
+    <category-def name="ProRefactor.org" label="ProRefactor.org">
+       <description>
+          Analysis and refactoring for Progress OE ABL source code.
+
+
+
+From johnallengreen at berlios.de  Fri Jul  7 22:22:51 2006
+From: johnallengreen at berlios.de (johnallengreen at BerliOS)
+Date: Fri, 7 Jul 2006 22:22:51 +0200
+Subject: [Prorefactor-svn] r77 - in trunk: org.prolint.core/src/org/prolint/core org.prolint.core/src/org/prolint/eclipse org.prorefactor.core org.prorefactor.core/src/com/joanju org.prorefactor.core/src/org/prorefactor/treeparser org.prorefactor.doc org.prorefactor.eclipse/src/org/prorefactor/eclipse
+Message-ID: <200607072022.k67KMp4r016500@sheep.berlios.de>
+
+Author: johnallengreen
+Date: 2006-07-07 22:22:50 +0200 (Fri, 07 Jul 2006)
+New Revision: 77
+
+Modified:
+   trunk/org.prolint.core/src/org/prolint/core/FileStuff.java
+   trunk/org.prolint.core/src/org/prolint/core/LintRun.java
+   trunk/org.prolint.core/src/org/prolint/eclipse/ClearMarkersAction.java
+   trunk/org.prorefactor.core/build.properties
+   trunk/org.prorefactor.core/src/com/joanju/ProparseLdr.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/ParseUnit.java
+   trunk/org.prorefactor.doc/Makefile
+   trunk/org.prorefactor.eclipse/src/org/prorefactor/eclipse/ResourceUtil.java
+Log:
+Cleaned up some of the "find IFile" type code, especially with regard to linked resources.
+
+Modified: trunk/org.prolint.core/src/org/prolint/core/FileStuff.java
+===================================================================
+--- trunk/org.prolint.core/src/org/prolint/core/FileStuff.java	2006-07-04 22:20:34 UTC (rev 76)
++++ trunk/org.prolint.core/src/org/prolint/core/FileStuff.java	2006-07-07 20:22:50 UTC (rev 77)
+@@ -26,9 +26,6 @@
+ import java.io.FileReader;
+ import java.io.IOException;
+ 
+-import org.eclipse.core.resources.IFile;
+-import org.prorefactor.eclipse.ResourceUtil;
+-
+ /** Long and short term extensions to org.prorefactor.refactor.FileStuff.
+  * Some of the methods added here may be migrated to ProRefactor. 
+  */
+@@ -62,13 +59,4 @@
+ 		throw new IOException("No such line: " + line + " in file: " + file.getPath());
+ 	}
+ 
+-	/** Find an IFile for a string filename, or null if not found.
+-	 * Maybe later: Remove once it's been added to org.prorefactor.eclipse.ResourceUtil.
+-	 */
+-	public static IFile getIFileRelaxed(String filename) {
+-		File file = FileStuff.findFile(filename);
+-		if (file==null) return null;
+-		return ResourceUtil.getIFile((FileStuff.fullpath(file)));
+-	}
+-
+ }
+
+Modified: trunk/org.prolint.core/src/org/prolint/core/LintRun.java
+===================================================================
+--- trunk/org.prolint.core/src/org/prolint/core/LintRun.java	2006-07-04 22:20:34 UTC (rev 76)
++++ trunk/org.prolint.core/src/org/prolint/core/LintRun.java	2006-07-07 20:22:50 UTC (rev 77)
+@@ -37,12 +37,11 @@
+ import org.prolint.rules.NodeRule;
+ import org.prolint.rules.Rule;
+ import org.prorefactor.core.JPNode;
++import org.prorefactor.eclipse.ResourceUtil;
+ import org.prorefactor.refactor.RefactorException;
+ import org.prorefactor.refactor.source.CompileUnit;
+ 
+-import com.joanju.ProparseLdr;
+ 
+-
+ /** This class stores the configuration for a lint run, and it contains
+  * the methods for launching lint against a given compile unit.
+  * The lint run keeps track of all files visited for all compile units.
+@@ -59,10 +58,10 @@
+ 	private int fileIndexSequence = 1;
+ 	private int ruleIndexSequence = 1;
+ 	private ArrayList cuRulesList = new ArrayList();
+-	private HashMap indexToResourceMap = new HashMap();
++	private HashMap<Integer, IFile> indexToResourceMap = new HashMap<Integer, IFile>();
+ 	private HashMap nodeRulesMap = new HashMap();
+ 	private HashMap ruleIndexMap = new HashMap();
+-	private HashMap resourceToIndexMap = new HashMap();
++	private HashMap<IFile, Integer> resourceToIndexMap = new HashMap<IFile, Integer>();
+ 	private IFile [] currentUnitIFiles = null;
+ 	private TempMarkerTable tempMarkerTable = new TempMarkerTable();
+ 
+@@ -134,14 +133,14 @@
+ 	 * file index can be retrieved quickly.
+ 	 */
+ 	private void clearAndIndexFiles(CompileUnit cu) {
+-		ArrayList resourceList = new ArrayList();
+-		String [] filenameArray = ProparseLdr.getInstance().getFilenameArray();
++		ArrayList<IFile> resourceList = new ArrayList<IFile>();
++		String [] filenameArray = cu.getFileIndex();
+ 		for (int i = 0; i < filenameArray.length; i++) {
+ 			String name = filenameArray[i];
+ 			IFile ifile = null;
+-			if (name.length() > 0) ifile = FileStuff.getIFileRelaxed(name);
+-			resourceList.add(ifile);
++			if (name.length() > 0) ifile = ResourceUtil.getIFileRelaxed(name);
+ 			if (ifile==null) continue;
++			resourceList.add(ifile);
+ 			if (resourceToIndexMap.containsKey(ifile)) continue;
+ 			ClearMarkersAction.clear(ifile);
+ 			Integer index = new Integer(fileIndexSequence++);
+
+Modified: trunk/org.prolint.core/src/org/prolint/eclipse/ClearMarkersAction.java
+===================================================================
+--- trunk/org.prolint.core/src/org/prolint/eclipse/ClearMarkersAction.java	2006-07-04 22:20:34 UTC (rev 76)
++++ trunk/org.prolint.core/src/org/prolint/eclipse/ClearMarkersAction.java	2006-07-07 20:22:50 UTC (rev 77)
+@@ -33,7 +33,7 @@
+ import org.eclipse.jface.viewers.IStructuredSelection;
+ import org.eclipse.ui.IViewActionDelegate;
+ import org.eclipse.ui.IViewPart;
+-import org.prolint.core.FileStuff;
++import org.prorefactor.eclipse.ResourceUtil;
+ 
+ 
+ /** This class is responsible for clearing Prolint problem markers
+@@ -48,7 +48,7 @@
+ 	 * Is recursive for directory names.
+ 	 */
+ 	public static void clear(String filename) {
+-		IFile ifile = FileStuff.getIFileRelaxed(filename);
++		IFile ifile = ResourceUtil.getIFileRelaxed(filename);
+ 		if (ifile==null) return;
+ 		clear(ifile);
+ 	}
+
+Modified: trunk/org.prorefactor.core/build.properties
+===================================================================
+--- trunk/org.prorefactor.core/build.properties	2006-07-04 22:20:34 UTC (rev 76)
++++ trunk/org.prorefactor.core/build.properties	2006-07-07 20:22:50 UTC (rev 77)
+@@ -19,7 +19,6 @@
+                about.html,\
+                META-INF/,\
+                build.properties,\
+-               src/,\
+                prorefactor/,\
+                tmp/
+ jars.compile.order = 
+
+Modified: trunk/org.prorefactor.core/src/com/joanju/ProparseLdr.java
+===================================================================
+--- trunk/org.prorefactor.core/src/com/joanju/ProparseLdr.java	2006-07-04 22:20:34 UTC (rev 76)
++++ trunk/org.prorefactor.core/src/com/joanju/ProparseLdr.java	2006-07-07 20:22:50 UTC (rev 77)
+@@ -79,6 +79,7 @@
+ 	 * Important note: Sometimes Proparse will stick a blank "" entry into this list.
+ 	 * @deprecated May,2006. The new "filename-list" node attribute is used when the tree is loaded
+ 	 * into JPNode, and the filename array is stored in the ProgramRootNode object.
++	 * @see org.prorefactor.treeparser.ParseUnit#getFileIndex()
+ 	 */
+ 	public String [] getFilenameArray() {
+ 		ArrayList names = new ArrayList();
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/ParseUnit.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/ParseUnit.java	2006-07-04 22:20:34 UTC (rev 76)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/ParseUnit.java	2006-07-07 20:22:50 UTC (rev 77)
+@@ -72,7 +72,11 @@
+ 	}
+ 	
+ 	
+-	/** Get the file index, either from the PUB file or from the parser, whichever was used to get the tree. */
++	/** Get the file index, either from the PUB file or from the parser, whichever was used to get the tree.
++	 * The return is the array of file names. The file at index zero is always the compile unit.
++	 * The others are include files. The array index position corresponds to JPNode.getFileIndex().
++	 * @see org.prorefactor.nodetypes.ProgramRootNode#getFilenames()
++	 */
+ 	public String [] getFileIndex() {
+ 		if (topNode==null) return null;
+ 		return topNode.getFilenames();
+
+Modified: trunk/org.prorefactor.doc/Makefile
+===================================================================
+--- trunk/org.prorefactor.doc/Makefile	2006-07-04 22:20:34 UTC (rev 76)
++++ trunk/org.prorefactor.doc/Makefile	2006-07-07 20:22:50 UTC (rev 77)
+@@ -13,3 +13,18 @@
+ 	cp html/toc.xml .
+ 	cd html ; zip -r ../doc.zip *
+ 
++
++# This wrote into the top directory. How did I work around that in Callgraph?
++#
++# html/index.html: manual.xml joanju.xsl Makefile
++#	rm -rf html
++#	mkdir html
++#	cp -r images html
++#	cp -r screenshots html
++#	cp *.css html
++#	rm -rfd html/images/.svn
++#	rm -rfd html/images/callouts/.svn
++#	rm -rfd html/screenshots/.svn
++#	java -cp /progfile/xalan-j_2_7_0/xalan.jar org.apache.xalan.xslt.Process -IN manual.xml -XSL joanju.xsl
++#	cd html ; zip -r ../doc.zip *
++
+
+Modified: trunk/org.prorefactor.eclipse/src/org/prorefactor/eclipse/ResourceUtil.java
+===================================================================
+--- trunk/org.prorefactor.eclipse/src/org/prorefactor/eclipse/ResourceUtil.java	2006-07-04 22:20:34 UTC (rev 76)
++++ trunk/org.prorefactor.eclipse/src/org/prorefactor/eclipse/ResourceUtil.java	2006-07-07 20:22:50 UTC (rev 77)
+@@ -19,11 +19,14 @@
+ import org.eclipse.core.resources.IFile;
+ import org.eclipse.core.resources.IMarker;
+ import org.eclipse.core.resources.IResource;
++import org.eclipse.core.resources.IWorkspaceRoot;
++import org.eclipse.core.resources.ResourcesPlugin;
+ import org.eclipse.core.runtime.CoreException;
+ import org.eclipse.core.runtime.IProgressMonitor;
+ import org.eclipse.core.runtime.Path;
+ import org.eclipse.ui.actions.WorkspaceModifyOperation;
+ import org.prorefactor.refactor.FileStuff;
++import org.prorefactor.refactor.RefactorSession;
+ import org.prorefactor.refactor.messages.Message;
+ 
+ 
+@@ -55,21 +58,44 @@
+ 	} // clearRefactorMarkers
+ 
+ 
+-
+-	/** Find an IFile in the workspace that matches a full String pathname. */
++	/** Attempt to find an appropriate IFile for a file fullpath.
++	 * Since more than one linked resource can point at any one file
++	 * on the OS filesystem, any number of IFile matches are possible.
++	 * This attempts to find an IFile, in the following order:
++	 * 1. Unique "simple" (not linked) IFile in the workspace.
++	 * 2. First in current ProRefactor project.
++	 * 3. First in workspace.
++	 * @return null if there is no IFile representation.
++	 */
+ 	public static IFile getIFile(String fullPath) {
+-		Path temp = new Path(fullPath);
+-		if (! temp.toFile().exists() ) return null;
+-		IFile tempIFile = Plugin.getWorkspace().getRoot().getFileForLocation(temp);
+-		return tempIFile;
++		Path path = new Path(fullPath);
++		IFile ifile = ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(path);
++		/* If we found a "simple" IFile, we're done and we don't need to
++		 * widen the search to include linked resources.
++		 */ 
++		if (ifile!=null) return ifile;
++		
++		try {
++			IWorkspaceRoot workspaceRoot = null;
++			workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
++			String projectName = RefactorSession.getInstance().getProjectName();
++			for (IFile i : workspaceRoot.findFilesForLocation(path)) {
++				if (i.getProject().getName().equalsIgnoreCase(projectName)) {
++					return i;
++				}
++				if (ifile==null) ifile = i;
++			}
++		} catch (IllegalStateException e) {
++			// The workspace is closed, and can't be searched.
++		}
++		return ifile;
+ 	}
+-
+ 	
+ 	
+ 	/** Find an IFile in the workspace for any relative or qualified file path.
+ 	 * Returns null if the file or resource is not found.
+ 	 */
+-	private static IFile getIFileRelaxed(String filename) {
++	public static IFile getIFileRelaxed(String filename) {
+ 		File file = FileStuff.findFile(filename);
+ 		if (file==null) return null;
+ 		return getIFile((FileStuff.fullpath(file)));
+@@ -82,11 +108,13 @@
+ 	 */
+ 	public static void messagesToMarkers(final ArrayList messages) {
+ 		WorkspaceModifyOperation op = new WorkspaceModifyOperation() {
++			@Override
+ 			protected void execute(IProgressMonitor monitor) {
+ 				for (Iterator it = messages.iterator(); it.hasNext();) {
+ 					try {
+ 						Message message = (Message) it.next();
+ 						IFile file = getIFile(message.file.getCanonicalPath());
++						if (file==null) continue;
+ 						IMarker marker = file.createMarker("org.prorefactor.markers.refactor");
+ 						marker.setAttribute(IMarker.LINE_NUMBER, message.line);
+ 						marker.setAttribute(IMarker.MESSAGE, message.message);
+
+
+

@@ -1,0 +1,512 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Prorefactor-svn] r24 - in trunk: org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.refactor/data/pub org.prorefactor.refactor/prorefactor/projects/sports2000/pubs/data/pub org.prorefactor.refactor/prorefactor/projects/sports2000/pubs/data/rename/t01/orig org.prorefactor.refactor/src/org/prorefactor/refactor org.prorefactor.refactor/src/org/prorefactor/refactor/unittest
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/prorefactor-svn/2005-May/index.html" >
+   <LINK REL="made" HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r24%20-%20in%20trunk%3A%20org.prorefactor.core/src/org/prorefactor/treeparser01%20org.prorefactor.refactor/data/pub%20org.prorefactor.refactor/prorefactor/projects/sports2000/pubs/data/pub%20org.prorefactor.refactor/prorefactor/projects/sports2000/pubs/data/rename/t01/orig%20org.prorefactor.refactor/src/org/prorefactor/refactor%20org.prorefactor.refactor/src/org/prorefactor/refactor/unittest&In-Reply-To=%3C200505051846.j45IkTp0001255%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000018.html">
+   <LINK REL="Next"  HREF="000020.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Prorefactor-svn] r24 - in trunk: org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.refactor/data/pub org.prorefactor.refactor/prorefactor/projects/sports2000/pubs/data/pub org.prorefactor.refactor/prorefactor/projects/sports2000/pubs/data/rename/t01/orig org.prorefactor.refactor/src/org/prorefactor/refactor org.prorefactor.refactor/src/org/prorefactor/refactor/unittest</H1>
+    <B>John Green at BerliOS</B> 
+    <A HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r24%20-%20in%20trunk%3A%20org.prorefactor.core/src/org/prorefactor/treeparser01%20org.prorefactor.refactor/data/pub%20org.prorefactor.refactor/prorefactor/projects/sports2000/pubs/data/pub%20org.prorefactor.refactor/prorefactor/projects/sports2000/pubs/data/rename/t01/orig%20org.prorefactor.refactor/src/org/prorefactor/refactor%20org.prorefactor.refactor/src/org/prorefactor/refactor/unittest&In-Reply-To=%3C200505051846.j45IkTp0001255%40sheep.berlios.de%3E"
+       TITLE="[Prorefactor-svn] r24 - in trunk: org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.refactor/data/pub org.prorefactor.refactor/prorefactor/projects/sports2000/pubs/data/pub org.prorefactor.refactor/prorefactor/projects/sports2000/pubs/data/rename/t01/orig org.prorefactor.refactor/src/org/prorefactor/refactor org.prorefactor.refactor/src/org/prorefactor/refactor/unittest">johnallengreen at sheep.berlios.de
+       </A><BR>
+    <I>Thu May  5 20:46:29 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000018.html">[Prorefactor-svn] r23 - in trunk/org.prorefactor.core/src/org/prorefactor: . nodetypes treeparser treeparser01 widgettypes
+</A></li>
+        <LI>Next message: <A HREF="000020.html">[Prorefactor-svn] r25 - in trunk: org.prorefactor.antlr org.prorefactor.core
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19">[ date ]</a>
+              <a href="thread.html#19">[ thread ]</a>
+              <a href="subject.html#19">[ subject ]</a>
+              <a href="author.html#19">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: johnallengreen
+Date: 2005-05-05 20:46:27 +0200 (Thu, 05 May 2005)
+New Revision: 24
+
+Modified:
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Action.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Support.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01.java
+   trunk/org.prorefactor.refactor/data/pub/test01.p
+   trunk/org.prorefactor.refactor/prorefactor/projects/sports2000/pubs/data/pub/test01.p.pub
+   trunk/org.prorefactor.refactor/prorefactor/projects/sports2000/pubs/data/rename/t01/orig/t01.p.pub
+   trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/PUB.java
+   trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/unittest/PUBTest.java
+Log:
+Good grief. I forgot to rebuild TreeParser01 before committing my changes related to Symbol subtypes. Done now, and fixed a bug with that.
+Added initial import/export tables to the Parse Unit Binaries. Currently, just tables of symbols defined with SHARED and NEW SHARED.
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Action.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Action.java	2005-05-04 21:17:51 UTC (rev 23)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Action.java	2005-05-05 18:46:27 UTC (rev 24)
+@@ -75,7 +75,7 @@
+ 	/** Called by the tree parser to define anything other than
+ 	 * buffers, temp/work tables, and variables/parameters.
+ 	 */
+-	public Symbol defineSymbol(AST defAST, AST idAST, int symbolType) { return null; }
++	public Symbol defineSymbol(int symbolType, AST defAST, AST idAST) { return null; }
+ 
+ 	
+ 	/** Called by the tree parser at a temp or work table field definition. */
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Support.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Support.java	2005-05-04 21:17:51 UTC (rev 23)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Support.java	2005-05-05 18:46:27 UTC (rev 24)
+@@ -99,7 +99,7 @@
+ 
+ 	
+ 	public void addToScope(Object o) {
+-		currentScope.add((Variable)o);
++		currentScope.add((Symbol)o);
+ 	}
+ 
+ 	
+@@ -227,7 +227,7 @@
+ 
+ 
+ 
+-	public Symbol defineSymbol(AST defAST, AST idAST, int symbolType) {
++	public Symbol defineSymbol(int symbolType, AST defAST, AST idAST) {
+ 		/* Some notes:
+ 		 * We need to create the Symbol right away, because further
+ 		 * actions in the grammar might need to set attributes on it.
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01.java	2005-05-04 21:17:51 UTC (rev 23)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TreeParser01.java	2005-05-05 18:46:27 UTC (rev 24)
+@@ -10322,7 +10322,7 @@
+ 		match(_t,ID);
+ 		_t = _t.getNextSibling();
+ 		if ( inputState.guessing==0 ) {
+-			push(action.defineVariable(def, id));
++			push(action.defineSymbol(BROWSE, def, id));
+ 		}
+ 		{
+ 		if (_t==null) _t=ASTNULL;
+@@ -10991,7 +10991,7 @@
+ 		match(_t,ID);
+ 		_t = _t.getNextSibling();
+ 		if ( inputState.guessing==0 ) {
+-			push(action.defineVariable(def, id));
++			push(action.defineSymbol(BUTTON, def, id));
+ 		}
+ 		{
+ 		_loop813:
+@@ -11426,7 +11426,7 @@
+ 		match(_t,ID);
+ 		_t = _t.getNextSibling();
+ 		if ( inputState.guessing==0 ) {
+-			push(action.defineVariable(def, id));
++			push(action.defineSymbol(DATASET, def, id));
+ 		}
+ 		AST tmp729_AST_in = (AST)_t;
+ 		match(_t,FOR);
+@@ -11584,7 +11584,7 @@
+ 		match(_t,ID);
+ 		_t = _t.getNextSibling();
+ 		if ( inputState.guessing==0 ) {
+-			push(action.defineVariable(def, id));
++			push(action.defineSymbol(DATASOURCE, def, id));
+ 		}
+ 		AST tmp737_AST_in = (AST)_t;
+ 		match(_t,FOR);
+@@ -11732,7 +11732,7 @@
+ 		match(_t,ID);
+ 		_t = _t.getNextSibling();
+ 		if ( inputState.guessing==0 ) {
+-			push(action.defineVariable(def, id));
++			push(action.defineSymbol(FRAME, def, id));
+ 		}
+ 		{
+ 		_loop857:
+@@ -11955,7 +11955,7 @@
+ 		match(_t,ID);
+ 		_t = _t.getNextSibling();
+ 		if ( inputState.guessing==0 ) {
+-			push(action.defineVariable(def, id));
++			push(action.defineSymbol(IMAGE, def, id));
+ 		}
+ 		{
+ 		_loop880:
+@@ -12178,7 +12178,7 @@
+ 		match(_t,ID);
+ 		_t = _t.getNextSibling();
+ 		if ( inputState.guessing==0 ) {
+-			push(action.defineVariable(def, id));
++			push(action.defineSymbol(MENU, def, id));
+ 		}
+ 		{
+ 		_loop888:
+@@ -12732,7 +12732,7 @@
+ 		match(_t,ID);
+ 		_t = _t.getNextSibling();
+ 		if ( inputState.guessing==0 ) {
+-			push(action.defineVariable(def, id));
++			push(action.defineSymbol(QUERY, def, id));
+ 		}
+ 		AST tmp797_AST_in = (AST)_t;
+ 		match(_t,FOR);
+@@ -12924,7 +12924,7 @@
+ 		match(_t,ID);
+ 		_t = _t.getNextSibling();
+ 		if ( inputState.guessing==0 ) {
+-			push(action.defineVariable(def, id));
++			push(action.defineSymbol(RECTANGLE, def, id));
+ 		}
+ 		{
+ 		_loop973:
+@@ -13135,7 +13135,7 @@
+ 		_t = __t976;
+ 		_t = _t.getNextSibling();
+ 		if ( inputState.guessing==0 ) {
+-			action.addToScope(action.defineVariable(def, id));
++			action.addToScope(action.defineSymbol(STREAM, def, id));
+ 		}
+ 		_retTree = _t;
+ 	}
+@@ -13210,7 +13210,7 @@
+ 		match(_t,ID);
+ 		_t = _t.getNextSibling();
+ 		if ( inputState.guessing==0 ) {
+-			push(action.defineVariable(def, id));
++			push(action.defineSymbol(SUBMENU, def, id));
+ 		}
+ 		{
+ 		_loop986:
+@@ -44070,7 +44070,7 @@
+ 			match(_t,ID);
+ 			_t = _t.getNextSibling();
+ 			if ( inputState.guessing==0 ) {
+-				push(action.defineVariable(id, id));
++				push(action.defineSymbol(MENUITEM, id, id));
+ 			}
+ 			{
+ 			_loop902:
+@@ -44181,7 +44181,7 @@
+ 			match(_t,ID);
+ 			_t = _t.getNextSibling();
+ 			if ( inputState.guessing==0 ) {
+-				push(action.defineVariable(id2, id2));
++				push(action.defineSymbol(SUBMENU, id2, id2));
+ 			}
+ 			{
+ 			_loop907:
+
+Modified: trunk/org.prorefactor.refactor/data/pub/test01.p
+===================================================================
+--- trunk/org.prorefactor.refactor/data/pub/test01.p	2005-05-04 21:17:51 UTC (rev 23)
++++ trunk/org.prorefactor.refactor/data/pub/test01.p	2005-05-05 18:46:27 UTC (rev 24)
+@@ -1,6 +1,7 @@
+ /* test01.p - test file for &quot;parse unit binary&quot; unit tests.
+  */
+ 
++def shared var sharedChar as char.
+ def new shared frame myFrame.
+ 
+ def var myChar as char no-undo.
+
+Modified: trunk/org.prorefactor.refactor/prorefactor/projects/sports2000/pubs/data/pub/test01.p.pub
+===================================================================
+(Binary files differ)
+
+Modified: trunk/org.prorefactor.refactor/prorefactor/projects/sports2000/pubs/data/rename/t01/orig/t01.p.pub
+===================================================================
+(Binary files differ)
+
+Modified: trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/PUB.java
+===================================================================
+--- trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/PUB.java	2005-05-04 21:17:51 UTC (rev 23)
++++ trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/PUB.java	2005-05-05 18:46:27 UTC (rev 24)
+@@ -4,7 +4,7 @@
+  * Sep 1, 2004
+  * www.joanju.com
+  *
+- * Copyright (C) 2004 Joanju Limited.
++ * Copyright (C) 2004-2005 Joanju Limited.
+  * All rights reserved. This program and the accompanying materials 
+  * are made available under the terms of the Eclipse Public License v1.0
+  * which accompanies this distribution, and is available at
+@@ -26,6 +26,7 @@
+ import java.util.ArrayList;
+ import java.util.Collection;
+ import java.util.Iterator;
++import java.util.List;
+ import java.util.TreeMap;
+ 
+ import org.prorefactor.core.IConstants;
+@@ -33,7 +34,7 @@
+ import org.prorefactor.core.schema.Table;
+ import org.prorefactor.refactor.source.CompileUnit;
+ import org.prorefactor.treeparser.FieldBuffer;
+-import org.prorefactor.treeparser.SymbolScopeRoot;
++import org.prorefactor.treeparser.Symbol;
+ import org.prorefactor.treeparser.TableBuffer;
+ 
+ import com.joanju.ProparseLdr;
+@@ -54,7 +55,7 @@
+ 		pubFile = new File(refpack.getProRefactorProjectDir() + &quot;/pubs/&quot; + relPath + &quot;.pub&quot;);
+ 	}
+ 	
+-	public static final int LAYOUT_VERSION = 1;
++	public static final int LAYOUT_VERSION = 2;
+ 
+ 	/** loadTo(PUBFILE_TIMESTAMP) - just check if the binary exists and
+ 	 * check that it is newer than the compile unit file. Does not read anything
+@@ -76,24 +77,42 @@
+ 	/** loadTo(END) - all binary file segments will be loaded. */
+ 	public static final int END = 100;
+ 
++	private ArrayList exportList;
+ 	private ArrayList fileList;
++	private ArrayList importList;
+ 	private File cuFile;
+ 	private File pubFile;
+ 	private ProparseLdr parser = ProparseLdr.getInstance();
+ 	private RefactorSession refpack = RefactorSession.getInstance();
+ 	private TreeMap tableMap;
++
++	/** A record of symbol type and name, for import/export tables. */
++	public class SymbolRef {
++		SymbolRef(int progressType, String symbolName) {
++			this.progressType = progressType;
++			this.symbolName = symbolName;
++		}
++		/** The TokenType, ex: TokenTypes.VARIABLE */
++		public int progressType;
++		/** The symbol name (Symbol.fullName), with caseAsDefined. */
++		public String symbolName;
++	}
+ 	
+ 	private class TableRef {
+ 		TableRef(String name) { this.name = name; }
+ 		String name;
+ 		TreeMap fieldMap = new TreeMap();
+ 	}
++
+ 	
++	
+ 	/** It's possible, maybe even sensible, to reuse a PUB object.
+ 	 * This method clears out old lists in preparation for reloading or rebuilding.
+ 	 */
+ 	private void _refresh() {
++		exportList = new ArrayList();
+ 		fileList = new ArrayList();
++		importList = new ArrayList();
+ 		tableMap = new TreeMap();
+ 	}
+ 
+@@ -115,7 +134,10 @@
+ 		ObjectOutputStream out = new ObjectOutputStream(fileOut);
+ 		writeVersion(out);
+ 		writeFileIndex(out);
+-		writeSchemaSegment(out, cu.getRootScope());
++		ArrayList allSymbols = cu.getRootScope().getAllSymbols();
++		writeSchemaSegment(out, allSymbols);
++		writeImportSegment(out, allSymbols);
++		writeExportSegment(out, allSymbols);
+ 		out.close();
+ 		return cu;
+ 	}
+@@ -153,6 +175,17 @@
+ 	}
+ 	
+ 	
++	
++	/** Get the array of exported symbols, in no particular order.
++	 * Currently just for DEF NEW [GLOBAL] SHARED symbols.
++	 */
++	public SymbolRef [] getExportTable() {
++		SymbolRef [] ret = new SymbolRef[exportList.size()];
++		exportList.toArray(ret);
++		return ret;
++	}
++	
++	
+ 
+ 	/** Get the array of file names. The file at index zero is always the compile unit.
+ 	 * The others are include files. The array index position corresponds to JPNode.getFileIndex().
+@@ -166,6 +199,17 @@
+ 	
+ 	
+ 	
++	/** Get the array of imported symbols, in no particular order.
++	 * Currently just for DEF SHARED symbols.
++	 */
++	public SymbolRef [] getImportTable() {
++		SymbolRef [] ret = new SymbolRef[importList.size()];
++		importList.toArray(ret);
++		return ret;
++	}
++	
++	
++
+ 	private ObjectInputStream getObjectInputStream() {
+ 		try {
+ 			InputStream fileIn = new BufferedInputStream(new FileInputStream(pubFile));
+@@ -205,6 +249,10 @@
+ 			if (lastSegmentToLoad==PUB.HEADER) return true;
+ 			readSchema(inStream);
+ 			if (lastSegmentToLoad==PUB.SCHEMA) return true;
++			readImportSegment(inStream);
++			if (lastSegmentToLoad==PUB.IMPORTS) return true;
++			readExportSegment(inStream);
++			if (lastSegmentToLoad==PUB.EXPORTS) return true;
+ 		} catch (IOException e1) {
+ 			return false;
+ 		} finally {
+@@ -215,6 +263,16 @@
+ 	
+ 	
+ 	
++	private void readExportSegment(ObjectInputStream in) throws IOException {
++		for (;;) {
++			SymbolRef symbolRef = new SymbolRef(in.readInt(), in.readUTF());
++			if (symbolRef.progressType == -1) break;
++			exportList.add(symbolRef);
++		}
++	}
++	
++
++	
+ 	private void readFileIndex(ObjectInputStream in) throws IOException {
+ 		int index;
+ 		String filename;
+@@ -228,6 +286,16 @@
+ 	
+ 	
+ 	
++	private void readImportSegment(ObjectInputStream in) throws IOException {
++		for (;;) {
++			SymbolRef symbolRef = new SymbolRef(in.readInt(), in.readUTF());
++			if (symbolRef.progressType == -1) break;
++			importList.add(symbolRef);
++		}
++	}
++	
++
++	
+ 	private void readSchema(ObjectInputStream in) throws IOException {
+ 		for (;;) {
+ 			String tableName = in.readUTF();
+@@ -266,6 +334,20 @@
+ 	
+ 	
+ 	
++	private void writeExportSegment(ObjectOutputStream out, List allSymbols) throws IOException {
++		for (Iterator it = allSymbols.iterator(); it.hasNext();) {
++			Symbol symbol = (Symbol) it.next();
++			if (symbol.isExported()) {
++				out.writeInt(symbol.getProgressType());
++				out.writeUTF(symbol.fullName()); // We write caseAsDefined
++			}
++		}
++		out.writeInt(-1);
++		out.writeUTF(&quot;&quot;);
++	}
++	
++	
++	
+ 	private void writeFileIndex(ObjectOutputStream out) throws IOException {
+ 		String [] files = parser.getFilenameArray();
+ 		for (int i = 0; i &lt; files.length; i++) {
+@@ -278,9 +360,22 @@
+ 	
+ 	
+ 	
+-	private void writeSchemaSegment(ObjectOutputStream out, SymbolScopeRoot rootScope) throws IOException {
+-		ArrayList allSymbols = rootScope.getAllSymbols();
++	private void writeImportSegment(ObjectOutputStream out, List allSymbols) throws IOException {
+ 		for (Iterator it = allSymbols.iterator(); it.hasNext();) {
++			Symbol symbol = (Symbol) it.next();
++			if (symbol.isImported()) {
++				out.writeInt(symbol.getProgressType());
++				out.writeUTF(symbol.fullName()); // We write caseAsDefined
++			}
++		}
++		out.writeInt(-1);
++		out.writeUTF(&quot;&quot;);
++	}
++	
++	
++	
++	private void writeSchemaSegment(ObjectOutputStream out, List allSymbols) throws IOException {
++		for (Iterator it = allSymbols.iterator(); it.hasNext();) {
+ 			Object obj = it.next();
+ 			if (obj instanceof TableBuffer) {
+ 				Table table = ((TableBuffer)obj).getTable();
+
+Modified: trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/unittest/PUBTest.java
+===================================================================
+--- trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/unittest/PUBTest.java	2005-05-04 21:17:51 UTC (rev 23)
++++ trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/unittest/PUBTest.java	2005-05-05 18:46:27 UTC (rev 24)
+@@ -15,6 +15,7 @@
+ import java.io.File;
+ import java.util.ArrayList;
+ 
++import org.prorefactor.core.TokenTypes;
+ import org.prorefactor.core.unittest.UnitTestBase2;
+ import org.prorefactor.refactor.PUB;
+ import org.prorefactor.refactor.RefactorSession;
+@@ -72,6 +73,18 @@
+ 		assertTrue(fields.size() == 1);
+ 		assertTrue(fields.get(0).toString().equals(&quot;name&quot;));
+ 
++		// Test the import table.
++		PUB.SymbolRef [] imports = pub.getImportTable();
++		PUB.SymbolRef imp = imports[0];
++		assertTrue(imp.progressType == TokenTypes.VARIABLE);
++		assertTrue(imp.symbolName.equals(&quot;sharedChar&quot;));
++		
++		// Test the export table.
++		PUB.SymbolRef [] exports = pub.getExportTable();
++		PUB.SymbolRef exp = exports[0];
++		assertTrue(exp.progressType == TokenTypes.FRAME);
++		assertTrue(exp.symbolName.equals(&quot;myFrame&quot;));
++		
+ 	}
+ 
+ }
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000018.html">[Prorefactor-svn] r23 - in trunk/org.prorefactor.core/src/org/prorefactor: . nodetypes treeparser treeparser01 widgettypes
+</A></li>
+	<LI>Next message: <A HREF="000020.html">[Prorefactor-svn] r25 - in trunk: org.prorefactor.antlr org.prorefactor.core
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19">[ date ]</a>
+              <a href="thread.html#19">[ thread ]</a>
+              <a href="subject.html#19">[ subject ]</a>
+              <a href="author.html#19">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">More information about the Prorefactor-svn
+mailing list</a><br>
+</body></html>

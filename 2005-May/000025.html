@@ -1,0 +1,2695 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Prorefactor-svn] r30 - in trunk: org.prorefactor.antlr org.prorefactor.core/src/org/prorefactor/core org.prorefactor.lib org.prorefactor.lib/stringtemplate org.prorefactor.refactor/src/org/prorefactor/refactor
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/prorefactor-svn/2005-May/index.html" >
+   <LINK REL="made" HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r30%20-%20in%20trunk%3A%20org.prorefactor.antlr%20org.prorefactor.core/src/org/prorefactor/core%20org.prorefactor.lib%20org.prorefactor.lib/stringtemplate%20org.prorefactor.refactor/src/org/prorefactor/refactor&In-Reply-To=%3C200505171629.j4HGTUmS023053%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000023.html">
+   <LINK REL="Next"  HREF="000026.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Prorefactor-svn] r30 - in trunk: org.prorefactor.antlr org.prorefactor.core/src/org/prorefactor/core org.prorefactor.lib org.prorefactor.lib/stringtemplate org.prorefactor.refactor/src/org/prorefactor/refactor</H1>
+    <B>John Green at BerliOS</B> 
+    <A HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r30%20-%20in%20trunk%3A%20org.prorefactor.antlr%20org.prorefactor.core/src/org/prorefactor/core%20org.prorefactor.lib%20org.prorefactor.lib/stringtemplate%20org.prorefactor.refactor/src/org/prorefactor/refactor&In-Reply-To=%3C200505171629.j4HGTUmS023053%40sheep.berlios.de%3E"
+       TITLE="[Prorefactor-svn] r30 - in trunk: org.prorefactor.antlr org.prorefactor.core/src/org/prorefactor/core org.prorefactor.lib org.prorefactor.lib/stringtemplate org.prorefactor.refactor/src/org/prorefactor/refactor">johnallengreen at sheep.berlios.de
+       </A><BR>
+    <I>Tue May 17 18:29:30 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000023.html">[Prorefactor-svn] r29 - in trunk/org.prorefactor.refactor/prorefactor/projects/sports2000/pubs/data: pub rename/t01/orig
+</A></li>
+        <LI>Next message: <A HREF="000026.html">[Prorefactor-svn] r31 - trunk/org.prorefactor.antlr
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#25">[ date ]</a>
+              <a href="thread.html#25">[ thread ]</a>
+              <a href="subject.html#25">[ subject ]</a>
+              <a href="author.html#25">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: johnallengreen
+Date: 2005-05-17 18:29:26 +0200 (Tue, 17 May 2005)
+New Revision: 30
+
+Added:
+   trunk/org.prorefactor.antlr/LICENSE.txt
+   trunk/org.prorefactor.antlr/README.txt
+   trunk/org.prorefactor.antlr/antlr.jar
+   trunk/org.prorefactor.antlr/antlrsrc.zip
+   trunk/org.prorefactor.antlr/version.txt
+   trunk/org.prorefactor.lib/stringtemplate/
+   trunk/org.prorefactor.lib/stringtemplate/doc.html
+   trunk/org.prorefactor.lib/stringtemplate/release.html
+   trunk/org.prorefactor.lib/stringtemplate/src.zip
+   trunk/org.prorefactor.lib/stringtemplate/stringtemplate.jar
+Modified:
+   trunk/org.prorefactor.antlr/.classpath
+   trunk/org.prorefactor.antlr/plugin.xml
+   trunk/org.prorefactor.core/src/org/prorefactor/core/TokenTypes.java
+   trunk/org.prorefactor.lib/.classpath
+   trunk/org.prorefactor.lib/build.properties
+   trunk/org.prorefactor.lib/plugin.xml
+   trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/PUB.java
+Log:
+Updated antlr to 2.7.5.
+Removed antlr src directory, added antlr src.zip.
+In TokenTypes, added default text for operators and punctuation, so that we aren't storing text strings for those nodes in the PUB files.
+In TokenTypes, renamed isKeyword and getKeywordText to hasDefaultText and getDefaultText.
+Added StringTemplate to ProRefactor's libraries.
+
+Modified: trunk/org.prorefactor.antlr/.classpath
+===================================================================
+--- trunk/org.prorefactor.antlr/.classpath	2005-05-13 21:40:06 UTC (rev 29)
++++ trunk/org.prorefactor.antlr/.classpath	2005-05-17 16:29:26 UTC (rev 30)
+@@ -1,7 +1,7 @@
+ &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+ &lt;classpath&gt;
+-	&lt;classpathentry kind=&quot;src&quot; path=&quot;src&quot;/&gt;
+ 	&lt;classpathentry kind=&quot;con&quot; path=&quot;org.eclipse.pde.core.requiredPlugins&quot;/&gt;
+ 	&lt;classpathentry kind=&quot;con&quot; path=&quot;org.eclipse.jdt.launching.JRE_CONTAINER&quot;/&gt;
++	&lt;classpathentry exported=&quot;true&quot; sourcepath=&quot;antlrsrc.zip&quot; kind=&quot;lib&quot; path=&quot;antlr.jar&quot;/&gt;
+ 	&lt;classpathentry kind=&quot;output&quot; path=&quot;bin&quot;/&gt;
+ &lt;/classpath&gt;
+
+Added: trunk/org.prorefactor.antlr/LICENSE.txt
+===================================================================
+--- trunk/org.prorefactor.antlr/LICENSE.txt	2005-05-13 21:40:06 UTC (rev 29)
++++ trunk/org.prorefactor.antlr/LICENSE.txt	2005-05-17 16:29:26 UTC (rev 30)
+@@ -0,0 +1,31 @@
++
++SOFTWARE RIGHTS
++
++ANTLR 1989-2004 Developed by Terence Parr
++Partially supported by University of San Francisco &amp; jGuru.com
++
++We reserve no legal rights to the ANTLR--it is fully in the
++public domain. An individual or company may do whatever
++they wish with source code distributed with ANTLR or the
++code generated by ANTLR, including the incorporation of
++ANTLR, or its output, into commerical software.
++
++We encourage users to develop software with ANTLR. However,
++we do ask that credit is given to us for developing
++ANTLR. By &quot;credit&quot;, we mean that if you use ANTLR or
++incorporate any source code into one of your programs
++(commercial product, research project, or otherwise) that
++you acknowledge this fact somewhere in the documentation,
++research report, etc... If you like ANTLR and have
++developed a nice tool with the output, please mention that
++you developed it using ANTLR. In addition, we ask that the
++headers remain intact in our source code. As long as these
++guidelines are kept, we expect to continue enhancing this
++system and expect to make other tools available as they are
++completed.
++
++The primary ANTLR guy:
++
++Terence Parr
+<A HREF="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">+parrt at cs.usfca.edu</A>
+<A HREF="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">+parrt at antlr.org</A>
+
+Added: trunk/org.prorefactor.antlr/README.txt
+===================================================================
+--- trunk/org.prorefactor.antlr/README.txt	2005-05-13 21:40:06 UTC (rev 29)
++++ trunk/org.prorefactor.antlr/README.txt	2005-05-17 16:29:26 UTC (rev 30)
+@@ -0,0 +1,362 @@
++                            A N T L R 
++======================================================================
++ *SOFTWARE RIGHTS*
++
++ ANTLR 1989-2004 Developed by Terence Parr
++ Partially supported by University of San Francisco &amp; jGuru.com
++
++ We reserve no legal rights to the ANTLR--it is fully in the
++ public domain. An individual or company may do whatever
++ they wish with source code distributed with ANTLR or the
++ code generated by ANTLR, including the incorporation of
++ ANTLR, or its output, into commerical software.
++
++ We encourage users to develop software with ANTLR. However,
++ we do ask that credit is given to us for developing
++ ANTLR. By &quot;credit&quot;, we mean that if you use ANTLR or
++ incorporate any source code into one of your programs
++ (commercial product, research project, or otherwise) that
++ you acknowledge this fact somewhere in the documentation,
++ research report, etc... If you like ANTLR and have
++ developed a nice tool with the output, please mention that
++ you developed it using ANTLR. In addition, we ask that the
++ headers remain intact in our source code. As long as these
++ guidelines are kept, we expect to continue enhancing this
++ system and expect to make other tools available as they are
++ completed.
++
++ The primary ANTLR guy:
++
++ Terence Parr
++ <A HREF="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">parrt at cs.usfca.edu</A>
++ <A HREF="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">parrt at antlr.org</A>
++
++______________________________________________________________________
++
++WELCOME TO ANTLR!
++
++If you have problems or think you have found a bug in ANTLR, see the
++section BUGS in the ANTLR manual.
++
++Please consult the INSTALL.txt file for information on tested
++configurations.  If you have a comment about an already tested
++configuration, or have tried ANTKR on a new configuration, please let 
++us know as described in INSTALL.txt. Free software only works if we 
++all help out.
++
++Finally, we cannot guarantee that this release will not completely 
++wipe out all of your work from your system.  We do some simple testing 
++before each release, but you are completely on your own.  We recommend
++testing this release on a source repository that is not critical to 
++your work.  
++
++         THIS SOFTWARE IS SUPPLIED COMPLETELY &quot;AS IS&quot;.  
++                       NO WARRANTY....
++
++Thanks for your support!
++
++  -The ANTLR Team-
++
++______________________________________________________________________
++
++WHAT IS ANTLR?
++
++ ANTLR, (AN)other (T)ool for (L)anguage (R)ecognition - formerly known 
++ as PCCTS - is a language tool that provides a framework for 
++ constructing recognizers, compilers, and translators from grammatical 
++ descriptions containing actions in the following languages:
++
++  Java, 
++  C++, 
++  C# or
++  Python
++ 
++ (You can use PCCTS 1.xx to generate C-based parsers).
++
++ Computer language translation has become a common task. While 
++ compilers and tools for traditional computer languages (such as C or 
++ Java) are still being built, their number is dwarfed by the thousands 
++ of mini-languages for which recognizers and translators are being 
++ developed. Programmers construct translators for database formats, 
++  graphical data files (e.g., PostScript, AutoCAD), text processing
++ files (e.g., HTML, SGML).  ANTLR is designed to handle all of your 
++ translation tasks.
++
++ Prof. Terence Parr has been working on ANTLR since 1989 and, together
++ with his colleagues, has made a number of fundamental contributions
++ to parsing theory and language tool construction, leading to the 
++ resurgence of LL(k)-based recognition tools.
++
++ Have a look at the history section at the end of this document on 
++ how ANTLR has evolved over time. For  most  up-to-date informaton 
++ read <A HREF="http://www.antlr.org/history.html.">http://www.antlr.org/history.html.</A>
++______________________________________________________________________
++
++UPGRADING?
++
++ See
++
++   <A HREF="http://www.antlr.org/blog/CHANGES-2.7.5.txt">http://www.antlr.org/blog/CHANGES-2.7.5.txt</A>
++
++ for a description of features new in this version. There are no
++ incompatibilties known to a previous 2.7.x installation. If you found
++ a problem please let us know.
++
++______________________________________________________________________
++
++
++INSTALLATION?
++
++ Please read the INSTALL.txt file for installation instructions. The
++ brief summary is:
++
++  $ ./configure 
++  $ make
++  $ make test         # optional
++  $ su root           # optional
++  $ make install
++
++______________________________________________________________________
++
++ANTLR IS INSTALLED - WHAT'S NEXT?
++
++ Please read &quot;doc/getting-started.html&quot; on what you are supposed to
++ do. Here's a very brief summary for the impatient:
++
++ ANTLR is a command line tool. To run ANTLR you need to have JAVA
++ installed. The basic steps are:
++
++  a. write a grammar file - mygrammar.g
++
++  b. run ANTLR like
++
++       $ CLASSPATH=antlr.jar
++
++       $ java antlr.Tool mygrammar.g
++
++  c. write a driver program using source code generated by ANTLR, ie.
++     Main.java, main.cpp, Main.cs or main.py
++
++  d. link generated code, your driver code, ANTLR's core library and
++     any additional library you are using together to get an 
++     executable
++
++  f. run the executable on arbitrary input to be parsed
++
++ For a set of standard examples have a look into directory &quot;examples&quot;
++ and appropriate subdirectories.
++
++______________________________________________________________________
++
++WANT TO KNOW MORE?
++  
++ The documentation is in the &quot;doc&quot; subdirectory and &quot;index.html&quot; is 
++ the main entry point. 
++
++ Further information available at
++
++ <A HREF="http://www.antlr.org">http://www.antlr.org</A>
++
++______________________________________________________________________
++
++WHO CONTRIBUTED TO THIS MESS?
++
++ Project Lead and Supreme Dictator Terence Parr, University of San 
++ Franciso
++
++ Help with initial coding John Lilly, Empathy Software 
++
++ C++ code generator by Peter Wells and Ric Klaren
++
++ C# code generation by Micheal Jordan, Kunle Odutola and Anthony 
++ Oguntimehin. 
++
++ Python's universe has been extended by Wolfgang H&#228;felinger and Marq 
++ Kole
++
++ Substantial intellectual effort donated by Loring Craymer, Monty 
++ Zukowski, Jim Coker, Scott Stanchfield, John Mitchell, Chapman 
++ Flack (UNICODE, streams)
++
++ Source changes for Eclipse and NetBeans by Marco van Meegen and 
++ Brian Smith
++
++ Infrastructure support from Perforce - The world's best source 
++ code control system
++
++
++______________________________________________________________________
++
++WANNA KNOW ABOUT ANTLR's HISTORY?
++
++ The PCCTS project began as a parser-generator project for a graduate 
++ course at Purdue University in the Fall of 1988 taught by Hank Dietz
++ &quot;translator-writing systems&quot;. Under the guidance of Professor Dietz, 
++ the parser generator, ANTLR (originally called YUCC), continued after
++ the termination of the course and eventually became the subject of 
++ Terence Parr&#146;s Master&#146;s thesis. Originally, lexical analysis was 
++ performed via a simple scanner generator which was soon replaced by 
++ Will Cohen&#146;s DLG in the Fall of 1989 (DFA-based lexical-analyzer 
++ generator, also an offshoot of the graduate translation course). 
++
++ The alpha version of ANTLR was totally rewritten resulting in 1.00B. 
++ Version 1.00B was released via an internet newsgroup (comp.compilers) 
++ posting in February of 1990 and quickly gathered a large following. 
++ 1.00B generated only LL(1) parsers, but allowed the merged 
++ description of lexical and syntactic analysis. It had rudimentary 
++ attribute handling similar to that of YACC and did not incorporate 
++ rule parameters or return values; downward inheritance was very 
++ awkward. 1.00B-generated parsers terminated upon the first syntax 
++ error. Lexical classes (modes) were not allowed and DLG did not have
++ an interactive mode. 
++
++ Upon starting his Ph.D. at Purdue in the Fall of 1990, Terence Parr
++ began the second total rewrite of ANTLR. The method by which grammars
++ may be practically analyzed to generate LL(k) lookahead information 
++ was discovered in August of 1990 just before Terence&#146;s return to 
++ Purdue. Version 1.00 incorporated this algorithm and included the AST
++ mechanism, lexical classes, error classes, and automatic error 
++ recovery; code quality and portability were higher. In February of 
++ 1992 1.00 was released via an article in SIGPLAN Notices. Peter Dahl,
++ then Ph.D. candidate, and Professor Matt O&#146;Keefe (both at the 
++ University of Minnesota) tested this version extensively. Dana 
++ Hoggatt (Micro Data Base Systems, Inc.) tested 1.00 heavily. 
++
++ Version 1.06 was released in December 1992 and represented a large 
++ feature enhancement over 1.00. For example, rudimentary semantic 
++ predicates were introduced, error messages were significantly 
++ improved for k&gt;1 lookahead and ANTLR parsers could indicate that 
++ lookahead fetches were to occur only when necessary for the parse 
++ (normally, the lookahead &quot;pipe&quot; was constantly full). Russell Quong
++ joined the project in the Spring of 1992 to aid in the semantic 
++ predicate design. Beginning and advanced tutorials were created and
++ released as well. A makefile generator was included that sets up 
++ dependencies and such correctly for ANTLR and DLG. Very few 1.00 
++ incompatibilities were introduced (1.00 was quite different from 
++ 1.00B in some areas). 
++
++ Version 1.10 was released on August 31, 1993 after Terence&#146;s release
++ from Purdue and incorporated bug fixes, a few feature enhancements 
++ and a major new capability -- an arbitrary lookahead operator 
++ (syntactic predicate), &quot;(a)?b&quot;. This feature was codesigned with 
++ Professor Russell Quong also at Purdue. To support infinite 
++ lookahead, a preprocessor flag, ZZINF_LOOK, was created that forced
++ the ANTLR() macro to tokenize all input prior to parsing. Hence, at 
++ any moment, an action or predicate could see the entire input 
++ sentence. The predicate mechanism of 1.06 was extended to allow 
++ multiple predicates to be hoisted; the syntactic context of a 
++ predicate could also be moved along with the predicate. 
++
++ In February of 1994, SORCERER was released. This tool allowed the
++ user to parse child-sibling trees by specifying a grammar rather than
++ building a recursive-descent tree walker by hand. Aaron Sawdey at The
++ University of Minnesota became a second author of SORCERER after the 
++ initial release. On April 1, 1994, PCCTS 1.20 was released. This was 
++ the first version to actively support C++ output. It also included 
++ important fixes regarding semantic predicates and (..)+ subrules. 
++ This version also introduced token classes, the &quot;not&quot; operator, and 
++ token ranges. 
++
++ On June 19, 1994, SORCERER 1.00B9 was released. Gary Funck of 
++ Intrepid Technology joined the SORCERER team and provided very 
++ valuable suggestions regarding the &quot;transform&quot; mode of SORCERER. 
++
++ On August 8, 1994, PCCTS 1.21 was released. It mainly cleaned up the
++ C++ output and included a number of bug fixes. 
++
++ From the 1.21 release forward, the maintenance and support of all 
++ PCCTS tools was picked up by Parr Research Corporation. 
++
++ A sophisticated error handling mechanism called &quot;parser exception 
++ handling&quot; was released for version 1.30. 1.31 fixed a few bugs. 
++
++ Release 1.33 is the version corresponding to the initial book release. 
++
++ ANTLR 2.0.0 came out around May 1997 and was partially funded so 
++ Terence hired John Lilley, a maniac coder and serious ANTLR hacker, 
++ to build much of the initial version. Terence did the grammar 
++ analyzer, naturally. 
++
++ John Mitchell, Jim Coker, Scott Stanchfield, and Monty Zukowski 
++ donate lots of brain power to ANTLR 2.xx in general. 
++
++ ANTLR 2.1.0, July 1997, mainly improved parsing performance, 
++ decreased parser memory requirements, and added a lot of cool lexer
++ features including a case-insensitivity option. 
++
++ ANTLR 2.2.0, December 1997, saw the introduction of the new 
++ <A HREF="http://www.antlr.org">http://www.antlr.org</A> website.  This release also added grammar 
++ inheritance, enhanced AST support, and enhanced lexical translation
++ support (each lexical rule now was considered to return a Token 
++ object even when referenced by another lexical rule). 
++
++ ANTLR 2.3.0, June 1998, was the first version to have Peter Wells
++ C++ code generator. 
++
++ ANTLR 2.4.0, September 1998, introduced the ParseView parser debugger
++ by Scott Stanchfield.  This version also had a semi-functional -html
++ option to generate HTML from your grammar for reading purposes. Scott
++ and Terence updated the file I/O to be JDK 1.1. 
++
++ ANTLR 2.5.0, November 1998, introduced the filter option for the lexer
++ that lets ANTLR behave like SED or AWK. 
++
++ ANTLR 2.6.0, March 1999, introduced token streams. Chapman Flack, 
++ Purdue Graduate student, pounded me at the right moment about streams,
++ nudging me in the right direction. 
++
++ MageLang Institute currently provides support and continues 
++ development of ANTLR. 
++
++ MageLang becomes jGuru.com as we quit doing Java training and start 
++ building the jGuru Java developer's website. 
++
++ 2.7.0 released January 19, 2000 had the following enhancements:
++
++  * Nongreedy subrules 
++  * Heterogeneous trees 
++  * Element options.  To support heterogeneous trees, elements such 
++    as token references may now include options. 
++  * Exception hierarchy redesign 
++  * XML serialization 
++  * Improved C++ code generator 
++  * New Sather code generator 
++
++ 2.7.1 released October 1, 2000 had the following enhancements 
++
++  * ANTLR now allows UNICODE characters because Terence made case-
++    statement expressions more efficient ;)  See the unicode example 
++    in the distribution and the brief blurb in the documentation. 
++  * Massively improved C++ code generator (Thanks to Ric Klaren). 
++  * Added automatic column setting support. 
++  * Ter added throws to tree and regular parsers . 
++
++ 2.7.2 release January 19, 2003 was mainly a bug fix release, 
++ 
++  * but also included a C# code generator by Micheal Jordan, Kunle 
++    Odutola and Anthony Oguntimehin. :) 
++  * I (who, Ter?) added an antlr.build.Tool 'cause I hate ANT. This
++    release does UNICODE properly now. Added limited lexical lookahead
++    hoisting. Sather code generator disappears. Source changes for 
++    Eclipse and NetBeans by Marco van Meegen and Brian Smith. 
++
++ 2.7.3 released March 22, 2004 was mainly a bug fix release, 
++
++  * but included the parse-tree/derivation code to aid in debugging 
++  * plus the cool TokenStreamRewriteEngine that makes rewriting or 
++    tweaking input files particularly easy. 
++
++ 2.7.4 released May 9, 2004 was mainly a bug fix release.
++
++ 2.7.5 release Xmas 2004 had the following enhancements:
++
++  * A Python code generator has been implemented and contributed
++    by Wolfang Haefelinger and Marq Kole.
++
++  * A new make/autoconf framework as been contributed by Wolfgang
++    Haefelinger
++
++  * A MSI based installer has been contributed by Wolfgang Haefelinger. 
++
++======================================================================
++             README.txt - last update December 18th, 2004
+
+Added: trunk/org.prorefactor.antlr/antlr.jar
+===================================================================
+(Binary files differ)
+
+
+Property changes on: trunk/org.prorefactor.antlr/antlr.jar
+___________________________________________________________________
+Name: svn:mime-type
+   + application/octet-stream
+
+Added: trunk/org.prorefactor.antlr/antlrsrc.zip
+===================================================================
+(Binary files differ)
+
+
+Property changes on: trunk/org.prorefactor.antlr/antlrsrc.zip
+___________________________________________________________________
+Name: svn:mime-type
+   + application/octet-stream
+
+Modified: trunk/org.prorefactor.antlr/plugin.xml
+===================================================================
+--- trunk/org.prorefactor.antlr/plugin.xml	2005-05-13 21:40:06 UTC (rev 29)
++++ trunk/org.prorefactor.antlr/plugin.xml	2005-05-17 16:29:26 UTC (rev 30)
+@@ -3,7 +3,7 @@
+ &lt;plugin
+    id=&quot;org.prorefactor.antlr&quot;
+    name=&quot;Antlr&quot;
+-   version=&quot;2.7.4&quot;
++   version=&quot;2.7.5&quot;
+    provider-name=&quot;antlr.org via prorefactor.org&quot;&gt;
+ 
+    &lt;runtime&gt;
+
+Added: trunk/org.prorefactor.antlr/version.txt
+===================================================================
+--- trunk/org.prorefactor.antlr/version.txt	2005-05-13 21:40:06 UTC (rev 29)
++++ trunk/org.prorefactor.antlr/version.txt	2005-05-17 16:29:26 UTC (rev 30)
+@@ -0,0 +1 @@
++Antlr version 2.7.5
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/core/TokenTypes.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/core/TokenTypes.java	2005-05-13 21:40:06 UTC (rev 29)
++++ trunk/org.prorefactor.core/src/org/prorefactor/core/TokenTypes.java	2005-05-17 16:29:26 UTC (rev 30)
+@@ -43,7 +43,7 @@
+ 		info.isNatural = true;
+ 		allTokens[1087] = info;
+ 
+-		assignKeywordsText();
++		assignDefaultText();
+ 	}
+ 	
+ 	private static TokenInfo getInfo(int tokenType) {
+@@ -57,9 +57,9 @@
+ 	/** For integer token types that represent a keyword in the
+ 	 * syntax, this returns the full keyword text/name.
+ 	 * @return null if invalid token type or is not a keyword according to Proparse.
+-	 * @see #isKeyword(int)
++	 * @see #hasDefaultText(int)
+ 	 */
+-	public static String getKeywordText(int tokenType) {
++	public static String getDefaultText(int tokenType) {
+ 		TokenInfo info = getInfo(tokenType);
+ 		if (info==null) return null;
+ 		return info.keywordText;
+@@ -94,7 +94,7 @@
+ 	 * a keyword type, ID is not.
+ 	 * See Proparse's node attribute documentation for NODE_TYPE_KEYWORD.
+ 	 */
+-	public static boolean isKeyword(int tokenType) {
++	public static boolean hasDefaultText(int tokenType) {
+ 		TokenInfo info = getInfo(tokenType);
+ 		if (info==null) return false;
+ 		return (info.keywordText != null);
+@@ -106,7 +106,36 @@
+ 	}
+ 
+ 	
+-	private static void assignKeywordsText() {
++	private static void assignDefaultText() {
++
++		// Operators and punctuation
++		allTokens[SLASH].keywordText = &quot;/&quot;;
++		allTokens[LEXCOLON].keywordText = &quot;:&quot;;
++		allTokens[OBJCOLON].keywordText = &quot;:&quot;;
++		allTokens[LEXAT].keywordText = &quot;@&quot;;
++		allTokens[LEFTBRACE].keywordText = &quot;[&quot;;
++		allTokens[RIGHTBRACE].keywordText = &quot;]&quot;;
++		allTokens[CARET].keywordText = &quot;^&quot;;
++		allTokens[COMMA].keywordText = &quot;,&quot;;
++		allTokens[EXCLAMATION].keywordText = &quot;!&quot;;
++		allTokens[EQUAL].keywordText = &quot;=&quot;;
++		allTokens[LEFTPAREN].keywordText = &quot;(&quot;;
++		allTokens[RIGHTPAREN].keywordText = &quot;)&quot;;
++		allTokens[SEMI].keywordText = &quot;;&quot;;
++		allTokens[STAR].keywordText = &quot;*&quot;;
++		allTokens[UNKNOWNVALUE].keywordText = &quot;?&quot;;
++		allTokens[BACKTICK].keywordText = &quot;`&quot;;
++		allTokens[NAMEDOT].keywordText = &quot;.&quot;;
++		allTokens[PERIOD].keywordText = &quot;.&quot;;
++		allTokens[GTOREQUAL].keywordText = &quot;&gt;=&quot;;
++		allTokens[RIGHTANGLE].keywordText = &quot;&gt;&quot;;
++		allTokens[GTORLT].keywordText = &quot;&lt;&gt;&quot;;
++		allTokens[LTOREQUAL].keywordText = &quot;&lt;=&quot;;
++		allTokens[LEFTANGLE].keywordText = &quot;&lt;&quot;;
++		allTokens[PLUS].keywordText = &quot;+&quot;;
++		allTokens[MINUS].keywordText = &quot;-&quot;;
++
++		// Keywords
+ 		allTokens[AACBIT].keywordText = &quot;_CBIT&quot;;
+ 		allTokens[AACONTROL].keywordText = &quot;_CONTROL&quot;;
+ 		allTokens[AALIST].keywordText = &quot;_LIST&quot;;
+
+Modified: trunk/org.prorefactor.lib/.classpath
+===================================================================
+--- trunk/org.prorefactor.lib/.classpath	2005-05-13 21:40:06 UTC (rev 29)
++++ trunk/org.prorefactor.lib/.classpath	2005-05-17 16:29:26 UTC (rev 30)
+@@ -15,5 +15,6 @@
+ 	&lt;classpathentry exported=&quot;true&quot; sourcepath=&quot;jakarta/commons-collections/src.zip&quot; kind=&quot;lib&quot; path=&quot;jakarta/commons-collections/commons-collections.jar&quot;/&gt;
+ 	&lt;classpathentry exported=&quot;true&quot; sourcepath=&quot;jakarta/commons-io/src.zip&quot; kind=&quot;lib&quot; path=&quot;jakarta/commons-io/commons-io.jar&quot;/&gt;
+ 	&lt;classpathentry exported=&quot;true&quot; sourcepath=&quot;jakarta/commons-lang/src.zip&quot; kind=&quot;lib&quot; path=&quot;jakarta/commons-lang/commons-lang.jar&quot;/&gt;
++	&lt;classpathentry exported=&quot;true&quot; sourcepath=&quot;stringtemplate/src.zip&quot; kind=&quot;lib&quot; path=&quot;stringtemplate/stringtemplate.jar&quot;/&gt;
+ 	&lt;classpathentry kind=&quot;output&quot; path=&quot;bin&quot;/&gt;
+ &lt;/classpath&gt;
+
+Modified: trunk/org.prorefactor.lib/build.properties
+===================================================================
+--- trunk/org.prorefactor.lib/build.properties	2005-05-13 21:40:06 UTC (rev 29)
++++ trunk/org.prorefactor.lib/build.properties	2005-05-17 16:29:26 UTC (rev 30)
+@@ -9,7 +9,8 @@
+                jakarta/,\
+                readme.txt,\
+                bin/,\
+-               prorefactor.lib.jar
++               prorefactor.lib.jar,\
++               stringtemplate/
+ src.includes = .classpath,\
+                .project,\
+                build.properties,\
+@@ -33,7 +34,8 @@
+                xml-apis.jar,\
+                readme.txt,\
+                jakarta/,\
+-               bin/
++               bin/,\
++               stringtemplate/
+ jars.compile.order = prorefactor.lib.jar
+ source.prorefactor.lib.jar = jakarta/commons-io-1.0/src/
+ output.prorefactor.lib.jar = bin/
+
+Modified: trunk/org.prorefactor.lib/plugin.xml
+===================================================================
+--- trunk/org.prorefactor.lib/plugin.xml	2005-05-13 21:40:06 UTC (rev 29)
++++ trunk/org.prorefactor.lib/plugin.xml	2005-05-17 16:29:26 UTC (rev 30)
+@@ -49,6 +49,9 @@
+       &lt;library name=&quot;jakarta/commons-lang/commons-lang.jar&quot;&gt;
+          &lt;export name=&quot;*&quot;/&gt;
+       &lt;/library&gt;
++      &lt;library name=&quot;stringtemplate/stringtemplate.jar&quot;&gt;
++         &lt;export name=&quot;*&quot;/&gt;
++      &lt;/library&gt;
+    &lt;/runtime&gt;
+ 
+ &lt;/plugin&gt;
+
+Added: trunk/org.prorefactor.lib/stringtemplate/doc.html
+===================================================================
+--- trunk/org.prorefactor.lib/stringtemplate/doc.html	2005-05-13 21:40:06 UTC (rev 29)
++++ trunk/org.prorefactor.lib/stringtemplate/doc.html	2005-05-17 16:29:26 UTC (rev 30)
+@@ -0,0 +1,1871 @@
++&lt;HTML&gt;
++&lt;HEAD&gt;
++&lt;body bgcolor=#FFFFFF text=#000000&gt;
++&lt;title&gt;StringTemplate Documentation&lt;/title&gt;
++&lt;/HEAD&gt;
++&lt;BODY&gt;
++&lt;H1&gt;StringTemplate Documentation&lt;/H1&gt;
++
++
++&lt;P&gt;Brought to you by that maniac that brings you
++&lt;A HREF=&quot;<A HREF="http://www.antlr.org">http://www.antlr.org</A>&quot;&gt;&lt;B&gt; ANTLR&lt;/B&gt;&lt;/A&gt;!
++
++&lt;P&gt;Terence Parr &lt;BR&gt;
++University of San Francisco &lt;BR&gt;
++&lt;TT&gt;<A HREF="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">parrt at cs.usfca.edu</A>&lt;/TT&gt; &lt;BR&gt;
++&lt;em&gt;Copyright 2003-2005&lt;/em&gt; &lt;BR&gt;
++&lt;A HREF=&quot;<A HREF="http://www.stringtemplate.org">http://www.stringtemplate.org</A>&quot;&gt;&lt;B&gt;<A HREF="http://www.stringtemplate.org&lt;/B">http://www.stringtemplate.org&lt;/B</A>&gt;&lt;/A&gt; &lt;BR&gt;
++(StringTemplate released under BSD License)
++
++&lt;P&gt;Version 2.1, January 22, 2005
++
++&lt;P&gt;Note that the &lt;TT&gt;TestStringTemplates.java&lt;/TT&gt; file has many tests that are
++an excellent set of examples.  Also, I highly recommend you read the
++(academic-oriented) paper,
++&lt;A HREF=&quot;<A HREF="http://www.cs.usfca.edu/~parrt/papers/mvc.templates.pdf">http://www.cs.usfca.edu/~parrt/papers/mvc.templates.pdf</A>&quot;&gt;&lt;B&gt; Enforcing
++Model-View Separation in Template Engines&lt;/B&gt;&lt;/A&gt;.  There are some more
++examples including nested menu generation that will be of interest.
++&lt;H2&gt;Acknowledgements&lt;/H2&gt;
++
++
++&lt;P&gt;Tom Burns (CEO jGuru.com) co-designed &lt;TT&gt;StringTemplate&lt;/TT&gt; and listened to
++me think out loud incessantly.  I would also like to thank Monty
++Zukowski for planting the &lt;TT&gt;template&lt;/TT&gt; &quot;meme&quot; in my head back in the mid
++1990's.  Loring Craymer and Monty both are helping me hone these ideas
++for use in source-to-source language translation.  Matthew Ford has done a
++huge amount of thinking about StringTemplate and has submitted numerous
++suggestions and patches.  Anthony Casalena at &lt;A HREF=&quot;<A HREF="http://www.squarespace.com">http://www.squarespace.com</A>&quot;&gt;&lt;B&gt;<A HREF="http://www.squarespace.com&lt;/B">http://www.squarespace.com&lt;/B</A>&gt;&lt;/A&gt; has been a big help beta-testing &lt;TT&gt;StringTemplate&lt;/TT&gt;.
++&lt;H2&gt;Introduction&lt;/H2&gt;
++
++
++&lt;P&gt;A &lt;TT&gt;StringTemplate&lt;/TT&gt; is a &quot;document&quot; with holes in it where you can
++stick values.  &lt;TT&gt;StringTemplate&lt;/TT&gt; breaks up your template into chunks of
++text and attribute expressions, which are by default enclosed in
++dollar signs &lt;TT&gt;$&lt;/TT&gt;&lt;em&gt;attribute-expression&lt;/em&gt;&lt;TT&gt;$&lt;/TT&gt; (to make them easy to see in
++HTML files).  &lt;TT&gt;StringTemplate&lt;/TT&gt; ignores everything outside of attribute
++expressions, treating it as just text to spit out when you call
++&lt;TT&gt;StringTemplate.toString()&lt;/TT&gt;.  For example, the following template has two chunks, a literal and a reference to attribute &lt;TT&gt;name&lt;/TT&gt;:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++Hello, $name$
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;Using templates in Java code is very easy. Here is the requisite example that prints &quot;&lt;TT&gt;Hello, World&lt;/TT&gt;&quot;:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++StringTemplate hello = new StringTemplate(&quot;Hello, $name$&quot;);
++hello.setAttribute(&quot;name&quot;, &quot;World&quot;);
++System.out.println(hello.toString());
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;&lt;TT&gt;StringTemplate&lt;/TT&gt; is not a &quot;system&quot; or &quot;engine&quot; or &quot;server&quot;; it's a
++library with two primary classes of interest: &lt;TT&gt;StringTemplate&lt;/TT&gt; and
++&lt;TT&gt;StringTemplateGroup&lt;/TT&gt;.  You can directly create a &lt;TT&gt;StringTemplate&lt;/TT&gt; in
++Java code, you can load a template from a file, and you can load a
++single file with many templates (a template group file).
++
++&lt;P&gt;&lt;TT&gt;StringTemplate&lt;/TT&gt; evolved over years developing the following sites:
++&lt;UL&gt;
++&lt;LI&gt;&lt;A HREF=&quot;<A HREF="http://www.jguru.com">http://www.jguru.com</A>&quot;&gt;&lt;B&gt;<A HREF="http://www.jguru.com&lt;/B">http://www.jguru.com&lt;/B</A>&gt;&lt;/A&gt;
++&lt;/LI&gt;
++&lt;LI&gt;&lt;A HREF=&quot;<A HREF="http://www.knowspam.net">http://www.knowspam.net</A>&quot;&gt;&lt;B&gt;<A HREF="http://www.knowspam.net&lt;/B">http://www.knowspam.net&lt;/B</A>&gt;&lt;/A&gt;
++&lt;/LI&gt;
++&lt;LI&gt;&lt;A HREF=&quot;<A HREF="http://www.peerscope.com">http://www.peerscope.com</A>&quot;&gt;&lt;B&gt;<A HREF="http://www.peerscope.com&lt;/B">http://www.peerscope.com&lt;/B</A>&gt;&lt;/A&gt;
++&lt;/LI&gt;
++&lt;LI&gt;&lt;A HREF=&quot;<A HREF="http://www.antlr.org">http://www.antlr.org</A>&quot;&gt;&lt;B&gt;<A HREF="http://www.antlr.org&lt;/B">http://www.antlr.org&lt;/B</A>&gt;&lt;/A&gt;
++&lt;/LI&gt;
++
++&lt;/UL&gt;
++
++&lt;P&gt;The need for dynamically-generated web pages, such as the book description pages at Amazon.com, has led to the development of numerous template engines in an attempt to make web application development easier, improve flexibility, reduce maintenance costs, and allow parallel code and HTML development.  These enticing benefits, which have driven the proliferation of template engines, derive entirely from a single principle: separating the specification of a page's business logic and data computations from the specification of how a page displays such information. With separate encapsulated specifications, template engines promote component reuse, pluggable site &quot;looks&quot;, single-points-of-change for common components, and high overall system clarity.  
++
++&lt;P&gt;StringTemplate distinguishes itself by strictly enforcing the separation of business logic from display. After examining hundreds of template files that I created over years of development, I found that I needed only the following four basic canonical operations:
++&lt;UL&gt;
++&lt;LI&gt;attribute reference; e.g., &lt;TT&gt;$phoneNumber$&lt;/TT&gt;
++&lt;/LI&gt;
++&lt;LI&gt;template reference (like #include or macro expansion); e.g., &lt;TT&gt;$searchbox()$&lt;/TT&gt;
++&lt;/LI&gt;
++&lt;LI&gt;conditional include of subtemplate (an IF statement); e.g., &lt;TT&gt;$if(title)$&lt;title&gt;$title$&lt;/title&gt;$endif$&lt;/TT&gt;
++&lt;/LI&gt;
++&lt;LI&gt;template application to list of attributes; e.g., &lt;TT&gt;$names:bold()$&lt;/TT&gt;
++&lt;/LI&gt;
++
++&lt;/UL&gt;
++
++&lt;P&gt;where template references can be recursive.  Things like setting variables, loops, arbitrary method calls into the model etc... are simply unnecessary and lead to entangled specifications.
++
++&lt;P&gt;While &lt;TT&gt;StringTemplate&lt;/TT&gt; evolved while I was building websites, in the back of my mind I kept wondering how useful it would be in my research area (parser generators and other code
++generators).  With the 2.0 release I have augmented &lt;TT&gt;StringTemplate&lt;/TT&gt;
++to better support text code generators such as auto-indentation and
++template group files.  Along with the group file format, you will see formal arguments for templates so that many previously-undetected errors can be trapped such as referencing an attribute that is not set by the controller.
++&lt;H2&gt;Defining Templates&lt;/H2&gt;
++
++&lt;H3&gt;Creating Templates With Java Code&lt;/H3&gt;
++
++
++&lt;P&gt;Here is a simple piece of Java that creates and uses a template on the fly:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++StringTemplate query =
++  new StringTemplate(&quot;SELECT $column$ FROM $table$;&quot;);
++query.setAttribute(&quot;column&quot;, &quot;name&quot;);
++query.setAttribute(&quot;table&quot;, &quot;User&quot;);
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;where &lt;TT&gt;StringTemplate&lt;/TT&gt; considers anything in &lt;TT&gt;$...$&lt;/TT&gt; to be something
++it needs to pay attention to.  By setting attributes, you are
++&quot;pushing&quot; values into the template for use when the template is
++printed out.  The attribute values are set by referencing their names.
++Invoking &lt;TT&gt;query.toString()&lt;/TT&gt; would yield
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++SELECT name FROM User;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;You can set an attribute multiple times, which simply means that the
++attribute is multi-valued.  For example, adding another
++&lt;TT&gt;setAttribute()&lt;/TT&gt; call makes attribute &lt;TT&gt;column&lt;/TT&gt; multi-valued:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++StringTemplate query =
++  new StringTemplate(&quot;SELECT $column$ FROM $table$;&quot;);
++query.setAttribute(&quot;column&quot;, &quot;name&quot;);
++query.setAttribute(&quot;column&quot;, &quot;email&quot;);
++query.setAttribute(&quot;table&quot;, &quot;User&quot;);
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;Invoking &lt;TT&gt;query.toString()&lt;/TT&gt; would now yield
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++SELECT nameemail FROM User;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;Ooops...there is no separator between the multiple values.  If you want a comma, say, between the column names, then change the template to record that formatting information:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++StringTemplate query =
++  new StringTemplate(&quot;SELECT $column; separator=\&quot;,\&quot;$ FROM $table$;&quot;);
++query.setAttribute(&quot;column&quot;, &quot;name&quot;);
++query.setAttribute(&quot;column&quot;, &quot;email&quot;);
++query.setAttribute(&quot;table&quot;, &quot;User&quot;);
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;Note that the right-hand-side of the separator specification in this case is a string literal; therefore, I have escaped the double-quotes as the template is specified in a Java string.  In general, the right-hand-side can be any attribute expression.  Invoking &lt;TT&gt;query.toString()&lt;/TT&gt; would now yield
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++SELECT name,email FROM User;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;Attributes can be any object at all.  &lt;TT&gt;StringTemplate&lt;/TT&gt; calls &lt;TT&gt;toString()&lt;/TT&gt; on each object as it writes the template out.  The separator is not used unless the attribute is multi-valued.
++&lt;H3&gt;Loading Templates From Files&lt;/H3&gt;
++
++
++&lt;P&gt;To load a template from the disk you must use a &lt;TT&gt;StringTemplateGroup&lt;/TT&gt;
++that will manage all the templates you load, caching them so you do
++not waste time talking to the disk for each template fetch request
++(you can change it to not cache; see below).  You may have multiple
++template groups.  Here is a simple example that loads the previous SQL
++template from file &lt;TT&gt;/tmp/theQuery.st&lt;/TT&gt;:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++SELECT $column; separator=&quot;,&quot;$ FROM $table$;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;The Java code creates a &lt;TT&gt;StringTemplateGroup&lt;/TT&gt; called &lt;TT&gt;myGroup&lt;/TT&gt; rooted
++at &lt;TT&gt;/tmp&lt;/TT&gt; so that requests for template &lt;TT&gt;theQuery&lt;/TT&gt; forces a load of
++file &lt;TT&gt;/tmp/theQuery.st&lt;/TT&gt;.
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++StringTemplateGroup group =
++  new StringTemplateGroup(&quot;myGroup&quot;, &quot;/tmp&quot;);
++StringTemplate query = group.getInstanceOf(&quot;theQuery&quot;);
++query.setAttribute(&quot;column&quot;, &quot;name&quot;);
++query.setAttribute(&quot;column&quot;, &quot;email&quot;);
++query.setAttribute(&quot;table&quot;, &quot;User&quot;);
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;If you have a directory hierarchy of templates such as file
++&lt;TT&gt;/tmp/jguru/bullet.st&lt;/TT&gt;, you would reference them relative to the root;
++in this case, you would ask for template &lt;TT&gt;jguru/bullet()&lt;/TT&gt;.
++
++&lt;P&gt;&lt;B&gt;Note&lt;/B&gt;: StringTemplate strips whitespace from the front and back of
++all loaded template files.  You can add, for example, &lt;TT&gt;&lt;\n&gt;&lt;/TT&gt; at the
++end of the file to get an extra carriage return.
++&lt;H3&gt;Loading Templates From CLASSPATH&lt;/H3&gt;
++
++
++&lt;P&gt;When deploying applications or providing a library for use by other programmers, you will not know where your templates files live specifically on the disk.  You will, however, know relative to the classpath where your templates reside.  For example, if your code is in package &lt;TT&gt;com.mycompany.server&lt;/TT&gt; you might put your templates in a &lt;TT&gt;templates&lt;/TT&gt; subdirectory of &lt;TT&gt;server&lt;/TT&gt;.  If you do not specify an absolute directory with the &lt;TT&gt;StringTemplateGroup&lt;/TT&gt; constructor, future loads via that group will happen relative to the &lt;TT&gt;CLASSPATH&lt;/TT&gt;.  For example, to load template file &lt;TT&gt;page.st&lt;/TT&gt; you would do the following:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++// Look for templates in CLASSPATH as resources
++StringTemplateGroup group = new StringTemplateGroup(&quot;mygroup&quot;);
++StringTemplate st = group.getInstanceOf(&quot;com/mycompany/server/templates/page&quot;);
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;If &lt;TT&gt;page.st&lt;/TT&gt; references, say, &lt;TT&gt;searchbox&lt;/TT&gt; template, it must be fully qualified as:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++&lt;font size=2&gt;SEARCH&lt;/font&gt;: $com/mycompany/server/templates/page/searchbox()$
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;This is inconvenient and I may add the invoking template's path prefix automatically in the future.
++&lt;H2&gt;StringTemplate Group Files&lt;/H2&gt;
++
++
++&lt;P&gt;2.0 introduces the notion of a group file that has two main attractions.  First, it allows you to define lots of small templates more conveniently because they may all be defined within a single file.  Second, you may specify formal template arguments that help &lt;TT&gt;StringTemplate&lt;/TT&gt; detect errors (such as setting unknown attributes) and make the templates easier to read.  Here is a sample group file (I'm using &lt;TT&gt;&lt;...&gt;&lt;/TT&gt; delimiters) with two templates, &lt;TT&gt;vardef&lt;/TT&gt; and &lt;TT&gt;method&lt;/TT&gt;, that could be used to generate C files:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++group simple;
++
++vardef(type,name) ::= &quot;&lt;type&gt; &lt;name&gt;;&quot;
++
++method(type,name,args) ::= &lt;&lt;
++&lt;type&gt; &lt;name&gt;(&lt;args; separator=&quot;,&quot;&gt;) {
++  &lt;statements; separator=&quot;\n&quot;&gt;
++}
++&gt;&gt;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;Single line templates are enclosed in double quotes while multi-line templates are enclosed in double angle-brackets. Every template must define arguments even if the formal argument list if blank.
++
++&lt;P&gt;Using templates in a group file is straightforwards.  A &lt;TT&gt;StringTemplateGroup&lt;/TT&gt; constructor accepts a &lt;TT&gt;Reader&lt;/TT&gt; so you can pass in a string or file or whatever:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++String templates =
++   &quot;group simple; vardef(type,name) ...&quot;; // templates from above
++StringTemplateGroup group = new StringTemplateGroup(new StringReader(templates));
++StringTemplate t = group.getInstanceOf(&quot;vardef&quot;);
++t.setAttribute(&quot;type&quot;, &quot;int&quot;);
++t.setAttribute(&quot;name&quot;, &quot;foo&quot;);
++System.out.println(t);
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;The output would be: &quot;&lt;TT&gt;int foo;&lt;/TT&gt;&quot;.
++&lt;H3&gt;Formal argument error handling&lt;/H3&gt;
++
++
++&lt;P&gt;When using a group file format to specify templates, you must specify the formal arguments for that template.  If you try to set an attribute that is not specifically formally defined that template, you will get a &lt;TT&gt;NoSuchElementException&lt;/TT&gt;.
++&lt;H3&gt;Newline handling&lt;/H3&gt;
++
++
++&lt;P&gt;The first newline following the &lt;TT&gt;&lt;&lt;&lt;/TT&gt; in a template definition is
++ignored as it is usually used just to get the first line of text for
++the template at the start of a line.  In other words, if you want to
++have a blank line at the start of your template, use:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++foo() ::= &lt;&lt;
++
++2nd line is not blank, but first is
++&gt;&gt;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;or
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++foo() ::= &lt;&lt;&lt;\n&gt;
++same as before; newline then this line
++&gt;&gt;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;The last newline before the &lt;TT&gt;&gt;&gt;&lt;/TT&gt; is also ignored and is included in
++the output.  To add a final newline, add an extra line or &lt;TT&gt;&lt;\n&gt;&lt;/TT&gt;
++before the &lt;TT&gt;&gt;&gt;&lt;/TT&gt;:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++foo() ::= &lt;&lt;
++rodent
++
++&gt;&gt;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;or
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++foo() ::= &lt;&lt;
++rodent&lt;\n&gt;
++&gt;&gt;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;Template:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++foo() ::= &lt;&lt;
++rodent
++&gt;&gt;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;on the other hand, is identical to
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++foo() ::= &quot;rodent&quot;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++&lt;H3&gt;Group file format&lt;/H3&gt;
++
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++group
++    :	&quot;group&quot; name:ID SEMI (template)*
++    ;
++
++template
++    :	name:ID LPAREN (args)? RPAREN DEFINED_TO_BE TEMPLATE
++    |   ID DEFINED_TO_BE ID // alias one template to be another
++    ;
++
++args:	ID (COMMA ID)*
++    ;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;TABLE cellspacing=0 border=1&gt;
++&lt;TR&gt;&lt;TD&gt;&lt;B&gt;An aside&lt;/B&gt;: All along, during my website construction days, I kept in mind that any text output follows a format and, thus, output sentences conform to a language.  Consequently, a grammar should describe the output rather than a bunch of ad hoc print statements in code.  This helped me formalize the study of templates because I could compare templates (output grammars) to well established ideas from formal language theory and context-free grammars.  This allowed me to show, among other things, that &lt;TT&gt;StringTemplate&lt;/TT&gt; can easily generate any document describable with an XML DTD even though it is deliberately limited.  The group file format should look very much like a grammar to you.
++&lt;/TD&gt;&lt;/TR&gt;
++&lt;/TABLE&gt;
++
++
++&lt;P&gt;See the scoping rules section for information on how formal arguments affect attribute look up.
++
++&lt;P&gt;I use &lt;TT&gt;.stg&lt;/TT&gt; file extension, which you might also want to use.
++&lt;H2&gt;Functionality Summary&lt;/H2&gt;
++
++&lt;H3&gt;Attribute References&lt;/H3&gt;
++
++&lt;H4&gt;Named attributes&lt;/H4&gt;
++
++
++&lt;P&gt;The most common thing in a template besides plain text is a simple named attribute reference such as:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++Your email: $email$
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;The template will look up the value of &lt;TT&gt;email&lt;/TT&gt; and insert it into the output stream when you ask the template to print itself out.  If &lt;TT&gt;email&lt;/TT&gt; has no value, then it evaluates to the empty string and nothing is printed out for that attribute expression.
++&lt;H4&gt;Property references&lt;/H4&gt;
++
++
++&lt;P&gt;If a named attribute is an aggregate with a property (ala JavaBeans), you may reference that property using &lt;em&gt;attribute&lt;/em&gt;.&lt;em&gt;property&lt;/em&gt;.  For example:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++Your name: $person.name$
++Your email: $person.email$
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;&lt;TT&gt;StringTemplate&lt;/TT&gt; ignores the actual object type stored in attribute
++&lt;TT&gt;person&lt;/TT&gt; and simply invokes &lt;TT&gt;getName()&lt;/TT&gt; and &lt;TT&gt;getEmail()&lt;/TT&gt; via
++reflection.  As a special case, StringTemplate tries &lt;TT&gt;x.isFoo()&lt;/TT&gt; for
++&lt;TT&gt;x.foo&lt;/TT&gt; if &lt;TT&gt;x&lt;/TT&gt; is &lt;TT&gt;Boolean&lt;/TT&gt;.
++
++&lt;P&gt;Because the type is ignored, you can pass in whatever existing Java aggregate (class) you have such as &lt;TT&gt;User&lt;/TT&gt; or &lt;TT&gt;Person&lt;/TT&gt;:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++User u = database.lookupPerson(&quot;<A HREF="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">parrt at jguru.com</A>&quot;);
++st.setAttribute(&quot;person&quot;, u);
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;Or, if a suitable aggregate doesn't exist, you can make a connector or &quot;glue&quot; object and pass that in instead:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++st.setAttribute(&quot;person&quot;, new Connector());
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;where &lt;TT&gt;Connector&lt;/TT&gt; is defined as:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++public class Connector {
++    public String getName() { return &quot;Terence&quot;; }
++    public String getEmail() { return &quot;<A HREF="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">parrt at jguru.com</A>&quot;; }
++}
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;The ability to reference aggregrate properties saves you the trouble
++of having to pull out the properties with Java code like this:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++User u = database.lookupPerson(&quot;<A HREF="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">parrt at jguru.com</A>&quot;);
++st.setAttribute(&quot;name&quot;, u.getName());
++st.setAttribute(&quot;email&quot;, u.getEmail());
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;and having template:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++Your name: $name$
++Your email: $email$
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;&lt;B&gt;Warning&lt;/B&gt;: The latter is more widely applicable and totally decoupled
++from code and logic; i.e., it's &quot;better&quot; but much less convenient.  Be
++very careful that the property methods do not have any side-effects
++like updating a counter or whatever.  This breaks the rule of order of
++evaluation independence.
++&lt;H4&gt;Map key/value pair access&lt;/H4&gt;
++
++
++&lt;P&gt;You may pass in instances of type &lt;TT&gt;HashMap&lt;/TT&gt; and &lt;TT&gt;Hashtable&lt;/TT&gt; but cannot
++pass in objects implementing the &lt;TT&gt;Map&lt;/TT&gt; because that would allow all
++sorts of wacky stuff like database access.   Rather than creating an
++aggregate object (though I make it easier for you with the automatic
++aggregate creation in the next section) you can pass in a &lt;TT&gt;HashMap&lt;/TT&gt;
++that has keys referencable within templates.  For example, 
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++StringTemplate a = new StringTemplate(&quot;$user.name$, $user.phone$&quot;);
++HashMap user = new HashMap();
++user.put(&quot;name&quot;, &quot;Terence&quot;);
++user.put(&quot;name&quot;, &quot;none-of-your-business&quot;);
++a.setAttribute(&quot;user&quot;, user);
++String results = a.toString();
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;yields a result of &quot;Terence, none-of-your-business&quot;.
++&lt;H4&gt;Automatic aggregate creation&lt;/H4&gt;
++
++
++&lt;P&gt;While Java anonymous inner classes are supposed to make creating and passing around aggregates easy, it turns out they have a nasty weakness: they are created with protections such that they are not visible outside their package.  In other words, if you want to avoid creating a separate class and want to use an anonymous class, &lt;TT&gt;StringTemplate&lt;/TT&gt; will receive an illegal access exception when trying to access the (public) property methods via reflection.  It stunned me too, but after hours of frustration, I can only conclude this is inescapable.  Anonymous classes are created with non-public access.  Anyway, I found a workaround that is better by augmenting &lt;TT&gt;StringTemplate&lt;/TT&gt; slightly.  You may pass in an aggregrate attribute name to &lt;TT&gt;setAttribute()&lt;/TT&gt; now:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++StringTemplate st =
++        new StringTemplate(&quot;$items:{$it.last$, $it.first$\n}$&quot;);
++st.setAttribute(&quot;items.{first,last}&quot;, &quot;John&quot;, &quot;Smith&quot;);
++st.setAttribute(&quot;items.{first,last}&quot;, &quot;Baron&quot;, &quot;Von Munchhausen&quot;);
++String expecting =
++        &quot;Smith, John\n&quot; +
++        &quot;Von Munchhausen, Baron\n&quot;;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;Note that the template, &lt;TT&gt;st&lt;/TT&gt;, expects the &lt;TT&gt;items&lt;/TT&gt; to be aggregates with properties &lt;TT&gt;first&lt;/TT&gt; and &lt;TT&gt;last&lt;/TT&gt;.  By using attribute name
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++items.{first,last}
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;You are telling &lt;TT&gt;StringTemplate&lt;/TT&gt; to take the following two arguments as properties &lt;TT&gt;first&lt;/TT&gt; and &lt;TT&gt;last&lt;/TT&gt;.  
++
++&lt;P&gt;I have created variants of the &lt;TT&gt;setAttribute()&lt;/TT&gt; method to handle from 2 to 5 properties.  This is really handy. :)
++&lt;H3&gt;Template References&lt;/H3&gt;
++
++
++&lt;P&gt;You may reference other templates to have them included just like the C language preprocessor &lt;TT&gt;#include&lt;/TT&gt; construct behaves.  For example, if you are building a web page (&lt;TT&gt;page.st&lt;/TT&gt;) that has a search box, you might want the search box stored in a separate template file, say, &lt;TT&gt;searchbox.st&lt;/TT&gt;.  This has two advantages:
++&lt;OL&gt;
++&lt;LI&gt;You can reuse the template over and over (no cut/paste)
++&lt;/LI&gt;
++&lt;LI&gt;You can change one template and all search boxes change on the whole site.
++&lt;/LI&gt;
++
++&lt;/OL&gt;
++
++&lt;P&gt;Using method call syntax, just reference the foreign template:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++&lt;html&gt;
++&lt;body&gt;
++...
++$searchbox()$
++...
++&lt;/body&gt;
++&lt;/html&gt;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;The invoking Java code would still just create the overall page and the enclosing page template would automatically create an instance of the referenced template and insert it:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++StringTemplateGroup group =
++  new StringTemplateGroup(&quot;webpages&quot;, &quot;/usr/local/site/templates&quot;);
++StringTemplate page = group.getInstanceOf(&quot;page&quot;);
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;If the template you want to reference, say &lt;TT&gt;searchbox&lt;/TT&gt;, is in a subdirectory of the &lt;TT&gt;StringTemplateGroup&lt;/TT&gt; root directory called &lt;TT&gt;misc&lt;/TT&gt;, then you must reference the template as: &lt;TT&gt;misc/searchbox()&lt;/TT&gt;.
++
++&lt;P&gt;The included template may access attributes.  How can you set the attribute of an included template?  There are two ways: inheriting attributes and passing parameters.
++&lt;H4&gt;Accessing Attributes Of Enclosing Template&lt;/H4&gt;
++
++
++&lt;P&gt;Any included template can reference the attributes of the enclosing template instance.  So if &lt;TT&gt;searchbox&lt;/TT&gt; references an attribute called &lt;TT&gt;resource&lt;/TT&gt;:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++&lt;form ...&gt;
++...
++&lt;input type=hidden name=resource value=$resource$&gt;
++...
++&lt;/form&gt;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;you could set attribute &lt;TT&gt;resource&lt;/TT&gt; in the enclosing template &lt;TT&gt;page&lt;/TT&gt;:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++StringTemplate page = group.getInstanceOf(&quot;page&quot;);
++page.setAttribute(&quot;resource&quot;, &quot;faqs&quot;);
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;This &quot;inheritance&quot; of attributes feature is particularly handy for setting generally useful attributes like &lt;TT&gt;siteFontTag&lt;/TT&gt;. 
++&lt;H4&gt;Passing Parameters To Another Template&lt;/H4&gt;
++
++
++&lt;P&gt;Another, more obvious, way to set the attributes of an included template is to pass in values as parameters, making them look like C macro invocations rather than includes.  The syntax looks like a set of attribute assignments:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++&lt;html&gt;
++&lt;body&gt;
++...
++$searchbox(resource=&quot;faqs&quot;)$
++...
++&lt;/body&gt;
++&lt;/html&gt;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;where I am setting the attribute of the included &lt;TT&gt;searchbox&lt;/TT&gt; to be the
++string literal &lt;TT&gt;&quot;faqs&quot;&lt;/TT&gt;.
++
++&lt;P&gt;The right-hand-side of the assignment may be any expression such as an attribute reference or even a reference to another template like this:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++$boldMe(item=copyrightNotice())$
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++&lt;H3&gt;Attribute Expressions&lt;/H3&gt;
++
++
++&lt;P&gt;When setting parameters or testing IF conditionals, you may find it handy to use the plus &quot;string concatenate&quot; operator.  For example, when building web pages, you will find it useful to create a template called &lt;TT&gt;link&lt;/TT&gt; and then use it to generate HTML link tags; you may want to change the way every link looks on your site and it's convenient to have one place to change things.  The template might look like:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++&lt;a href=&quot;$url$&quot;&gt;&lt;b&gt;$title$&lt;/b&gt;&lt;/a&gt;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;Then in a page template you might reference:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++...$link(url=&quot;<A HREF="http://www.jguru.com">http://www.jguru.com</A>&quot;, title=&quot;jGuru&quot;)$...
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;or you could use attributes to set the link parameters:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++...$link(url=person.homePage, title=person.name)$...
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;Sometimes you may want to compute the URL; usually it is enough to concatenate strings:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++...$link(url=&quot;/faq/view?ID=&quot;+faqid, title=faqtitle)$...
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;where &lt;TT&gt;faqid&lt;/TT&gt; and &lt;TT&gt;faqtitle&lt;/TT&gt; are attributes you would have to set for
++the template that referenced &lt;TT&gt;link&lt;/TT&gt;.
++
++&lt;P&gt;You may parenthesize any expression:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++...$link(url=(&quot;/faq/view?ID=&quot;+faqid), title=faqtitle)$...
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++&lt;H3&gt;Template Application&lt;/H3&gt;
++
++
++&lt;P&gt;Imagine a simple template called &lt;TT&gt;bold&lt;/TT&gt;:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++&lt;b&gt;$item$&lt;/b&gt;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;Just as with template &lt;TT&gt;link&lt;/TT&gt; described above, you can reference it from a template by invoking it like a method call:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++$bold(item=name)$
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;What if you want something bold and italicized?  You could simply nest the template reference:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++$bold(item=italics(item=name))$
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;where template &lt;TT&gt;italics&lt;/TT&gt; is defined as:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++&lt;i&gt;$item$&lt;/i&gt;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;using a different attribute with the same name, &lt;TT&gt;item&lt;/TT&gt;; the attributes have different values just like you would expect if these template references where Java method calls and &lt;TT&gt;item&lt;/TT&gt; were a local variable.  Parameters and attribute references are scoped like a programming language.
++
++&lt;P&gt;Think about what you are really trying to say here.  You want to say &quot;make name italics and then make it bold&quot;, or &quot;apply italics to the name and then apply bold.&quot;  There is an &quot;apply template&quot; syntax that is a literal translation:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++$name:italics():bold()$
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;where the templates are applied in the order specified from left to right.  This is much more clear, particularly if you had three templates to apply:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++$name:courierFont():italics():bold()$
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;For this syntax to work, however, the applied templates have to reference a standard attribute because you are not setting the attribute in a parameter assignment.  In general for syntax &lt;em&gt;expr&lt;/em&gt;:&lt;em&gt;template&lt;/em&gt;(), an attribute called &lt;TT&gt;it&lt;/TT&gt; is set to the value of &lt;em&gt;expr&lt;/em&gt;.  So, the definition of &lt;TT&gt;bold&lt;/TT&gt; (and analogously &lt;TT&gt;italics&lt;/TT&gt;), would have to be:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++&lt;b&gt;$it$&lt;/b&gt;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;to pick up the value of &lt;TT&gt;name&lt;/TT&gt; in our examples above.
++&lt;H4&gt;Applying Templates To Multi-Valued Attributes&lt;/H4&gt;
++
++
++&lt;P&gt;Where template application really shines though is when an attribute is multi-valued.  One of the most common web page generation issues is making lists of items either as bullet lists or table rows etc...  Applying a template to a multi-valued attribute means that you want the template applied to each of the values.
++
++&lt;P&gt;Consider a list of names (i.e., you set attribute &lt;TT&gt;names&lt;/TT&gt; multiple times) that you want in a bullet list.  If you have a template called &lt;TT&gt;listItem&lt;/TT&gt;:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++&lt;li&gt;$it$&lt;/li&gt;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;then you can do this:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++&lt;ul&gt;
++$names:listItem()$
++&lt;/ul&gt;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;and each name will appear as a bullet item. For example, if you set &lt;TT&gt;names&lt;/TT&gt; to &lt;TT&gt;&quot;Terence&quot;&lt;/TT&gt;, &lt;TT&gt;&quot;Tom&quot;&lt;/TT&gt;, and &lt;TT&gt;&quot;Jim&quot;&lt;/TT&gt;, then you would see:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++&lt;ul&gt;
++&lt;li&gt;Terence&lt;/li&gt;
++&lt;li&gt;Tom&lt;/li&gt;
++&lt;li&gt;Jim&lt;/li&gt;
++&lt;/ul&gt;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;in the output.
++
++&lt;P&gt;Whenever you apply a template to an attribute or multi-valued attribute, the default attribute &lt;TT&gt;it&lt;/TT&gt; is set.  Another attribute &lt;TT&gt;i&lt;/TT&gt; (of type &lt;TT&gt;Integer&lt;/TT&gt;) is also set to the value's index number starting from 1.  For example, if you wanted to make your own style of numbered list, you could reference &lt;TT&gt;i&lt;/TT&gt; to get the index:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++$names:numberedListItem()$
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;where template &lt;TT&gt;numberedListItem&lt;/TT&gt; is defined as:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++$i$. $it$&lt;br&gt;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;In this case, the output would be:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++1. Terence&lt;br&gt;
++2. Tom&lt;br&gt;
++3. Jim&lt;br&gt;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;If there is only one attribute value, then &lt;TT&gt;i&lt;/TT&gt; will be 1.
++&lt;H4&gt;Applying Multiple Templates To Multi-Valued Attributes&lt;/H4&gt;
++
++
++&lt;P&gt;The result of applying a template to a multi-valued attribute is another multi-valued attribute containing the results of the application.  You may apply another template to the results of the first template application, which comes in handy when you need to format the elements of a list before they go into the list.  For example, to bold the elements of a list do the following (given the appropriate template definitions from above):
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++$names:bold():listItem()$
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++ 
++
++&lt;P&gt;If you actually want to apply a template to the combined (string) result of a previous template application, enclose the previous application in parenthesis.  The parenthesis will force immediate evaluation of the template application, resulting in a string.  For example,
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++$(names:bold()):listItem()$
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++ 
++
++&lt;P&gt;results in a single list item full of a bunch of bolded names.  Without the parenthesis, you get a list of items that are bolded.
++&lt;H4&gt;Applying Alternating Templates To Multi-Valued Attributes&lt;/H4&gt;
++
++
++&lt;P&gt;When generating lists of things, you often need to change the color or other formatting instructions depending on the list position.  For example, you might want to alternate the color of the background for the elements of a list.  The easiest and most natural way to specify this is with an alternating list of templates to apply to an expression of the form: &lt;TT&gt;$&lt;/TT&gt;&lt;em&gt;expr&lt;/em&gt;:&lt;em&gt;t1&lt;/em&gt;(),&lt;em&gt;t2&lt;/em&gt;(),...,&lt;em&gt;tN&lt;/em&gt;()&lt;TT&gt;$&lt;/TT&gt;.  To make an alternating list of blue and green names, you might say:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++$names:blueListItem(),greenListItem()$
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;where presumably &lt;TT&gt;blueListItem&lt;/TT&gt; template is an HTML &lt;TT&gt;&lt;table&gt;&lt;/TT&gt; or something that lets you change background color.   &lt;TT&gt;names[0]&lt;/TT&gt; would get &lt;TT&gt;blueListItem()&lt;/TT&gt; applied to it, &lt;TT&gt;names[1]&lt;/TT&gt; would get &lt;TT&gt;greenListItem()&lt;/TT&gt;, and &lt;TT&gt;names[2]&lt;/TT&gt; would get &lt;TT&gt;blueListItem()&lt;/TT&gt;, etc...
++
++&lt;P&gt;If &lt;TT&gt;names&lt;/TT&gt; is single-valued, then &lt;TT&gt;blueListItem()&lt;/TT&gt; is applied and that's it.
++&lt;H4&gt;Applying Anonymous Templates&lt;/H4&gt;
++
++
++&lt;P&gt;Some templates are so simple or so unlikely to be reused that it seems a waste of time making a separate template file and then referencing it.  &lt;TT&gt;StringTemplate&lt;/TT&gt; provides &lt;em&gt;anonymous subtemplates&lt;/em&gt; to handle this case.  The templates are anonymous in the sense that they are not named; they are directly applied in a single instance.
++
++&lt;P&gt;For example, to show a name list do the following:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++&lt;ul&gt;
++$names:{&lt;li&gt;$it$&lt;/li&gt;}$
++&lt;/ul&gt;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;where anything enclosed in curlies is an anonymous subtemplate if, of course, it's within an attribute expression.  Note that in the subtemplate, I must enclose the &lt;TT&gt;it&lt;/TT&gt; reference in the template expression delimiters.  You have started a new template exactly like the surrounding template and you must distinguish between text and attribute expressions.
++
++&lt;P&gt;You can apply multiple templates very conveniently.  Here is the bold list of names again with anonymous templates:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++&lt;ul&gt;
++$names:{&lt;b&gt;$it$&lt;/b&gt;}:{&lt;li&gt;$it$&lt;/li&gt;}$
++&lt;/ul&gt;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;The output would look like:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++&lt;ul&gt;
++&lt;li&gt;&lt;b&gt;Terence&lt;/b&gt;&lt;/li&gt;
++&lt;li&gt;&lt;b&gt;Tom&lt;/b&gt;&lt;/li&gt;
++&lt;li&gt;&lt;b&gt;Jim&lt;/b&gt;&lt;/li&gt;
++&lt;/ul&gt;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;Anonymous templates work on single-valued attributes as well.
++&lt;H4&gt;Indirect template references&lt;/H4&gt;
++
++
++&lt;P&gt;Sometimes the name of the template you would like to include is itself
++a variable.  So, rather than using &quot;&lt;TT&gt;&lt;item:format()&gt;&lt;/TT&gt;&quot; you want the
++name of the template, &lt;TT&gt;format&lt;/TT&gt;, to be a variable rather than a
++literal.  Just enclose the template name in parenthesis to indicate
++you want the immediate value of that attribute and then add &lt;TT&gt;()&lt;/TT&gt; like
++a normal template invocation and you get &quot;&lt;TT&gt;&lt;item:(someFormat)()&gt;&lt;/TT&gt;&quot;,
++which means &quot;look up attribute &lt;TT&gt;someFormat&lt;/TT&gt; and use its value as a
++template name; appy to &lt;TT&gt;item&lt;/TT&gt;.&quot;  This deliberately looks similar to
++the C function call indirection through a function pointer (e.g.,
++&quot;&lt;TT&gt;(*fp)()&lt;/TT&gt;&quot; where fp is a pointer to a function).  A better way to look at
++it though is that the &lt;TT&gt;(someFormat)&lt;/TT&gt; implies &lt;em&gt;immediately evaluate someFormat and use as the template name&lt;/em&gt;.
++
++&lt;P&gt;Usually this &quot;variable template&quot; situation occurs when you have a list
++of items to format and each element may require a different template.
++Rather than have the controller code create a bunch of instances, one
++could consider it better to have &lt;TT&gt;StringTemplate&lt;/TT&gt; do the creation--the
++controller just names what format to use.
++
++&lt;P&gt;Consider generating a list of Java declarations that are initialized to 0, false, null, etc...  One solution is to define a template for &lt;TT&gt;int&lt;/TT&gt;, &lt;TT&gt;Object&lt;/TT&gt;, &lt;TT&gt;Array&lt;/TT&gt;, etc... declarations and then pass in an aggregate object that has the variable declaration object and the format.  In a template group file you might have:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++group Java;
++
++file(variables,methods) ::= &lt;&lt;
++&lt;variables:{&lt;it.decl:(it.format)()&gt;}; separator=&quot;\n&quot;&gt;
++&lt;methods&gt;
++&gt;&gt;
++intdecl() ::= &quot;int &lt;it.name&gt; = 0;&quot;
++intarray() ::= &quot;int[] &lt;it.name&gt; = null;&quot;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;Your code might look like:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++StringTemplateGroup group =
++        new StringTemplateGroup(new StringReader(templates),
++                AngleBracketTemplateLexer.class);
++StringTemplate f = group.getInstanceOf(&quot;file&quot;);
++f.setAttribute(&quot;variables.{decl,format}&quot;, new Decl(&quot;i&quot;,&quot;int&quot;), &quot;intdecl&quot;);
++f.setAttribute(&quot;variables.{decl,format}&quot;, new Decl(&quot;a&quot;,&quot;int-array&quot;), &quot;intarray&quot;);
++System.out.println(&quot;f=&quot;+f);
++String expecting = &quot;&quot;+newline+newline;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;For this simple unit test, I used the following dummy decl class:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++public static class Decl {
++    String name;
++    String type;
++    public Decl(String name, String type) {this.name=name; this.type=type;}
++    public String getName() {return name;}
++    public String getType() {return type;}
++}
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;The value of &lt;TT&gt;f.toString()&lt;/TT&gt; is:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++int i = 0;
++int[] a = null;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;Missing attributes (i.e., &lt;TT&gt;null&lt;/TT&gt; valued attributes) used as indirect
++template attribute generate nothing just like referencing a missing
++attribute.
++&lt;H3&gt;Conditionally Included Subtemplates (IF statements)&lt;/H3&gt;
++
++
++&lt;P&gt;There are many situations when you want to conditionally include some text or another template.  &lt;TT&gt;StringTemplate&lt;/TT&gt; provides simple IF-statements to let you specify conditional includes.  For example, in a dynamic web page you usually want a slightly different look depending on whether or not the viewer is &quot;logged in&quot; or not.  Without a conditional include, you would need two templates: &lt;TT&gt;page_logged_in&lt;/TT&gt; and &lt;TT&gt;page_logged_out&lt;/TT&gt;.  You can use a single &lt;TT&gt;page&lt;/TT&gt; definition with &lt;TT&gt;if(&lt;/TT&gt;&lt;em&gt;expr&lt;/em&gt;&lt;TT&gt;)&lt;/TT&gt; attribute actions instead:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++&lt;html&gt;
++...
++&lt;body&gt;
++$if(member)$
++$gutter/top_gutter_logged_in()$
++$else$
++$gutter/top_gutter_logged_out()$
++$endif$
++...
++&lt;/body&gt;
++&lt;/html&gt;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++ 
++
++&lt;P&gt;where template &lt;TT&gt;top_gutter_logged_in&lt;/TT&gt; is located in the &lt;TT&gt;gutter&lt;/TT&gt; subdirectory of my &lt;TT&gt;StringTemplateGroup&lt;/TT&gt;.
++
++&lt;P&gt;IF actions test the presence or absence of an attribute unless the
++object is a &lt;TT&gt;Boolean&lt;/TT&gt;, in which case it tests the attribute for
++&lt;TT&gt;true&lt;/TT&gt;/&lt;TT&gt;false&lt;/TT&gt;.  The only operator allowed is &quot;not&quot; and means either
++&quot;not present&quot; or &quot;not true&quot;.  For example,
++&quot;&lt;TT&gt;$if(!member)$...$endif$&lt;/TT&gt;&quot;.
++&lt;H4&gt;Whitespace in conditionals issue&lt;/H4&gt;
++
++
++&lt;P&gt;There is a simple, but not perfect rule: kill a single newline &lt;B&gt;after&lt;/B&gt;
++&lt;TT&gt;&lt;if&gt;&lt;/TT&gt;, &lt;TT&gt;&lt;&lt;&lt;/TT&gt;, &lt;TT&gt;&lt;else&gt;&lt;/TT&gt;, and &lt;TT&gt;&lt;endif&gt;&lt;/TT&gt; (but for &lt;TT&gt;&lt;endif&gt;&lt;/TT&gt; only if it's
++on a line by itself) . Kill newlines &lt;B&gt;before&lt;/B&gt; &lt;TT&gt;&lt;else&gt;&lt;/TT&gt; and &lt;TT&gt;&lt;endif&gt;&lt;/TT&gt;
++and &lt;TT&gt;&gt;&gt;&lt;/TT&gt;.  For example,
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++a &lt;if(foo)&gt;big&lt;else&gt;small&lt;endif&gt; dog
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;is identical to:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++a &lt;if(foo)&gt;
++big
++&lt;else&gt;
++small
++&lt;endif&gt;
++ dog
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;It is very difficult to get the newline rule to work &quot;properly&quot;
++because sometimes you want newlines and sometimes you don't.  I
++decided to chew up as many as is reasonable and then let you
++explicitly say &lt;TT&gt;&lt;\n&gt;&lt;/TT&gt; when you need to.
++&lt;H3&gt;Template visualization&lt;/H3&gt;
++
++
++&lt;P&gt;Sometimes you use or define templates improperly.  Either you set an
++attribute that is not used or forget to set one or reference the wrong
++template etc...  I have made a toy visualization tool via that shows
++both the attributes and the way &lt;TT&gt;StringTemplate&lt;/TT&gt; breaks up your
++template into chunks.  It properly handles &lt;TT&gt;StringTemplate&lt;/TT&gt; objects as
++attributes and other nested structures.  Here is the way to launch a
++Swing frame to view your template:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++StringTemplate st = ...;
++StringTemplateTreeView viz =
++    new StringTemplateTreeView(&quot;sample&quot;,st);
++viz.setVisible(true);
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;Here is a snapshot (note that due some weird font thing on my os x
++box, the first &lt;TT&gt;&lt;html&gt;&lt;/TT&gt; text chunk is missing in the display.) :( The
++display is associated with the fill-a-table example below.
++
++&lt;P&gt; &lt;img src=&quot;page.treeview.jpg&quot;  &gt; 
++
++&lt;P&gt;If you turn on &quot;lint mode&quot; via &lt;TT&gt;StringTemplate.setLintMode(true)&lt;/TT&gt; then
++you may access attribute &lt;TT&gt;attributes&lt;/TT&gt;, which is a text string that
++recursively dumps out types, properties, etc... It does not print out
++their values.
++&lt;H2&gt;Functionality Summary&lt;/H2&gt;
++
++
++&lt;TABLE cellspacing=0 border=1&gt;
++&lt;TR&gt;&lt;TD&gt;
++&lt;B&gt;Syntax&lt;/B&gt; &lt;/TD&gt;&lt;TD&gt; &lt;B&gt;Description&lt;/B&gt;
++&lt;/TD&gt;
++&lt;/TR&gt;
++&lt;TR&gt;
++&lt;TD&gt;
++&lt;&lt;em&gt;attribute&lt;/em&gt;&gt;
++&lt;/TD&gt;&lt;TD&gt; Evaluates to the value of &lt;em&gt;attribute&lt;/em&gt;&lt;TT&gt;.toString()&lt;/TT&gt; if it exists else empty string.
++&lt;/TD&gt;
++&lt;/TR&gt;
++&lt;TR&gt;
++&lt;TD&gt;
++&lt;&lt;em&gt;multi-valued-attribute&lt;/em&gt;&gt;
++&lt;/TD&gt;&lt;TD&gt; Concatenation of &lt;TT&gt;toString()&lt;/TT&gt; invoked on each element.  If &lt;em&gt;multi-valued-attribute&lt;/em&gt; is missing this evaluates to the empty string.
++&lt;/TD&gt;
++&lt;/TR&gt;
++&lt;TR&gt;
++&lt;TD&gt;
++&lt;&lt;em&gt;multi-valued-attribute&lt;/em&gt;; separator=&lt;em&gt;expr&lt;/em&gt;&gt;
++&lt;/TD&gt;&lt;TD&gt; Concatenation of &lt;TT&gt;toString()&lt;/TT&gt; invoked on each element separated by &lt;em&gt;expr&lt;/em&gt;. 
++&lt;/TD&gt;
++&lt;/TR&gt;
++&lt;TR&gt;
++&lt;TD&gt;
++&lt;&lt;em&gt;template&lt;/em&gt;(&lt;em&gt;argument-list&lt;/em&gt;)&gt;
++&lt;/TD&gt;&lt;TD&gt; Include &lt;em&gt;template&lt;/em&gt;.  The &lt;em&gt;argument-list&lt;/em&gt; is a list of attribute assignments where each assignment is of the form &lt;em&gt;attribute&lt;/em&gt;=&lt;em&gt;expr&lt;/em&gt;.
++&lt;/TD&gt;
++&lt;/TR&gt;
++&lt;TR&gt;
++&lt;TD&gt;
++&lt;&lt;em&gt;(expr)&lt;/em&gt;(&lt;em&gt;argument-list&lt;/em&gt;)&gt;
++&lt;/TD&gt;&lt;TD&gt; Include &lt;em&gt;template&lt;/em&gt; whose name is computed via &lt;em&gt;expr&lt;/em&gt;.  The &lt;em&gt;argument-list&lt;/em&gt; is a list of attribute assignments where each assignment is of the form &lt;em&gt;attribute&lt;/em&gt;=&lt;em&gt;expr&lt;/em&gt;.  Example &lt;TT&gt;$(titleFont)()$&lt;/TT&gt; looks up &lt;TT&gt;titleFont&lt;/TT&gt;'s value and uses that as template name.  Can also apply an indirect template to an attribute.
++&lt;/TD&gt;
++&lt;/TR&gt;
++&lt;TR&gt;
++&lt;TD&gt;
++&lt;&lt;em&gt;attribute&lt;/em&gt;:&lt;em&gt;template&lt;/em&gt;(&lt;em&gt;argument-list&lt;/em&gt;)&gt;
++&lt;/TD&gt;&lt;TD&gt; Apply &lt;em&gt;template&lt;/em&gt; to &lt;em&gt;attribute&lt;/em&gt;.  The optional &lt;em&gt;argument-list&lt;/em&gt; is evaluated before application so that you can set attributes within &lt;em&gt;template&lt;/em&gt;.  The default attribute &lt;TT&gt;it&lt;/TT&gt; is set to the value of &lt;em&gt;attribute&lt;/em&gt;.  Example: &lt;TT&gt;$data:bold()&lt;/TT&gt; applies &lt;TT&gt;bold()&lt;/TT&gt; to &lt;TT&gt;data&lt;/TT&gt;'s value.  If &lt;em&gt;attribute&lt;/em&gt; is multi-valued, then the optional &lt;em&gt;argument-list&lt;/em&gt; is evaluated before each application so that you can set attributes within &lt;em&gt;template&lt;/em&gt;.  Also, the default attribute &lt;TT&gt;it&lt;/TT&gt; is set to the value of each element in turn.
++&lt;/TD&gt;
++&lt;/TR&gt;
++&lt;TR&gt;
++&lt;TD&gt;
++&lt;&lt;em&gt;attribute&lt;/em&gt;:&lt;em&gt;(expr)&lt;/em&gt;(&lt;em&gt;argument-list&lt;/em&gt;)&gt;
++&lt;/TD&gt;&lt;TD&gt; Apply &lt;em&gt;template&lt;/em&gt;, whose name is computed from &lt;em&gt;expr&lt;/em&gt;, to &lt;em&gt;attribute&lt;/em&gt;.  The optional &lt;em&gt;argument-list&lt;/em&gt; is evaluated before application so that you can set attributes within &lt;em&gt;template&lt;/em&gt;.  The default attribute &lt;TT&gt;it&lt;/TT&gt; is set to the value of &lt;em&gt;attribute&lt;/em&gt;.  Example &lt;TT&gt;$data:(name)()$&lt;/TT&gt; looks up &lt;TT&gt;name&lt;/TT&gt;'s value and uses that as template name to apply to &lt;TT&gt;data&lt;/TT&gt;.
++&lt;/TD&gt;
++&lt;/TR&gt;
++&lt;TR&gt;
++&lt;TD&gt;
++&lt;&lt;em&gt;multi-valued-attribute&lt;/em&gt;:&lt;em&gt;t1&lt;/em&gt;(&lt;em&gt;argument-list&lt;/em&gt;): ... :&lt;em&gt;tN&lt;/em&gt;(&lt;em&gt;argument-list&lt;/em&gt;)&gt;
++&lt;/TD&gt;&lt;TD&gt; Apply multiple templates in order from left to right.  The result of a template application upon a multi-valued attribute is another multi-valued attribute.  The overall expression evaluates to the concatenation of all elements of the final multi-valued attribute resulting from &lt;em&gt;templateN&lt;/em&gt;'s application. 
++&lt;/TD&gt;
++&lt;/TR&gt;
++&lt;TR&gt;
++&lt;TD&gt;
++&lt;&lt;em&gt;attribute&lt;/em&gt;:{&lt;em&gt;anonymous-template&lt;/em&gt;}&gt;
++&lt;/TD&gt;&lt;TD&gt; Concatenate the results of applying a template with no name to each element of &lt;em&gt;multi-valued-attribute&lt;/em&gt;.
++&lt;/TD&gt;
++&lt;/TR&gt;
++&lt;TR&gt;
++&lt;TD&gt;
++&lt;&lt;em&gt;attribute&lt;/em&gt;:&lt;em&gt;t1&lt;/em&gt;(),&lt;em&gt;t2&lt;/em&gt;(),...,&lt;em&gt;tN&lt;/em&gt;()&gt;
++&lt;/TD&gt;&lt;TD&gt; Apply an alternating list of templates to the elements of &lt;em&gt;attribute&lt;/em&gt;.
++&lt;/TD&gt;
++&lt;/TR&gt;
++&lt;TR&gt;
++&lt;TD&gt;
++&lt;if(&lt;em&gt;attribute&lt;/em&gt;)&gt;&lt;em&gt;subtemplate&lt;/em&gt;
++&lt;else&gt;&lt;em&gt;subtemplate2&lt;/em&gt;
++&lt;endif&gt;
++&lt;/TD&gt;&lt;TD&gt; If &lt;em&gt;attribute&lt;/em&gt; has a value or is a &lt;TT&gt;true&lt;/TT&gt; &lt;TT&gt;Boolean&lt;/TT&gt; object, include &lt;em&gt;subtemplate&lt;/em&gt; else include &lt;em&gt;subtemplate2&lt;/em&gt;.  These conditionals may be nested.
++&lt;/TD&gt;
++&lt;/TR&gt;
++&lt;TR&gt;
++&lt;TD&gt;
++&lt;if(!&lt;em&gt;attribute&lt;/em&gt;)&gt;&lt;em&gt;subtemplate&lt;/em&gt;&lt;endif&gt;
++&lt;/TD&gt;&lt;TD&gt; If &lt;em&gt;attribute&lt;/em&gt; has no value or is a &lt;TT&gt;false&lt;/TT&gt; &lt;TT&gt;Boolean&lt;/TT&gt; object, include &lt;em&gt;subtemplate&lt;/em&gt;.  These conditionals may be nested.
++&lt;/TD&gt;
++&lt;/TR&gt;
++&lt;TR&gt;
++&lt;TD&gt;
++&lt;TT&gt;\$&lt;/TT&gt; or &lt;TT&gt;\&lt;&lt;/TT&gt; &lt;/TD&gt;&lt;TD&gt; escaped delimiter prevents &lt;TT&gt;$&lt;/TT&gt; or &lt;TT&gt;&lt;&lt;/TT&gt; from starting an attribute
++expression and results in that single character.
++&lt;/TD&gt;
++&lt;/TR&gt;
++&lt;TR&gt;
++&lt;TD&gt;
++&lt;TT&gt;&lt;\ &gt;&lt;/TT&gt;, &lt;TT&gt;&lt;\n&gt;&lt;/TT&gt;, &lt;TT&gt;&lt;\t&gt;&lt;/TT&gt;, &lt;TT&gt;&lt;\r&gt;&lt;/TT&gt; &lt;/TD&gt;&lt;TD&gt; special characters: space, newline,
++tab, carriage return.
++&lt;/TD&gt;
++&lt;/TR&gt;
++&lt;TR&gt;
++&lt;TD&gt;
++&lt;TT&gt;&lt;! comment !&gt;&lt;/TT&gt;, &lt;TT&gt;$! comment !$&lt;/TT&gt; &lt;/TD&gt;&lt;TD&gt; Comments, ignored by StringTemplate.
++&lt;/TD&gt;&lt;/TR&gt;
++&lt;/TABLE&gt;
++
++&lt;H2&gt;Setting the Expression Delimiters&lt;/H2&gt;
++
++
++&lt;P&gt;By default, expressions in a template are delimited by dollar signs:
++&lt;TT&gt;$...$&lt;/TT&gt;.  This works great for the most common case of HTML generation
++because the attribute expressions are clearly highlighted in the text.
++Sometimes, with other formats like SQL statement generation, you may
++want to change the template expression delimiters to avoid a conflict
++and to make the expressions stand out.
++
++&lt;P&gt;As of 2.0, the start and stop strings are limited to either &lt;TT&gt;$...$&lt;/TT&gt; or &lt;TT&gt;&lt;...&gt;&lt;/TT&gt; (unless you build your own lexical analyzer to break apart templates into chunks).
++
++&lt;P&gt;To use the angle bracket delimiters you must create a &lt;TT&gt;StringTemplateGroup&lt;/TT&gt;:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++StringTemplateGroup group =
++  new StringTemplateGroup(&quot;sqlstuff&quot;, &quot;/tmp&quot;, AngleBracketTemplateLexer.class);
++StringTemplate query =
++  new StringTemplate(group, &quot;SELECT &lt;column&gt; FROM &lt;table&gt;;&quot;);
++query.setAttribute(&quot;column&quot;, &quot;name&quot;);
++query.setAttribute(&quot;table&quot;, &quot;User&quot;);
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;All templates created through the group or in anyway associated with
++the group will assume your the angle bracket delimiters.  It's smart to be
++consistent across all files of similar type such as &quot;all HTML
++templates use &lt;TT&gt;$...$&lt;/TT&gt;&quot; and &quot;all SQL templates use &lt;TT&gt;&lt;...&gt;&lt;/TT&gt;&quot;.
++&lt;H2&gt;Caching&lt;/H2&gt;
++
++
++&lt;P&gt;By default templates are loaded from disk just once.  During
++development, however, it is convenient to turn caching off.  Also, you
++may want to turn off caching so that you can quickly update a running
++site.  You can set a simple refresh interval using
++&lt;TT&gt;StringTemplateGroup.setRefreshInterval(...)&lt;/TT&gt;.  When the interval is
++reached, all templates are thrown out.  Set interval to 0 to refresh
++constantly (no caching).  Set the interval to a huge number like
++&lt;TT&gt;Integer.MAX_INT&lt;/TT&gt; to have no refreshing at all.
++&lt;H2&gt;Template Inheritance&lt;/H2&gt;
++
++
++&lt;P&gt;Recall that a StringTemplateGroup is a collection of related templates such as all templates associated with the look of a web site. If you want to design a similar look for that site (such as for premium users), you don't really want to cut-n-paste the original template files for use in the new look. Changes to the original will not be propogated to the new look.
++
++&lt;P&gt;Just like you would do with a class definition, a template group may inherit templates from  another group, the &lt;em&gt;supergroup&lt;/em&gt;.  If template &lt;em&gt;t&lt;/em&gt; is not found in a group, it is looked up in the supergroup, if present.  This works regardless of whether you use a group file format or load templates from the disk via a &lt;TT&gt;StringTemplateGroup&lt;/TT&gt; object.  Currently you cannot use the group file syntax to specify a supergroup.  I am investigating how this should work.  In the meantime, you must explicitly set the super.
++
++&lt;P&gt;From my unit tests, here is a simple inheritance of a template, &lt;TT&gt;bold&lt;/TT&gt;:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++StringTemplateGroup supergroup = new StringTemplateGroup(&quot;super&quot;);
++StringTemplateGroup subgroup = new StringTemplateGroup(&quot;sub&quot;);
++supergroup.defineTemplate(&quot;bold&quot;, &quot;&lt;b&gt;$it$&lt;/b&gt;&quot;);
++subgroup.setSuperGroup(supergroup);
++StringTemplate st = new StringTemplate(subgroup, &quot;$name:bold()$&quot;);
++st.setAttribute(&quot;name&quot;, &quot;Terence&quot;);
++String expecting = &quot;&lt;b&gt;Terence&lt;/b&gt;&quot;;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;The supergroup has a bold definition but the subgroup does not.  Referencing &lt;TT&gt;$name:bold()$&lt;/TT&gt; works because subgroup looks into its supergroup if it is not found.
++
++&lt;P&gt;You may override templates:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++supergroup.defineTemplate(&quot;bold&quot;, &quot;&lt;b&gt;$it$&lt;/b&gt;&quot;);
++subgroup.defineTemplate(&quot;bold&quot;, &quot;&lt;strong&gt;$it$&lt;/strong&gt;&quot;);
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;And you may refer to a template in a supergroup via &lt;TT&gt;super.&lt;/TT&gt;&lt;em&gt;template&lt;/em&gt;&lt;TT&gt;()&lt;/TT&gt;:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++StringTemplateGroup group = new StringTemplateGroup(...);
++StringTemplateGroup subGroup = new StringTemplateGroup(...);
++subGroup.setSuperGroup(group);
++group.defineTemplate(&quot;page&quot;, &quot;$font()$:text&quot;);
++group.defineTemplate(&quot;font&quot;, &quot;Helvetica&quot;);
++subGroup.defineTemplate(&quot;font&quot;, &quot;$super.font()$ and Times&quot;);
++StringTemplate st = subGroup.getInstanceOf(&quot;page&quot;);
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;The string &lt;TT&gt;st.toString()&lt;/TT&gt; results in &quot;&lt;TT&gt;Helvetica and Times:text&lt;/TT&gt;&quot;.
++
++&lt;P&gt;Just like object-oriented programming languages, &lt;TT&gt;StringTemplate&lt;/TT&gt; has polymorphism.  That is, template names are looked up dynamically relative to the invoking templates group.  The classic demonstration of dynamic message sends in Java, for example, would be the following example that catches my students all the time: ;)
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++class A {
++  public void page() {bold();}
++  public void bold() {System.out.println(&quot;A.bold&quot;);}
++}
++class B extends A {
++  public void bold() {System.out.println(&quot;B.bold&quot;);}
++}
++...
++A a = new B();
++a.page();
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;This prints &quot;&lt;TT&gt;B.bold&lt;/TT&gt;&quot; not &quot;&lt;TT&gt;A.bold&lt;/TT&gt;&quot; because the receiver determines how to answer a message not the type of the variable.  So, I have created a &lt;TT&gt;B&lt;/TT&gt; object meaning that any message, such as &lt;TT&gt;bold()&lt;/TT&gt;, invoked will first look in class &lt;TT&gt;B&lt;/TT&gt; for &lt;TT&gt;bold()&lt;/TT&gt;.
++
++&lt;P&gt;Similarly, a template's group determines where it starts looking for a template.  In this case, both super and sub groups define a &lt;TT&gt;bold&lt;/TT&gt; template mirroring the Java above.  Because I create template &lt;TT&gt;st&lt;/TT&gt; as a member of the &lt;TT&gt;subGroup&lt;/TT&gt; and reference to &lt;TT&gt;bold&lt;/TT&gt; starts looking in &lt;TT&gt;subGroup&lt;/TT&gt; even though &lt;TT&gt;page&lt;/TT&gt; is the template referring to &lt;TT&gt;bold&lt;/TT&gt;.
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++StringTemplateGroup group = new StringTemplateGroup(&quot;super&quot;);
++StringTemplateGroup subGroup = new StringTemplateGroup(&quot;sub&quot;);
++subGroup.setSuperGroup(group);
++group.defineTemplate(&quot;bold&quot;, &quot;&lt;b&gt;$it$&lt;/b&gt;&quot;);
++group.defineTemplate(&quot;page&quot;, &quot;$name:bold()$&quot;);
++subGroup.defineTemplate(&quot;bold&quot;, &quot;&lt;strong&gt;$it$&lt;/strong&gt;&quot;);
++StringTemplate st = subGroup.getInstanceOf(&quot;page&quot;);
++st.setAttribute(&quot;name&quot;, &quot;Ter&quot;);
++String expecting = &quot;&lt;strong&gt;Ter&lt;/strong&gt;&quot;;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++&lt;H2&gt;Template And Attribute Lookup Rules&lt;/H2&gt;
++
++&lt;H3&gt;Template lookup&lt;/H3&gt;
++
++
++&lt;P&gt;When you request a named template via &lt;TT&gt;StringTemplateGroup.getInstanceOf()&lt;/TT&gt; or within a template, there is a specific sequence used to locate the template.
++
++&lt;P&gt;If a template, &lt;em&gt;t&lt;/em&gt;, references another template and &lt;em&gt;t&lt;/em&gt; is not specifically associated with any group, &lt;em&gt;t&lt;/em&gt; is implicitly associated with a default group whose root directory is &quot;&lt;TT&gt;.&lt;/TT&gt;&quot;, the current directory.  The referenced template will be looked up in the current directory.
++
++&lt;P&gt;If a template &lt;em&gt;t&lt;/em&gt; is associated with a group, but was not defined via a group file format, lookup a referenced template in the group's template table.  If not there, look for it on the disk under the group's root dir or via the &lt;TT&gt;CLASSPATH&lt;/TT&gt; (it might have appeared dynamically on disk).  If not found, recursively look at any supergroup of the group.  If not found at all, record this fact and don't look again on the disk until refresh interval.
++
++&lt;P&gt;If the template's associated group was defined via a group file, then that group is searched first.  If not found, the template is looked up in any supergroup.  The refresh interval is not used for group files because the group file is considered complete and enduring.
++&lt;H3&gt;Attribute scoping rules&lt;/H3&gt;
++
++
++&lt;P&gt;A &lt;TT&gt;StringTemplate&lt;/TT&gt; is a list of chunks, text literals and attribute expressions, and an attributes table.  To render a template to string, the chunks are written out in order; the expressions are evaluated only when asked to during rendering.  Attributes referenced in expressions are looked up using a very specific sequence similar to an inheritance mechanism.
++
++&lt;P&gt;When you nest a template within another, such as when a &lt;TT&gt;page&lt;/TT&gt; template references a &lt;TT&gt;searchbox&lt;/TT&gt; template, the nested template may see any attributes of the enclosing instance or its enclosing instances.  This mechanism is called &lt;em&gt;dynamic scoping&lt;/em&gt;.  Contrast this with &lt;em&gt;lexical scoping&lt;/em&gt; used in most programming languages like Java where a method may not see the variables defined in invoking methods.  Dynamic scoping is very natural for templates.  For example, if &lt;TT&gt;page&lt;/TT&gt; has an attribute/value pair &lt;TT&gt;font&lt;/TT&gt;/&lt;TT&gt;Times&lt;/TT&gt; then &lt;TT&gt;searchbox&lt;/TT&gt; could reference &lt;TT&gt;$font$&lt;/TT&gt; when nested within a &lt;TT&gt;page&lt;/TT&gt; instance.
++
++&lt;P&gt;Reference to attribute &lt;em&gt;a&lt;/em&gt; in template &lt;em&gt;t&lt;/em&gt; is resolved as follows:
++&lt;OL&gt;
++&lt;LI&gt;Look in &lt;em&gt;t&lt;/em&gt;'s attribute table
++&lt;/LI&gt;
++&lt;LI&gt;Look in &lt;em&gt;t&lt;/em&gt;'s arguments
++&lt;/LI&gt;
++&lt;LI&gt;Look in &lt;em&gt;t&lt;/em&gt;'s enclosing template instance
++&lt;/LI&gt;
++
++&lt;/OL&gt;
++
++&lt;P&gt;This process is recursively executed until &lt;em&gt;a&lt;/em&gt; is found or there are no more enclosing template instances.
++
++&lt;P&gt;When using a group file format to specify templates, you must specify the formal arguments for that template.  If you try to access an attribute that is not formally defined in that template or an enclosing template, you will get a &lt;TT&gt;NoSuchElementException&lt;/TT&gt;.
++
++&lt;P&gt;When building code generators with &lt;TT&gt;StringTemplate&lt;/TT&gt;, large heavily nested template tree structures are commonplace and, due to dynamic attribute scoping, a nested template could inadvertently use an attribute from an enclosing scope.  This could lead to infinite recursion during rendering.  To prevent this, formal arguments on template &lt;em&gt;t&lt;/em&gt; hide any attribute value with that name in any enclosing scope.  Here is a test case that illustrates the point.  
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++String templates =
++        &quot;group test;&quot; +newline+
++        &quot;block(stats) ::= \&quot;{$stats$}\&quot;&quot;
++        ;
++StringTemplateGroup group =
++        new StringTemplateGroup(new StringReader(templates));
++StringTemplate b = group.getInstanceOf(&quot;block&quot;);
++b.setAttribute(&quot;stats&quot;, group.getInstanceOf(&quot;block&quot;));
++String expecting =&quot;{{}}&quot;;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;Even though &lt;TT&gt;block&lt;/TT&gt; has a &lt;TT&gt;stats&lt;/TT&gt; value that refers to itself, there is no recursion because each instance of &lt;TT&gt;block&lt;/TT&gt; hides the &lt;TT&gt;stats&lt;/TT&gt; value from above since &lt;TT&gt;stats&lt;/TT&gt; is a formal argument.
++
++&lt;P&gt;Sometimes self-recursive (hence infinitely recursive) structures occur through programming error and they are nasty to track down.  If you turn on &quot;lint mode&quot;, &lt;TT&gt;StringTemplate&lt;/TT&gt; will attempt to find cases where a template instance is being evaluated during the evaluation of itself.  For example, here is a test case that causes and traps infinite recursion.
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++String templates =
++        &quot;group test;&quot; +newline+
++        &quot;block(stats) ::= \&quot;$stats$\&quot;&quot; +
++        &quot;ifstat(stats) ::= \&quot;IF true then $stats$\&quot;\n&quot;
++        ;
++StringTemplate.setLintMode(true);
++StringTemplateGroup group =
++        new StringTemplateGroup(new StringReader(templates));
++StringTemplate b = group.getInstanceOf(&quot;block&quot;);
++StringTemplate ifstat = group.getInstanceOf(&quot;ifstat&quot;);
++b.setAttribute(&quot;stats&quot;, ifstat); // block has if stat
++ifstat.setAttribute(&quot;stats&quot;, b); // but make the &quot;if&quot; contain block
++try {
++    String result = b.toString();
++}
++catch (IllegalStateException ise) {
++    ...
++}
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;The nested template stack trace from &lt;TT&gt;ise.getMessage()&lt;/TT&gt; will be similar to:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++infinite recursion to &lt;ifstat([stats])@4&gt; referenced in &lt;block([stats])@3&gt;; stack trace:
++&lt;ifstat([stats])@4&gt;, attributes=[stats=&lt;block()@3&gt;]&gt;
++&lt;block([stats])@3&gt;, attributes=[stats=&lt;ifstat()@4&gt;], references=[stats]&gt;
++&lt;ifstat([stats])@4&gt; (start of recursive cycle)
++...
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++&lt;H3&gt;Lazy evaluation&lt;/H3&gt;
++
++
++&lt;P&gt;Attributes are &lt;em&gt;lazily evaluated&lt;/em&gt; in the sense that referencing &lt;em&gt;a&lt;/em&gt; does not actually invoke the lookup mechanism described here until the template is asked to render itself to text.  Lazy evaluation is surprising useful in both the web and code generation worlds because such order decoupling allows code to set attributes when it is convenient or efficient not necessarily before templates reference those attributes.  For example, a complicated web page consisting of many nested templates all may reference &lt;TT&gt;$userName$&lt;/TT&gt;, but the value of &lt;TT&gt;userName&lt;/TT&gt; does not need to be set until right before the entire page is rendered to text via &lt;TT&gt;toString()&lt;/TT&gt;.  Even applying a template to a multi-valued attribute does not actually lookup and evaluate attributes until the entire overall template tree structure is rendered.  Applying a template to an attribute yields a template not a string.  You may ask the resulting template for its attributes even though!
+  they have not been computed.
++&lt;H2&gt;Output Filters&lt;/H2&gt;
++
++
++&lt;P&gt;2.0 introduces the notion of a &lt;TT&gt;StringTemplateWriter&lt;/TT&gt;.  All text rendered from a template goes through one of these writers before being placed in the output buffer.  I added this primarily for auto-indentation for code generation, but it also could be used to remove whitespace (as a compression) from HTML output.  If you don't care about indentation, you can simply implement &lt;TT&gt;write()&lt;/TT&gt;:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++public interface StringTemplateWriter {
++    void pushIndentation(String indent);
++
++    String popIndentation();
++
++    void write(String str) throws IOException;
++}
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;Here is a &quot;pass through&quot; writer that is already defined:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++/** Just pass through the text */
++public class NoIndentWriter extends AutoIndentWriter {
++    public NoIndentWriter(Writer out) {
++        super(out);
++    }
++
++    public void write(String str) throws IOException {
++	    out.write(str);
++    }
++}
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;Use it like this:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++StringWriter out = new StringWriter();
++StringTemplateGroup group =
++                new StringTemplateGroup(&quot;test&quot;);
++group.defineTemplate(&quot;bold&quot;, &quot;&lt;b&gt;$x$&lt;/b&gt;&quot;);
++StringTemplate nameST = new StringTemplate(group, &quot;$name:bold(x=name)$&quot;);
++nameST.setAttribute(&quot;name&quot;, &quot;Terence&quot;);
++// write to 'out' with no indentation
++nameST.write(new NoIndentWriter(out));
++System.out.println(&quot;output: &quot;+out.toString());
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;Instead of using &lt;TT&gt;nameST.toString()&lt;/TT&gt;, which calls &lt;TT&gt;write&lt;/TT&gt; with a string write and returns its value, manually invoke &lt;TT&gt;write&lt;/TT&gt; with your writer.
++
++&lt;P&gt;If you want to always use a particular output filter, then use
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++StringTemplateGroup.setStringTemplateWriter(Class userSpecifiedWriterClass);
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;The &lt;TT&gt;StringTemplate.toString()&lt;/TT&gt; method is sensitive to the group's
++writer class.
++&lt;H3&gt;Auto-indentation&lt;/H3&gt;
++
++
++&lt;P&gt;&lt;TT&gt;StringTemplate&lt;/TT&gt; 2.0 has auto-indentation on by default.  To turn it off, use &lt;TT&gt;NoIndentWriter&lt;/TT&gt; rather than (the default) &lt;TT&gt;AutoIndentWriter&lt;/TT&gt;.
++
++&lt;P&gt;At the simplest level, the indentation looks like a simple column count:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++My dogs' names 
++  $names; separator=&quot;\n&quot;$
++The last, unindented line
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;will yield output like:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++My dog's names
++  Fido
++  Rex
++  Stinky
++The last, unindented line
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;where the last line gets &quot;unindented&quot; after displaying the list.  &lt;TT&gt;StringTemplate&lt;/TT&gt; tracks the characters to the left of the &lt;TT&gt;$&lt;/TT&gt; or &lt;TT&gt;&lt;&lt;/TT&gt; rather than the column number so that if you indent with tabs versus spaces, you'll get the same indentation in the output.
++
++&lt;P&gt;When there are nested templates, &lt;TT&gt;StringTemplate&lt;/TT&gt; tracks the combined
++indentation:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++// &lt;user&gt; is indented two spaces
++main(user) ::= &lt;&lt;
++Hi
++\t$user:quote(); separator=&quot;\n&quot;$
++&gt;&gt;
++
++quote ::= &quot; '$it$'&quot;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;In this case, you would get output like:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++Hi
++\t 'Bob'
++\t 'Ephram'
++\t 'Mary'
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;where the combined indentation is tab plus space for the attribute
++references in template &lt;TT&gt;quote&lt;/TT&gt;.  Expression &lt;TT&gt;$user$&lt;/TT&gt; is indented by 1 tab and hence any attribute
++generated from it (in this case the &lt;TT&gt;$attr$&lt;/TT&gt; of &lt;TT&gt;quote()&lt;/TT&gt;) must have
++at least the tab.
++
++&lt;P&gt;Consider generating nested statement lists as in C.  Any statements
++inside must be nested 4 spaces.  Here are two templates that could
++take care of this:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++function(name,body) ::= &lt;&lt;
++void $name$() $body$
++&gt;&gt;
++
++slist(statements) ::= &lt;&lt;
++{
++    $statements; separator=&quot;\n&quot;$
++}&gt;&gt;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;Your code would create a &lt;TT&gt;function&lt;/TT&gt; template instance and an &lt;TT&gt;slist&lt;/TT&gt;
++instance, which gets passed to the &lt;TT&gt;function&lt;/TT&gt; template as attribute
++&lt;TT&gt;body&lt;/TT&gt;.  The following Java code:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++StringTemplate f = group.getInstanceOf(&quot;function&quot;);
++f.setAttribute(&quot;name&quot;, &quot;foo&quot;);
++StringTemplate body = group.getInstanceOf(&quot;slist&quot;);
++body.setAttribute(&quot;statements&quot;, &quot;i=1;&quot;);
++StringTemplate nestedSList = group.getInstanceOf(&quot;slist&quot;);
++nestedSList.setAttribute(&quot;statements&quot;, &quot;i=2;&quot;);
++body.setAttribute(&quot;statements&quot;, nestedSList);
++body.setAttribute(&quot;statements&quot;, &quot;i=3;&quot;);
++f.setAttribute(&quot;body&quot;, body);
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;should generate something like:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++void foo() {
++    i=1;
++    {
++        i=2;
++    }
++    i=3;
++}
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;Indentation can only occur at the start of a line so indentation is
++only tracked in front of attribute expressions following a newline.
++
++&lt;P&gt;The one exception to indentation is that naturally, &lt;TT&gt;$if$&lt;/TT&gt; actions do
++not cause indentation as they do not result in any output.  However,
++the subtemplates (THEN and ELSE clauses) will see indentations.  For
++example, in the following template, the two subtemplates are indented
++by exactly 1 space each:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++     $if(foo)$
++ $x$
++\t\t$else
++ $y$
++$endif$
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++&lt;H2&gt;Examples&lt;/H2&gt;
++
++
++&lt;P&gt;You should look at
++&lt;TT&gt;org.antlr.stringtemplate.test.TestStringTemplate.java&lt;/TT&gt;, which
++contains a many tests.
++&lt;H3&gt;Fill-a-Table Example&lt;/H3&gt;
++
++
++&lt;P&gt;The manner in which a template engine handles filling an HTML table
++with data often provides good insight into its programming and design
++strategy.  It illustrates the interaction of the model and view via
++the controller.  Using &lt;TT&gt;StringTemplate&lt;/TT&gt;, the view may not access the
++model directly; rather the view is the passive recipient of data from
++the model.
++
++&lt;P&gt;First, imagine we have objects of type &lt;TT&gt;User&lt;/TT&gt; that we will pull from a
++simulated database:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++public static class User {
++    String name;
++    int age;
++    public User(String name, int age) {
++        this.name = name;
++        this.age = age;
++    }
++    public String getName() { return name; }
++    public int getAge() { return age; }
++}
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;Our database is just a static list:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++static User[] users = new User[] {
++    new User(&quot;Boris&quot;, 39),
++    new User(&quot;Natasha&quot;, 31),
++    new User(&quot;Jorge&quot;, 25),
++    new User(&quot;Vladimir&quot;, 28)
++};
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;Here is my simple overall page design template, &lt;TT&gt;page.st&lt;/TT&gt;:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++&lt;html&gt;
++&lt;head&gt;
++&lt;title&gt;$title$&lt;/title&gt;
++&lt;/head&gt;
++&lt;body&gt;
++&lt;h1&gt;$title$&lt;/h1&gt;
++
++$body$
++
++&lt;/body&gt;
++&lt;/html&gt;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;The body attribute of &lt;TT&gt;page.st&lt;/TT&gt; will be set to the following template
++&lt;TT&gt;users.inline.st&lt;/TT&gt; by my web server infrastructure (part of the controller):
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++&lt;table border=1&gt;
++$users:{
++  &lt;tr&gt;
++    &lt;td&gt;$it.name$&lt;/td&gt;&lt;td&gt;$it.age$&lt;/td&gt;
++  &lt;/tr&gt;
++}$
++&lt;/table&gt;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;Again, &lt;TT&gt;it&lt;/TT&gt; is the default attribute passed to a template when you
++apply that template to an attribute or attributes.  &lt;TT&gt;it.name&lt;/TT&gt; gets
++the &lt;TT&gt;name&lt;/TT&gt; property, if it exists, from the &lt;TT&gt;it&lt;/TT&gt; object ala
++JavaBeans.  That is, &lt;TT&gt;StringTemplate&lt;/TT&gt; uses reflection to call the
++&lt;TT&gt;getName()&lt;/TT&gt; method on the incoming object.  By using reflection, I
++avoid a type dependence between model and view.
++
++&lt;P&gt;Now, imagine the server and templates are set up to format data.  My
++page definition is part of the controller that pulls data from the
++model (the database) and pushes into the view (the template).  That is
++all the page definition should do--interpret the data and set some
++attributes in the view.  The view only formats data and does no
++interpretation.
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++public static class UserListPage extends SamplePage {
++    /** This &quot;controller&quot; pulls from &quot;model&quot; and pushes to &quot;view&quot; */
++    public void generateBody(StringTemplate bodyST) throws Exception {
++        User[] list = users; // normally pull from database
++        // filter list if you want here (not in template)
++        bodyST.setAttribute(&quot;users&quot;, list);
++    }
++
++    public String getTitle() { return &quot;User List&quot;; }
++}
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;Notice that the controller and model have no HTML in them at all and
++that the template has no code with side-effects or logic that can
++break the model-view separation.  If you wanted to only see users with
++age &lt; 30, you would filter the list in &lt;TT&gt;generateBody()&lt;/TT&gt; rather than
++alter your template.  The template only displays information once the
++controller pulls the right data from the model.
++
++&lt;P&gt;Pushing factorization further, you could make a &lt;TT&gt;row.st&lt;/TT&gt; component in
++order to reuse the table row HTML:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++&lt;tr&gt;
++  &lt;td&gt;$it.name$&lt;/td&gt;&lt;td&gt;$it.age$&lt;/td&gt;
++&lt;/tr&gt;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;Then the user list template reduces to the more readable:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++&lt;table border=1&gt;
++$users:row()$
++&lt;/table&gt;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;Naturally, you could go one step further and make another component
++for the entire table (putting it in file &lt;TT&gt;table.st&lt;/TT&gt;):
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++&lt;table border=1&gt;
++$elements:row()$
++&lt;/table&gt;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;then the body template would simply be:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++$table(elements=users)$
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++&lt;H2&gt;Complete Grammar&lt;/H2&gt;
++
++
++&lt;P&gt;&lt;TT&gt;StringTemplate&lt;/TT&gt; has multiple grammars that describe templates at varying degrees of detail.  At the grossest level of granularity, the &lt;TT&gt;group.g&lt;/TT&gt; grammar accepts a list of templates with formal template arguments.  Each of these templates is broken up into chunks of literal text and attribute expressions via &lt;TT&gt;template.g&lt;/TT&gt;.  The default lexer uses &lt;TT&gt;$...$&lt;/TT&gt; delimiters, but the &lt;TT&gt;angle.bracket.template.g&lt;/TT&gt; lexer provides &lt;TT&gt;&lt;...&gt;&lt;/TT&gt; delimiters.  Each of the attribute expression chunks is processed by &lt;TT&gt;action.g&lt;/TT&gt;.  It builds trees (ASTs) representing the operation indicated in the expression.  These ASTs represent the &quot;precompiled&quot; templates, which are evaluated by the tree grammar &lt;TT&gt;eval.g&lt;/TT&gt; each time a &lt;TT&gt;StringTemplate&lt;/TT&gt; is rendered to string with &lt;TT&gt;toString()&lt;/TT&gt;.
++
++&lt;P&gt;The grammar files are:
++&lt;UL&gt;
++&lt;LI&gt;&lt;TT&gt;group.g&lt;/TT&gt;: read a group file full of templates
++&lt;/LI&gt;
++&lt;LI&gt;&lt;TT&gt;template.g&lt;/TT&gt;: break an individual template into chunks
++&lt;/LI&gt;
++&lt;LI&gt;&lt;TT&gt;angle.bracket.template.g&lt;/TT&gt;: &lt;TT&gt;&lt;...&gt;&lt;/TT&gt; template lexer
++&lt;/LI&gt;
++&lt;LI&gt;&lt;TT&gt;action.g&lt;/TT&gt;: parse attribute expressions into ASTs
++&lt;/LI&gt;
++&lt;LI&gt;&lt;TT&gt;eval.g&lt;/TT&gt;: evaluate expression ASTs during &lt;TT&gt;toString()&lt;/TT&gt;
++&lt;/LI&gt;
++
++&lt;/UL&gt;
++
++&lt;P&gt;Anything outside of the &lt;TT&gt;StringTemplate&lt;/TT&gt; start/stop delimiters is ignored.  The ANTLR grammar inside the attribute action is:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++action
++    :   templatesExpr (SEMI optionList)?
++    |   &quot;if&quot; LPAREN ifCondition RPAREN
++    ;
++
++optionList
++    :   &quot;separator&quot; ASSIGN expr
++    ;
++
++ifCondition
++    :   ifAtom
++    |   NOT ifAtom
++    ;
++
++ifAtom
++    :   expr
++    ;
++
++expr:   atom (PLUS atom)*
++    ;
++
++atom:   attribute
++    |   templateInclude
++    |   LPAREN expr RPAREN  // regular old parens
++    ;
++
++templatesExpr
++    :   expr ( COLON template (COMMA template)* )*
++    ;
++
++nonAlternatingTemplateExpr
++    :   expr ( COLON template )*
++    ;
++
++template
++    :   (   namedTemplate       // foo()
++        |   anonymousTemplate   // {foo}
++        )
++    ;
++
++namedTemplate
++    :   ID argList
++    ;
++
++anonymousTemplate
++    :   ANONYMOUS_TEMPLATE
++    ;
++
++attribute
++    :   ID
++    |   objPropertyRef
++    |   STRING
++    |   INT
++    ;
++
++templateInclude
++    :   ID argList
++    |   &quot;super&quot; DOT ID argList
++    ;
++
++objPropertyRef
++    :   ID (DOT ID)+
++    ;
++
++argList
++    :   LPAREN RPAREN
++    |   LPAREN argumentAssignment (COMMA argumentAssignment)* RPAREN
++    ;
++
++argumentAssignment
++    :   ID ASSIGN nonAlternatingTemplateExpr
++    ;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;An identifier is:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++ID  :	('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'0'..'9'|'_'|'/')*
++    ;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;Strings are double-quoted with optional embedded escaped characters that are translated (escapes are not translated outside of strings; for example, text outside of attribute expressions do not get escape chars translated except &lt;TT&gt;\\$&lt;/TT&gt;, &lt;TT&gt;\\&lt;&lt;/TT&gt; and &lt;TT&gt;\\&gt;&lt;/TT&gt;).
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++STRING
++    :   '&quot;' (ESC_CHAR | ~'&quot;')* '&quot;'
++    ;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;Anonymous templates are enclosed in curlies:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++ANONYMOUS_TEMPLATE
++    :   '{' (ESC_CHAR | ~'}')* '}'
++    ;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;The translated escapes are:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++ESC_CHAR
++    :   '\\'
++        (   'n'
++        |   'r'
++        |   't'
++        |   'b'
++        |   'f'
++        |   '&quot;'
++        |   '\\'
++        )
++     ;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;but other escapes are allowed and ignored.
++
++&lt;P&gt;The other unspecified operators are:
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++COMMA  : ',' ;
++DOT    : '.' ;
++ASSIGN : '=' ;
++COLON  : ':' ;
++PLUS   : '+' ;
++SEMI   : ';' ;
++NOT    : '!' ;
++LPAREN : '(' ;
++RPAREN : ')' ;
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++&lt;H2&gt;A Common Syntax Question&lt;/H2&gt;
++
++
++&lt;P&gt;Why have a template like:
++ 
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++Check this faq entry: $link(url=&quot;/faq/view?ID=&quot;+id, title=&quot;A FAQ&quot;)$.
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;instead of 
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++Check this faq entry: $link(url=&quot;/faq/view?ID=&quot;+$id$, title=&quot;A FAQ&quot;)$.
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++
++&lt;P&gt;using &lt;TT&gt;$id$&lt;/TT&gt; instead of &lt;TT&gt;id&lt;/TT&gt; for that attribute reference?  The
++simplest answer is that you are already within the scope of an
++attribute expression between the &lt;TT&gt;$...$&lt;/TT&gt; and hence &lt;TT&gt;StringTemplate&lt;/TT&gt;
++knows that &lt;TT&gt;id&lt;/TT&gt; must be a reference to an attribute by the grammar
++alone.  The template delimiters mark the beginning and end of what
++&lt;TT&gt;StringTemplate&lt;/TT&gt; cares about.
++
++&lt;P&gt;Another way to look at it is the following.  Surely syntax (i) makes
++the most sense:
++
++&lt;P&gt;(i)   &lt;TT&gt;SELECT $col+blort$ FROM $table$&lt;/TT&gt;
++
++&lt;P&gt;(ii)  &lt;TT&gt;SELECT $$col$+$blort$$ FROM $table$&lt;/TT&gt;
++
++&lt;P&gt;(iii) &lt;TT&gt;SELECT $col$+$blort$ FROM $table$&lt;/TT&gt;
++
++&lt;P&gt;Syntax (ii) is rather verbose and redundant wouldn't you say?  Syntax
++(iii) doesn't even work because the + is outside the realm of
++&lt;TT&gt;StringTemplate&lt;/TT&gt; delimiters.
++
++&lt;P&gt;&lt;/BODY&gt;
++&lt;/HTML&gt;
+
+Added: trunk/org.prorefactor.lib/stringtemplate/release.html
+===================================================================
+--- trunk/org.prorefactor.lib/stringtemplate/release.html	2005-05-13 21:40:06 UTC (rev 29)
++++ trunk/org.prorefactor.lib/stringtemplate/release.html	2005-05-17 16:29:26 UTC (rev 30)
+@@ -0,0 +1,101 @@
++&lt;HTML&gt;
++&lt;HEAD&gt;
++&lt;body bgcolor=#FFFFFF text=#000000&gt;
++&lt;title&gt;StringTemplate 2.1 Release Notes&lt;/title&gt;
++&lt;/HEAD&gt;
++&lt;BODY&gt;
++&lt;H1&gt;StringTemplate 2.1 Release Notes&lt;/H1&gt;
++
++
++&lt;P&gt;Brought to you by that maniac that brings you
++&lt;A HREF=&quot;<A HREF="http://www.antlr.org">http://www.antlr.org</A>&quot;&gt;&lt;B&gt; ANTLR&lt;/B&gt;&lt;/A&gt;!
++
++&lt;P&gt;Terence Parr &lt;BR&gt;
++University of San Francisco &lt;BR&gt;
++&lt;TT&gt;<A HREF="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">parrt at cs.usfca.edu</A>&lt;/TT&gt; &lt;BR&gt;
++&lt;em&gt;Copyright 2003-2005&lt;/em&gt; &lt;BR&gt;
++&lt;A HREF=&quot;<A HREF="http://www.stringtemplate.org">http://www.stringtemplate.org</A>&quot;&gt;&lt;B&gt;<A HREF="http://www.stringtemplate.org&lt;/B">http://www.stringtemplate.org&lt;/B</A>&gt;&lt;/A&gt; &lt;BR&gt;
++(StringTemplate released under BSD License)
++
++&lt;P&gt;Version 2.1, January 22, 2005
++
++&lt;P&gt;2.1 is a bug fix and small feature enhancement release.  2.1 should be
++a drop-in replacement for those using &lt;TT&gt;StringTemplate&lt;/TT&gt; for websites.
++Some newline handling differences exist, particularly for
++those using the group file format.  (If you are generating code not
++html, you will note some newlines are missing that used to be there;
++see the use of &lt;TT&gt;&lt;\n&gt;&lt;/TT&gt; below).
++&lt;H2&gt;Enhancements&lt;/H2&gt;
++
++&lt;UL&gt;
++&lt;LI&gt;Added 
++
++&lt;FONT SIZE=2&gt;&lt;PRE&gt;
++/** Specify a StringTemplateWriter implementing class to use for
++ *  filtering output
++ */
++public void setStringTemplateWriter(Class c) {
++	userSpecifiedWriter = c;
++}
++&lt;/PRE&gt;&lt;/FONT&gt;
++
++
++and made StringTemplate.toString() sensitive to it.
++&lt;/LI&gt;
++&lt;LI&gt;added support for nonlocal file encodings; added property
++fileCharEncoding.  The template loading routines are now sensitive to
++this property. Defaults to the file.encoding system property.
++&lt;/LI&gt;
++&lt;LI&gt;updated testing harness to be same as ANTLR 3.0's which is more
++sophisticated.
++&lt;/LI&gt;
++&lt;LI&gt;addressed whitespace at begin/end of template .st file issue.
++Decided to let it continue to strip all front/back whitespace and then
++make you add it directly.  This is a simple rule and can be made to do
++what you want.  It is consistent with the strip newline before &gt;&gt;
++rule too.
++&lt;/LI&gt;
++&lt;LI&gt;newlines ignored before &lt;else&gt; and &lt;endif&gt;.  Rule is: kill a single
++newline after &lt;if&gt;, &lt;&lt;, &lt;else&gt;, and &lt;endif&gt; (but for &lt;endif&gt; only if
++it's on a line by itself) . Kill newlines before &lt;else&gt; and &lt;endif&gt;
++and &gt;&gt;.  the newline immediately preceding &gt;&gt; in a template group file
++is tossed out just like the newline right after the &lt;&lt;
++&lt;/LI&gt;
++&lt;LI&gt;added &lt;n&gt;, &lt;r&gt;, &lt;t&gt;, &lt; &gt; (space char)
++&lt;/LI&gt;
++&lt;LI&gt;added $!...!$ and &lt;!...!&gt; comments (version 2.1b3)
++&lt;/LI&gt;
++&lt;LI&gt;allow HashMap, Hashtable precisely but not Map in attribute.property lookup
++&lt;/LI&gt;
++&lt;LI&gt;Attribute &lt;TT&gt;attributes$&lt;/TT&gt; is a text string when lint mode is on that
++recursively dumps out types, properties, etc... (no values)
++&lt;/LI&gt;
++&lt;LI&gt;Templates track their embedded instances; can ask for embedded
++&lt;/LI&gt;
++&lt;LI&gt;added isXXX accessor properties so x.special invokes x.getSpecial
++then x.isSpecial if not successful.
++&lt;/LI&gt;
++&lt;LI&gt;Empty output for a single attribute expression one a line by itself gets no newline (i.e., you don't get a blank line).
++&lt;/LI&gt;
++
++&lt;/UL&gt;
++&lt;H2&gt;Bug Fixes&lt;/H2&gt;
++
++&lt;UL&gt;
++&lt;LI&gt;bug in st.attribute...if no attributes table, got null ptr exception
++&lt;/LI&gt;
++&lt;LI&gt;fixed n refs in TestStringTemplate unit tests to be portable newline reference.
++&lt;/LI&gt;
++&lt;LI&gt;STG.templateIsDefinedInThisGroup -&gt; isDefinedInThisGroup
++&lt;/LI&gt;
++&lt;LI&gt;added isDefined(name) that checks whole hierarchy
++&lt;/LI&gt;
++&lt;LI&gt;trap all antlr generated errors now and send to listener.
++&lt;/LI&gt;
++&lt;LI&gt;Made null indirect template generate nothing; used to generate
++null-ptr exception.
++&lt;/LI&gt;
++
++&lt;/UL&gt;
++&lt;/BODY&gt;
++&lt;/HTML&gt;
+
+Added: trunk/org.prorefactor.lib/stringtemplate/src.zip
+===================================================================
+(Binary files differ)
+
+
+Property changes on: trunk/org.prorefactor.lib/stringtemplate/src.zip
+___________________________________________________________________
+Name: svn:mime-type
+   + application/octet-stream
+
+Added: trunk/org.prorefactor.lib/stringtemplate/stringtemplate.jar
+===================================================================
+(Binary files differ)
+
+
+Property changes on: trunk/org.prorefactor.lib/stringtemplate/stringtemplate.jar
+___________________________________________________________________
+Name: svn:mime-type
+   + application/octet-stream
+
+Modified: trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/PUB.java
+===================================================================
+--- trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/PUB.java	2005-05-13 21:40:06 UTC (rev 29)
++++ trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/PUB.java	2005-05-17 16:29:26 UTC (rev 30)
+@@ -464,7 +464,7 @@
+ 	private void writeTree(ObjectOutputStream out, JPNode node) throws IOException {
+ 		out.writeInt(node.getSubtypeIndex());
+ 		out.writeInt(node.getType());
+-		if ( ! TokenTypes.isKeyword(node.getType()) ) {
++		if ( ! TokenTypes.hasDefaultText(node.getType()) ) {
+ 			out.writeInt(NODETEXT);
+ 			out.writeInt(stringIndex(node.getText()));
+ 		}
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000023.html">[Prorefactor-svn] r29 - in trunk/org.prorefactor.refactor/prorefactor/projects/sports2000/pubs/data: pub rename/t01/orig
+</A></li>
+	<LI>Next message: <A HREF="000026.html">[Prorefactor-svn] r31 - trunk/org.prorefactor.antlr
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#25">[ date ]</a>
+              <a href="thread.html#25">[ thread ]</a>
+              <a href="subject.html#25">[ subject ]</a>
+              <a href="author.html#25">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">More information about the Prorefactor-svn
+mailing list</a><br>
+</body></html>

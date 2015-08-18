@@ -1,0 +1,286 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Prorefactor-svn] r64 - in trunk/org.prorefactor.core/src/org/prorefactor: core/unittest treeparser treeparser01
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/prorefactor-svn/2006-March/index.html" >
+   <LINK REL="made" HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r64%20-%20in%20trunk/org.prorefactor.core/src/org/prorefactor%3A%20core/unittest%20treeparser%20treeparser01&In-Reply-To=%3C200603302016.k2UKGanp029262%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000053.html">
+   <LINK REL="Next"  HREF="000055.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Prorefactor-svn] r64 - in trunk/org.prorefactor.core/src/org/prorefactor: core/unittest treeparser treeparser01</H1>
+    <B>johnallengreen at BerliOS</B> 
+    <A HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r64%20-%20in%20trunk/org.prorefactor.core/src/org/prorefactor%3A%20core/unittest%20treeparser%20treeparser01&In-Reply-To=%3C200603302016.k2UKGanp029262%40sheep.berlios.de%3E"
+       TITLE="[Prorefactor-svn] r64 - in trunk/org.prorefactor.core/src/org/prorefactor: core/unittest treeparser treeparser01">johnallengreen at berlios.de
+       </A><BR>
+    <I>Thu Mar 30 22:16:36 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000053.html">[Prorefactor-svn] r63 - in trunk/org.prorefactor.core/src/org/prorefactor: core/unittest treeparser treeparser01
+</A></li>
+        <LI>Next message: <A HREF="000055.html">[Prorefactor-svn] r65 - in trunk/org.prorefactor.core/src/org/prorefactor: core/unittest treeparser treeparser01
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#54">[ date ]</a>
+              <a href="thread.html#54">[ thread ]</a>
+              <a href="subject.html#54">[ subject ]</a>
+              <a href="author.html#54">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: johnallengreen
+Date: 2006-03-30 22:16:36 +0200 (Thu, 30 Mar 2006)
+New Revision: 64
+
+Modified:
+   trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/RoutineHandler.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Call.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/ErrorList.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Expression.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/SemanticRecord.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Value.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01ProcessAction.java
+Log:
+More superficial updates.
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/RoutineHandler.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/RoutineHandler.java	2006-03-30 19:04:04 UTC (rev 63)
++++ trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/RoutineHandler.java	2006-03-30 20:16:36 UTC (rev 64)
+@@ -3,6 +3,11 @@
+  * @author Peter Dalbadie
+  * 21-Sep-2004
+  * 
++ * Copyright (c) 2004,2006 ProRefactor.org.
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
+  */
+ 
+ 
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Call.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Call.java	2006-03-30 19:04:04 UTC (rev 63)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Call.java	2006-03-30 20:16:36 UTC (rev 64)
+@@ -106,7 +106,7 @@
+ 	public boolean equals(Object other){
+ 		if (other.getClass() == this.getClass()){
+ 			Call otherCall = (Call) other;
+-			return id().equals(otherCall.id());
++			return id().equalsIgnoreCase(otherCall.id());
+ 		} else return false;
+ 	}
+ 
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/ErrorList.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/ErrorList.java	2006-03-30 19:04:04 UTC (rev 63)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/ErrorList.java	2006-03-30 20:16:36 UTC (rev 64)
+@@ -3,6 +3,11 @@
+  * @author Peter Dalbadie
+  * 21-Sep-2004
+  * 
++ * Copyright (c) 2004,2006 ProRefactor.org.
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
+  */
+ 
+ package org.prorefactor.treeparser;
+@@ -15,47 +20,30 @@
+  *
+  */
+ public class ErrorList {
++
++	public ErrorList() { }
++
++	private ArrayList&lt;SemanticError&gt; list = new ArrayList&lt;SemanticError&gt;();
+ 	
+-	private ArrayList list = null;
+ 	
+-	public ErrorList(){
+-		list = new ArrayList();
+-	}
++
++	public boolean add(SemanticError o) { return list.add(o); }
++
++
++	public void clear() { list.clear(); }
++
++
++	public boolean equals(Object obj) { return list.equals(obj); }
+ 	
+-	/**
+-	 * @param o
+-	 * @return
+-	 */
+-	public boolean add(SemanticError o) {
+-		return list.add(o);
+-	}
++	
++	/** Get a copy of the error list. */
++	public ArrayList&lt;SemanticError&gt; getCopy() { return new ArrayList&lt;SemanticError&gt;(list); }
+ 
+-	/**
+-	 * 
+-	 */
+-	public void clear() {
+-		list.clear();
+-	}
+ 
+-	/* (non-Javadoc)
+-	 * @see java.lang.Object#equals(java.lang.Object)
+-	 */
+-	public boolean equals(Object obj) {
+-		return list.equals(obj);
+-	}
++	public boolean isEmpty() { return list.isEmpty(); }
+ 
+-	/**
+-	 * @return
+-	 */
+-	public boolean isEmpty() {
+-		return list.isEmpty();
+-	}
+ 
+-	/**
+-	 * @return
+-	 */
+-	public int size() {
+-		return list.size();
+-	}
++	public int size() { return list.size(); }
+ 
++
+ }
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Expression.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Expression.java	2006-03-30 19:04:04 UTC (rev 63)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Expression.java	2006-03-30 20:16:36 UTC (rev 64)
+@@ -3,6 +3,11 @@
+  * @author Peter Dalbadie
+  * 21-Sep-2004
+  * 
++ * Copyright (c) 2004,2006 ProRefactor.org.
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
+  */
+ 
+ package org.prorefactor.treeparser;
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/SemanticRecord.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/SemanticRecord.java	2006-03-30 19:04:04 UTC (rev 63)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/SemanticRecord.java	2006-03-30 20:16:36 UTC (rev 64)
+@@ -3,6 +3,11 @@
+  * @author Peter Dalbadie
+  * 21-Sep-2004
+  * 
++ * Copyright (c) 2004,2006 ProRefactor.org.
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
+  */
+ 
+ package org.prorefactor.treeparser;
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Value.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Value.java	2006-03-30 19:04:04 UTC (rev 63)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Value.java	2006-03-30 20:16:36 UTC (rev 64)
+@@ -3,6 +3,11 @@
+  * @author Peter Dalbadie
+  * 21-Sep-2004
+  * 
++ * Copyright (c) 2004,2006 ProRefactor.org.
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
+  */
+ 
+ 
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01ProcessAction.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01ProcessAction.java	2006-03-30 19:04:04 UTC (rev 63)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01ProcessAction.java	2006-03-30 20:16:36 UTC (rev 64)
+@@ -38,32 +38,24 @@
+  */
+ public class TP01ProcessAction extends TP01Action {
+ 
+-
++	public TP01ProcessAction(SymbolScopeRoot rootScope){
++		this.rootScope = rootScope;
++		currentScope = rootScope;
++		errorList = new ErrorList();
++	}
++	
+ 	SymbolScope currentScope;
+ 	SymbolScopeRoot rootScope;
+ 	TableBuffer lastTableReferenced;
+ 	TableBuffer prevTableReferenced;
+ 	TableBuffer currDefTable;
+ 
+-	private ErrorList errorList;
+-
+ 	private Call wipCall;
++	private ErrorList errorList;
+ 	private Expression wipExpression;
+ 	private JPNode wipFieldNode;
+ 	
+-	public TP01ProcessAction(){	// initialization
+-		rootScope = new SymbolScopeRoot();
+-		currentScope = rootScope;
+-		errorList = new ErrorList();
+-		// See programRoot() for initiazation of the root Block.
+-	}
+ 
+-	public TP01ProcessAction(SymbolScopeRoot rootScope){
+-		this.rootScope = rootScope;
+-		currentScope = rootScope;
+-		errorList = new ErrorList();
+-	}
+-	
+ 	/**
+ 	 * Get the RunHandle value in &quot;run &lt;proc&gt; in &lt;handle&gt;.&quot; Where &lt;handle&gt;
+ 	 * is a handle valued Expression; then save the RunHandle value
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000053.html">[Prorefactor-svn] r63 - in trunk/org.prorefactor.core/src/org/prorefactor: core/unittest treeparser treeparser01
+</A></li>
+	<LI>Next message: <A HREF="000055.html">[Prorefactor-svn] r65 - in trunk/org.prorefactor.core/src/org/prorefactor: core/unittest treeparser treeparser01
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#54">[ date ]</a>
+              <a href="thread.html#54">[ thread ]</a>
+              <a href="subject.html#54">[ subject ]</a>
+              <a href="author.html#54">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">More information about the Prorefactor-svn
+mailing list</a><br>
+</body></html>

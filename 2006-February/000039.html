@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Prorefactor-svn] r46 - in trunk: org.prorefactor.doc org.prorefactor.javadoc
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/prorefactor-svn/2006-February/index.html" >
+   <LINK REL="made" HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r46%20-%20in%20trunk%3A%20org.prorefactor.doc%20org.prorefactor.javadoc&In-Reply-To=%3C200602110057.k1B0vY8v002290%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000038.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Prorefactor-svn] r46 - in trunk: org.prorefactor.doc org.prorefactor.javadoc</H1>
+    <B>johnallengreen at BerliOS</B> 
+    <A HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r46%20-%20in%20trunk%3A%20org.prorefactor.doc%20org.prorefactor.javadoc&In-Reply-To=%3C200602110057.k1B0vY8v002290%40sheep.berlios.de%3E"
+       TITLE="[Prorefactor-svn] r46 - in trunk: org.prorefactor.doc org.prorefactor.javadoc">johnallengreen at berlios.de
+       </A><BR>
+    <I>Sat Feb 11 01:57:34 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000038.html">[Prorefactor-svn] r45 - in trunk: org.prolint.core org.prorefactor.core org.prorefactor.doc org.prorefactor.eclipse org.prorefactor.javadoc org.prorefactor.lib org.prorefactor.refactor
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#39">[ date ]</a>
+              <a href="thread.html#39">[ thread ]</a>
+              <a href="subject.html#39">[ subject ]</a>
+              <a href="author.html#39">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: johnallengreen
+Date: 2006-02-11 01:57:26 +0100 (Sat, 11 Feb 2006)
+New Revision: 46
+
+Modified:
+   trunk/org.prorefactor.doc/build.properties
+   trunk/org.prorefactor.doc/manual.xml
+   trunk/org.prorefactor.javadoc/javadoc.xml
+Log:
+Candidate for last commit before 1.3 release.
+A few last minute doc touch ups.
+
+Modified: trunk/org.prorefactor.doc/build.properties
+===================================================================
+--- trunk/org.prorefactor.doc/build.properties	2006-02-10 22:36:25 UTC (rev 45)
++++ trunk/org.prorefactor.doc/build.properties	2006-02-11 00:57:26 UTC (rev 46)
+@@ -10,21 +10,17 @@
+                joanjupdf.xsl,\
+                toc.xml,\
+                doc.zip,\
+-               META-INF/,\
+-               images/,\
+-               screenshots/
++               META-INF/
+ src.includes = META-INF/,\
+                Makefile,\
+                about.html,\
+                build.properties,\
+                doc.zip,\
+                helpcontexts.xml,\
+-               images/,\
+                joanju.css,\
+                joanju.xsl,\
+                joanjupdf.xsl,\
+                manual.xml,\
+                plugin.xml,\
+-               screenshots/,\
+                toc.xml,\
+                pdf.bat
+
+Modified: trunk/org.prorefactor.doc/manual.xml
+===================================================================
+--- trunk/org.prorefactor.doc/manual.xml	2006-02-10 22:36:25 UTC (rev 45)
++++ trunk/org.prorefactor.doc/manual.xml	2006-02-11 00:57:26 UTC (rev 46)
+@@ -1062,19 +1062,13 @@
+ 
+       &lt;programlisting&gt;svn checkout <A HREF="svn://svn.berlios.de/prorefactor/trunk&lt;/programlisting">svn://svn.berlios.de/prorefactor/trunk&lt;/programlisting</A>&gt;
+ 
+-      &lt;para&gt;This will create several directories named
+-      &lt;filename&gt;org.prorefactor.*&lt;/filename&gt;.&lt;/para&gt;
++      &lt;para&gt;This will create a directory named &lt;filename&gt;trunk&lt;/filename&gt; and
++      several directories named &lt;filename&gt;org.prorefactor.*&lt;/filename&gt;.&lt;/para&gt;
+ 
+-      &lt;para&gt;Once you have checked the source out from the repository, you are
+-      ready to load that source into Eclipse projects.&lt;/para&gt;
+-
+       &lt;para&gt;From the Eclipse menu, choose &lt;guimenuitem&gt;File &gt; Import...
+-      &gt; Existing Project into Workspace&lt;/guimenuitem&gt; for each of the
+-      &lt;literal&gt;org.prorefactor&lt;/literal&gt; project directories in the following
+-      order: &lt;literal&gt;lib&lt;/literal&gt;, &lt;literal&gt;core&lt;/literal&gt;,
+-      &lt;literal&gt;refactor&lt;/literal&gt;, &lt;literal&gt;eclipse&lt;/literal&gt;, and then the
+-      rest. Eclipse will automatically build (compile) each project as you
+-      import it.&lt;/para&gt;
++      &gt; Existing Project into Workspace&lt;/guimenuitem&gt;. Browse to select
++      &lt;filename&gt;trunk&lt;/filename&gt; as the root directory, and then Eclipse will
++      allow you to import all of the projects at once.&lt;/para&gt;
+     &lt;/section&gt;
+ 
+     &lt;section&gt;
+@@ -1569,6 +1563,12 @@
+               Prolint/Eclipse is in early development, and not yet generally
+               useful for real work.&lt;/para&gt;
+             &lt;/listitem&gt;
++
++            &lt;listitem&gt;
++              &lt;para&gt;The instructions for &quot;Extending ProRefactor&quot; are now much
++              simpler. The same applies for extending Prolint/Eclipse. No
++              excuses. :)&lt;/para&gt;
++            &lt;/listitem&gt;
+           &lt;/itemizedlist&gt;
+         &lt;/listitem&gt;
+       &lt;/varlistentry&gt;
+
+Modified: trunk/org.prorefactor.javadoc/javadoc.xml
+===================================================================
+--- trunk/org.prorefactor.javadoc/javadoc.xml	2006-02-10 22:36:25 UTC (rev 45)
++++ trunk/org.prorefactor.javadoc/javadoc.xml	2006-02-11 00:57:26 UTC (rev 46)
+@@ -3,7 +3,7 @@
+   &lt;target name=&quot;javadoc&quot; description=&quot;Build javadoc dir&quot;&gt;
+ 	  &lt;javadoc 
+ 	           destdir=&quot;javadoc&quot;
+-	           source=&quot;1.4&quot;
++	           source=&quot;5.0&quot;
+ 	           author=&quot;true&quot;
+ 	           version=&quot;true&quot;
+ 	           use=&quot;true&quot;
+@@ -24,8 +24,8 @@
+ 	    &lt;fileset dir=&quot;../org.prorefactor.eclipse/src&quot; defaultexcludes=&quot;yes&quot;&gt;
+ 	      &lt;include name=&quot;**/*.java&quot;/&gt;
+ 	    &lt;/fileset&gt;
+-	    &lt;doctitle&gt;&lt;![CDATA[&lt;h1&gt;ProRefactor 1.2.3&lt;/h1&gt;]]&gt;&lt;/doctitle&gt;
+-	    &lt;bottom&gt;&lt;![CDATA[&lt;i&gt;Copyright &#169; 2002-2005 Joanju and others. All Rights Reserved.&lt;/i&gt;]]&gt;&lt;/bottom&gt;
++	    &lt;doctitle&gt;&lt;![CDATA[&lt;h1&gt;ProRefactor 1.3.0&lt;/h1&gt;]]&gt;&lt;/doctitle&gt;
++	    &lt;bottom&gt;&lt;![CDATA[&lt;i&gt;Copyright &#169; 2002-2006 Joanju and others. All Rights Reserved.&lt;/i&gt;]]&gt;&lt;/bottom&gt;
+ 	    &lt;tag name=&quot;todo&quot; scope=&quot;all&quot; description=&quot;To do:&quot; /&gt;
+ 	  &lt;/javadoc&gt;
+       &lt;zip zipfile=&quot;doc.zip&quot; basedir=&quot;javadoc&quot; filesonly=&quot;false&quot; whenempty=&quot;skip&quot; update=&quot;false&quot;/&gt;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000038.html">[Prorefactor-svn] r45 - in trunk: org.prolint.core org.prorefactor.core org.prorefactor.doc org.prorefactor.eclipse org.prorefactor.javadoc org.prorefactor.lib org.prorefactor.refactor
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#39">[ date ]</a>
+              <a href="thread.html#39">[ thread ]</a>
+              <a href="subject.html#39">[ subject ]</a>
+              <a href="author.html#39">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">More information about the Prorefactor-svn
+mailing list</a><br>
+</body></html>

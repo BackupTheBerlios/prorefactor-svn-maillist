@@ -1,0 +1,243 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Prorefactor-svn] r75 - in trunk: org.prorefactor.core/src/org/prorefactor/refactor org.prorefactor.core/src/org/prorefactor/treeparser org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.eclipse/src/org/prorefactor/eclipse
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/prorefactor-svn/2006-July/index.html" >
+   <LINK REL="made" HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r75%20-%20in%20trunk%3A%20org.prorefactor.core/src/org/prorefactor/refactor%20org.prorefactor.core/src/org/prorefactor/treeparser%20org.prorefactor.core/src/org/prorefactor/treeparser01%20org.prorefactor.eclipse/src/org/prorefactor/eclipse&In-Reply-To=%3C200607042203.k64M3aUQ022957%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000061.html">
+   <LINK REL="Next"  HREF="000063.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Prorefactor-svn] r75 - in trunk: org.prorefactor.core/src/org/prorefactor/refactor org.prorefactor.core/src/org/prorefactor/treeparser org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.eclipse/src/org/prorefactor/eclipse</H1>
+    <B>johnallengreen at BerliOS</B> 
+    <A HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r75%20-%20in%20trunk%3A%20org.prorefactor.core/src/org/prorefactor/refactor%20org.prorefactor.core/src/org/prorefactor/treeparser%20org.prorefactor.core/src/org/prorefactor/treeparser01%20org.prorefactor.eclipse/src/org/prorefactor/eclipse&In-Reply-To=%3C200607042203.k64M3aUQ022957%40sheep.berlios.de%3E"
+       TITLE="[Prorefactor-svn] r75 - in trunk: org.prorefactor.core/src/org/prorefactor/refactor org.prorefactor.core/src/org/prorefactor/treeparser org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.eclipse/src/org/prorefactor/eclipse">johnallengreen at berlios.de
+       </A><BR>
+    <I>Wed Jul  5 00:03:36 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000061.html">[Prorefactor-svn] r74 - in trunk: org.prolint.core/META-INF org.prolint.core/src/org/prolint/rules org.prorefactor.core/data org.prorefactor.core/data/bugsfixed org.prorefactor.core/src/org/prorefactor/core/unittest org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.feature
+</A></li>
+        <LI>Next message: <A HREF="000063.html">[Prorefactor-svn] r76 - in trunk: org.prorefactor.core/META-INF org.prorefactor.doc org.prorefactor.doc/META-INF org.prorefactor.eclipse/META-INF org.prorefactor.feature org.prorefactor.javadoc org.prorefactor.javadoc/META-INF org.prorefactor.lib/META-INF org.prorefactor.update
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#62">[ date ]</a>
+              <a href="thread.html#62">[ thread ]</a>
+              <a href="subject.html#62">[ subject ]</a>
+              <a href="author.html#62">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: johnallengreen
+Date: 2006-07-05 00:03:35 +0200 (Wed, 05 Jul 2006)
+New Revision: 75
+
+Modified:
+   trunk/org.prorefactor.core/src/org/prorefactor/refactor/IDE.java
+   trunk/org.prorefactor.core/src/org/prorefactor/refactor/PUB.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/ParseUnit.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Support.java
+   trunk/org.prorefactor.eclipse/src/org/prorefactor/eclipse/ProRefactorIDEGateway.java
+Log:
+Added fixes for problems around linked resources.
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/refactor/IDE.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/refactor/IDE.java	2006-07-04 19:53:05 UTC (rev 74)
++++ trunk/org.prorefactor.core/src/org/prorefactor/refactor/IDE.java	2006-07-04 22:03:35 UTC (rev 75)
+@@ -31,7 +31,8 @@
+ 	 * The return is an array of two strings. The first entry is the project
+ 	 * name, ex: &quot;projectName&quot;. The second entry is the relative path, ex:
+ 	 * &quot;src/com/joanju/Example.cls&quot;.
+-	 * @return null if the IDE does not find the file.
++	 * @return Must never return null. The project name may be anything
++	 * including null. The relative path must never be null.
+ 	 */
+ 	String [] getProjectRelativePath(File file);
+ 	
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/refactor/PUB.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/refactor/PUB.java	2006-07-04 19:53:05 UTC (rev 74)
++++ trunk/org.prorefactor.core/src/org/prorefactor/refactor/PUB.java	2006-07-04 22:03:35 UTC (rev 75)
+@@ -78,20 +78,21 @@
+ 	 * @param fullPath The fully qualified path to the compile unit's source file.
+ 	 */
+ 	public PUB(String relPath, String fullPath) {
+-		init(null, relPath, fullPath);
++		init(relPath, fullPath, true);
+ 	}
+ 
+ 	/** Work with a PUB for any compile unit from any project.
++	 * For any project name other than the current RefactorSession getProjectName(),
++	 * the PUB file is treated as a &quot;foreign&quot; pub.
+ 	 * @see PUB(String, String)
+ 	 */
+ 	public PUB(String project, String relPath, String fullPath) {
+-		init(project, relPath, fullPath);
++		boolean isLocalProjectFile = (project!=null &amp;&amp; project.equalsIgnoreCase(refpack.getProjectName()));
++		init(relPath, fullPath, isLocalProjectFile);
+ 	}
+ 	
+-	private void init(String project, String relPath, String fullPath) {
+-		String subdir;
+-		if (project==null || project.equalsIgnoreCase(refpack.getProjectName())) subdir = &quot;/pubs/&quot;;
+-		else subdir = &quot;/foreign_pubs/&quot;;
++	private void init(String relPath, String fullPath, boolean isLocalProjectFile) {
++		String subdir = isLocalProjectFile ? &quot;/pubs/&quot; : &quot;/foreign_pubs/&quot;;
+ 		cuFile = new File(fullPath);
+ 		pubFile = new File(refpack.getProRefactorProjectDir() + subdir + relPath + &quot;.pub&quot;);
+ 	}
+@@ -317,7 +318,9 @@
+ 	}
+ 	
+ 	
++	public ParseUnit getParseUnit() { return parseUnit; }
+ 	
++	
+ 	public String getSuperClassName() { return superClassName; }
+ 	
+ 	
+@@ -503,7 +506,10 @@
+ 	
+ 	
+ 	
+-	public void setParseUnit(ParseUnit pu) {this.parseUnit = pu;}
++	public void setParseUnit(ParseUnit pu) {
++		this.parseUnit = pu;
++		if (pu.getPUB()!=this) pu.setPUB(this);
++	}
+ 	
+ 	
+ 	
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/ParseUnit.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/ParseUnit.java	2006-07-04 19:53:05 UTC (rev 74)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/ParseUnit.java	2006-07-04 22:03:35 UTC (rev 75)
+@@ -133,7 +133,11 @@
+ 	}
+ 	
+ 	
+-	public ParseUnit setPUB(PUB pub) { this.pub = pub; return this; }
++	public ParseUnit setPUB(PUB pub) {
++		this.pub = pub;
++		if (pub.getParseUnit()!=this) pub.setParseUnit(this);
++		return this;
++	}
+ 
+ 	
+ 	public void setRootScope(SymbolScopeRoot rootScope) { this.rootScope = rootScope; }
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Support.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Support.java	2006-07-04 19:53:05 UTC (rev 74)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Support.java	2006-07-04 22:03:35 UTC (rev 75)
+@@ -216,7 +216,6 @@
+ 		if (! file.exists()) throw new Error(&quot;Could not find source on PROPATH for class: &quot; + className);
+ 		RefactorSession refpack = RefactorSession.getInstance();
+ 		String [] projFile = refpack.getIDE().getProjectRelativePath(file);
+-		if (projFile==null) throw new Error(&quot;Could not find IDE project/file for class: &quot; + className);
+ 		PUB pub = new PUB(projFile[0], projFile[1], FileStuff.fullpath(file));
+ 		boolean pubIsCurrent = pub.loadTo(PUB.HEADER);
+ 		ParseUnit pu = new ParseUnit(file);
+
+Modified: trunk/org.prorefactor.eclipse/src/org/prorefactor/eclipse/ProRefactorIDEGateway.java
+===================================================================
+--- trunk/org.prorefactor.eclipse/src/org/prorefactor/eclipse/ProRefactorIDEGateway.java	2006-07-04 19:53:05 UTC (rev 74)
++++ trunk/org.prorefactor.eclipse/src/org/prorefactor/eclipse/ProRefactorIDEGateway.java	2006-07-04 22:03:35 UTC (rev 75)
+@@ -12,20 +12,57 @@
+ import java.io.File;
+ 
+ import org.eclipse.core.resources.IFile;
++import org.eclipse.core.resources.IWorkspaceRoot;
++import org.eclipse.core.resources.ResourcesPlugin;
++import org.eclipse.core.runtime.Path;
++import org.prorefactor.refactor.FileStuff;
+ import org.prorefactor.refactor.IDE;
++import org.prorefactor.refactor.RefactorSession;
+ 
+ 
+ /** @see IDE */
+ public class ProRefactorIDEGateway implements IDE {
+ 
+-	/** @see IDE#getProjectRelativePath(File) */
++
++	/** Get the project relative path for a File object.
++	 * &lt;p&gt;
++	 * Returns an array of two strings.
++	 * &lt;p&gt;
++	 * If the file was found in the current RefactorSession getProjectName() project,
++	 * then that project name and the IFile relative path are returned.
++	 * &lt;p&gt;
++	 * If the file was found in &lt;b&gt;any&lt;/b&gt; project, then the &lt;b&gt;first matching&lt;/b&gt; project name and
++	 * the IFile relative path are returned.
++	 * &lt;p&gt;
++	 * Otherwise, the project name returned is null, and File.getPath() is returned.
++	 * @see IDE#getProjectRelativePath(File)
++	 */
+ 	public String [] getProjectRelativePath(File file) {
+-		IFile ifile = ResourceUtil.getIFile(file.getAbsolutePath());
+-		if (ifile==null) return null;
+ 		String [] ret = new String[2];
+-		ret[0] = ifile.getProject().getName();
+-		ret[1] = ifile.getProjectRelativePath().toString();
++		IWorkspaceRoot workspaceRoot = null;
++		IFile ifile = null;
++		try {
++			workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
++			String projectName = RefactorSession.getInstance().getProjectName();
++			for (IFile i : workspaceRoot.findFilesForLocation(Path.fromOSString(FileStuff.fullpath(file)))) {
++				if (i.getProject().getName().equalsIgnoreCase(projectName)) {
++					ifile = i;
++					break;
++				}
++				if (ifile==null) ifile = i;
++			}
++		} catch (IllegalStateException e) {
++			// The workspace is closed, and can't be searched.
++		}
++		if (ifile!=null) {
++			ret[0] = ifile.getProject().getName();
++			ret[1] = ifile.getProjectRelativePath().toString();
++		} else {
++			ret[0] = null;
++			ret[1] = file.getPath();
++		}
+ 		return ret;
+ 	}
+ 
++	
+ }
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000061.html">[Prorefactor-svn] r74 - in trunk: org.prolint.core/META-INF org.prolint.core/src/org/prolint/rules org.prorefactor.core/data org.prorefactor.core/data/bugsfixed org.prorefactor.core/src/org/prorefactor/core/unittest org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.feature
+</A></li>
+	<LI>Next message: <A HREF="000063.html">[Prorefactor-svn] r76 - in trunk: org.prorefactor.core/META-INF org.prorefactor.doc org.prorefactor.doc/META-INF org.prorefactor.eclipse/META-INF org.prorefactor.feature org.prorefactor.javadoc org.prorefactor.javadoc/META-INF org.prorefactor.lib/META-INF org.prorefactor.update
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#62">[ date ]</a>
+              <a href="thread.html#62">[ thread ]</a>
+              <a href="subject.html#62">[ subject ]</a>
+              <a href="author.html#62">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">More information about the Prorefactor-svn
+mailing list</a><br>
+</body></html>

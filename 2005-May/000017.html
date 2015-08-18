@@ -1,0 +1,918 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Prorefactor-svn] r22 - in trunk: org.prorefactor.core/src/org/prorefactor org.prorefactor.core/src/org/prorefactor/core org.prorefactor.core/src/org/prorefactor/nodetypes org.prorefactor.core/src/org/prorefactor/treeparser org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.doc org.prorefactor.refactor/src/org/prorefactor/refactor/action org.prorefactor.refactor/src/org/prorefactor/refactor/tfnames org.prorefactor.refactor/src/org/prorefactor/treeparser03
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/prorefactor-svn/2005-May/index.html" >
+   <LINK REL="made" HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r22%20-%20in%20trunk%3A%20org.prorefactor.core/src/org/prorefactor%20org.prorefactor.core/src/org/prorefactor/core%20org.prorefactor.core/src/org/prorefactor/nodetypes%20org.prorefactor.core/src/org/prorefactor/treeparser%20org.prorefactor.core/src/org/prorefactor/treeparser01%20org.prorefactor.doc%20org.prorefactor.refactor/src/org/prorefactor/refactor/action%20org.prorefactor.refactor/src/org/prorefactor/refactor/tfnames%20org.prorefactor.refactor/src/org/prorefactor/treeparser03&In-Reply-To=%3C200505021858.j42Iwn35016632%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000018.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Prorefactor-svn] r22 - in trunk: org.prorefactor.core/src/org/prorefactor org.prorefactor.core/src/org/prorefactor/core org.prorefactor.core/src/org/prorefactor/nodetypes org.prorefactor.core/src/org/prorefactor/treeparser org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.doc org.prorefactor.refactor/src/org/prorefactor/refactor/action org.prorefactor.refactor/src/org/prorefactor/refactor/tfnames org.prorefactor.refactor/src/org/prorefactor/treeparser03</H1>
+    <B>John Green at BerliOS</B> 
+    <A HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r22%20-%20in%20trunk%3A%20org.prorefactor.core/src/org/prorefactor%20org.prorefactor.core/src/org/prorefactor/core%20org.prorefactor.core/src/org/prorefactor/nodetypes%20org.prorefactor.core/src/org/prorefactor/treeparser%20org.prorefactor.core/src/org/prorefactor/treeparser01%20org.prorefactor.doc%20org.prorefactor.refactor/src/org/prorefactor/refactor/action%20org.prorefactor.refactor/src/org/prorefactor/refactor/tfnames%20org.prorefactor.refactor/src/org/prorefactor/treeparser03&In-Reply-To=%3C200505021858.j42Iwn35016632%40sheep.berlios.de%3E"
+       TITLE="[Prorefactor-svn] r22 - in trunk: org.prorefactor.core/src/org/prorefactor org.prorefactor.core/src/org/prorefactor/core org.prorefactor.core/src/org/prorefactor/nodetypes org.prorefactor.core/src/org/prorefactor/treeparser org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.doc org.prorefactor.refactor/src/org/prorefactor/refactor/action org.prorefactor.refactor/src/org/prorefactor/refactor/tfnames org.prorefactor.refactor/src/org/prorefactor/treeparser03">johnallengreen at sheep.berlios.de
+       </A><BR>
+    <I>Mon May  2 20:58:49 CEST 2005</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000018.html">[Prorefactor-svn] r23 - in trunk/org.prorefactor.core/src/org/prorefactor: . nodetypes treeparser treeparser01 widgettypes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17">[ date ]</a>
+              <a href="thread.html#17">[ thread ]</a>
+              <a href="subject.html#17">[ subject ]</a>
+              <a href="author.html#17">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: johnallengreen
+Date: 2005-05-02 20:58:48 +0200 (Mon, 02 May 2005)
+New Revision: 22
+
+Added:
+   trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/
+   trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/BlockNode.java
+   trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/FieldRefNode.java
+   trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/NodeFactory.java
+   trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/RecordNameNode.java
+   trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/package.html
+Modified:
+   trunk/org.prorefactor.core/src/org/prorefactor/core/JPNav.java
+   trunk/org.prorefactor.core/src/org/prorefactor/core/JPNode.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Block.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Support.java
+   trunk/org.prorefactor.doc/manual.xml
+   trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/action/ExtractMethod.java
+   trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/action/QualifyFieldsRefactor.java
+   trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/action/RenameSchema.java
+   trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/tfnames/NamesLint.java
+   trunk/org.prorefactor.refactor/src/org/prorefactor/treeparser03/TP03Support.java
+Log:
+Started subclassing JPNode, so that the AST is easier to program with.
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/core/JPNav.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/core/JPNav.java	2005-04-29 00:27:31 UTC (rev 21)
++++ trunk/org.prorefactor.core/src/org/prorefactor/core/JPNav.java	2005-05-02 18:58:48 UTC (rev 22)
+@@ -17,12 +17,16 @@
+  * Methods here are specific to Proparse's tree structure.
+  * For general node navigation (firstChild, etc.) see JPNode.
+  * &lt;p&gt;
+- * I plan to subclass JPNode, for example, to FieldRefNode, which will allow
++ * The new subclass of JPNode, FieldRefNode, allows
+  * this class and its members to go away entirely.
++ * @deprecated
+  */
+ public class JPNav {
+ 
+-	/** Find the ID node for a Field_ref node */
++	/** Find the ID node for a Field_ref node
++	 * @deprecated
++	 * @see org.prorefactor.nodetypes.FieldRefNode#getIdNode()
++	 */
+ 	public static JPNode findFieldRefIdNode(JPNode refNode) {
+ 		JPNode idNode = refNode.findDirectChild(TokenTypes.ID);
+ 		assert idNode != null;
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/core/JPNode.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/core/JPNode.java	2005-04-29 00:27:31 UTC (rev 21)
++++ trunk/org.prorefactor.core/src/org/prorefactor/core/JPNode.java	2005-05-02 18:58:48 UTC (rev 22)
+@@ -23,8 +23,10 @@
+ 
+ import java.util.HashMap;
+ 
++import org.prorefactor.nodetypes.NodeFactory;
+ 
+ 
++
+ /**
+  * Extension to antlr.BaseAST, which allows us to extract an
+  * external &quot;antlr&quot; AST view of a Proparse AST, which we can
+@@ -75,7 +77,11 @@
+ 	 */
+ 	public static final Integer BUFFERSCOPE = new Integer(-212);
+ 
+-	/** A valid value for setLink() and getLink() */
++	/** A valid value for setLink() and getLink().
++	 * You should not use this directly. Only JPNodes of subtype BlockNode
++	 * will have this set, so use BlockNode.getBlock instead.
++	 * @see org.prorefactor.nodetypes.BlockNode.
++	 */
+ 	public static final Integer BLOCK = new Integer(-214);
+ 
+ 	static private ProparseLdr parser = ProparseLdr.getInstance();
+@@ -124,7 +130,7 @@
+ 	}
+ 
+ 	private static JPNode getTree(int inHandle, TreeConfig config, JPNode parent) {
+-		JPNode thisNode = new JPNode(inHandle, config);
++		JPNode thisNode = NodeFactory.create(inHandle).configure(config);
+ 		thisNode.parent = parent;
+ 		int handle = parser.getHandle();
+ 		if (parser.nodeFirstChildI(inHandle, handle) != 0) {
+@@ -197,7 +203,8 @@
+ 
+ 
+ 
+-	private void configure(TreeConfig config) {
++	private JPNode configure(TreeConfig config) {
++		if (config==null) return this;
+ 		if (config.disconnected) {
+ 			attrSet(JPNode.STATE2, parser.attrGetI(nodeHandle, IConstants.STATE2));
+ 			fileIndex = parser.getNodeFileIndex(nodeHandle);
+@@ -211,6 +218,7 @@
+ 			column = parser.getNodeColumn(nodeHandle);
+ 		}
+ 		if (config.callback != null) config.callback.run(this);
++		return this;
+ 	} // configure
+ 
+ 
+
+Added: trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/BlockNode.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/BlockNode.java	2005-04-29 00:27:31 UTC (rev 21)
++++ trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/BlockNode.java	2005-05-02 18:58:48 UTC (rev 22)
+@@ -0,0 +1,32 @@
++/* Created on Apr 29, 2005
++ * Authors: John Green
++ * 
++ * Copyright (c) 2005 Joanju (www.joanju.com)
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
++ */
++
++package org.prorefactor.nodetypes;
++
++import org.prorefactor.core.JPNode;
++import org.prorefactor.treeparser.Block;
++
++
++public class BlockNode extends JPNode {
++
++	public BlockNode(int handle) { super(handle); }
++	public BlockNode(int handle, TreeConfig config) { super(handle, config); }
++	public BlockNode(int file, int line, int column) { super(file, line, column); }
++
++	public Block getBlock() {
++		Block block = (Block) getLink(JPNode.BLOCK);
++		assert block != null;
++		return block;
++	}
++	public void setBlock(Block block) {
++		setLink(JPNode.BLOCK, block);
++	}
++	
++}
+
+Added: trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/FieldRefNode.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/FieldRefNode.java	2005-04-29 00:27:31 UTC (rev 21)
++++ trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/FieldRefNode.java	2005-05-02 18:58:48 UTC (rev 22)
+@@ -0,0 +1,67 @@
++/* Created on Apr 29, 2005
++ * Authors: John Green
++ * 
++ * Copyright (c) 2005 Joanju (www.joanju.com)
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
++ */
++
++package org.prorefactor.nodetypes;
++
++import org.prorefactor.core.JPNode;
++import org.prorefactor.core.TokenTypes;
++import org.prorefactor.treeparser.BufferScope;
++import org.prorefactor.treeparser.FieldBuffer;
++import org.prorefactor.treeparser.Symbol;
++import org.prorefactor.treeparser.Variable;
++
++
++public class FieldRefNode extends JPNode {
++
++	public FieldRefNode(int handle) { super(handle); }
++	public FieldRefNode(int handle, TreeConfig config) { super(handle, config); }
++	public FieldRefNode(int file, int line, int column) { super(file, line, column); }
++
++	public BufferScope getBufferScope() {
++		BufferScope bufferScope = (BufferScope) getLink(JPNode.BUFFERSCOPE);
++		assert bufferScope!=null;
++		return bufferScope;
++	}
++	
++	/** We very often need to reference the ID node for a Field_ref node.
++	 * The Field_ref node is a synthetic node - it doesn't have any text.
++	 * If we want the field/variable name, or the file/line/column, then
++	 * we probably want to get those from the ID node.
++	 */
++	public JPNode getIdNode() {
++		JPNode idNode = findDirectChild(TokenTypes.ID);
++		assert idNode != null;
++		return idNode;
++	}
++	
++	/** Get the Symbol for a Field_ref node.
++	 * @return Always returns one of two Symbol types: Variable or FieldBuffer.
++	 */
++	public Symbol getSymbol() {
++		Symbol symbol = (Symbol) getLink(JPNode.SYMBOL);
++		assert symbol != null;
++		return symbol;
++	}
++	
++	public void setBufferScope(BufferScope bufferScope) {
++		assert bufferScope!=null;
++		setLink(JPNode.BUFFERSCOPE, bufferScope);
++	}
++	
++	public void setSymbol(FieldBuffer symbol) {
++		assert symbol!=null;
++		setLink(JPNode.SYMBOL, symbol);
++	}
++	public void setSymbol(Variable symbol) {
++		assert symbol!=null;
++		setLink(JPNode.SYMBOL, symbol);
++	}
++
++}
+
+Added: trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/NodeFactory.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/NodeFactory.java	2005-04-29 00:27:31 UTC (rev 21)
++++ trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/NodeFactory.java	2005-05-02 18:58:48 UTC (rev 22)
+@@ -0,0 +1,77 @@
++/* Created on Apr 29, 2005
++ * Authors: John Green
++ * 
++ * Copyright (c) 2005 Joanju (www.joanju.com)
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
++ */
++
++package org.prorefactor.nodetypes;
++
++import org.prorefactor.core.IConstants;
++import org.prorefactor.core.JPNode;
++import org.prorefactor.core.TokenTypes;
++
++import com.joanju.ProparseLdr;
++
++
++/** Create a JPNode, or an object of the appropriate subclass.
++ * &lt;p&gt;
++ * &lt;b&gt;This factory is final - it may not be subclassed or replaced.&lt;b&gt;&lt;br&gt;
++ * ProRefactor expects nodes to be of certain subtypes. If third parties
++ * were to use their own node factories, then when ProRefactor adds
++ * new JPNode subtypes, the third party factories would be out of date, and
++ * cause ProRefactor to fail.
++ * &lt;p&gt;
++ * An alternative implementation would have been to restrict ProRefactor to
++ * only reference JPNode, so that third parties could subclass JPNode any 
++ * which way. This was decided against, in favor of allowing JPNode subclasses
++ * to be used within ProRefactor itself. Third parties should use other
++ * mechanisms to extend JPNode, such as attributes and setLink/getLink.
++ * It is ProRefactor's responsibility to provide appropriate node subtypes so
++ * that the tree is easy to work with.
++ */
++public final class NodeFactory {
++	
++	private static ProparseLdr parser = ProparseLdr.getInstance();
++	
++	public static JPNode create(int handle) {
++		switch (parser.getNodeTypeI(handle)) {
++		case TokenTypes.Field_ref:
++			return new FieldRefNode(handle);
++		case TokenTypes.RECORD_NAME:
++			return new RecordNameNode(handle);
++		case TokenTypes.DO:
++		case TokenTypes.FOR:
++		case TokenTypes.REPEAT:
++		case TokenTypes.FUNCTION:
++		case TokenTypes.ON:
++		case TokenTypes.PROCEDURE:
++			// We check that these are statement heads, whether the keyword is reserved or not.
++			if (parser.attrGetI(handle, IConstants.STATEHEAD) != 0 )
++				return new BlockNode(handle);
++			else
++				return new JPNode(handle);
++		case TokenTypes.Program_root:
++		case TokenTypes.CANFIND:
++			// CANFIND is reserved, and only used in the syntax for the CAN-FIND function.
++			// It is a &quot;block&quot; because it has special buffer/index-cursor handling.
++			return new BlockNode(handle);
++		case TokenTypes.TRIGGERS:
++			{
++				int temp = parser.getHandle();
++				int childType = parser.nodeFirstChildI(handle, temp);
++				parser.releaseHandle(temp);
++				if (childType == TokenTypes.Code_block)
++					return new BlockNode(handle);
++				else
++					return new JPNode(handle);
++			}
++		default:
++			return new JPNode(handle);
++		}
++	}
++
++}
+
+Added: trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/RecordNameNode.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/RecordNameNode.java	2005-04-29 00:27:31 UTC (rev 21)
++++ trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/RecordNameNode.java	2005-05-02 18:58:48 UTC (rev 22)
+@@ -0,0 +1,45 @@
++/* Created on Apr 29, 2005
++ * Authors: John Green
++ * 
++ * Copyright (c) 2005 Joanju (www.joanju.com)
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
++ */
++
++package org.prorefactor.nodetypes;
++
++import org.prorefactor.core.JPNode;
++import org.prorefactor.treeparser.BufferScope;
++import org.prorefactor.treeparser.TableBuffer;
++
++
++public class RecordNameNode extends JPNode {
++
++	public RecordNameNode(int handle) { super(handle); }
++	public RecordNameNode(int handle, TreeConfig config) { super(handle, config); }
++	public RecordNameNode(int file, int line, int column) { super(file, line, column); }
++
++	public BufferScope getBufferScope() {
++		BufferScope bufferScope = (BufferScope) getLink(JPNode.BUFFERSCOPE);
++		assert bufferScope!=null;
++		return bufferScope;
++	}
++	
++	public TableBuffer getTableBuffer() {
++		TableBuffer buffer = (TableBuffer) getLink(JPNode.SYMBOL);
++		assert buffer != null;
++		return buffer;
++	}
++
++	public void setBufferScope(BufferScope bufferScope) {
++		assert bufferScope!=null;
++		setLink(JPNode.BUFFERSCOPE, bufferScope);
++	}
++	
++	public void setTableBuffer(TableBuffer buffer) {
++		setLink(JPNode.SYMBOL, buffer);
++	}
++
++}
+
+Added: trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/package.html
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/package.html	2005-04-29 00:27:31 UTC (rev 21)
++++ trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/package.html	2005-05-02 18:58:48 UTC (rev 22)
+@@ -0,0 +1,24 @@
++&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 3.2 Final//EN&quot;&gt;
++&lt;html&gt;
++&lt;head&gt;
++&lt;!--
++ Copyright (c) 2005 Joanju (www.joanju.com)
++ All rights reserved. This program and the accompanying materials 
++ are made available under the terms of the Eclipse Public License v1.0
++ which accompanies this distribution, and is available at
++ <A HREF="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</A>
++--&gt;
++&lt;/head&gt;
++&lt;body bgcolor=&quot;white&quot;&gt;
++
++Subtypes of org.prorefactor.core.JPNode, and related classes. 
++
++
++&lt;h2&gt;Package Specification&lt;/h2&gt;
++
++&lt;h2&gt;Related Documentation&lt;/h2&gt;
++
++&lt;!-- Put @see and @since tags down here. --&gt;
++
++&lt;/body&gt;
++&lt;/html&gt;
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Block.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Block.java	2005-04-29 00:27:31 UTC (rev 21)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/Block.java	2005-05-02 18:58:48 UTC (rev 22)
+@@ -25,6 +25,7 @@
+ import org.prorefactor.core.TokenTypes;
+ import org.prorefactor.core.schema.Field;
+ import org.prorefactor.core.schema.Schema;
++import org.prorefactor.nodetypes.RecordNameNode;
+ 
+ 
+ 
+@@ -89,14 +90,13 @@
+ 	 * a CAN-FIND function. (2004.Sep:John: Maybe in triggers too? Haven't checked.)
+ 	 * @param node The RECORD_NAME node. Must have the BufferSymbol linked to it already.
+ 	 */
+-	public void addHiddenCursor(JPNode node) {
+-		TableBuffer symbol = (TableBuffer) node.getLink(JPNode.SYMBOL);
+-		assert symbol != null;
++	public void addHiddenCursor(RecordNameNode node) {
++		TableBuffer symbol = node.getTableBuffer();
+ 		BufferScope buff = new BufferScope(this, symbol, BufferScope.HIDDEN_CURSOR);
+ 		bufferScopes.add(buff);
+ 		// Note the difference compared to addStrong and addWeak - we don't add
+ 		// BufferScope references to the enclosing blocks.
+-		node.setLink(JPNode.BUFFERSCOPE, buff);
++		node.setBufferScope(buff);
+ 	}
+ 
+ 
+@@ -108,13 +108,12 @@
+ 	 * @param node The RECORD_NAME node. It must already have
+ 	 * the BufferSymbol linked to it.
+ 	 */
+-	public void addStrongBufferScope(JPNode node) {
+-		TableBuffer symbol = (TableBuffer) node.getLink(JPNode.SYMBOL);
+-		assert symbol != null;
++	public void addStrongBufferScope(RecordNameNode node) {
++		TableBuffer symbol = node.getTableBuffer();
+ 		BufferScope buff = new BufferScope(this, symbol, BufferScope.STRONG);
+ 		bufferScopes.add(buff);
+ 		addBufferScopeReferences(buff);
+-		node.setLink(JPNode.BUFFERSCOPE, buff);
++		node.setBufferScope(buff);
+ 	} // addStrongBufferScope
+ 
+ 
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Support.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Support.java	2005-04-29 00:27:31 UTC (rev 21)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Support.java	2005-05-02 18:58:48 UTC (rev 22)
+@@ -23,6 +23,9 @@
+ import org.prorefactor.core.schema.Field;
+ import org.prorefactor.core.schema.Schema;
+ import org.prorefactor.core.schema.Table;
++import org.prorefactor.nodetypes.BlockNode;
++import org.prorefactor.nodetypes.FieldRefNode;
++import org.prorefactor.nodetypes.RecordNameNode;
+ import org.prorefactor.treeparser.Block;
+ import org.prorefactor.treeparser.BufferScope;
+ import org.prorefactor.treeparser.CQ;
+@@ -110,9 +113,9 @@
+ 
+ 	/** Beginning of a block. */
+ 	public void blockBegin(AST blockAST) {
+-		JPNode node = (JPNode) blockAST;
+-		currentBlock = pushBlock(new Block(currentBlock, node));
+-		node.setLink(JPNode.BLOCK, currentBlock);
++		BlockNode blockNode = (BlockNode) blockAST;
++		currentBlock = pushBlock(new Block(currentBlock, blockNode));
++		blockNode.setBlock(currentBlock);
+ 	}
+ 
+ 
+@@ -135,7 +138,7 @@
+ 	 * making a local-scoped named buffer using that same name.
+ 	 */
+ 	protected void canFindBegin(AST canfindAST, AST recordAST) {
+-		JPNode recordNode = (JPNode) recordAST;
++		RecordNameNode recordNode = (RecordNameNode) recordAST;
+ 		// Keep a ref to the current block...
+ 		Block b = currentBlock;
+ 		// ...create a can-find scope and block (assigns currentBlock)...
+@@ -154,7 +157,7 @@
+ 			isDefault = true;
+ 		}
+ 		TableBuffer newBuff = currentScope.defineBuffer(isDefault ? &quot;&quot; : buffName, table);
+-		recordNode.setLink(JPNode.SYMBOL, newBuff);
++		recordNode.setTableBuffer(newBuff);
+ 		currentBlock.addHiddenCursor(recordNode);
+ 	}
+ 
+@@ -308,7 +311,7 @@
+ 	 */
+ 	public void field(AST refAST, AST idAST, int contextQualifier, int whichTable) {
+ 		JPNode idNode = (JPNode) idAST;
+-		JPNode refNode = (JPNode) refAST;
++		FieldRefNode refNode = (FieldRefNode) refAST;
+ 		String name = idNode.getText();
+ 		FieldLookupResult result = null;
+ 
+@@ -355,17 +358,17 @@
+ 			refNode.attrSet(IConstants.ABBREVIATED, IConstants.TRUE);
+ 		// Variable
+ 		if (result.variable != null) {
+-			refNode.setLink(JPNode.SYMBOL, result.variable);
++			refNode.setSymbol(result.variable);
+ 			refNode.attrSet(IConstants.STORETYPE, IConstants.ST_VAR);
+ 			result.variable.noteReference(contextQualifier);
+ 		}
+ 		// Buffer attributes
+ 		if (result.bufferScope != null) {
+-			refNode.setLink(JPNode.BUFFERSCOPE, result.bufferScope);
++			refNode.setBufferScope(result.bufferScope);
+ 		}
+ 		// Table field
+ 		if (result.field != null) {
+-			refNode.setLink(JPNode.SYMBOL, result.field);
++			refNode.setSymbol(result.field);
+ 			result.field.noteReference(contextQualifier);
+ 		}
+ 
+@@ -386,7 +389,7 @@
+ 		SymbolScope forwardScope = (SymbolScope) funcForwards.get(idAST.getText());
+ 		if (forwardScope==null) return;
+ 		scopeSwap(forwardScope);
+-		((JPNode)funcAST).setLink(JPNode.BLOCK, currentBlock);
++		((BlockNode)funcAST).setBlock(currentBlock);
+ 	}
+ 
+ 
+@@ -432,11 +435,11 @@
+ 	}
+ 
+ 	public void programRoot(AST rootAST) {
+-		JPNode node = (JPNode) rootAST;
+-		currentBlock = pushBlock(new Block(rootScope, node));
++		BlockNode blockNode = (BlockNode) rootAST;
++		currentBlock = pushBlock(new Block(rootScope, blockNode));
+ 		rootScope.setRootBlock(currentBlock);
+-		node.setLink(JPNode.BLOCK, currentBlock);
+-		parseUnit.setTopNode(node);
++		blockNode.setBlock(currentBlock);
++		parseUnit.setTopNode(blockNode);
+ 		parseUnit.setRootScope(rootScope);
+ 	}
+ 
+@@ -488,8 +491,8 @@
+ 
+ 	/** Action to take at various RECORD_NAME nodes. */
+ 	public void recordNameNode(AST anode, int contextQualifier) {
+-		JPNode node = (JPNode) anode;
+-		node.attrSet(IConstants.CONTEXT_QUALIFIER, contextQualifier);
++		RecordNameNode recordNode = (RecordNameNode) anode;
++		recordNode.attrSet(IConstants.CONTEXT_QUALIFIER, contextQualifier);
+ 		TableBuffer buffer = null;
+ 		switch (contextQualifier) {
+ 			case CQ.INIT :
+@@ -498,7 +501,7 @@
+ 			case CQ.REFUP :
+ 			case CQ.UPDATING :
+ 			case CQ.BUFFERSYMBOL :
+-				buffer = currentScope.getBufferSymbol(node.getText());
++				buffer = currentScope.getBufferSymbol(recordNode.getText());
+ 				break;
+ 			case CQ.SYMBOL :
+ 				buffer = currentScope.lookupTableOrBufferSymbol(anode.getText());
+@@ -513,21 +516,17 @@
+ 			default :
+ 				assert false;
+ 		}
+-		recordNodeSymbol(node, buffer); // Does checks, sets attributes.
+-		node.setLink(JPNode.SYMBOL, buffer);
++		recordNodeSymbol(recordNode, buffer); // Does checks, sets attributes.
++		recordNode.setTableBuffer(buffer);
+ 		switch (contextQualifier) {
+ 			case CQ.INIT :
+ 			case CQ.REF :
+ 			case CQ.REFUP :
+ 			case CQ.UPDATING :
+-				node.setLink(
+-					JPNode.BUFFERSCOPE
+-					, currentBlock.getBufferForReference(buffer) );
++				recordNode.setBufferScope(currentBlock.getBufferForReference(buffer));
+ 				break;
+ 			case CQ.INITWEAK :
+-				node.setLink(
+-					JPNode.BUFFERSCOPE
+-					, currentBlock.addWeakBufferScope(buffer) );
++				recordNode.setBufferScope(currentBlock.addWeakBufferScope(buffer));
+ 				break;
+ 		}
+ 		buffer.noteReference(contextQualifier);
+@@ -536,11 +535,11 @@
+ 
+ 
+ 	public void scopeAdd(AST anode) {
+-		JPNode node = (JPNode) anode;
++		BlockNode blockNode = (BlockNode) anode;
+ 		currentScope = currentScope.addScope();
+-		currentBlock = pushBlock(new Block(currentScope, node));
++		currentBlock = pushBlock(new Block(currentScope, blockNode));
+ 		currentScope.setRootBlock(currentBlock);
+-		node.setLink(JPNode.BLOCK, currentBlock);
++		blockNode.setBlock(currentBlock);
+ 	} // scopeAdd()
+ 
+ 
+@@ -581,7 +580,7 @@
+ 	 * the BufferSymbol linked to it.
+ 	 */
+ 	public void strongScope(AST anode) {
+-		currentBlock.addStrongBufferScope((JPNode)anode);
++		currentBlock.addStrongBufferScope((RecordNameNode)anode);
+ 	}
+ 
+ 
+
+Modified: trunk/org.prorefactor.doc/manual.xml
+===================================================================
+--- trunk/org.prorefactor.doc/manual.xml	2005-04-29 00:27:31 UTC (rev 21)
++++ trunk/org.prorefactor.doc/manual.xml	2005-05-02 18:58:48 UTC (rev 22)
+@@ -1589,6 +1589,17 @@
+               Added data type attribute to fields and variables in the symbol
+               table.&lt;/para&gt;
+             &lt;/listitem&gt;
++
++            &lt;listitem&gt;
++              &lt;para&gt;Some classes and class members have been deprecated, and
++              will be removed soon. Please see the javadoc.&lt;/para&gt;
++            &lt;/listitem&gt;
++
++            &lt;listitem&gt;
++              &lt;para&gt;Subclassed JPNode. This allows JPNav to go away, and
++              allows us to add better functions for getting Symbols and such,
++              rather than working directly with the JPNode &quot;links&quot;.&lt;/para&gt;
++            &lt;/listitem&gt;
+           &lt;/itemizedlist&gt;
+         &lt;/listitem&gt;
+       &lt;/varlistentry&gt;
+
+Modified: trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/action/ExtractMethod.java
+===================================================================
+--- trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/action/ExtractMethod.java	2005-04-29 00:27:31 UTC (rev 21)
++++ trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/action/ExtractMethod.java	2005-05-02 18:58:48 UTC (rev 22)
+@@ -19,9 +19,8 @@
+ 
+ import org.prorefactor.core.ICallback;
+ import org.prorefactor.core.IConstants;
+-import org.prorefactor.core.JPNav;
+ import org.prorefactor.core.JPNode;
+-import org.prorefactor.core.TokenTypes;
++import org.prorefactor.nodetypes.FieldRefNode;
+ import org.prorefactor.refactor.FileStuff;
+ import org.prorefactor.refactor.RefactorException;
+ import org.prorefactor.refactor.RefactorSession;
+@@ -112,13 +111,13 @@
+ 	/** Check if a Field_ref is in the selection range.
+ 	 * Update our reference list if so.
+ 	 */
+-	protected void checkFieldRef(JPNode refNode) {
+-		JPNode idNode = JPNav.findFieldRefIdNode(refNode);
++	protected void checkFieldRef(FieldRefNode refNode) {
++		JPNode idNode = refNode.getIdNode();
+ 		if (idNode.getFileIndex() != selectionFile) return;
+ 		if (! org.prorefactor.core.Util.isInRange(
+ 			idNode.getLine(), idNode.getColumn(), selectionBegin, selectionEnd ) )
+ 			return;
+-		Symbol symbol = (Symbol) refNode.getLink(JPNode.SYMBOL);
++		Symbol symbol = refNode.getSymbol();
+ 		assert symbol != null;
+ 		if (symbol instanceof Variable) {
+ 			// If the variable is scoped to the program block, parameter is not necessary.
+@@ -220,8 +219,7 @@
+ 		selectionFile = FileStuff.getFileIndex(sourceFile);
+ 		ICallback callback = new ICallback() {
+ 			public Object run(Object obj) {
+-				JPNode node = (JPNode) obj;
+-				if (node.getType() == TokenTypes.Field_ref) checkFieldRef(node);
++				if (obj instanceof FieldRefNode) checkFieldRef((FieldRefNode)obj);
+ 				return null;
+ 			}
+ 		};
+
+Modified: trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/action/QualifyFieldsRefactor.java
+===================================================================
+--- trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/action/QualifyFieldsRefactor.java	2005-04-29 00:27:31 UTC (rev 21)
++++ trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/action/QualifyFieldsRefactor.java	2005-05-02 18:58:48 UTC (rev 22)
+@@ -17,10 +17,9 @@
+ 
+ import org.prorefactor.core.ICallback;
+ import org.prorefactor.core.IConstants;
+-import org.prorefactor.core.JPNav;
+ import org.prorefactor.core.JPNode;
+ import org.prorefactor.core.PRCException;
+-import org.prorefactor.core.TokenTypes;
++import org.prorefactor.nodetypes.FieldRefNode;
+ import org.prorefactor.refactor.FileStuff;
+ import org.prorefactor.refactor.RefactorException;
+ import org.prorefactor.refactor.ScanLib;
+@@ -42,21 +41,21 @@
+ 	private File sourceFile;
+ 	
+ 	protected class UnqualNode {
+-		UnqualNode(JPNode idNode, JPNode refNode) {
++		UnqualNode(JPNode idNode, FieldRefNode refNode) {
+ 			this.idNode = idNode;
+ 			this.refNode = refNode;
+ 		}
+ 		JPNode idNode;
+-		JPNode refNode;
++		FieldRefNode refNode;
+ 	}
+ 	
+ 
+ 
+ 	public ICallback callback = new ICallback() {
+ 		public Object run(Object obj) {
+-			JPNode refNode = (JPNode) obj;
+-			if (refNode.getType() != TokenTypes.Field_ref) return null;
+-			JPNode idNode = JPNav.findFieldRefIdNode(refNode);
++			if (! (obj instanceof FieldRefNode)) return null;
++			FieldRefNode refNode = (FieldRefNode) obj;
++			JPNode idNode = refNode.getIdNode();
+ 			if (idNode.getFileIndex() != sourceFileIndex) return null;
+ 			if (refNode.attrGet(IConstants.UNQUALIFIED_FIELD) == IConstants.TRUE)
+ 				nodeList.add(new UnqualNode(idNode, refNode));
+@@ -79,7 +78,7 @@
+ 			String fieldname = parser.getNodeText(handle);
+ 			if (fieldname.compareToIgnoreCase(uqn.idNode.getText()) != 0) continue;
+ 			// Can't be unqualified unless it's a Field - which must have a BufferSymbol.
+-			FieldBuffer fieldBuff = (FieldBuffer) uqn.refNode.getLink(JPNode.SYMBOL);
++			FieldBuffer fieldBuff = (FieldBuffer) uqn.refNode.getSymbol();
+ 			assert fieldBuff != null;
+ 			parser.setNodeText(
+ 					handle
+
+Modified: trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/action/RenameSchema.java
+===================================================================
+--- trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/action/RenameSchema.java	2005-04-29 00:27:31 UTC (rev 21)
++++ trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/action/RenameSchema.java	2005-05-02 18:58:48 UTC (rev 22)
+@@ -18,12 +18,13 @@
+ import java.util.StringTokenizer;
+ import java.util.TreeSet;
+ 
+-import org.prorefactor.core.JPNav;
+ import org.prorefactor.core.JPNode;
+ import org.prorefactor.core.TokenTypes;
+ import org.prorefactor.core.schema.Field;
+ import org.prorefactor.core.schema.Schema;
+ import org.prorefactor.core.schema.Table;
++import org.prorefactor.nodetypes.FieldRefNode;
++import org.prorefactor.nodetypes.RecordNameNode;
+ import org.prorefactor.refactor.IRefactor;
+ import org.prorefactor.refactor.PUB;
+ import org.prorefactor.refactor.Refactor;
+@@ -103,24 +104,23 @@
+ 
+ 	private void checkNode(JPNode node) {
+ 		int type = node.getType();
+-		if (type == TokenTypes.Field_ref) checkNodeDuField(node);
+-		else if (type == TokenTypes.RECORD_NAME) checkNodeDuTable(node);
++		if (type == TokenTypes.Field_ref) checkNodeDuField((FieldRefNode)node);
++		else if (type == TokenTypes.RECORD_NAME) checkNodeDuTable((RecordNameNode)node);
+ 		return;
+ 	}
+ 	
+ 	
+ 	
+-	private void checkNodeDuField(JPNode node) {
+-		Symbol symbol = (Symbol) node.getLink(JPNode.SYMBOL);
+-		assert symbol != null;
++	private void checkNodeDuField(FieldRefNode refNode) {
++		Symbol symbol = refNode.getSymbol();
+ 		if (! (symbol instanceof FieldBuffer)) return;
+-		FieldBuffer fieldBuff = (FieldBuffer) node.getLink(JPNode.SYMBOL);
++		FieldBuffer fieldBuff = (FieldBuffer) symbol;
+ 		assert fieldBuff != null;
+ 		TableBuffer tableBuff = fieldBuff.getBuffer();
+ 		String mapFieldValue = (String) schemaMap.get(fieldBuff.getField());
+ 		String mapTableValue = (String) schemaMap.get(tableBuff.getTable());
+ 		if (mapFieldValue==null &amp;&amp; mapTableValue==null) return;
+-		JPNode idNode = JPNav.findFieldRefIdNode(node);
++		JPNode idNode = refNode.getIdNode();
+ 		String origText = idNode.getText();
+ 		Field.Name oldName = new Field.Name(origText);
+ 		Field.Name newName = new Field.Name(origText);
+@@ -143,8 +143,8 @@
+ 	
+ 	
+ 	
+-	private void checkNodeDuTable(JPNode node) {
+-		TableBuffer buffer = (TableBuffer) node.getLink(JPNode.SYMBOL);
++	private void checkNodeDuTable(RecordNameNode node) {
++		TableBuffer buffer = node.getTableBuffer();
+ 		assert buffer != null;
+ 		// Check that this is a &quot;default&quot; schema buffer - not a named buffer.
+ 		if (! buffer.isDefaultSchema()) return;
+
+Modified: trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/tfnames/NamesLint.java
+===================================================================
+--- trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/tfnames/NamesLint.java	2005-04-29 00:27:31 UTC (rev 21)
++++ trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/tfnames/NamesLint.java	2005-05-02 18:58:48 UTC (rev 22)
+@@ -20,6 +20,8 @@
+ import org.prorefactor.core.TokenTypes;
+ import org.prorefactor.core.schema.Database;
+ import org.prorefactor.core.schema.Table;
++import org.prorefactor.nodetypes.FieldRefNode;
++import org.prorefactor.nodetypes.RecordNameNode;
+ import org.prorefactor.refactor.ILint;
+ import org.prorefactor.treeparser.FieldBuffer;
+ import org.prorefactor.treeparser.Symbol;
+@@ -74,11 +76,11 @@
+ 		switch (node.getType()) {
+ 			case TokenTypes.Field_ref :
+ 				currTarget = new NamesTarget();
+-				lintFieldRef(node);
++				lintFieldRef((FieldRefNode)node);
+ 				break;
+ 			case TokenTypes.RECORD_NAME :
+ 				currTarget = new NamesTarget();
+-				lintRecordName(node);
++				lintRecordName((RecordNameNode)node);
+ 				break;
+ 		}
+ 	} // examineNode()
+@@ -106,10 +108,9 @@
+ 
+ 
+ 
+-	private void lintFieldRef(JPNode node) {
++	private void lintFieldRef(FieldRefNode node) {
+ 		int handle = node.getHandle();
+-		Symbol symbol =  (Symbol) node.getLink(JPNode.SYMBOL);
+-		assert symbol != null;
++		Symbol symbol =  node.getSymbol();
+ 		FieldBuffer fieldBuff = null;
+ 		TableBuffer tableBuff = null;
+ 		if (symbol instanceof FieldBuffer) { 
+@@ -210,8 +211,8 @@
+ 	 * (Buffer names cannot be abbreviated, and we're not going to try to deal
+ 	 * with capitalization on buffer names. bCustomer might be very valid.)
+ 	 */
+-	private void lintRecordName(JPNode node) {
+-		TableBuffer tableBuff = (TableBuffer) node.getLink(JPNode.SYMBOL);
++	private void lintRecordName(RecordNameNode node) {
++		TableBuffer tableBuff = node.getTableBuffer();
+ 		Table table = tableBuff.getTable();
+ 
+ 		// Are we applying changes to work/temp tables?
+
+Modified: trunk/org.prorefactor.refactor/src/org/prorefactor/treeparser03/TP03Support.java
+===================================================================
+--- trunk/org.prorefactor.refactor/src/org/prorefactor/treeparser03/TP03Support.java	2005-04-29 00:27:31 UTC (rev 21)
++++ trunk/org.prorefactor.refactor/src/org/prorefactor/treeparser03/TP03Support.java	2005-05-02 18:58:48 UTC (rev 22)
+@@ -39,6 +39,7 @@
+ import org.prorefactor.core.CommentFinder;
+ import org.prorefactor.core.IConstants;
+ import org.prorefactor.core.JPNode;
++import org.prorefactor.nodetypes.FieldRefNode;
+ import org.prorefactor.refactor.RefactorTarget;
+ import org.prorefactor.refactor.noundo.NoundoTarget;
+ import org.prorefactor.treeparser.Symbol;
+@@ -177,10 +178,10 @@
+ 	 * @param refNode The Field_ref node.
+ 	 * @param idNode The ID node.
+ 	 */
+-	public void fieldRef(AST refNode, AST idNode) {
++	public void fieldRef(AST refAST, AST idNode) {
+ 		if (!isUpdating) return;
+-		Symbol symbol = (Symbol) ((JPNode)refNode).getLink(JPNode.SYMBOL);
+-		assert symbol != null;
++		FieldRefNode refNode = (FieldRefNode) refAST;
++		Symbol symbol = refNode.getSymbol();
+ 		NoundoTarget target = (NoundoTarget) undoTargetsMap.get(symbol);
+ 		if (target==null) return;
+ 		((Block)blockList.getFirst()).undoTargetsAssignedList.add(target);
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000018.html">[Prorefactor-svn] r23 - in trunk/org.prorefactor.core/src/org/prorefactor: . nodetypes treeparser treeparser01 widgettypes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17">[ date ]</a>
+              <a href="thread.html#17">[ thread ]</a>
+              <a href="subject.html#17">[ subject ]</a>
+              <a href="author.html#17">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">More information about the Prorefactor-svn
+mailing list</a><br>
+</body></html>

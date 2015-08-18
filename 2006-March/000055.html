@@ -1,0 +1,653 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Prorefactor-svn] r65 - in trunk/org.prorefactor.core/src/org/prorefactor: core/unittest treeparser treeparser01
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/prorefactor-svn/2006-March/index.html" >
+   <LINK REL="made" HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r65%20-%20in%20trunk/org.prorefactor.core/src/org/prorefactor%3A%20core/unittest%20treeparser%20treeparser01&In-Reply-To=%3C200603310421.k2V4LVmp019979%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000054.html">
+   <LINK REL="Next"  HREF="000056.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Prorefactor-svn] r65 - in trunk/org.prorefactor.core/src/org/prorefactor: core/unittest treeparser treeparser01</H1>
+    <B>johnallengreen at BerliOS</B> 
+    <A HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r65%20-%20in%20trunk/org.prorefactor.core/src/org/prorefactor%3A%20core/unittest%20treeparser%20treeparser01&In-Reply-To=%3C200603310421.k2V4LVmp019979%40sheep.berlios.de%3E"
+       TITLE="[Prorefactor-svn] r65 - in trunk/org.prorefactor.core/src/org/prorefactor: core/unittest treeparser treeparser01">johnallengreen at berlios.de
+       </A><BR>
+    <I>Fri Mar 31 06:21:31 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000054.html">[Prorefactor-svn] r64 - in trunk/org.prorefactor.core/src/org/prorefactor: core/unittest treeparser treeparser01
+</A></li>
+        <LI>Next message: <A HREF="000056.html">[Prorefactor-svn] r66 - in trunk/org.prorefactor.core/src/org/prorefactor: treeparser01 treeparser03 treeparserbase
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#55">[ date ]</a>
+              <a href="thread.html#55">[ thread ]</a>
+              <a href="subject.html#55">[ subject ]</a>
+              <a href="author.html#55">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: johnallengreen
+Date: 2006-03-31 06:21:30 +0200 (Fri, 31 Mar 2006)
+New Revision: 65
+
+Modified:
+   trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/TP01ProcessActionTest.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser/ParseUnit.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01ProcessAction.java
+Log:
+Superficial changes to TP01ProcessAction.java. For methods called by the tree parser,
+commented as such, and made those protected.
+In ParseUnit, added support for TP01Action objects other than the default, and this
+allowed me to make TP01ProcessActionTest.java slightly simpler.
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/TP01ProcessActionTest.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/TP01ProcessActionTest.java	2006-03-30 20:16:36 UTC (rev 64)
++++ trunk/org.prorefactor.core/src/org/prorefactor/core/unittest/TP01ProcessActionTest.java	2006-03-31 04:21:30 UTC (rev 65)
+@@ -12,30 +12,25 @@
+ 
+ package org.prorefactor.core.unittest;
+ 
++import java.io.File;
+ import java.util.ArrayList;
+ import java.util.Map;
+ 
+ import junit.framework.TestCase;
+ 
+-import org.prorefactor.core.JPNode;
++import org.prorefactor.refactor.RefactorException;
+ import org.prorefactor.treeparser.Call;
++import org.prorefactor.treeparser.ParseUnit;
+ import org.prorefactor.treeparser01.TP01ProcessAction;
+ import org.prorefactor.treeparser01.TP01Support;
+-import org.prorefactor.treeparser01.TreeParser01;
+ 
+-import antlr.RecognitionException;
+-
+-import com.joanju.ProparseLdr;
+-
+ /**
+  * Tests for ProcessParseAction.
+  *
+  */
+ public class TP01ProcessActionTest extends TestCase {
+-	private ProparseLdr parser = null;
+ 	private TP01Support symbolAction;
+ 	private TP01ProcessAction processAction;
+-	private TreeParser01 treeWalker;
+ 
+ 	private String testDir = Config.testDir();
+ 	
+@@ -46,85 +41,66 @@
+ 		super(name);
+ 	}
+ 	
+-	private JPNode getTree() {
+-		int topNode = parser.getHandle();
+-		parser.nodeTop(topNode);
+-		JPNode ast = JPNode.getTree(topNode);
+-		return ast;
+-	}
+-	
+ 	public void setUp(){
+-		parser = ProparseLdr.getInstance();
+ 		symbolAction = new TP01Support();
+ 		processAction = new TP01ProcessAction(symbolAction.getRootScope());
+-		treeWalker = new TreeParser01();
+ 	}
+ 
++
+ 	/**
+ 	 * Parse compile-file.p and verify that all calls
+ 	 * are registered correctly, for each scope.
++	 * @throws RefactorException 
+ 	 */
+-	public void testCompileFileCalls(){
+-		try {
+-			String externalName = &quot;compile-file.p&quot;;
+-			parser.parse(testDir + externalName);
+-			assertTrue(&quot;Parse error.&quot;, parser.errorGetStatus() &gt;= 0);
+-			
+-			JPNode ast = getTree();
+-			
+-			treeWalker.setActionObject(symbolAction);
+-			treeWalker.program(ast);
++	public void testCompileFileCalls() throws Exception{
++		File file = new File(testDir + &quot;compile-file.p&quot;);
++		String externalName = file.getPath();
+ 
+-			treeWalker.setActionObject(processAction);
+-			treeWalker.program(ast);
+-			
++		ParseUnit pu = new ParseUnit(file);
++		pu.treeParser01(symbolAction);
++		pu.treeParser01(processAction);
+ 
+-			// Define routine handlers for expected routines.
+-			RoutineHandler enableUi = new RoutineHandler(&quot;enable-ui&quot;, symbolAction);
+-			RoutineHandler userAction = new RoutineHandler(&quot;user-action&quot;, symbolAction);
+-			RoutineHandler disableUi = new RoutineHandler(&quot;disable-ui&quot;, symbolAction);
+-			RoutineHandler setState = new RoutineHandler(&quot;setState&quot;, symbolAction);
+-			RoutineHandler getCompileList = new RoutineHandler(&quot;get-compile-list&quot;, symbolAction);			
++		// Define routine handlers for expected routines.
++		RoutineHandler enableUi = new RoutineHandler(&quot;enable-ui&quot;, symbolAction);
++		RoutineHandler userAction = new RoutineHandler(&quot;user-action&quot;, symbolAction);
++		RoutineHandler disableUi = new RoutineHandler(&quot;disable-ui&quot;, symbolAction);
++		RoutineHandler setState = new RoutineHandler(&quot;setState&quot;, symbolAction);
++		RoutineHandler getCompileList = new RoutineHandler(&quot;get-compile-list&quot;, symbolAction);			
+ 
++		// Define call objects for expected calls.
++		Call enableUiCall = new Call(externalName,enableUi.getName());
++		Call userActionCall = new Call(externalName,userAction.getName());
++		Call disableUiCall = new Call(externalName,disableUi.getName());
++		Call setStateCall = new Call(externalName,setState.getName());
++		Call getCompileListCall = new Call(externalName,getCompileList.getName());
++		
++		// Create expected result set for root scope: enable-ui, user-action, disable-ui.
++		ArrayList&lt;Call&gt; expectedRootCalls = new ArrayList&lt;Call&gt;();
++		expectedRootCalls.add(disableUiCall);
++		expectedRootCalls.add(enableUiCall);
++		expectedRootCalls.add(userActionCall);
+ 
+-			// Define call objects for expected calls.
+-			Call enableUiCall = new Call(externalName,enableUi.getName());
+-			Call userActionCall = new Call(externalName,userAction.getName());
+-			Call disableUiCall = new Call(externalName,disableUi.getName());
+-			Call setStateCall = new Call(externalName,setState.getName());
+-			Call getCompileListCall = new Call(externalName,getCompileList.getName());
+-			
+-			// Create expected result set for root scope: enable-ui, user-action, disable-ui.
+-			ArrayList&lt;Call&gt; expectedRootCalls = new ArrayList&lt;Call&gt;();
+-			expectedRootCalls.add(disableUiCall);
+-			expectedRootCalls.add(enableUiCall);
+-			expectedRootCalls.add(userActionCall);
+-			
+-
+-			// Get actual calls found in code and test against expected.
+-			Map&lt;String, Call&gt; actualRootCalls = processAction.getRootScope().getCallMap();
+-			assertTrue(actualRootCalls.values().containsAll(expectedRootCalls));
+-			assertTrue(! actualRootCalls.values().contains(setStateCall));			
+-			assertTrue(! actualRootCalls.values().contains(getCompileListCall));			
+-			
+-			// Internal proc enable-ui calls: setState.
+-			Map&lt;String, Call&gt; actualEnableUiCalls = enableUi.getRoutineScope().getCallMap();
+-			assertTrue(actualEnableUiCalls.values().contains(setStateCall));
+-			
+-			// Internal proc user-action calls: get-compile-list.
+-			Map&lt;String, Call&gt; actualUserActionCalls = userAction.getRoutineScope().getCallMap();
+-			assertTrue(actualUserActionCalls.values().contains(getCompileListCall));
+-			
+-			// Internal proc get-compile-list calls: setState x 3.
+-			Map&lt;String, Call&gt; actualGetCompileListCalls = getCompileList.getRoutineScope().getCallMap();
+-			assertTrue(actualGetCompileListCalls.values().contains(setStateCall));
++		// Get actual calls found in code and test against expected.
++		Map&lt;String, Call&gt; actualRootCalls = pu.getRootScope().getCallMap();
++		assertTrue(actualRootCalls.values().containsAll(expectedRootCalls));
++		assertTrue(! actualRootCalls.values().contains(setStateCall));			
++		assertTrue(! actualRootCalls.values().contains(getCompileListCall));			
++		
++		// Internal proc enable-ui calls: setState.
++		Map&lt;String, Call&gt; actualEnableUiCalls = enableUi.getRoutineScope().getCallMap();
++		assertTrue(actualEnableUiCalls.values().contains(setStateCall));
++		
++		// Internal proc user-action calls: get-compile-list.
++		Map&lt;String, Call&gt; actualUserActionCalls = userAction.getRoutineScope().getCallMap();
++		assertTrue(actualUserActionCalls.values().contains(getCompileListCall));
++		
++		// Internal proc get-compile-list calls: setState x 3.
++		Map&lt;String, Call&gt; actualGetCompileListCalls = getCompileList.getRoutineScope().getCallMap();
++		assertTrue(actualGetCompileListCalls.values().contains(setStateCall));
+ 						
+-		} catch (RecognitionException e) {
+-			e.printStackTrace();
+-			fail();
+-		}
+ 	}
+ 
++
+ 	/**
+ 	 * Parse persistent-run.p and verify that:
+ 	 * a) run &lt;proc1&gt; persistent set &lt;h&gt; results in the
+@@ -132,56 +108,46 @@
+ 	 * b) run &lt;proc2&gt; in &lt;h&gt; is registered as a call to
+ 	 * proc1.proc2.
+ 	 */
+-	public void testPersistenProc(){
+-		try {
+-			String externalName = &quot;persistent-run.p&quot;;
+-			parser.parse(testDir + externalName);
+-			assertTrue(&quot;Parse error.&quot;, parser.errorGetStatus() &gt;= 0);
+-			
+-			JPNode ast = getTree();
++	public void testPersistenProc() throws Exception {
++		File file = new File(testDir + &quot;persistent-run.p&quot;);
++		String externalName = file.getPath();
+ 
+-			treeWalker.setActionObject(symbolAction);
+-			treeWalker.program(ast);
++		ParseUnit pu = new ParseUnit(file);
++		pu.treeParser01(symbolAction);
++		pu.treeParser01(processAction);
++	
++		assertTrue(processAction.getErrorList().size() == 0);
+ 
+-			treeWalker.setActionObject(processAction);
+-			treeWalker.program(ast);
++		// Define routines.
++		RoutineHandler test01 = new RoutineHandler(&quot;test_01&quot;, symbolAction);
++		RoutineHandler test02 = new RoutineHandler(&quot;test_02&quot;, symbolAction);
++		
++		// Define calls.
++		String targetProc = &quot;persistent-proc.p&quot;;
++		Call persistentProcCall = new Call(targetProc,null);
++		Call test01InHandleCall = new Call(targetProc,test01.getName());
++		Call test02InHandleCall = new Call(targetProc,test02.getName());
++		Call test01InternalCall = new Call(externalName,test01.getName());
++		
++		// Expected root procedure calls.
++		ArrayList&lt;Call&gt; expectedRootCalls = new ArrayList&lt;Call&gt;();
++		expectedRootCalls.add(persistentProcCall);
++		expectedRootCalls.add(test01InHandleCall);
++		expectedRootCalls.add(test01InternalCall);
+ 
+-			assertTrue(processAction.getErrorList().size() == 0);
++		// Expected calls in procedure test_01
++		ArrayList&lt;Call&gt; expectedTest01Calls = new ArrayList&lt;Call&gt;();
++		expectedTest01Calls.add(test02InHandleCall);
++		
++		// Test actual root calls agains expected root calls.
++		Map&lt;String, Call&gt; actualRootCalls = processAction.getCallList();
++		assertTrue(actualRootCalls.values().containsAll(expectedRootCalls));
++		assertTrue(! actualRootCalls.values().contains(test02InHandleCall));			
+ 
+-			// Define routines.
+-			RoutineHandler test01 = new RoutineHandler(&quot;test_01&quot;, symbolAction);
+-			RoutineHandler test02 = new RoutineHandler(&quot;test_02&quot;, symbolAction);
+-			
+-			// Define calls.
+-			String targetProc = &quot;persistent-proc.p&quot;;
+-			Call persistentProcCall = new Call(targetProc,null);
+-			Call test01InHandleCall = new Call(targetProc,test01.getName());
+-			Call test02InHandleCall = new Call(targetProc,test02.getName());
+-			Call test01InternalCall = new Call(externalName,test01.getName());
+-			
+-			// Expected root procedure calls.
+-			ArrayList&lt;Call&gt; expectedRootCalls = new ArrayList&lt;Call&gt;();
+-			expectedRootCalls.add(persistentProcCall);
+-			expectedRootCalls.add(test01InHandleCall);
+-			expectedRootCalls.add(test01InternalCall);
++		// Test actual calls in test_01 against expected calls.
++		Map&lt;String, Call&gt; actualTest01Calls = test01.getRoutineScope().getCallMap();
++		assertTrue(actualTest01Calls.values().containsAll(expectedTest01Calls));
++	}
+ 
+-			// Expected calls in procedure test_01
+-			ArrayList&lt;Call&gt; expectedTest01Calls = new ArrayList&lt;Call&gt;();
+-			expectedTest01Calls.add(test02InHandleCall);
+-			
+-			// Test actual root calls agains expected root calls.
+-			Map&lt;String, Call&gt; actualRootCalls = processAction.getCallList();
+-			assertTrue(actualRootCalls.values().containsAll(expectedRootCalls));
+-			assertTrue(! actualRootCalls.values().contains(test02InHandleCall));			
+ 
+-			// Test actual calls in test_01 against expected calls.
+-			Map&lt;String, Call&gt; actualTest01Calls = test01.getRoutineScope().getCallMap();
+-			assertTrue(actualTest01Calls.values().containsAll(expectedTest01Calls));
+-			
+-		} catch (RecognitionException e) {
+-			e.printStackTrace();
+-			fail();
+-		}
+-
+-	}
+ }
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser/ParseUnit.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser/ParseUnit.java	2006-03-30 20:16:36 UTC (rev 64)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser/ParseUnit.java	2006-03-31 04:21:30 UTC (rev 65)
+@@ -20,6 +20,7 @@
+ import org.prorefactor.refactor.PUB;
+ import org.prorefactor.refactor.RefactorException;
+ import org.prorefactor.refactor.RefactorSession;
++import org.prorefactor.treeparser01.TP01Action;
+ import org.prorefactor.treeparser01.TreeParser01;
+ 
+ import com.joanju.ProparseLdr;
+@@ -133,8 +134,8 @@
+ 	}
+ 
+ 	
+-	/** Run TreeParser01. This takes care of calling parse() first, if that
+-	 * has not already been done.
++	/** Run TreeParser01.
++	 * Takes care of calling parse() first, if that has not already been done.
+ 	 */
+ 	public void treeParser01() throws RefactorException {
+ 		if (this.getTopNode()==null) parse();
+@@ -144,4 +145,16 @@
+ 	}
+ 
+ 	
++	/** Run TreeParser01 with any TP01Action object.
++	 * Takes care of calling parse() first, if that has not already been done.
++	 */
++	public void treeParser01(TP01Action action) throws RefactorException {
++		if (this.getTopNode()==null) parse();
++		TreeParser01 tp = new TreeParser01();
++		tp.setActionObject(action);
++		action.setParseUnit(this);
++		treeParser(tp);
++	}
++
++	
+ }
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01ProcessAction.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01ProcessAction.java	2006-03-30 20:16:36 UTC (rev 64)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01ProcessAction.java	2006-03-31 04:21:30 UTC (rev 65)
+@@ -25,16 +25,14 @@
+ import org.prorefactor.treeparser.SemanticError;
+ import org.prorefactor.treeparser.SymbolScope;
+ import org.prorefactor.treeparser.SymbolScopeRoot;
+-import org.prorefactor.treeparser.TableBuffer;
+ import org.prorefactor.treeparser.Variable;
+ 
+ import antlr.SemanticException;
+ import antlr.collections.AST;
+ 
+ 
+-/**
++/** Action class for TP01 - creates Call records for RUN statements.
+  * @author pcd
+- *
+  */
+ public class TP01ProcessAction extends TP01Action {
+ 
+@@ -43,33 +41,108 @@
+ 		currentScope = rootScope;
+ 		errorList = new ErrorList();
+ 	}
+-	
+-	SymbolScope currentScope;
+-	SymbolScopeRoot rootScope;
+-	TableBuffer lastTableReferenced;
+-	TableBuffer prevTableReferenced;
+-	TableBuffer currDefTable;
+ 
+ 	private Call wipCall;
+ 	private ErrorList errorList;
+ 	private Expression wipExpression;
+ 	private JPNode wipFieldNode;
++	private SymbolScope currentScope;
++	private SymbolScopeRoot rootScope;
+ 	
+ 
+-	/**
++
++	/** Unused... I'm not sure where this was going.  -- John */
++	protected void expressionExprt(AST node) {
++		wipExpression = new Expression((JPNode) node);
++		wipExpression.setValue(wipFieldNode.getText());
++	}
++
++	
++	/** Unused.  -- John
++	 * Pop a SystemHandle from the semantic stack, create an
++	 * Expression, save the SystemHandle as the Expression value
++	 * and place the Expression on top of semantic stack.
++	 */
++	protected void exprtSystemHandleName(AST sysHandleName) { }
++
++
++	/** @return the Map of Call objects registered in the currentScope. */
++	public Map&lt;String, Call&gt; getCallList() { return currentScope.getCallMap(); }
++
++
++	public ErrorList getErrorList() { return errorList; }
++
++
++	/** Called by the tree parser at a Field_ref node. */
++	protected void field(AST refAST, AST idAST, int contextQualifier, int whichTable) {
++		wipFieldNode = (JPNode) idAST;
++	}
++
++	
++	/** Called by the tree parser at filenameorvalue: VALUE(expression), passing in the expression node. */
++	protected void fnvExpression(AST node){
++		wipExpression = new Expression((JPNode) node);
++	}
++	
++
++	/** Called by the tree parser for filenameorvalue: FILENAME  production */
++	protected void fnvFilename(AST node){
++		Expression exp = new Expression((JPNode) node);
++		exp.setValue(node.getText());
++		wipExpression = exp;
++	}
++
++	
++	/** Called by the tree parser at the beginning of a RUN statement. */
++	protected void runBegin(AST node) {
++		// Expect a FileName at the top of semantic stack;
++		String fileName = (String) wipExpression.getValue();
++		Call call = new Call((JPNode) node);
++		call.setRunArgument(fileName);
++		wipCall = call;
++	}
++
++	
++	/* Called by the tree parser in the RUN statement right before any parameters. */
++	protected void runEnd(AST node) {
++		/* 
++		 * Cannot resolve whether internal or external procedure here.
++		 * run &lt;name&gt; in &lt;handle&gt;: &lt;name&gt; is an internal procedure.
++		 * run &lt;name&gt; and &lt;name&gt; is defined in the current scope: &lt;name&gt; is an internal procedure.
++		 * run &lt;name&gt; and &lt;name&gt; is not defined in the current scope: &lt;name&gt; is an external procedure.
++		 * 
++		 */
++		Call call = wipCall;
++		if (call.isUnresolved()){
++			errorList.add(new SemanticError(&quot;Unresolved call&quot;, null));
++		} else {
++			try {
++				String routineId = call.getRunArgument();
++				call.finalize(rootScope.hasRoutine(routineId));
++			} catch (SemanticException e) {
++				throw new RuntimeException(&quot;Unhandled SemanticException.&quot;);
++			}
++		}
++		// Record the call in the current context.
++		currentScope.registerCall(call);
++	}
++	
++
++	/** Called by the tree parser for RUN IN HANDLE.
+ 	 * Get the RunHandle value in &quot;run &lt;proc&gt; in &lt;handle&gt;.&quot; Where &lt;handle&gt;
+ 	 * is a handle valued Expression; then save the RunHandle value
+ 	 * in the current call.
+ 	 * @see com.qad.parse.ParseAction#runInHandle(antlr.collections.AST, antlr.collections.AST)
+ 	 */
+-	public void runInHandle(AST node) {
++	protected void runInHandle(AST node) {
+ 		//wipCall.setRunHandle((RunHandle) wipExpression.getValue());
+ 		// TODO - enable expressionExprt
+ 		Variable handleVar = currentScope.lookupVariable(wipFieldNode.getText());
+ 		wipCall.setRunHandle((RunHandle) handleVar.getValue());
+ 	}
+ 
+-	/** 
++
++	/** Called by the tree parser for RUN PERSISTENT SET.
+ 	 * Update the &lt;handle&gt; in &quot;run &lt;proc&gt; persistent set &lt;handle&gt;.&quot;:
+ 	 * save a reference to the external procedure &lt;proc&gt; in &lt;handle&gt;.
+ 	 * The AST structure for this form of the run is:
+@@ -82,7 +155,7 @@
+ 	 * the Call.finalize method can update its value.
+ 	 * @param fld is used for error reporting.
+ 	 */
+-	public void runPersistentSet(AST fld) {
++	protected void runPersistentSet(AST fld) {
+ 		String varName = wipFieldNode.getText();
+ 
+ 		Variable var = (Variable) currentScope.lookupVariable(varName);
+@@ -98,72 +171,8 @@
+ 		}
+ 	}
+ 
+-	/* (non-Javadoc)
+-	 * @see com.qad.parse.ParseAction#run(antlr.collections.AST)
+-	 */
+-	public void runBegin(AST node) {
+-		// Expect a FileName at the top of semantic stack;
+-		String fileName = (String) wipExpression.getValue();
+-		Call call = new Call((JPNode) node);
+-		call.setRunArgument(fileName);
+-		wipCall = call;
+-	}
+ 
+-	/* (non-Javadoc)
+-	 * @see com.qad.parse.ParseAction#runEnd()
+-	 */
+-	public void runEnd(AST node) {
+-
+-/* 
+- * Cannot resolve whether internal or external procedure here.
+- * run &lt;name&gt; in &lt;handle&gt;: &lt;name&gt; is an internal procedure.
+- * run &lt;name&gt; and &lt;name&gt; is defined in the current scope: &lt;name&gt; is an internal procedure.
+- * run &lt;name&gt; and &lt;name&gt; is not defined in the current scope: &lt;name&gt; is an external procedure.
+- * 
+- */
+-		Call call = wipCall;
+-		
+-		if (call.isUnresolved()){
+-			errorList.add(new SemanticError(&quot;Unresolved call&quot;, null));
+-		} else {
+-			try {
+-				String routineId = call.getRunArgument();
+-				call.finalize(rootScope.hasRoutine(routineId));
+-			} catch (SemanticException e) {
+-				throw new RuntimeException(&quot;Unhandled SemanticException.&quot;);
+-			}
+-		}
+-			
+-		// Record the call in the current context.
+-		currentScope.registerCall(call);
+-	}
+-	
+ 	/**
+-	 * Action taken in:
+-	 * filenameorvalue: ... expression ... production
+-	 */
+-	public void fnvExpression(AST node){
+-		wipExpression = new Expression((JPNode) node);
+-	}
+-	
+-	/**
+-	 * Action taken in:
+-	 * filenameorvalue: FILENAME  production
+-	 * @return
+-	 */
+-	public void fnvFilename(AST node){
+-		Expression exp = new Expression((JPNode) node);
+-		exp.setValue(node.getText());
+-		wipExpression = exp;
+-	}
+-
+-	
+-	public void field(AST refAST, AST idAST, int contextQualifier, int whichTable) {
+-		wipFieldNode = (JPNode) idAST;
+-	}
+-
+-	
+-	/**
+ 	 * Switch SymbolTable scope to that of the procedure.
+ 	 * @see com.qad.parse.ParseAction#procedureBegin(antlr.collections.AST)
+ 	 */
+@@ -174,49 +183,10 @@
+ 	}
+ 
+ 
+-	/**
+-	 * @see com.qad.parse.ParseAction#procedureEnd(antlr.collections.AST)
+-	 */
+-	public void procedureEnd(AST p) {
++	/** Called by the tree parser at the end of a PROCEDURE statement. */
++	protected void procedureEnd(AST p) {
+ 		currentScope = currentScope.getParentScope();
+ 	}
+ 
+-	/**
+-	 * 
+-	 * @see com.qad.parse.ParseAction#expressionExprt(antlr.collections.AST)
+-	 */
+-	public void expressionExprt(AST node) {
+-		wipExpression = new Expression((JPNode) node);
+-		wipExpression.setValue(wipFieldNode.getText());
+-	}
+ 
+-	
+-	/**
+-	 * Pop a SystemHandle from the semantic stack, create an
+-	 * Expression, save the SystemHandle as the Expression value
+-	 * and place the Expression on top of semantic stack.
+-	 * @see com.qad.parse.ParseAction#exprtSystemHandleName(antlr.collections.AST)
+-	 */
+-	public void exprtSystemHandleName(AST sysHandleName) {
+-	}
+-
+-
+-	/** @return the Map of Call objects registered in the currentScope. */
+-	public Map&lt;String, Call&gt; getCallList() { return currentScope.getCallMap(); }
+-
+-
+-	/**
+-	 * @return
+-	 */
+-	public SymbolScopeRoot getRootScope() {
+-		// TODO Move Up: should scope elements be in action base class.
+-		return rootScope;
+-	}
+-
+-	/**
+-	 * @return
+-	 */
+-	public ErrorList getErrorList() {
+-		return errorList;
+-	}
+ }
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000054.html">[Prorefactor-svn] r64 - in trunk/org.prorefactor.core/src/org/prorefactor: core/unittest treeparser treeparser01
+</A></li>
+	<LI>Next message: <A HREF="000056.html">[Prorefactor-svn] r66 - in trunk/org.prorefactor.core/src/org/prorefactor: treeparser01 treeparser03 treeparserbase
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#55">[ date ]</a>
+              <a href="thread.html#55">[ thread ]</a>
+              <a href="subject.html#55">[ subject ]</a>
+              <a href="author.html#55">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">More information about the Prorefactor-svn
+mailing list</a><br>
+</body></html>

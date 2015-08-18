@@ -1,0 +1,430 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Prorefactor-svn] r45 - in trunk: org.prolint.core org.prorefactor.core org.prorefactor.doc org.prorefactor.eclipse org.prorefactor.javadoc org.prorefactor.lib org.prorefactor.refactor
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/prorefactor-svn/2006-February/index.html" >
+   <LINK REL="made" HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r45%20-%20in%20trunk%3A%20org.prolint.core%20org.prorefactor.core%20org.prorefactor.doc%20org.prorefactor.eclipse%20org.prorefactor.javadoc%20org.prorefactor.lib%20org.prorefactor.refactor&In-Reply-To=%3C200602102236.k1AMaQH1020586%40sheep.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000037.html">
+   <LINK REL="Next"  HREF="000039.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Prorefactor-svn] r45 - in trunk: org.prolint.core org.prorefactor.core org.prorefactor.doc org.prorefactor.eclipse org.prorefactor.javadoc org.prorefactor.lib org.prorefactor.refactor</H1>
+    <B>johnallengreen at BerliOS</B> 
+    <A HREF="mailto:prorefactor-svn%40lists.berlios.de?Subject=Re%3A%20%5BProrefactor-svn%5D%20r45%20-%20in%20trunk%3A%20org.prolint.core%20org.prorefactor.core%20org.prorefactor.doc%20org.prorefactor.eclipse%20org.prorefactor.javadoc%20org.prorefactor.lib%20org.prorefactor.refactor&In-Reply-To=%3C200602102236.k1AMaQH1020586%40sheep.berlios.de%3E"
+       TITLE="[Prorefactor-svn] r45 - in trunk: org.prolint.core org.prorefactor.core org.prorefactor.doc org.prorefactor.eclipse org.prorefactor.javadoc org.prorefactor.lib org.prorefactor.refactor">johnallengreen at berlios.de
+       </A><BR>
+    <I>Fri Feb 10 23:36:26 CET 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000037.html">[Prorefactor-svn] r44 - in trunk: . org.prolint.core org.prolint.core/META-INF org.prolint.core/src org.prolint.core/src/org org.prolint.core/src/org/prolint org.prolint.core/src/org/prolint/core org.prolint.core/src/org/prolint/eclipse org.prolint.core/src/org/prolint/rules org.prolint.core/src/org/prolint/unittest org.prolint.core/src/testdata org.prolint.core/src/testdata/abbrevnames org.prolint.core/src/testdata/junit_s2k org.prolint.core/src/testdata/simpleunit org.prorefactor.core org.prorefactor.core/META-INF org.prorefactor.doc org.prorefactor.doc/META-INF org.prorefactor.eclipse org.prorefactor.eclipse/META-INF org.prorefactor.eclipse/src/org/prorefactor/eclipse/actions org.prorefactor.eclipse/src/org/prorefactor/eclipse/wizards org.prorefactor.feature org.prorefactor.javadoc org.prorefactor.javadoc/META-INF org.prorefactor.lib org.prorefactor.lib/META-INF org.prorefactor.lib/antlr org.prorefactor.lib/junit org.prorefactor.refactor org.prorefactor.refactor/META-INF org.prore! factor.refactor/src/org/prorefactor/refactor org.prorefactor.refactor/src/org/prorefactor/refactor/util org.prorefactor.update
+</A></li>
+        <LI>Next message: <A HREF="000039.html">[Prorefactor-svn] r46 - in trunk: org.prorefactor.doc org.prorefactor.javadoc
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#38">[ date ]</a>
+              <a href="thread.html#38">[ thread ]</a>
+              <a href="subject.html#38">[ subject ]</a>
+              <a href="author.html#38">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Author: johnallengreen
+Date: 2006-02-10 23:36:25 +0100 (Fri, 10 Feb 2006)
+New Revision: 45
+
+Modified:
+   trunk/org.prolint.core/build.properties
+   trunk/org.prorefactor.core/build.properties
+   trunk/org.prorefactor.doc/build.properties
+   trunk/org.prorefactor.doc/manual.xml
+   trunk/org.prorefactor.eclipse/build.properties
+   trunk/org.prorefactor.javadoc/build.properties
+   trunk/org.prorefactor.lib/build.properties
+   trunk/org.prorefactor.refactor/build.properties
+Log:
+Changed build.properties - don't deploy .project or .classpath. It makes importing the ProRefactor projects using &quot;import external project&quot; more messy, with incorrect hard-coded path to the source &quot;src&quot; folder.
+
+Modified: trunk/org.prolint.core/build.properties
+===================================================================
+--- trunk/org.prolint.core/build.properties	2006-02-10 18:28:17 UTC (rev 44)
++++ trunk/org.prolint.core/build.properties	2006-02-10 22:36:25 UTC (rev 45)
+@@ -3,13 +3,9 @@
+ bin.includes = plugin.xml,\
+                core.jar,\
+                hibernate2.jar,\
+-               .classpath,\
+-               .project,\
+                META-INF/,\
+                build.properties
+ src.includes = hibernate2.jar,\
+-               .classpath,\
+-               .project,\
+                META-INF/,\
+                build.properties,\
+                plugin.xml
+
+Modified: trunk/org.prorefactor.core/build.properties
+===================================================================
+--- trunk/org.prorefactor.core/build.properties	2006-02-10 18:28:17 UTC (rev 44)
++++ trunk/org.prorefactor.core/build.properties	2006-02-10 22:36:25 UTC (rev 45)
+@@ -1,5 +1,4 @@
+-bin.includes = *.jar,\
+-               proparse.dll,\
++bin.includes = proparse.dll,\
+                proparse_jni.dll,\
+                *.txt,\
+                plugin.xml,\
+@@ -8,8 +7,6 @@
+                *.zip,\
+                *.html,\
+                META-INF/,\
+-               .classpath,\
+-               .project,\
+                build.properties
+ source.core.jar = src/
+ src.includes = proparse_jni.dll,\
+@@ -18,9 +15,7 @@
+                plugin.xml,\
+                data/,\
+                about.html,\
+-               .classpath,\
+-               .project,\
+                META-INF/,\
+                build.properties,\
+-               core.jar
++               src/
+ jars.compile.order = 
+
+Modified: trunk/org.prorefactor.doc/build.properties
+===================================================================
+--- trunk/org.prorefactor.doc/build.properties	2006-02-10 18:28:17 UTC (rev 44)
++++ trunk/org.prorefactor.doc/build.properties	2006-02-10 22:36:25 UTC (rev 45)
+@@ -10,12 +10,10 @@
+                joanjupdf.xsl,\
+                toc.xml,\
+                doc.zip,\
+-               .project,\
+                META-INF/,\
+                images/,\
+                screenshots/
+-src.includes = .project,\
+-               META-INF/,\
++src.includes = META-INF/,\
+                Makefile,\
+                about.html,\
+                build.properties,\
+
+Modified: trunk/org.prorefactor.doc/manual.xml
+===================================================================
+--- trunk/org.prorefactor.doc/manual.xml	2006-02-10 18:28:17 UTC (rev 44)
++++ trunk/org.prorefactor.doc/manual.xml	2006-02-10 22:36:25 UTC (rev 45)
+@@ -991,79 +991,27 @@
+ 
+       &lt;orderedlist&gt;
+         &lt;listitem&gt;
+-          &lt;para&gt;If you don't want to pollute your existing workspace, start
+-          Eclipse with an empty workspace (use: &lt;option&gt;-data
+-          &lt;replaceable&gt;new_workspace_location&lt;/replaceable&gt;&lt;/option&gt; on the
+-          command line).&lt;/para&gt;
++          &lt;para&gt;In &lt;guimenuitem&gt;Window &gt; Preferences &gt; Java &gt;
++          Compiler&lt;/guimenuitem&gt;, set the compliance level to 5.0. While in
++          Java preferences, also go to &lt;guilabel&gt;Installed JREs&lt;/guilabel&gt;,
++          and edit your default JRE. Add &lt;option&gt;-ea -Xss2M&lt;/option&gt; to the
++          default VM args. This enables assertions, and sets the stack size to
++          be large enough for recursively descending large syntax
++          trees.&lt;/para&gt;
+         &lt;/listitem&gt;
+ 
+         &lt;listitem&gt;
+-          &lt;para&gt;We make use of the Java version 1.4 &lt;literal&gt;assert&lt;/literal&gt;
+-          statement. In &lt;guimenuitem&gt;Window &gt; Preferences &gt; Java &gt;
+-          Compiler &gt; Compliance&lt;/guimenuitem&gt;, set source and class
+-          compatibility to version 1.4. While in Java preferences, also go to
+-          &lt;guilabel&gt;Installed JREs&lt;/guilabel&gt;, and edit your default JRE. Add
+-          &lt;option&gt;-ea -Xss2M&lt;/option&gt; to the default VM args. This enables
+-          assertions, and sets the stack size to be large enough for
+-          recursively descending large syntax trees.&lt;/para&gt;
+-        &lt;/listitem&gt;
+-
+-        &lt;listitem&gt;
+           &lt;para&gt;Switch to the Java perspective.&lt;/para&gt;
+         &lt;/listitem&gt;
+-
+-        &lt;listitem&gt;
+-          &lt;para&gt;Choose &lt;guimenuitem&gt;File &gt; Import... &gt; External Plug-ins
+-          and Fragments&lt;/guimenuitem&gt;.&lt;/para&gt;
+-        &lt;/listitem&gt;
+-
+-        &lt;listitem&gt;
+-          &lt;para&gt;All of the defaults should be fine for the first page. You
+-          want to import from the target platform, all plug-ins and fragments,
+-          binary projects with linked content. Click
+-          &lt;guibutton&gt;Next&lt;/guibutton&gt;.&lt;/para&gt;
+-        &lt;/listitem&gt;
+-
+-        &lt;listitem&gt;
+-          &lt;para&gt;On the &lt;guilabel&gt;Selection&lt;/guilabel&gt; page add all
+-          &lt;literal&gt;org.eclipse&lt;/literal&gt; and the &lt;literal&gt;org.junit&lt;/literal&gt;
+-          plug-ins. Do not select the &lt;literal&gt;org.prorefactor.*&lt;/literal&gt;
+-          plug-ins. We will come back to those.&lt;/para&gt;
+-        &lt;/listitem&gt;
+-
+-        &lt;listitem&gt;
+-          &lt;para&gt;Click &lt;guibutton&gt;Finish&lt;/guibutton&gt;. The plug-ins will be
+-          imported into binary projects and their build class paths
+-          initialized. You can now browse and search the full Eclipse
+-          source.&lt;/para&gt;
+-        &lt;/listitem&gt;
+-
+-        &lt;listitem&gt;
+-          &lt;para&gt;Switch to the Package Explorer view. Most of the time, you
+-          don't want to see the binary projects. Select
+-          &lt;guimenuitem&gt;Filters&lt;/guimenuitem&gt; from the Package Explorer view
+-          pull-down menu. Select &lt;guilabel&gt;Binary plug-in and feature
+-          projects&lt;/guilabel&gt; in the subsequent dialog. If you started Eclipse
+-          in a clean workspace, the Package Explorer will be empty after you
+-          invoke the filter because you haven't created any source plug-in
+-          projects yet.&lt;/para&gt;
+-        &lt;/listitem&gt;
+-
+-        &lt;listitem&gt;
+-          &lt;para&gt;One thing to keep in mind when you install a new version of
+-          Eclipse (or ProRefactor.org plug-ins): Do not forget to re-import
+-          the plug-ins. To do so, click the &lt;guibutton&gt;Existing Binary
+-          Projects&lt;/guibutton&gt; button on the import wizard's plug-in selection
+-          page. This will replace your existing binary projects with the code
+-          for the new versions.&lt;/para&gt;
+-        &lt;/listitem&gt;
+       &lt;/orderedlist&gt;
+ 
+       &lt;para&gt;You now have two choices for importing ProRefactor source. If you
+-      want read-only access to ProRefactor, then follow the steps under &lt;link
++      want to use the latest released version of ProRefactor as a library or
++      framework, then follow the steps under &lt;link
+       linkend=&quot;sec_import_source&quot;&gt;&quot;Option One&quot;&lt;/link&gt;, below. If you want
+-      access to the version control repository, then follow the steps under
+-      &lt;link linkend=&quot;sec_checkout_source&quot;&gt;&quot;Option Two&quot;&lt;/link&gt;, below.&lt;/para&gt;
++      access to the version control repository for the very latest source code
++      &quot;as it happens&quot;, then follow the steps under &lt;link
++      linkend=&quot;sec_checkout_source&quot;&gt;&quot;Option Two&quot;&lt;/link&gt;, below.&lt;/para&gt;
+     &lt;/section&gt;
+ 
+     &lt;section id=&quot;sec_import_source&quot;&gt;
+@@ -1079,33 +1027,16 @@
+         &lt;/listitem&gt;
+ 
+         &lt;listitem&gt;
+-          &lt;para&gt;This time, you want to import the projects with source
+-          folders, rather than just a binary with linked content.&lt;/para&gt;
++          &lt;para&gt;Choose &lt;guilabel&gt;The target platform&lt;/guilabel&gt;,
++          &lt;guilabel&gt;Select from all plug-ins&lt;/guilabel&gt;, and
++          &lt;guilabel&gt;Projects with source folders&lt;/guilabel&gt;. Click
++          &lt;guibutton&gt;Next&lt;/guibutton&gt;.&lt;/para&gt;
+         &lt;/listitem&gt;
+ 
+         &lt;listitem&gt;
+           &lt;para&gt;Select the &lt;literal&gt;org.prorefactor.*&lt;/literal&gt; plug-ins, and
+           click &lt;guibutton&gt;Finish&lt;/guibutton&gt;.&lt;/para&gt;
+         &lt;/listitem&gt;
+-
+-        &lt;listitem&gt;
+-          &lt;para&gt;If you started from a clean workspace, the only projects
+-          visible in the Package Explorer should now be the ProRefactor.org
+-          projects which contain source code. You can browse and search the
+-          source in those projects.&lt;/para&gt;
+-        &lt;/listitem&gt;
+-
+-        &lt;listitem&gt;
+-          &lt;para&gt;In &lt;guimenuitem&gt;Window &gt; Preferences &gt; Java &gt;
+-          Compiler &gt; Installed JRE&lt;/guimenuitem&gt;s, edit your default JRE.
+-          Add
+-          &lt;option&gt;-Djava.library.path=&lt;replaceable&gt;/your/path&lt;/replaceable&gt;&lt;/option&gt;
+-          to the default VM args, where
+-          &lt;filename&gt;&lt;replaceable&gt;/your/path&lt;/replaceable&gt;&lt;/filename&gt; is the
+-          &lt;filename&gt;org.prorefactor.core&lt;/filename&gt; plug-in directory (which
+-          is where &lt;filename&gt;proparse.dll&lt;/filename&gt; and
+-          &lt;filename&gt;proparse_jni.dll&lt;/filename&gt; can be found).&lt;/para&gt;
+-        &lt;/listitem&gt;
+       &lt;/orderedlist&gt;
+     &lt;/section&gt;
+ 
+@@ -1140,24 +1071,33 @@
+       &lt;para&gt;From the Eclipse menu, choose &lt;guimenuitem&gt;File &gt; Import...
+       &gt; Existing Project into Workspace&lt;/guimenuitem&gt; for each of the
+       &lt;literal&gt;org.prorefactor&lt;/literal&gt; project directories in the following
+-      order: &lt;literal&gt;antlr&lt;/literal&gt;, &lt;literal&gt;lib&lt;/literal&gt;,
+-      &lt;literal&gt;core&lt;/literal&gt;, &lt;literal&gt;refactor&lt;/literal&gt;,
+-      &lt;literal&gt;eclipse&lt;/literal&gt;, &lt;literal&gt;javadoc&lt;/literal&gt;,
+-      &lt;literal&gt;doc&lt;/literal&gt;, &lt;literal&gt;feature&lt;/literal&gt;,
+-      &lt;literal&gt;update&lt;/literal&gt;. Eclipse will automatically build (compile)
+-      each project as you import it.&lt;/para&gt;
++      order: &lt;literal&gt;lib&lt;/literal&gt;, &lt;literal&gt;core&lt;/literal&gt;,
++      &lt;literal&gt;refactor&lt;/literal&gt;, &lt;literal&gt;eclipse&lt;/literal&gt;, and then the
++      rest. Eclipse will automatically build (compile) each project as you
++      import it.&lt;/para&gt;
++    &lt;/section&gt;
+ 
+-      &lt;para&gt;In &lt;guilabel&gt;Window &gt; Preferences &gt; Java &gt; Installed
+-      JREs&lt;/guilabel&gt;, edit your default JRE. Add:
++    &lt;section&gt;
++      &lt;title&gt;Assigning java.library.path&lt;/title&gt;
++
++      &lt;para&gt;In order for &lt;filename&gt;proparse.dll&lt;/filename&gt; and
++      &lt;filename&gt;proparse_jni.dll&lt;/filename&gt; to be found, they must be in the
++      Java library path. Those two DLLs are found in the
++      &lt;literal&gt;org.prorefactor.core&lt;/literal&gt; project directory. Select that
++      project, and choose &lt;guilabel&gt;Properties &gt; Info&lt;/guilabel&gt; and copy
++      the project location (full path). In &lt;guilabel&gt;Window &gt; Preferences
++      &gt; Java &gt; Installed JREs&lt;/guilabel&gt;, edit your default JRE. Add:
+       &lt;option&gt;-Djava.library.path=&lt;replaceable&gt;/your/path&lt;/replaceable&gt;&lt;/option&gt;
+       to the default VM args, where &lt;replaceable&gt;/your/path&lt;/replaceable&gt; is
+-      your &lt;filename&gt;org.prorefactor.core&lt;/filename&gt; project directory, where
+-      &lt;filename&gt;proparse.dll&lt;/filename&gt; and
+-      &lt;filename&gt;proparse_jni.dll&lt;/filename&gt; can be found.&lt;/para&gt;
++      your &lt;filename&gt;org.prorefactor.core&lt;/filename&gt; project directory.&lt;/para&gt;
++    &lt;/section&gt;
+ 
+-      &lt;para&gt;Now you can run the regression tests. You can navigate to the
+-      following two source files, and run them as JUnit tests:&lt;/para&gt;
++    &lt;section&gt;
++      &lt;title&gt;Unit Tests and Run-time Workbench&lt;/title&gt;
+ 
++      &lt;para&gt;Now you can run the unit tests. You can navigate to the following
++      two source files, and run them as JUnit tests:&lt;/para&gt;
++
+       &lt;itemizedlist&gt;
+         &lt;listitem&gt;
+           &lt;para&gt;&lt;filename&gt;org.prorefactor.core.unittest.AllPRCoreTests.java&lt;/filename&gt;&lt;/para&gt;
+@@ -1169,7 +1109,7 @@
+       &lt;/itemizedlist&gt;
+ 
+       &lt;para&gt;To launch the Run-time Workbench, choose &lt;guimenuitem&gt;Run &gt; Run
+-      As &gt; Run-time Workbench&lt;/guimenuitem&gt;. From the Run-time Workbench,
++      As &gt; Eclipse Application&lt;/guimenuitem&gt;. From the Run-time Workbench,
+       you should be able to select the ProRefactor perspective, create test
+       projects, and launch the ProRefactor menu actions. This is where you
+       would test any changes or additions that you make to ProRefactor or your
+
+Modified: trunk/org.prorefactor.eclipse/build.properties
+===================================================================
+--- trunk/org.prorefactor.eclipse/build.properties	2006-02-10 18:28:17 UTC (rev 44)
++++ trunk/org.prorefactor.eclipse/build.properties	2006-02-10 22:36:25 UTC (rev 45)
+@@ -10,9 +10,7 @@
+                plugin.properties,\
+                build.properties,\
+                META-INF/,\
+-               .template,\
+-               .project,\
+-               .classpath
++               .template
+ source.eclipse.jar = src/
+ src.includes = *.html,\
+                about.ini,\
+@@ -24,8 +22,6 @@
+                icons/,\
+                eclipse.jar,\
+                plugin.xml,\
+-               .classpath,\
+-               .project,\
+                .template,\
+                META-INF/,\
+                build.properties
+
+Modified: trunk/org.prorefactor.javadoc/build.properties
+===================================================================
+--- trunk/org.prorefactor.javadoc/build.properties	2006-02-10 18:28:17 UTC (rev 44)
++++ trunk/org.prorefactor.javadoc/build.properties	2006-02-10 22:36:25 UTC (rev 45)
+@@ -2,13 +2,11 @@
+                *.html,\
+                *.zip,\
+                toc.xml,\
+-               .project,\
+                build.properties,\
+                build.xml,\
+                javadoc.xml,\
+                META-INF/
+-src.includes = .project,\
+-               META-INF/,\
++src.includes = META-INF/,\
+                about.html,\
+                build.properties,\
+                doc.zip,\
+
+Modified: trunk/org.prorefactor.lib/build.properties
+===================================================================
+--- trunk/org.prorefactor.lib/build.properties	2006-02-10 18:28:17 UTC (rev 44)
++++ trunk/org.prorefactor.lib/build.properties	2006-02-10 22:36:25 UTC (rev 45)
+@@ -1,8 +1,6 @@
+ bin.includes = plugin.xml,\
+                lib/,\
+                build.properties,\
+-               .project,\
+-               .classpath,\
+                src/,\
+                hibernate/,\
+                hsqldb/,\
+@@ -13,9 +11,7 @@
+                antlr/,\
+                junit/,\
+                META-INF/
+-src.includes = .classpath,\
+-               .project,\
+-               build.properties,\
++src.includes = build.properties,\
+                lib/,\
+                plugin.xml,\
+                src/,\
+
+Modified: trunk/org.prorefactor.refactor/build.properties
+===================================================================
+--- trunk/org.prorefactor.refactor/build.properties	2006-02-10 18:28:17 UTC (rev 44)
++++ trunk/org.prorefactor.refactor/build.properties	2006-02-10 22:36:25 UTC (rev 45)
+@@ -6,8 +6,6 @@
+                *.html,\
+                4gl/,\
+                META-INF/,\
+-               .classpath,\
+-               .project,\
+                build.properties
+ source.refactor.jar = src/
+ src.includes = *.html,\
+@@ -18,6 +16,4 @@
+                refactor.jar,\
+                refactorsrc.zip,\
+                META-INF/,\
+-               build.properties,\
+-               .project,\
+-               .classpath
++               build.properties
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000037.html">[Prorefactor-svn] r44 - in trunk: . org.prolint.core org.prolint.core/META-INF org.prolint.core/src org.prolint.core/src/org org.prolint.core/src/org/prolint org.prolint.core/src/org/prolint/core org.prolint.core/src/org/prolint/eclipse org.prolint.core/src/org/prolint/rules org.prolint.core/src/org/prolint/unittest org.prolint.core/src/testdata org.prolint.core/src/testdata/abbrevnames org.prolint.core/src/testdata/junit_s2k org.prolint.core/src/testdata/simpleunit org.prorefactor.core org.prorefactor.core/META-INF org.prorefactor.doc org.prorefactor.doc/META-INF org.prorefactor.eclipse org.prorefactor.eclipse/META-INF org.prorefactor.eclipse/src/org/prorefactor/eclipse/actions org.prorefactor.eclipse/src/org/prorefactor/eclipse/wizards org.prorefactor.feature org.prorefactor.javadoc org.prorefactor.javadoc/META-INF org.prorefactor.lib org.prorefactor.lib/META-INF org.prorefactor.lib/antlr org.prorefactor.lib/junit org.prorefactor.refactor org.prorefactor.refactor/META-INF org.prore! factor.refactor/src/org/prorefactor/refactor org.prorefactor.refactor/src/org/prorefactor/refactor/util org.prorefactor.update
+</A></li>
+	<LI>Next message: <A HREF="000039.html">[Prorefactor-svn] r46 - in trunk: org.prorefactor.doc org.prorefactor.javadoc
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#38">[ date ]</a>
+              <a href="thread.html#38">[ thread ]</a>
+              <a href="subject.html#38">[ subject ]</a>
+              <a href="author.html#38">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/prorefactor-svn">More information about the Prorefactor-svn
+mailing list</a><br>
+</body></html>

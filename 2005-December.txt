@@ -1,0 +1,937 @@
+From johnallengreen at berlios.de  Mon Dec 19 21:26:49 2005
+From: johnallengreen at berlios.de (johnallengreen at BerliOS)
+Date: Mon, 19 Dec 2005 21:26:49 +0100
+Subject: [Prorefactor-svn] r40 - in trunk: org.prorefactor.core org.prorefactor.core/src/org/prorefactor/core org.prorefactor.core/src/org/prorefactor/nodetypes org.prorefactor.core/src/org/prorefactor/treeparser01 org.prorefactor.core/src/org/prorefactor/treeparserbase org.prorefactor.eclipse org.prorefactor.refactor org.prorefactor.refactor/src/org/prorefactor/refactor/tfnames
+Message-ID: <200512192026.jBJKQn42030371@sheep.berlios.de>
+
+Author: johnallengreen
+Date: 2005-12-19 21:26:48 +0100 (Mon, 19 Dec 2005)
+New Revision: 40
+
+Added:
+   trunk/org.prorefactor.core/src/org/prorefactor/core/JPNodeLister.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/TokenTypesReader.java
+   trunk/org.prorefactor.eclipse/build.xml
+   trunk/org.prorefactor.refactor/build.xml
+Modified:
+   trunk/org.prorefactor.core/plugin.xml
+   trunk/org.prorefactor.core/src/org/prorefactor/core/JPNode.java
+   trunk/org.prorefactor.core/src/org/prorefactor/core/TokenLister.java
+   trunk/org.prorefactor.core/src/org/prorefactor/core/Util.java
+   trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/BlockNode.java
+   trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/FieldRefNode.java
+   trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/NodeFactory.java
+   trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/ProparseDirectiveNode.java
+   trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/RecordNameNode.java
+   trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Support.java
+   trunk/org.prorefactor.eclipse/
+   trunk/org.prorefactor.refactor/
+   trunk/org.prorefactor.refactor/plugin.xml
+   trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/tfnames/NamesLint.java
+Log:
+Added JPNodeLister, similar to the "TokenLister" in Proparse's 4gl utilities set.
+Updated plugin.xml files for new Eclipse version.
+Added/changed constructors in JPNode. Added support for creating a new JPNode with a link to an original. This is for constructing a new tree with links to an old tree.
+Since ProRefactor does not yet support tracking or looking up of frame fields, I removed the actions for Field_ref nodes where the Field_ref is actually the INPUT function.
+
+
+Modified: trunk/org.prorefactor.core/plugin.xml
+===================================================================
+--- trunk/org.prorefactor.core/plugin.xml	2005-11-16 23:14:14 UTC (rev 39)
++++ trunk/org.prorefactor.core/plugin.xml	2005-12-19 20:26:48 UTC (rev 40)
+@@ -10,7 +10,6 @@
+    <runtime>
+       <library name="core.jar">
+          <export name="*"/>
+-         <packages prefixes="org.prorefactor,com.joanju"/>
+       </library>
+    </runtime>
+ 
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/core/JPNode.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/core/JPNode.java	2005-11-16 23:14:14 UTC (rev 39)
++++ trunk/org.prorefactor.core/src/org/prorefactor/core/JPNode.java	2005-12-19 20:26:48 UTC (rev 40)
+@@ -36,12 +36,28 @@
+ 
+ 	/** For creating from persistent storage */
+ 	public JPNode() { }
++	
++	public static final TreeConfig nullConfig = null;
+ 
+-	public JPNode(int handle) {
+-		nodeHandle = handle;
+-		setType(parser.getNodeTypeI(nodeHandle));
++	
++	/** Create an node with a given token type.
++	 * Used extensively by Antlr auto-generated tree constructors.
++	 */
++	public JPNode(int type) {
++		this.type = type;
+ 	}
+ 
++	/** If this AST is constructed from another, then create with link to the original. */
++	public JPNode(int type, JPNode original) {
++		this.type = type;
++		setLink(ORIGINAL, original);
++	}
++	
++	public JPNode(int type, String text) {
++		this.type = type;
++		this.text = text;
++	}
++
+ 	public JPNode(int handle, TreeConfig config) {
+ 		nodeHandle = handle;
+ 		setType(parser.getNodeTypeI(nodeHandle));
+@@ -54,7 +70,7 @@
+ 		this.line = line;
+ 		this.column = column;
+ 	}
+-
++	
+ 	/** Just an Integer object for the int IConstants.STATE2 */
+ 	public static final Integer STATE2 = new Integer(IConstants.STATE2);
+ 
+@@ -82,6 +98,10 @@
+ 	public static final Integer BLOCK = new Integer(-214);
+ 	/** A valid value for setLink() and getLink() */
+ 	private static final Integer COMMENTS = new Integer(-215);
++	/** A valid value for setLink() and getLink().
++	 * If this AST was constructed from another, then this is the link to the original.
++	 */
++	private static final Integer ORIGINAL = new Integer(-216);
+ 
+ 	
+ 	static private ProparseLdr parser = ProparseLdr.getInstance();
+@@ -364,7 +384,13 @@
+ 	}
+ 
+ 
++	/** If this AST was constructed from another, then get the original. */
++	public JPNode getOriginal() {
++		if (attrMap==null) return null;
++		return (JPNode)attrMap.get(ORIGINAL);
++	}
+ 
++
+ 	/** Return int[3] of nodes file/line/col. */
+ 	public int[] getPos() {
+ 		return new int[] {getFileIndex(), getLine(), getColumn()};
+
+Added: trunk/org.prorefactor.core/src/org/prorefactor/core/JPNodeLister.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/core/JPNodeLister.java	2005-11-16 23:14:14 UTC (rev 39)
++++ trunk/org.prorefactor.core/src/org/prorefactor/core/JPNodeLister.java	2005-12-19 20:26:48 UTC (rev 40)
+@@ -0,0 +1,76 @@
++/* Created on 25-Nov-2005
++ * Authors: john
++ *
++ * Copyright (c) 2002-2005 Joanju (www.joanju.com)
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * http://www.eclipse.org/legal/epl-v10.html
++ */
++package org.prorefactor.core;
++
++import java.io.FileWriter;
++import java.io.IOException;
++
++import org.prorefactor.treeparserbase.TokenTypesReader;
++
++
++
++/** Prints out the structure of a JPNode AST.
++ * Prints nodes one per line, using indentation to show the tree structure.
++ * Use TokenLister instead if you want to print using Proparse's API directly.
++ */
++public class JPNodeLister {
++
++	public JPNodeLister(JPNode topNode, String outfilename, TokenTypesReader typesReader) {
++		this.topNode = topNode;
++		this.outfilename = outfilename;
++		indentby = 4;
++		indentnum = 0;
++		this.typesReader = typesReader;
++	}
++
++	public int indentby;
++	public String outfilename;
++
++	private JPNode topNode;
++	private int indentnum;
++	private FileWriter ofile;
++	private TokenTypesReader typesReader = null;
++
++
++	/** Call this method to write the output file. */
++	public void print() throws IOException {
++		typesReader.init(); 
++		ofile = new FileWriter(outfilename);
++		print_sub(topNode);
++		ofile.close();
++	}
++
++
++	private void print_sub(JPNode node) throws IOException {
++		printline(node);
++		JPNode child = node.firstChild();
++		indentnum += indentby;
++		while (child!=null) {
++			if (child.firstChild()!=null)
++				print_sub(child);
++			else
++				printline(child);
++			child = child.nextSibling();
++		}
++		indentnum -= indentby;
++	}
++	
++	
++	private void printline(JPNode node) throws IOException {
++		char[] indent = new char[indentnum];
++		java.util.Arrays.fill(indent, ' ');
++		String spacer = "    ";
++		ofile.write(indent);
++		ofile.write(typesReader.getName(node.getType()) + spacer);
++		ofile.write(node.getText() + spacer);
++		ofile.write(Util.LINESEP);
++	}
++
++}
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/core/TokenLister.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/core/TokenLister.java	2005-11-16 23:14:14 UTC (rev 39)
++++ trunk/org.prorefactor.core/src/org/prorefactor/core/TokenLister.java	2005-12-19 20:26:48 UTC (rev 40)
+@@ -1,4 +1,11 @@
+ /* TokenLister.java
++ * John Green
++ * 
++ * Copyright (c) 2002-2005 Joanju (www.joanju.com)
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * http://www.eclipse.org/legal/epl-v10.html
+  */
+ 
+ package org.prorefactor.core;
+@@ -9,6 +16,10 @@
+ import com.joanju.ProparseLdr;
+ 
+ 
++/** Lists nodes directly via Proparse's API.
++ * Prints nodes one per line, using indentation to show the tree structure.
++ * Use JPNodeLister instead if you want to print a modified JPNode AST.
++ */
+ public class TokenLister {
+ 
+ 	public TokenLister(int topNode, String outfilename_) {
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/core/Util.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/core/Util.java	2005-11-16 23:14:14 UTC (rev 39)
++++ trunk/org.prorefactor.core/src/org/prorefactor/core/Util.java	2005-12-19 20:26:48 UTC (rev 40)
+@@ -24,6 +24,8 @@
+  */
+ public class Util {
+ 
++	/** OS specific text file line seperator - '\n' on unix, "\r\n" on Windows */
++	public static final String LINESEP = System.getProperty("line.separator");
+ 
+ 
+ 	/** Copy all files from one directory to another.
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/BlockNode.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/BlockNode.java	2005-11-16 23:14:14 UTC (rev 39)
++++ trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/BlockNode.java	2005-12-19 20:26:48 UTC (rev 40)
+@@ -19,7 +19,6 @@
+ 	/** For creating from persistent storage */
+ 	public BlockNode() { super(); }
+ 
+-	public BlockNode(int handle) { super(handle); }
+ 	public BlockNode(int handle, TreeConfig config) { super(handle, config); }
+ 	public BlockNode(int file, int line, int column) { super(file, line, column); }
+ 
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/FieldRefNode.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/FieldRefNode.java	2005-11-16 23:14:14 UTC (rev 39)
++++ trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/FieldRefNode.java	2005-12-19 20:26:48 UTC (rev 40)
+@@ -26,7 +26,6 @@
+ 	/** For creating from persistent storage */
+ 	public FieldRefNode() { super(); }
+ 
+-	public FieldRefNode(int handle) { super(handle); }
+ 	public FieldRefNode(int handle, TreeConfig config) { super(handle, config); }
+ 	public FieldRefNode(int file, int line, int column) { super(file, line, column); }
+ 
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/NodeFactory.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/NodeFactory.java	2005-11-16 23:14:14 UTC (rev 39)
++++ trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/NodeFactory.java	2005-12-19 20:26:48 UTC (rev 40)
+@@ -40,11 +40,11 @@
+ 	public static JPNode create(int handle) {
+ 		switch (parser.getNodeTypeI(handle)) {
+ 		case TokenTypes.Field_ref:
+-			return new FieldRefNode(handle);
++			return new FieldRefNode(handle, JPNode.nullConfig);
+ 		case TokenTypes.RECORD_NAME:
+-			return new RecordNameNode(handle);
++			return new RecordNameNode(handle, JPNode.nullConfig);
+ 		case TokenTypes.PROPARSEDIRECTIVE:
+-			return new ProparseDirectiveNode(handle);
++			return new ProparseDirectiveNode(handle, JPNode.nullConfig);
+ 		case TokenTypes.DO:
+ 		case TokenTypes.FOR:
+ 		case TokenTypes.REPEAT:
+@@ -52,27 +52,27 @@
+ 		case TokenTypes.PROCEDURE:
+ 			// We check that these are statement heads, whether the keyword is reserved or not.
+ 			if (parser.attrGetI(handle, IConstants.STATEHEAD) != 0 )
+-				return new BlockNode(handle);
++				return new BlockNode(handle, JPNode.nullConfig);
+ 			else
+-				return new JPNode(handle);
++				return new JPNode(handle, JPNode.nullConfig);
+ 		case TokenTypes.Program_root:
+ 		case TokenTypes.CANFIND:
+ 			// CANFIND is reserved, and only used in the syntax for the CAN-FIND function.
+ 			// It is a "block" because it has special buffer/index-cursor handling.
+-			return new BlockNode(handle);
++			return new BlockNode(handle, JPNode.nullConfig);
+ 		case TokenTypes.ON:
+ 			{
+ 				if (parser.attrGetI(handle, IConstants.STATEHEAD) != 0 )
+-					return new BlockNode(handle);
++					return new BlockNode(handle, JPNode.nullConfig);
+ 				int temp = parser.getHandle();
+ 				int childType = parser.nodeFirstChildI(handle, temp);
+ 				parser.releaseHandle(temp);
+ 				if (childType == TokenTypes.Event_list)
+-					return new BlockNode(handle);
+-				return new JPNode(handle);
++					return new BlockNode(handle, JPNode.nullConfig);
++				return new JPNode(handle, JPNode.nullConfig);
+ 			}
+ 		default:
+-			return new JPNode(handle);
++			return new JPNode(handle, JPNode.nullConfig);
+ 		}
+ 	}
+ 	
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/ProparseDirectiveNode.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/ProparseDirectiveNode.java	2005-11-16 23:14:14 UTC (rev 39)
++++ trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/ProparseDirectiveNode.java	2005-12-19 20:26:48 UTC (rev 40)
+@@ -20,7 +20,6 @@
+ 	/** For creating from persistent storage */
+ 	public ProparseDirectiveNode() { super(); }
+ 
+-	public ProparseDirectiveNode(int handle) { super(handle); }
+ 	public ProparseDirectiveNode(int handle, TreeConfig config) { super(handle, config); }
+ 	public ProparseDirectiveNode(int file, int line, int column) { super(file, line, column); }
+ 	
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/RecordNameNode.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/RecordNameNode.java	2005-11-16 23:14:14 UTC (rev 39)
++++ trunk/org.prorefactor.core/src/org/prorefactor/nodetypes/RecordNameNode.java	2005-12-19 20:26:48 UTC (rev 40)
+@@ -20,7 +20,6 @@
+ 	/** For creating from persistent storage */
+ 	public RecordNameNode() { super(); }
+ 
+-	public RecordNameNode(int handle) { super(handle); }
+ 	public RecordNameNode(int handle, TreeConfig config) { super(handle, config); }
+ 	public RecordNameNode(int file, int line, int column) { super(file, line, column); }
+ 
+
+Modified: trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Support.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Support.java	2005-11-16 23:14:14 UTC (rev 39)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparser01/TP01Support.java	2005-12-19 20:26:48 UTC (rev 40)
+@@ -337,6 +337,13 @@
+ 		FieldRefNode refNode = (FieldRefNode) refAST;
+ 		String name = idNode.getText();
+ 		FieldLookupResult result = null;
++		
++		// TODO Add support for frame fields.
++		// Searching the frames for an existing INPUT field is very different than
++		// the usual field/variable lookup rules. Support for frame fields has not
++		// yet been added to ProRefactor. Rather than get an INPUT field wrong here,
++		// we skip it entirely.
++		if (refNode.firstChild().getType()==TokenTypes.INPUT) return;
+ 
+ 		refNode.attrSet(IConstants.CONTEXT_QUALIFIER, contextQualifier);
+ 
+
+Added: trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/TokenTypesReader.java
+===================================================================
+--- trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/TokenTypesReader.java	2005-11-16 23:14:14 UTC (rev 39)
++++ trunk/org.prorefactor.core/src/org/prorefactor/treeparserbase/TokenTypesReader.java	2005-12-19 20:26:48 UTC (rev 40)
+@@ -0,0 +1,61 @@
++/* Created on 25-Nov-2005
++ * Authors: john
++ * 
++ * Copyright (C) 2005 Joanju Limited.
++ * All rights reserved. This program and the accompanying materials 
++ * are made available under the terms of the Eclipse Public License v1.0
++ * which accompanies this distribution, and is available at
++ * http://www.eclipse.org/legal/epl-v10.html
++ */
++package org.prorefactor.treeparserbase;
++
++import java.io.BufferedReader;
++import java.io.IOException;
++import java.io.InputStream;
++import java.io.InputStreamReader;
++import java.util.HashMap;
++
++
++/** Reads the "XYZTokenTypes.txt" file in this class's package directory.
++ * Subclass this in your own treeparsers directory in order to use it.
++ * IMPORTANT: When subclassing:
++ * 1. Copy the constructor to your subclass.
++ * 2. Set your own value for the file name.
++ */
++public class TokenTypesReader {
++
++	// --- Copy this constructor to your subclass, change the file name ---
++	public TokenTypesReader() {
++		inputStream = this.getClass().getResourceAsStream("ProParserTokenTypes.txt");
++	}
++	// --- End of what needs to be copied to subclasses ---
++
++	boolean isInit = false;
++	protected InputStream inputStream = null;
++	HashMap<Integer, String> map = new HashMap<Integer, String>();
++
++	
++	public void init() throws IOException {
++		if (isInit) return;
++		isInit = true;
++		BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
++		// Ignore the first two lines.
++		reader.readLine();
++		reader.readLine();
++		for (String currLine = reader.readLine(); currLine!=null; currLine = reader.readLine()) {
++			String [] parts = currLine.trim().split("=");
++			map.put(
++				// There may be two or three parts. Three parts ex: JAVAFOR="for"=10880
++				Integer.parseInt(parts[parts.length-1])
++				, parts[0]
++				);
++		}
++	}
++	
++	
++	public String getName(int type) {
++		return map.get(type);
++	}
++
++
++}
+
+
+Property changes on: trunk/org.prorefactor.eclipse
+___________________________________________________________________
+Name: svn:ignore
+   - bin
+eclipsesrc.zip
+
+   + bin
+eclipsesrc.zip
+temp.folder
+eclipse.jar
+
+
+Added: trunk/org.prorefactor.eclipse/build.xml
+===================================================================
+--- trunk/org.prorefactor.eclipse/build.xml	2005-11-16 23:14:14 UTC (rev 39)
++++ trunk/org.prorefactor.eclipse/build.xml	2005-12-19 20:26:48 UTC (rev 40)
+@@ -0,0 +1,235 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project name="org.prorefactor.eclipse" default="build.jars" basedir=".">
++
++	<property name="basews" value="${ws}"/>
++	<property name="baseos" value="${os}"/>
++	<property name="basearch" value="${arch}"/>
++	<property name="basenl" value="${nl}"/>
++
++	<!-- Compiler settings. -->
++	<property name="javacFailOnError" value="false"/>
++	<property name="javacDebugInfo" value="on"/>
++	<property name="javacVerbose" value="true"/>
++	<property name="javacSource" value="1.3"/>
++	<property name="javacTarget" value="1.2"/>
++	<property name="compilerArg" value=""/>
++	<path id="path_bootclasspath">
++		<fileset dir="${java.home}/lib">
++			<include name="*.jar"/>
++		</fileset>
++	</path>
++	<property name="bootclasspath" refid="path_bootclasspath"/>
++
++	<target name="init" depends="properties">
++		<condition property="pluginTemp" value="${buildTempFolder}/plugins">
++			<isset property="buildTempFolder"/>
++		</condition>
++		<property name="pluginTemp" value="${basedir}"/>
++		<condition property="build.result.folder" value="${pluginTemp}/org.prorefactor.eclipse">
++			<isset property="buildTempFolder"/>
++		</condition>
++		<property name="build.result.folder" value="${basedir}"/>
++		<property name="temp.folder" value="${basedir}/temp.folder"/>
++		<property name="plugin.destination" value="${basedir}"/>
++	</target>
++
++	<target name="properties" if="eclipse.running">
++		<property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
++
++	</target>
++
++	<target name="build.update.jar" depends="init" description="Build the plug-in: org.prorefactor.eclipse for an update site.">
++		<delete dir="${temp.folder}"/>
++		<mkdir dir="${temp.folder}"/>
++		<antcall target="build.jars"/>
++		<antcall target="gather.bin.parts">
++			<param name="destination.temp.folder" value="${temp.folder}/"/>
++		</antcall>
++		<zip destfile="${plugin.destination}/org.prorefactor.eclipse_1.2.4.jar" basedir="${temp.folder}/org.prorefactor.eclipse_1.2.4" filesonly="false" whenempty="skip" update="false"/>
++		<delete dir="${temp.folder}"/>
++	</target>
++
++	<target name="eclipse.jar" depends="init" unless="eclipse.jar" description="Create jar: org.prorefactor.eclipse eclipse.jar.">
++		<delete dir="${temp.folder}/eclipse.jar.bin"/>
++		<mkdir dir="${temp.folder}/eclipse.jar.bin"/>
++		<!-- compile the source code -->
++		<javac destdir="${temp.folder}/eclipse.jar.bin" failonerror="${javacFailOnError}" verbose="${javacVerbose}" debug="${javacDebugInfo}" includeAntRuntime="no" bootclasspath="${bootclasspath}" source="${javacSource}" target="${javacTarget}"		>
++			<compilerarg line="${compilerArg}"/>
++			<classpath>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.jface.text/progfile/eclipse/plugins/org.eclipse.jface.text_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.jface.text/org.eclipse.jface.text_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.core.runtime/progfile/eclipse/plugins/org.eclipse.core.runtime_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.core.runtime/org.eclipse.core.runtime_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.osgi/progfile/eclipse/plugins/org.eclipse.osgi_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.osgi/org.eclipse.osgi_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.text/progfile/eclipse/plugins/org.eclipse.text_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.text/org.eclipse.text_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.swt/@dot"/>
++				<pathelement path="..\..\..\progfile\eclipse\plugins\org.eclipse.swt.win32.win32.x86_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.jface/progfile/eclipse/plugins/org.eclipse.jface_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.jface/org.eclipse.jface_3.1.0.jar"/>
++				<pathelement path="..\..\..\progfile\eclipse\plugins\org.eclipse.core.commands_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.ui.workbench.texteditor/progfile/eclipse/plugins/org.eclipse.ui.workbench.texteditor_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.ui.workbench.texteditor/org.eclipse.ui.workbench.texteditor_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.ui/progfile/eclipse/plugins/org.eclipse.ui_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.ui/org.eclipse.ui_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.help/progfile/eclipse/plugins/org.eclipse.help_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.help/org.eclipse.help_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.ui.workbench/progfile/eclipse/plugins/org.eclipse.ui.workbench_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.ui.workbench/compatibility.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.ui.workbench/org.eclipse.ui.workbench_3.1.0.jar"/>
++				<pathelement path="../../../progfile/eclipse/plugins/org.eclipse.ui.workbench.compatibility_3.1.0/compatibility.jar"/>
++				<pathelement path="../../../progfile/eclipse/plugins/org.eclipse.ui.workbench.compatibility_3.1.0/org.eclipse.ui.workbench_3.1.0.jar"/>
++				<pathelement path="../../../progfile/eclipse/plugins/org.eclipse.ui.workbench.compatibility_3.1.0/@dot"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.core.expressions/progfile/eclipse/plugins/org.eclipse.core.expressions_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.core.expressions/org.eclipse.core.expressions_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.core.resources/progfile/eclipse/plugins/org.eclipse.core.resources_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.core.resources/org.eclipse.core.resources_3.1.0.jar"/>
++				<pathelement path="..\..\..\progfile\eclipse\plugins\org.eclipse.core.resources.compatibility_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.core.resources.win32/org.eclipse.core.resources_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.core.resources.win32/progfile/eclipse/plugins/org.eclipse.core.resources.win32_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.core.resources.win32/org.eclipse.core.resources.win32_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.core.runtime.compatibility/progfile/eclipse/plugins/org.eclipse.core.runtime.compatibility_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.core.runtime.compatibility/org.eclipse.core.runtime.compatibility_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.update.configurator/progfile/eclipse/plugins/org.eclipse.update.configurator_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.update.configurator/org.eclipse.update.configurator_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.ant.core/progfile/eclipse/plugins/org.eclipse.ant.core_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.ant.core/org.eclipse.ant.core_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.core.variables/progfile/eclipse/plugins/org.eclipse.core.variables_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.core.variables/org.eclipse.core.variables_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.ui.editors/progfile/eclipse/plugins/org.eclipse.ui.editors_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.ui.editors/org.eclipse.ui.editors_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.ui.ide/progfile/eclipse/plugins/org.eclipse.ui.ide_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.ui.ide/org.eclipse.ui.ide_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.ui.win32/org.eclipse.ui.ide_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.ui.win32/progfile/eclipse/plugins/org.eclipse.ui.win32_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.ui.win32/org.eclipse.ui.win32_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.ui.views/progfile/eclipse/plugins/org.eclipse.ui.views_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.ui.views/org.eclipse.ui.views_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.update.core/progfile/eclipse/plugins/org.eclipse.update.core_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.update.core/org.eclipse.update.core_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.update.core.win32/org.eclipse.update.core_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.update.core.win32/@dot"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.update.ui/progfile/eclipse/plugins/org.eclipse.update.ui_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.update.ui/org.eclipse.update.ui_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.ui.forms/progfile/eclipse/plugins/org.eclipse.ui.forms_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.ui.forms/org.eclipse.ui.forms_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.core.filebuffers/progfile/eclipse/plugins/org.eclipse.core.filebuffers_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.core.filebuffers/org.eclipse.core.filebuffers_3.1.0.jar"/>
++				<pathelement path="../org.prorefactor.refactor/bin"/>
++				<pathelement path="../org.prorefactor.refactor/refactor.jar"/>
++				<pathelement path="../org.prorefactor.core/bin"/>
++				<pathelement path="../org.prorefactor.core/core.jar"/>
++				<pathelement path="../../../progfile/eclipse/plugins/org.junit_3.8.1/progfile/eclipse/plugins/org.junit_3.8.1/junit.jar"/>
++				<pathelement path="../../../progfile/eclipse/plugins/org.junit_3.8.1/junit.jar"/>
++				<pathelement path="../org.prorefactor.antlr/antlr.jar"/>
++				<pathelement path="../org.prorefactor.lib/hibernate/cglib-full-2.0.2.jar"/>
++				<pathelement path="../org.prorefactor.lib/hsqldb/hsqldb.jar"/>
++				<pathelement path="../org.prorefactor.lib/hibernate/commons-logging-1.0.4.jar"/>
++				<pathelement path="../org.prorefactor.lib/hibernate/dom4j-1.4.jar"/>
++				<pathelement path="../org.prorefactor.lib/hibernate/ehcache-0.9.jar"/>
++				<pathelement path="../org.prorefactor.lib/hibernate/jdbc2_0-stdext.jar"/>
++				<pathelement path="../org.prorefactor.lib/hibernate/jta.jar"/>
++				<pathelement path="../org.prorefactor.lib/hibernate/odmg-3.0.jar"/>
++				<pathelement path="../org.prorefactor.lib/hibernate/xerces-2.4.0.jar"/>
++				<pathelement path="../org.prorefactor.lib/hibernate/xml-apis.jar"/>
++				<pathelement path="../org.prorefactor.lib/jakarta/commons-collections/commons-collections.jar"/>
++				<pathelement path="../org.prorefactor.lib/jakarta/commons-io/commons-io.jar"/>
++				<pathelement path="../org.prorefactor.lib/jakarta/commons-lang/commons-lang.jar"/>
++				<pathelement path="../org.prorefactor.lib/stringtemplate/stringtemplate.jar"/>
++				<pathelement path="../org.prorefactor.lib/bin/"/>
++				<pathelement path="../org.prorefactor.lib/prorefactor.lib.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.search/progfile/eclipse/plugins/org.eclipse.search_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.search/org.eclipse.search_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.compare/progfile/eclipse/plugins/org.eclipse.compare_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.compare/org.eclipse.compare_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.ui.console/progfile/eclipse/plugins/org.eclipse.ui.console_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.ui.console/org.eclipse.ui.console_3.1.0.jar"/>
++				<pathelement path="../org.prorefactor.doc/@dot"/>
++			</classpath>
++			<src path="src/"			/>
++			</javac>
++		<!-- Copy necessary resources -->
++		<copy todir="${temp.folder}/eclipse.jar.bin" failonerror="true" overwrite="false">
++			<fileset dir="src/" excludes="**/*.java, **/package.htm*,null"			/>
++		</copy>
++		<mkdir dir="${build.result.folder}"/>
++		<jar destfile="${build.result.folder}/eclipse.jar" basedir="${temp.folder}/eclipse.jar.bin"/>
++		<delete dir="${temp.folder}/eclipse.jar.bin"/>
++	</target>
++
++	<target name="eclipsesrc.zip" depends="init" unless="eclipsesrc.zip">
++		<mkdir dir="${build.result.folder}"/>
++		<zip destfile="${build.result.folder}/eclipsesrc.zip" filesonly="false" whenempty="skip" update="false">
++			<fileset dir="src/" includes="**/*.java"			/>
++		</zip>
++	</target>
++
++	<target name="build.jars" depends="init" description="Build all the jars for the plug-in: org.prorefactor.eclipse.">
++		<available property="eclipse.jar" file="${build.result.folder}/eclipse.jar"/>
++		<antcall target="eclipse.jar"/>
++	</target>
++
++	<target name="build.sources" depends="init">
++		<available property="eclipsesrc.zip" file="${build.result.folder}/eclipsesrc.zip"/>
++		<antcall target="eclipsesrc.zip"/>
++	</target>
++
++	<target name="gather.bin.parts" depends="init" if="destination.temp.folder">
++		<mkdir dir="${destination.temp.folder}/org.prorefactor.eclipse_1.2.4"/>
++		<copy todir="${destination.temp.folder}/org.prorefactor.eclipse_1.2.4" failonerror="true" overwrite="false">
++			<fileset dir="${build.result.folder}" includes="eclipse.jar"			/>
++		</copy>
++		<copy todir="${destination.temp.folder}/org.prorefactor.eclipse_1.2.4" failonerror="true" overwrite="false">
++			<fileset dir="${basedir}" includes="plugin.xml,*.jar,*.zip,*.html,*.ini,*.mappings,*.gif,icons/,about.properties,welcome.xml,plugin.properties"			/>
++		</copy>
++	</target>
++
++	<target name="build.zips" depends="init">
++	</target>
++
++	<target name="gather.sources" depends="init" if="destination.temp.folder">
++		<mkdir dir="${destination.temp.folder}/org.prorefactor.eclipse_1.2.4"/>
++		<copy file="${build.result.folder}/eclipsesrc.zip" todir="${destination.temp.folder}/org.prorefactor.eclipse_1.2.4" failonerror="false" overwrite="false"/>
++		<copy todir="${destination.temp.folder}/org.prorefactor.eclipse_1.2.4" failonerror="false" overwrite="false">
++			<fileset dir="${basedir}" includes="*.html,about.ini,about.mappings,about.properties,frog32.gif,src/,welcome.xml,plugin.properties,icons/"			/>
++		</copy>
++	</target>
++
++	<target name="gather.logs" depends="init" if="destination.temp.folder">
++		<mkdir dir="${destination.temp.folder}/org.prorefactor.eclipse_1.2.4"/>
++		<copy file="${temp.folder}/eclipse.jar.bin.log" todir="${destination.temp.folder}/org.prorefactor.eclipse_1.2.4" failonerror="false" overwrite="false"/>
++	</target>
++
++	<target name="clean" depends="init" description="Clean the plug-in: org.prorefactor.eclipse of all the zips, jars and logs created.">
++		<delete file="${build.result.folder}/eclipse.jar"/>
++		<delete file="${build.result.folder}/eclipsesrc.zip"/>
++		<delete file="${plugin.destination}/org.prorefactor.eclipse_1.2.4.jar"/>
++		<delete file="${plugin.destination}/org.prorefactor.eclipse_1.2.4.zip"/>
++		<delete dir="${temp.folder}"/>
++	</target>
++
++	<target name="refresh" depends="init" if="eclipse.running" description="Refresh this folder.">
++		<eclipse.convertPath fileSystemPath="C:/work/prorefactor/org.prorefactor.eclipse" property="resourcePath"/>
++		<eclipse.refreshLocal resource="${resourcePath}" depth="infinite"/>
++	</target>
++
++	<target name="zip.plugin" depends="init" description="Create a zip containing all the elements for the plug-in: org.prorefactor.eclipse.">
++		<delete dir="${temp.folder}"/>
++		<mkdir dir="${temp.folder}"/>
++		<antcall target="build.jars"/>
++		<antcall target="build.sources"/>
++		<antcall target="gather.bin.parts">
++			<param name="destination.temp.folder" value="${temp.folder}/"/>
++		</antcall>
++		<antcall target="gather.sources">
++			<param name="destination.temp.folder" value="${temp.folder}/"/>
++		</antcall>
++		<delete>
++			<fileset dir="${temp.folder}" includes="**/*.bin.log"			/>
++		</delete>
++		<zip destfile="${plugin.destination}/org.prorefactor.eclipse_1.2.4.zip" basedir="${temp.folder}" filesonly="true" whenempty="skip" update="false"/>
++		<delete dir="${temp.folder}"/>
++	</target>
++
++</project>
+
+
+Property changes on: trunk/org.prorefactor.refactor
+___________________________________________________________________
+Name: svn:ignore
+   - bin
+refactorsrc.zip
+
+   + bin
+refactorsrc.zip
+temp.folder
+refactor.jar
+
+
+Added: trunk/org.prorefactor.refactor/build.xml
+===================================================================
+--- trunk/org.prorefactor.refactor/build.xml	2005-11-16 23:14:14 UTC (rev 39)
++++ trunk/org.prorefactor.refactor/build.xml	2005-12-19 20:26:48 UTC (rev 40)
+@@ -0,0 +1,179 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project name="org.prorefactor.refactor" default="build.jars" basedir=".">
++
++	<property name="basews" value="${ws}"/>
++	<property name="baseos" value="${os}"/>
++	<property name="basearch" value="${arch}"/>
++	<property name="basenl" value="${nl}"/>
++
++	<!-- Compiler settings. -->
++	<property name="javacFailOnError" value="false"/>
++	<property name="javacDebugInfo" value="on"/>
++	<property name="javacVerbose" value="true"/>
++	<property name="javacSource" value="1.3"/>
++	<property name="javacTarget" value="1.2"/>
++	<property name="compilerArg" value=""/>
++	<path id="path_bootclasspath">
++		<fileset dir="${java.home}/lib">
++			<include name="*.jar"/>
++		</fileset>
++	</path>
++	<property name="bootclasspath" refid="path_bootclasspath"/>
++
++	<target name="init" depends="properties">
++		<condition property="pluginTemp" value="${buildTempFolder}/plugins">
++			<isset property="buildTempFolder"/>
++		</condition>
++		<property name="pluginTemp" value="${basedir}"/>
++		<condition property="build.result.folder" value="${pluginTemp}/org.prorefactor.refactor">
++			<isset property="buildTempFolder"/>
++		</condition>
++		<property name="build.result.folder" value="${basedir}"/>
++		<property name="temp.folder" value="${basedir}/temp.folder"/>
++		<property name="plugin.destination" value="${basedir}"/>
++	</target>
++
++	<target name="properties" if="eclipse.running">
++		<property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
++
++	</target>
++
++	<target name="build.update.jar" depends="init" description="Build the plug-in: org.prorefactor.refactor for an update site.">
++		<delete dir="${temp.folder}"/>
++		<mkdir dir="${temp.folder}"/>
++		<antcall target="build.jars"/>
++		<antcall target="gather.bin.parts">
++			<param name="destination.temp.folder" value="${temp.folder}/"/>
++		</antcall>
++		<zip destfile="${plugin.destination}/org.prorefactor.refactor_1.2.4.jar" basedir="${temp.folder}/org.prorefactor.refactor_1.2.4" filesonly="false" whenempty="skip" update="false"/>
++		<delete dir="${temp.folder}"/>
++	</target>
++
++	<target name="refactor.jar" depends="init" unless="refactor.jar" description="Create jar: org.prorefactor.refactor refactor.jar.">
++		<delete dir="${temp.folder}/refactor.jar.bin"/>
++		<mkdir dir="${temp.folder}/refactor.jar.bin"/>
++		<!-- compile the source code -->
++		<javac destdir="${temp.folder}/refactor.jar.bin" failonerror="${javacFailOnError}" verbose="${javacVerbose}" debug="${javacDebugInfo}" includeAntRuntime="no" bootclasspath="${bootclasspath}" source="${javacSource}" target="${javacTarget}"		>
++			<compilerarg line="${compilerArg}"/>
++			<classpath>
++				<pathelement path="../org.prorefactor.core/bin"/>
++				<pathelement path="../org.prorefactor.core/core.jar"/>
++				<pathelement path="../../../progfile/eclipse/plugins/org.junit_3.8.1/progfile/eclipse/plugins/org.junit_3.8.1/junit.jar"/>
++				<pathelement path="../../../progfile/eclipse/plugins/org.junit_3.8.1/junit.jar"/>
++				<pathelement path="../org.prorefactor.antlr/antlr.jar"/>
++				<pathelement path="../org.prorefactor.lib/hibernate/cglib-full-2.0.2.jar"/>
++				<pathelement path="../org.prorefactor.lib/hsqldb/hsqldb.jar"/>
++				<pathelement path="../org.prorefactor.lib/hibernate/commons-logging-1.0.4.jar"/>
++				<pathelement path="../org.prorefactor.lib/hibernate/dom4j-1.4.jar"/>
++				<pathelement path="../org.prorefactor.lib/hibernate/ehcache-0.9.jar"/>
++				<pathelement path="../org.prorefactor.lib/hibernate/jdbc2_0-stdext.jar"/>
++				<pathelement path="../org.prorefactor.lib/hibernate/jta.jar"/>
++				<pathelement path="../org.prorefactor.lib/hibernate/odmg-3.0.jar"/>
++				<pathelement path="../org.prorefactor.lib/hibernate/xerces-2.4.0.jar"/>
++				<pathelement path="../org.prorefactor.lib/hibernate/xml-apis.jar"/>
++				<pathelement path="../org.prorefactor.lib/jakarta/commons-collections/commons-collections.jar"/>
++				<pathelement path="../org.prorefactor.lib/jakarta/commons-io/commons-io.jar"/>
++				<pathelement path="../org.prorefactor.lib/jakarta/commons-lang/commons-lang.jar"/>
++				<pathelement path="../org.prorefactor.lib/stringtemplate/stringtemplate.jar"/>
++				<pathelement path="../org.prorefactor.lib/bin/"/>
++				<pathelement path="../org.prorefactor.lib/prorefactor.lib.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.swt/@dot"/>
++				<pathelement path="..\..\..\progfile\eclipse\plugins\org.eclipse.swt.win32.win32.x86_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.jface/progfile/eclipse/plugins/org.eclipse.jface_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.jface/org.eclipse.jface_3.1.0.jar"/>
++				<pathelement path="..\..\..\progfile\eclipse\plugins\org.eclipse.core.commands_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.core.runtime/progfile/eclipse/plugins/org.eclipse.core.runtime_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.core.runtime/org.eclipse.core.runtime_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.osgi/progfile/eclipse/plugins/org.eclipse.osgi_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.osgi/org.eclipse.osgi_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.jface.text/progfile/eclipse/plugins/org.eclipse.jface.text_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.jface.text/org.eclipse.jface.text_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.text/progfile/eclipse/plugins/org.eclipse.text_3.1.0.jar"/>
++				<pathelement path="../../prorefactor_work/workspace/org.eclipse.text/org.eclipse.text_3.1.0.jar"/>
++			</classpath>
++			<src path="src/"			/>
++			</javac>
++		<!-- Copy necessary resources -->
++		<copy todir="${temp.folder}/refactor.jar.bin" failonerror="true" overwrite="false">
++			<fileset dir="src/" excludes="**/*.java, **/package.htm*,null"			/>
++		</copy>
++		<mkdir dir="${build.result.folder}"/>
++		<jar destfile="${build.result.folder}/refactor.jar" basedir="${temp.folder}/refactor.jar.bin"/>
++		<delete dir="${temp.folder}/refactor.jar.bin"/>
++	</target>
++
++	<target name="refactorsrc.zip" depends="init" unless="refactorsrc.zip">
++		<mkdir dir="${build.result.folder}"/>
++		<zip destfile="${build.result.folder}/refactorsrc.zip" filesonly="false" whenempty="skip" update="false">
++			<fileset dir="src/" includes="**/*.java"			/>
++		</zip>
++	</target>
++
++	<target name="build.jars" depends="init" description="Build all the jars for the plug-in: org.prorefactor.refactor.">
++		<available property="refactor.jar" file="${build.result.folder}/refactor.jar"/>
++		<antcall target="refactor.jar"/>
++	</target>
++
++	<target name="build.sources" depends="init">
++		<available property="refactorsrc.zip" file="${build.result.folder}/refactorsrc.zip"/>
++		<antcall target="refactorsrc.zip"/>
++	</target>
++
++	<target name="gather.bin.parts" depends="init" if="destination.temp.folder">
++		<mkdir dir="${destination.temp.folder}/org.prorefactor.refactor_1.2.4"/>
++		<copy todir="${destination.temp.folder}/org.prorefactor.refactor_1.2.4" failonerror="true" overwrite="false">
++			<fileset dir="${build.result.folder}" includes="refactor.jar"			/>
++		</copy>
++		<copy todir="${destination.temp.folder}/org.prorefactor.refactor_1.2.4" failonerror="true" overwrite="false">
++			<fileset dir="${basedir}" includes="plugin.xml,*.jar,*.zip,icons/,data/,prorefactor/,*.html,4gl/"			/>
++		</copy>
++	</target>
++
++	<target name="build.zips" depends="init">
++	</target>
++
++	<target name="gather.sources" depends="init" if="destination.temp.folder">
++		<mkdir dir="${destination.temp.folder}/org.prorefactor.refactor_1.2.4"/>
++		<copy file="${build.result.folder}/refactorsrc.zip" todir="${destination.temp.folder}/org.prorefactor.refactor_1.2.4" failonerror="false" overwrite="false"/>
++		<copy todir="${destination.temp.folder}/org.prorefactor.refactor_1.2.4" failonerror="false" overwrite="false">
++			<fileset dir="${basedir}" includes="*.html,src/,prorefactor/,plugin.xml,data/,4gl/"			/>
++		</copy>
++	</target>
++
++	<target name="gather.logs" depends="init" if="destination.temp.folder">
++		<mkdir dir="${destination.temp.folder}/org.prorefactor.refactor_1.2.4"/>
++		<copy file="${temp.folder}/refactor.jar.bin.log" todir="${destination.temp.folder}/org.prorefactor.refactor_1.2.4" failonerror="false" overwrite="false"/>
++	</target>
++
++	<target name="clean" depends="init" description="Clean the plug-in: org.prorefactor.refactor of all the zips, jars and logs created.">
++		<delete file="${build.result.folder}/refactor.jar"/>
++		<delete file="${build.result.folder}/refactorsrc.zip"/>
++		<delete file="${plugin.destination}/org.prorefactor.refactor_1.2.4.jar"/>
++		<delete file="${plugin.destination}/org.prorefactor.refactor_1.2.4.zip"/>
++		<delete dir="${temp.folder}"/>
++	</target>
++
++	<target name="refresh" depends="init" if="eclipse.running" description="Refresh this folder.">
++		<eclipse.convertPath fileSystemPath="C:/work/prorefactor/org.prorefactor.refactor" property="resourcePath"/>
++		<eclipse.refreshLocal resource="${resourcePath}" depth="infinite"/>
++	</target>
++
++	<target name="zip.plugin" depends="init" description="Create a zip containing all the elements for the plug-in: org.prorefactor.refactor.">
++		<delete dir="${temp.folder}"/>
++		<mkdir dir="${temp.folder}"/>
++		<antcall target="build.jars"/>
++		<antcall target="build.sources"/>
++		<antcall target="gather.bin.parts">
++			<param name="destination.temp.folder" value="${temp.folder}/"/>
++		</antcall>
++		<antcall target="gather.sources">
++			<param name="destination.temp.folder" value="${temp.folder}/"/>
++		</antcall>
++		<delete>
++			<fileset dir="${temp.folder}" includes="**/*.bin.log"			/>
++		</delete>
++		<zip destfile="${plugin.destination}/org.prorefactor.refactor_1.2.4.zip" basedir="${temp.folder}" filesonly="true" whenempty="skip" update="false"/>
++		<delete dir="${temp.folder}"/>
++	</target>
++
++</project>
+
+Modified: trunk/org.prorefactor.refactor/plugin.xml
+===================================================================
+--- trunk/org.prorefactor.refactor/plugin.xml	2005-11-16 23:14:14 UTC (rev 39)
++++ trunk/org.prorefactor.refactor/plugin.xml	2005-12-19 20:26:48 UTC (rev 40)
+@@ -5,12 +5,11 @@
+    name="ProRefactor Refactorings"
+    version="1.2.4"
+    provider-name="ProRefactor.org"
+-   class="">
++   >
+ 
+    <runtime>
+       <library name="refactor.jar">
+          <export name="*"/>
+-         <packages prefixes="org.prorefactor"/>
+       </library>
+    </runtime>
+ 
+
+Modified: trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/tfnames/NamesLint.java
+===================================================================
+--- trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/tfnames/NamesLint.java	2005-11-16 23:14:14 UTC (rev 39)
++++ trunk/org.prorefactor.refactor/src/org/prorefactor/refactor/tfnames/NamesLint.java	2005-12-19 20:26:48 UTC (rev 40)
+@@ -109,6 +109,12 @@
+ 
+ 
+ 	private void lintFieldRef(FieldRefNode node) {
++		// TODO Add support for frame fields.
++		// ProRefactor does not yet support frame fields or the INPUT function.
++		// We skip any frame field referenced with the INPUT function, because
++		// TreeParser01 does not (yet) fill in any information for it. (Dec.2005)
++		if (node.firstChild().getType()==TokenTypes.INPUT) return;
++
+ 		int handle = node.getHandle();
+ 		Symbol symbol =  node.getSymbol();
+ 		FieldBuffer fieldBuff = null;
+@@ -118,7 +124,6 @@
+ 			tableBuff = fieldBuff.getBuffer();
+ 		}
+ 
+-
+ 		// Are we applying changes to work/temp tables?
+ 		if (	! settings.workTempTables
+ 			&&	node.attrGet(IConstants.STORETYPE) != IConstants.ST_DBTABLE
+
+
+
